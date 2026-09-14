@@ -233,7 +233,7 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           password: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
           port: ${{ secrets.HOSTINGER_PORT || vars.HOSTINGER_PORT || 65002 }}
-          source: "out/*"
+          source: "out/*,out/.htaccess"
           target: "releases/release-${{ github.run_number }}"
           strip_components: 1
 
