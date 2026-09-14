@@ -248,10 +248,33 @@ jobs:
           password: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
           port: ${{ secrets.HOSTINGER_PORT || vars.HOSTINGER_PORT || 65002 }}
           script: |
-            TARGET_PATH="${{ secrets.HOSTINGER_TARGET_PATH || vars.HOSTINGER_TARGET_PATH || 'public_html' }}"
-            RELEASE_DIR="$HOME/releases/release-${{ github.run_number }}"
-            DEST_DIR="$HOME/$TARGET_PATH"
+            RAW_TARGET="${{ secrets.HOSTINGER_TARGET_PATH || vars.HOSTINGER_TARGET_PATH }}"
+            # Bersihkan leading/trailing slash & whitespace untuk relative path
+            CLEAN_TARGET="$(echo "$RAW_TARGET" | sed -e 's/^[[:space:]/]*//' -e 's/[[:space:]/]*$//')"
 
+            # Deteksi apakah user memasukkan absolute path (misal: /home/u870220406/...) atau relative path:
+            if [[ "$RAW_TARGET" =~ ^/home/ ]]; then
+              DEST_DIR="$RAW_TARGET"
+            elif [ -n "$CLEAN_TARGET" ] && [ "$CLEAN_TARGET" != "public_html" ]; then
+              DEST_DIR="$HOME/$CLEAN_TARGET"
+            elif [ -d "$HOME/domains/afrizahanif.com/public_html" ]; then
+              echo "💡 Terdeteksi struktur Hostinger domain: $HOME/domains/afrizahanif.com/public_html"
+              DEST_DIR="$HOME/domains/afrizahanif.com/public_html"
+            elif [ -d "$HOME/public_html" ]; then
+              DEST_DIR="$HOME/public_html"
+            elif [ -d "$HOME/domains" ]; then
+              FIRST_DOMAIN=$(ls -1 "$HOME/domains" 2>/dev/null | head -n 1)
+              if [ -n "$FIRST_DOMAIN" ] && [ -d "$HOME/domains/$FIRST_DOMAIN/public_html" ]; then
+                echo "💡 Terdeteksi domain Hostinger ($FIRST_DOMAIN): $HOME/domains/$FIRST_DOMAIN/public_html"
+                DEST_DIR="$HOME/domains/$FIRST_DOMAIN/public_html"
+              else
+                DEST_DIR="$HOME/domains/afrizahanif.com/public_html"
+              fi
+            else
+              DEST_DIR="$HOME/public_html"
+            fi
+
+            RELEASE_DIR="$HOME/releases/release-${{ github.run_number }}"
             echo "🚀 Menjalankan Atomic Selective Sync ke: $DEST_DIR"
             mkdir -p "$DEST_DIR"
 
@@ -293,7 +316,7 @@ jobs:
           password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
           port: ${{ secrets.HOSTINGER_FTP_PORT || vars.HOSTINGER_FTP_PORT || 21 }}
           local-dir: ./out/
-          server-dir: ${{ secrets.HOSTINGER_FTP_TARGET_DIR || vars.HOSTINGER_FTP_TARGET_DIR || './public_html/' }}
+          server-dir: ${{ secrets.HOSTINGER_FTP_TARGET_DIR || vars.HOSTINGER_FTP_TARGET_DIR || secrets.HOSTINGER_TARGET_PATH || vars.HOSTINGER_TARGET_PATH || './domains/afrizahanif.com/public_html/' }}
           dangerous-clean-slate: false
           exclude: |
             **/.git*
@@ -313,17 +336,27 @@ jobs:
         run: |
           SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}"
           echo "🌐 Melakukan live smoke test ke: $SITE_URL"
-          sleep 3
 
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -L --connect-timeout 10 --max-time 20 "$SITE_URL" || echo "000")
-          echo "📡 Status HTTP Website Live: $HTTP_CODE"
+          SUCCESS=false
+          HTTP_CODE="000"
+          for i in {1..5}; do
+            echo "⏳ Percobaan $i/5: Menghubungi $SITE_URL..."
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -L --connect-timeout 10 --max-time 20 "$SITE_URL" || echo "000")
+            echo "📡 Status HTTP Website Live: $HTTP_CODE"
 
-          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
-            echo "🎉 Website LIVE dan merespons normal (HTTP $HTTP_CODE)!"
+            if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
+              echo "🎉 Website LIVE dan merespons normal (HTTP $HTTP_CODE)!"
+              echo "http_code=$HTTP_CODE" >> $GITHUB_OUTPUT
+              SUCCESS=true
+              break
+            fi
+            sleep 5
+          done
+
+          if [ "$SUCCESS" != "true" ]; then
+            echo "::error::❌ Website live tidak merespons sukses (HTTP $HTTP_CODE)! Kemungkinan file ter-deploy ke folder yang salah atau web server LiteSpeed belum menemukan index.html."
             echo "http_code=$HTTP_CODE" >> $GITHUB_OUTPUT
-          else
-            echo "⚠️ Peringatan: Website live merespons dengan kode HTTP $HTTP_CODE!"
-            echo "http_code=$HTTP_CODE" >> $GITHUB_OUTPUT
+            exit 1
           fi
 
       # ---------------------------------------------------------------------

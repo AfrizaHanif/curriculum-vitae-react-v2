@@ -71,8 +71,29 @@ jobs:
           password: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
           port: ${{ secrets.HOSTINGER_PORT || vars.HOSTINGER_PORT || 65002 }}
           script: |
-            TARGET_PATH="${{ secrets.HOSTINGER_TARGET_PATH || vars.HOSTINGER_TARGET_PATH || 'public_html' }}"
-            DEST_DIR="$HOME/$TARGET_PATH"
+            RAW_TARGET="${{ secrets.HOSTINGER_TARGET_PATH || vars.HOSTINGER_TARGET_PATH }}"
+            CLEAN_TARGET="$(echo "$RAW_TARGET" | sed -e 's/^[[:space:]/]*//' -e 's/[[:space:]/]*$//')"
+
+            # Deteksi apakah user memasukkan absolute path (misal: /home/u870220406/...) atau relative path
+            if [[ "$RAW_TARGET" =~ ^/home/ ]]; then
+              DEST_DIR="$RAW_TARGET"
+            elif [ -n "$CLEAN_TARGET" ] && [ "$CLEAN_TARGET" != "public_html" ]; then
+              DEST_DIR="$HOME/$CLEAN_TARGET"
+            elif [ -d "$HOME/domains/afrizahanif.com/public_html" ]; then
+              DEST_DIR="$HOME/domains/afrizahanif.com/public_html"
+            elif [ -d "$HOME/public_html" ]; then
+              DEST_DIR="$HOME/public_html"
+            elif [ -d "$HOME/domains" ]; then
+              FIRST_DOMAIN=$(ls -1 "$HOME/domains" 2>/dev/null | head -n 1)
+              if [ -n "$FIRST_DOMAIN" ] && [ -d "$HOME/domains/$FIRST_DOMAIN/public_html" ]; then
+                DEST_DIR="$HOME/domains/$FIRST_DOMAIN/public_html"
+              else
+                DEST_DIR="$HOME/domains/afrizahanif.com/public_html"
+              fi
+            else
+              DEST_DIR="$HOME/public_html"
+            fi
+
             RELEASES_BASE="$HOME/releases"
             INPUT_TARGET="${{ inputs.target_release }}"
 
