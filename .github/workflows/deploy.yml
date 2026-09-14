@@ -286,7 +286,7 @@ jobs:
       - name: "4. Fallback: Deploy via FTP"
         id: ftp_deploy
         if: always() && (steps.scp_upload.outcome != 'success' || steps.ssh_sync.outcome != 'success')
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.HOSTINGER_FTP_HOST || vars.HOSTINGER_FTP_HOST || secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_FTP_USERNAME || vars.HOSTINGER_FTP_USERNAME || secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}
