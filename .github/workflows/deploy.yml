@@ -240,7 +240,7 @@ jobs:
       - name: "3. Primary: Atomic Selective Sync & Cleanup (SSH)"
         id: ssh_sync
         if: steps.scp_upload.outcome == 'success'
-        uses: appleboy/ssh-action@v1.2.0
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}
