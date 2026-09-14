@@ -10,8 +10,13 @@ updates:
       timezone: "Asia/Jakarta"
     open-pull-requests-limit: 5
     commit-message:
-      prefix: "chore(deps)"
+      prefix: "chore"
       include: "scope"
+    # Mengelompokkan semua pembaruan npm ke dalam 1 PR gabungan untuk mencegah spam PR
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
 
   # Pembaruan dependensi GitHub Actions (actions/checkout, setup-node, dll.)
   - package-ecosystem: "github-actions"
@@ -23,5 +28,10 @@ updates:
       timezone: "Asia/Jakarta"
     open-pull-requests-limit: 5
     commit-message:
-      prefix: "ci(actions)"
+      prefix: "ci"
       include: "scope"
+    # Mengelompokkan semua pembaruan GitHub Actions ke dalam 1 PR gabungan
+    groups:
+      github-actions:
+        patterns:
+          - "*"
