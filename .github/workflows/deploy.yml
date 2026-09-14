@@ -36,10 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "1. Checkout repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: "2. Set up Node.js"
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: "npm"
@@ -105,16 +105,16 @@ jobs:
           fi
 
       - name: "1. Checkout repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: "2. Set up Node.js"
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: "npm"
 
       - name: "3. Setup Next.js Build Cache"
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.npm
@@ -167,7 +167,7 @@ jobs:
 
       - name: "10. Upload Artifact for Deployment"
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: production-build
           path: out/
@@ -215,7 +215,7 @@ jobs:
           echo "✅ Kredensial dasar deployment Hostinger terverifikasi."
 
       - name: "1. Download Build Artifact"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: production-build
           path: ./out
@@ -226,7 +226,7 @@ jobs:
       - name: "2. Primary: Upload Release via SCP (SSH)"
         id: scp_upload
         continue-on-error: true
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1.0.0
         with:
           host: ${{ secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}
@@ -240,7 +240,7 @@ jobs:
       - name: "3. Primary: Atomic Selective Sync & Cleanup (SSH)"
         id: ssh_sync
         if: steps.scp_upload.outcome == 'success'
-        uses: appleboy/ssh-action@v1.2.0
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}
@@ -286,7 +286,7 @@ jobs:
       - name: "4. Fallback: Deploy via FTP"
         id: ftp_deploy
         if: always() && (steps.scp_upload.outcome != 'success' || steps.ssh_sync.outcome != 'success')
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.HOSTINGER_FTP_HOST || vars.HOSTINGER_FTP_HOST || secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_FTP_USERNAME || vars.HOSTINGER_FTP_USERNAME || secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}
@@ -370,7 +370,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "1. Checkout repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: "2. Audit Live Website with Lighthouse"
         uses: treosh/lighthouse-ci-action@v12
