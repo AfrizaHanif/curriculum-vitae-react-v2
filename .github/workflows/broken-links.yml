@@ -1,0 +1,47 @@
+name: 🔗 Broken Links Checker
+
+on:
+  schedule:
+    # Berjalan setiap hari Minggu pukul 00:00 UTC (07:00 WIB)
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+concurrency:
+  group: link-checker
+  cancel-in-progress: true
+
+jobs:
+  link_check:
+    name: 🔍 Scan for Broken Links
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "1. Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "2. Scan Website for Dead Links with Lychee"
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --verbose
+            --no-progress
+            --accept 200,204,403
+            --exclude "^https?://(www\.)?(linkedin\.com|twitter\.com|x\.com|instagram\.com|facebook\.com|wa\.me|t\.me)"
+            --max-concurrency 8
+            https://afrizahanif.com
+          fail: false
+
+      - name: "3. Generate GitHub Step Summary"
+        if: always()
+        run: |
+          cat << 'EOF' >> $GITHUB_STEP_SUMMARY
+          ## 🔗 Broken Links Scan Summary
+
+          Pemeriksaan tautan pada <https://afrizahanif.com> telah selesai dieksekusi.
+          Domain sosial media yang memblokir automated crawlers (LinkedIn, Twitter/X, Instagram, WhatsApp) secara default diabaikan untuk menghindari *false positives*.
+          EOF
+
+          if [ -f "lychee/out.md" ]; then
+            cat lychee/out.md >> $GITHUB_STEP_SUMMARY
+          fi

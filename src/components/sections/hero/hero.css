@@ -1,0 +1,47 @@
+.hero-dot-grid {
+  position: relative;
+}
+
+/* Pola dot grid ditaruh di layer ::before agar tidak memengaruhi teks/konten */
+.hero-dot-grid::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.22) 1.5px,
+    transparent 1.5px
+  );
+  background-size: 24px 24px;
+
+  /* Mask hanya memudarkan pola titik-titik di tepi */
+  mask-image: radial-gradient(
+    ellipse 80% 70% at 50% 40%,
+    #000 50%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 70% at 50% 40%,
+    #000 50%,
+    transparent 100%
+  );
+
+  pointer-events: none; /* Klik tembus ke tombol di baliknya */
+  z-index: 0;
+}
+
+.hero-bottom-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background-color: var(--bs-body-bg);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black);
+  mask-image: linear-gradient(to bottom, transparent, black);
+  pointer-events: none;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}

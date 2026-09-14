@@ -1,0 +1,18 @@
+.controls-inset {
+  .carousel-control-prev {
+    left: 10px;
+  }
+  .carousel-control-next {
+    right: 10px;
+  }
+}
+
+/* Offcanvas and backdrop layering above modals (z-index 1055) and side-nav (z-index 1020) */
+.offcanvas-backdrop {
+  z-index: 1060;
+}
+
+#case-study-offcanvas,
+.offcanvas {
+  z-index: 1065;
+}

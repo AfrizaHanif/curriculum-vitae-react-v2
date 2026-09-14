@@ -1,0 +1,51 @@
+.contact-line-grid {
+  position: relative;
+}
+
+.contact-line-grid::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(to top, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+
+  /* Mask agar bagian pinggir memudar lembut */
+  mask-image: radial-gradient(
+    ellipse 80% 50% at 50% 50%,
+    #000 50%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 50% at 50% 50%,
+    #000 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contact-top-fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background-color: var(--bs-tertiary-bg);
+  -webkit-mask-image: linear-gradient(to top, transparent, black);
+  mask-image: linear-gradient(to top, transparent, black);
+  pointer-events: none;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+main
+  section:nth-child(odd of section:not(#hero):not(#contact))
+  + #contact
+  .contact-top-fade {
+  background-color: var(--bs-body-bg);
+}

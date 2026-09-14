@@ -1,0 +1,65 @@
+/* Frame Kartu Portrait Kaca (Glassmorphic) */
+.about-avatar-container {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.about-avatar-frame {
+  width: 100%;
+  border-radius: 1.25rem !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.45),
+    rgba(255, 255, 255, 0.15)
+  );
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+[data-bs-theme="dark"] .about-avatar-frame {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.05)
+  );
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-bs-theme="light"] .about-avatar-frame {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.3)
+  );
+  border: 2px solid rgba(0, 0, 0, 0.08);
+}
+
+.about-avatar-frame:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.about-avatar-img-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 1rem !important;
+}
+
+.about-avatar-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 20%;
+  border-radius: 1rem !important;
+  transition: transform 0.4s ease;
+}
+
+.about-avatar-frame:hover .about-avatar-img {
+  transform: scale(1.03);
+}

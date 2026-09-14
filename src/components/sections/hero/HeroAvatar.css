@@ -1,0 +1,24 @@
+/* Mobile: Circular Avatar */
+.hero-avatar-frame,
+.hero-avatar-img {
+  border-radius: 50% !important;
+}
+
+.hero-avatar-img {
+  width: 190px !important;
+  height: 190px !important;
+}
+
+/* Tablet & Desktop (>= 768px): Rounded Portrait Card */
+@media (min-width: 768px) {
+  .hero-avatar-frame,
+  .hero-avatar-img {
+    border-radius: var(--bs-border-radius-lg, 0.5rem) !important;
+  }
+
+  .hero-avatar-img {
+    width: clamp(240px, 32vw, 300px) !important;
+    height: auto !important;
+    aspect-ratio: 4 / 5;
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "FTP-001",
+    "project_id": "PRJ-001",
+    "title": "Desain Informatif dan Interaktif",
+    "description": null,
+    "progress": 40,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "FTP-002",
+    "project_id": "PRJ-002",
+    "title": "Autentikasi Laravel Sanctum",
+    "description": "Implementasi sistem autentikasi menggunakan Laravel Sanctum untuk keamanan aplikasi",
+    "progress": 95,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-21T09:45:19.000000Z"
+  },
+  {
+    "id": "FTP-003",
+    "project_id": "PRJ-002",
+    "title": "Endpoint Data API",
+    "description": "Implementasi endpoint untuk mengakses dan memanipulasi data melalui API",
+    "progress": 75,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-21T09:45:19.000000Z"
+  },
+  {
+    "id": "FTP-004",
+    "project_id": "PRJ-003",
+    "title": "Pembuatan CV dan Resume Secara Instan",
+    "description": "Fitur untuk membuat CV dan resume secara otomatis dari data yang dimasukkan pengguna dalam satu klik",
+    "progress": 0,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  }
+]

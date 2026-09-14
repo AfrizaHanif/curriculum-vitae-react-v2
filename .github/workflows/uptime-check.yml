@@ -1,0 +1,136 @@
+name: 🩺 Uptime & SSL Health Monitor
+
+on:
+  schedule:
+    # Berjalan setiap 6 jam
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: uptime-monitor
+  cancel-in-progress: true
+
+jobs:
+  health_check:
+    name: 🌐 Website & API Health Monitor
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "1. Check Live Website Uptime"
+        id: web_check
+        run: |
+          TARGET_URL="${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}"
+          echo "🔍 Memeriksa ketersediaan website: $TARGET_URL"
+
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -L --connect-timeout 10 --max-time 15 "$TARGET_URL" || echo "000")
+          echo "📡 Status HTTP: $HTTP_CODE"
+          echo "http_code=$HTTP_CODE" >> $GITHUB_OUTPUT
+
+          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
+            echo "✅ Website aktif dan normal."
+            echo "status=UP" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Website terdeteksi down atau merespons error!"
+            echo "status=DOWN" >> $GITHUB_OUTPUT
+          fi
+
+      - name: "2. Check Backend API Health"
+        id: api_check
+        run: |
+          API_URL="https://api.afrizahanif.com/api/profiles"
+          echo "🔍 Memeriksa ketersediaan backend API: $API_URL"
+
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -L --connect-timeout 10 --max-time 15 "$API_URL" || echo "000")
+          echo "📡 Status HTTP API: $HTTP_CODE"
+          echo "http_code=$HTTP_CODE" >> $GITHUB_OUTPUT
+
+          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
+            echo "✅ API aktif dan merespons normal."
+            echo "status=UP" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Backend API terdeteksi down atau bermasalah!"
+            echo "status=DOWN" >> $GITHUB_OUTPUT
+          fi
+
+      - name: "3. Check SSL Certificate Expiry"
+        id: ssl_check
+        run: |
+          DOMAIN="afrizahanif.com"
+          echo "🔒 Memeriksa masa berlaku sertifikat SSL untuk domain: $DOMAIN"
+
+          EXP_DATE=$(echo | openssl s_client -servername "$DOMAIN" -connect "$DOMAIN:443" 2>/dev/null | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2 || echo "")
+
+          if [ -n "$EXP_DATE" ]; then
+            EXP_EPOCH=$(date -d "$EXP_DATE" +%s 2>/dev/null || echo "0")
+            NOW_EPOCH=$(date +%s)
+            DAYS_LEFT=$(( (EXP_EPOCH - NOW_EPOCH) / 86400 ))
+            
+            echo "📅 Sertifikat kedaluwarsa pada: $EXP_DATE"
+            echo "⏳ Sisa masa berlaku: $DAYS_LEFT hari"
+            echo "days_left=$DAYS_LEFT" >> $GITHUB_OUTPUT
+            echo "exp_date=$EXP_DATE" >> $GITHUB_OUTPUT
+
+            if [ "$DAYS_LEFT" -le 14 ]; then
+              echo "⚠️ Peringatan: Sertifikat SSL tersisa kurang dari 14 hari!"
+              echo "ssl_status=EXPIRING_SOON" >> $GITHUB_OUTPUT
+            else
+              echo "✅ Sertifikat SSL masih aman."
+              echo "ssl_status=VALID" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "⚠️ Gagal mengecek sertifikat SSL."
+            echo "days_left=N/A" >> $GITHUB_OUTPUT
+            echo "ssl_status=UNKNOWN" >> $GITHUB_OUTPUT
+          fi
+
+      - name: "4. Generate GitHub Summary"
+        if: always()
+        run: |
+          WEB_STATUS="${{ steps.web_check.outputs.status || 'UNKNOWN' }}"
+          WEB_CODE="${{ steps.web_check.outputs.http_code || '000' }}"
+          API_STATUS="${{ steps.api_check.outputs.status || 'UNKNOWN' }}"
+          API_CODE="${{ steps.api_check.outputs.http_code || '000' }}"
+          SSL_STATUS="${{ steps.ssl_check.outputs.ssl_status || 'UNKNOWN' }}"
+          SSL_DAYS="${{ steps.ssl_check.outputs.days_left || 'N/A' }}"
+          SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}"
+
+          cat << EOF >> $GITHUB_STEP_SUMMARY
+          ## 🩺 Uptime & SSL Monitor Summary
+
+          | Layanan / Domain | Status | Detail Respons |
+          |---|:---:|---|
+          | **Website Utama** | $([ "$WEB_STATUS" = "UP" ] && echo "✅ UP" || echo "❌ DOWN") | HTTP $WEB_CODE (<$SITE_URL>) |
+          | **Backend API** | $([ "$API_STATUS" = "UP" ] && echo "✅ UP" || echo "❌ DOWN") | HTTP $API_CODE (<https://api.afrizahanif.com/api/profiles>) |
+          | **Sertifikat SSL** | $([ "$SSL_STATUS" = "VALID" ] && echo "🔒 AMAN" || echo "⚠️ PERLU PERHATIAN") | Sisa $SSL_DAYS hari |
+
+          > 🕒 *Pemeriksaan dilakukan secara otomatis setiap 6 jam.*
+          EOF
+
+      - name: "5. Send Emergency Alert on Failure"
+        if: steps.web_check.outputs.status == 'DOWN' || steps.api_check.outputs.status == 'DOWN' || steps.ssl_check.outputs.ssl_status == 'EXPIRING_SOON'
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || vars.TELEGRAM_CHAT_ID }}
+          WEB_CODE: ${{ steps.web_check.outputs.http_code }}
+          API_CODE: ${{ steps.api_check.outputs.http_code }}
+          SSL_DAYS: ${{ steps.ssl_check.outputs.days_left }}
+        run: |
+          MSG="🚨 **Peringatan Pemantauan Uptime!**\n• Website Live: HTTP $WEB_CODE\n• Backend API: HTTP $API_CODE\n• Sisa Masa Berlaku SSL: $SSL_DAYS hari\nMohon segera periksa server!"
+
+          if [ -n "$DISCORD_WEBHOOK" ]; then
+            curl -s -X POST -H "Content-Type: application/json" \
+              -d "{\"content\": \"$MSG\"}" "$DISCORD_WEBHOOK" || true
+          fi
+
+          if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+              -d "chat_id=$TELEGRAM_CHAT_ID" \
+              -d "text=$MSG" || true
+          fi
+
+      - name: "6. Fail Job if Downtime Detected"
+        if: steps.web_check.outputs.status == 'DOWN' || steps.api_check.outputs.status == 'DOWN'
+        run: |
+          echo "❌ Gagal: Terdeteksi masalah ketersediaan (downtime) pada website atau backend API!"
+          exit 1

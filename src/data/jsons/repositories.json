@@ -1,0 +1,42 @@
+[
+  {
+    "id": "REP-001",
+    "portfolio_id": "POR-001",
+    "label": "Dokumen",
+    "icon": "file-earmark-text",
+    "href": "https://repository.dinamika.ac.id/id/eprint/7167/",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "REP-002",
+    "portfolio_id": "POR-002",
+    "label": "Dokumen",
+    "icon": "file-earmark-text",
+    "href": "https://repository.dinamika.ac.id/id/eprint/7908/",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "REP-003",
+    "portfolio_id": "POR-002",
+    "label": "Source Code (GitHub)",
+    "icon": "code-slash",
+    "href": "https://github.com/AfrizaHanif/tugas_akhir_s1/",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "REP-004",
+    "portfolio_id": "POR-002",
+    "label": "Jurnal (JATI)",
+    "icon": "journal-text",
+    "href": "https://ojs.unikom.ac.id/index.php/jati/article/view/15243/",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  }
+]

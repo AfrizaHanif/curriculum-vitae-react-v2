@@ -1,0 +1,20 @@
+[
+  {
+    "id": "SOC-001",
+    "name": "LinkedIn",
+    "url": "https://linkedin.com/in/afrizahanif",
+    "icon": "linkedin",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SOC-002",
+    "name": "GitHub",
+    "url": "https://github.com/AfrizaHanif",
+    "icon": "github",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  }
+]

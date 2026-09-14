@@ -1,0 +1,201 @@
+name: 🔄 Instant Production Rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_release:
+        description: "Folder rilis di server ('previous' untuk rilis terakhir sebelum yang aktif saat ini, atau nama folder spesifik seperti 'release-14')"
+        required: true
+        type: string
+        default: "previous"
+      confirm_rollback:
+        description: "Ketik 'ROLLBACK' untuk konfirmasi tindakan ini"
+        required: true
+        type: string
+        default: "ROLLBACK"
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+jobs:
+  rollback:
+    name: ⏪ Rollback Production Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "1. Validate Rollback Confirmation"
+        run: |
+          if [ "${{ inputs.confirm_rollback }}" != "ROLLBACK" ]; then
+            echo "❌ Konfirmasi gagal! Anda harus mengetik 'ROLLBACK' secara tepat untuk mengeksekusi rollback."
+            exit 1
+          fi
+          echo "✅ Konfirmasi tervalidasi."
+
+      - name: "1b. Pre-Flight: Validate Hostinger SSH Credentials"
+        run: |
+          echo "🔍 Memeriksa kredensial SSH Hostinger untuk rollback..."
+          SERVER_HOST="${{ secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}"
+          SERVER_USER="${{ secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}"
+          SSH_KEY="${{ secrets.HOSTINGER_SSH_KEY }}"
+          SSH_PASS="${{ secrets.HOSTINGER_SSH_PASSWORD }}"
+
+          MISSING_CREDS=()
+          if [ -z "$SERVER_HOST" ]; then
+            MISSING_CREDS+=("HOSTINGER_HOST")
+          fi
+          if [ -z "$SERVER_USER" ]; then
+            MISSING_CREDS+=("HOSTINGER_USERNAME")
+          fi
+          if [ -z "$SSH_KEY" ] && [ -z "$SSH_PASS" ]; then
+            MISSING_CREDS+=("HOSTINGER_SSH_KEY atau HOSTINGER_SSH_PASSWORD")
+          fi
+
+          if [ ${#MISSING_CREDS[@]} -gt 0 ]; then
+            echo "::error::❌ Rollback dibatalkan! Kredensial SSH server belum dikonfigurasi di GitHub:"
+            for item in "${MISSING_CREDS[@]}"; do
+              echo "::error::   - $item"
+            done
+            exit 1
+          fi
+
+          echo "✅ Kredensial SSH terverifikasi. Memulai proses rollback ke server..."
+
+      - name: "2. Execute Atomic Rollback via SSH"
+        id: ssh_rollback
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          password: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
+          port: ${{ secrets.HOSTINGER_PORT || vars.HOSTINGER_PORT || 65002 }}
+          script: |
+            TARGET_PATH="${{ secrets.HOSTINGER_TARGET_PATH || vars.HOSTINGER_TARGET_PATH || 'public_html' }}"
+            DEST_DIR="$HOME/$TARGET_PATH"
+            RELEASES_BASE="$HOME/releases"
+            INPUT_TARGET="${{ inputs.target_release }}"
+
+            echo "🔍 Memeriksa direktori rilis di: $RELEASES_BASE"
+            if [ ! -d "$RELEASES_BASE" ]; then
+              echo "❌ Direktori $RELEASES_BASE tidak ditemukan di server!"
+              exit 1
+            fi
+
+            cd "$RELEASES_BASE"
+            AVAILABLE_RELEASES=$(ls -dt release-* 2>/dev/null || echo "")
+
+            if [ -z "$AVAILABLE_RELEASES" ]; then
+              echo "❌ Tidak ditemukan riwayat folder release-* di $RELEASES_BASE!"
+              exit 1
+            fi
+
+            echo "📦 Riwayat rilis yang tersedia di server (terbaru ke terlama):"
+            echo "$AVAILABLE_RELEASES"
+
+            # Menentukan folder rilis target
+            if [ "$INPUT_TARGET" = "previous" ]; then
+              # Mengambil rilis ke-2 terbaru (karena rilis pertama adalah rilis yang saat ini sedang aktif)
+              TARGET_DIR_NAME=$(echo "$AVAILABLE_RELEASES" | sed -n '2p')
+              if [ -z "$TARGET_DIR_NAME" ]; then
+                echo "❌ Rilis 'previous' tidak ditemukan (hanya ada 1 folder rilis)."
+                exit 1
+              fi
+            else
+              TARGET_DIR_NAME="$INPUT_TARGET"
+            fi
+
+            SOURCE_DIR="$RELEASES_BASE/$TARGET_DIR_NAME"
+            if [ ! -d "$SOURCE_DIR" ]; then
+              echo "❌ Direktori rilis target '$SOURCE_DIR' tidak ditemukan!"
+              exit 1
+            fi
+
+            echo "🚀 Melakukan Rollback ke: $TARGET_DIR_NAME"
+            echo "📂 Sumber : $SOURCE_DIR"
+            echo "🎯 Tujuan : $DEST_DIR"
+
+            # Rsync dengan proteksi file/folder subdomain dan data bersama
+            rsync -avz --delay-updates \
+              --exclude="api" \
+              --exclude="api/**" \
+              --exclude="admin" \
+              --exclude="admin/**" \
+              --exclude="storage" \
+              --exclude="storage/**" \
+              --exclude="shared" \
+              --exclude="shared/**" \
+              --exclude="uploads" \
+              --exclude="uploads/**" \
+              --exclude=".well-known" \
+              --exclude=".well-known/**" \
+              "$SOURCE_DIR/" "$DEST_DIR/"
+
+            echo "✅ Rollback atomik berhasil diterapkan ke $DEST_DIR."
+
+      - name: "3. Post-Rollback: Live Smoke Test"
+        id: smoke_test
+        run: |
+          SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}"
+          echo "🌐 Memeriksa kesehatan website pasca-rollback: $SITE_URL"
+          sleep 3
+
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -L --connect-timeout 10 --max-time 20 "$SITE_URL" || echo "000")
+          echo "📡 Status HTTP Live: $HTTP_CODE"
+          echo "http_code=$HTTP_CODE" >> $GITHUB_OUTPUT
+
+          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
+            echo "🎉 Website LIVE dan normal (HTTP $HTTP_CODE) setelah rollback!"
+          else
+            echo "⚠️ Peringatan: Respons status HTTP setelah rollback adalah $HTTP_CODE!"
+          fi
+
+      - name: "4. Summary: Generate GitHub Rollback Summary"
+        if: always()
+        run: |
+          SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}"
+          HTTP_CODE="${{ steps.smoke_test.outputs.http_code || 'N/A' }}"
+          ROLLBACK_STATUS="${{ steps.ssh_rollback.outcome }}"
+          TARGET_PARAM="${{ inputs.target_release }}"
+
+          cat << EOF >> $GITHUB_STEP_SUMMARY
+          ## 🔄 Production Rollback Summary
+
+          | Parameter / Tahap | Hasil | Keterangan |
+          |---|:---:|---|
+          | **Status Rollback** | $([ "$ROLLBACK_STATUS" = "success" ] && echo "✅ BERHASIL" || echo "❌ GAGAL") | Eksekusi SSH Rsync |
+          | **Target Rilis** | 🏷️ \`$TARGET_PARAM\` | Parameter input workflow |
+          | **Proteksi Subdomain** | 🛡️ AMAN | \`api\`, \`admin\`, \`storage\`, \`shared\`, \`uploads\` |
+          | **Live Healthcheck** | 🌐 HTTP $HTTP_CODE | <$SITE_URL> |
+          | **Operator** | 👤 @${{ github.actor }} | Dieksekusi secara manual via Actions |
+
+          > 💡 **Informasi**: Jika rilis target bernilai \`previous\`, sistem secara otomatis mengembalikan situs ke folder rilis ke-2 terbaru di \`$HOME/releases/\`.
+          EOF
+
+      - name: "5. Send Rollback Notification"
+        if: always()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || vars.TELEGRAM_CHAT_ID }}
+          SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}
+          ROLLBACK_STATUS: ${{ steps.ssh_rollback.outcome }}
+          TARGET_PARAM: ${{ inputs.target_release }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          if [ "$ROLLBACK_STATUS" = "success" ]; then
+            MSG="⏪ **Rollback Berhasil**: Situs dikembalikan ke rilis \`$TARGET_PARAM\` oleh @$ACTOR. Live URL: $SITE_URL"
+          else
+            MSG="❌ **Rollback GAGAL**: Upaya rollback ke \`$TARGET_PARAM\` oleh @$ACTOR mengalami kendala!"
+          fi
+
+          if [ -n "$DISCORD_WEBHOOK" ]; then
+            curl -s -X POST -H "Content-Type: application/json" \
+              -d "{\"content\": \"$MSG\"}" "$DISCORD_WEBHOOK" || true
+          fi
+
+          if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+              -d "chat_id=$TELEGRAM_CHAT_ID" \
+              -d "text=$MSG" || true
+          fi

@@ -1,0 +1,83 @@
+[
+  {
+    "id": "SKI-001",
+    "name": "Bootstrap",
+    "level": "Mahir",
+    "since": 2023,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-21T09:45:19.000000Z"
+  },
+  {
+    "id": "SKI-002",
+    "name": "Laravel",
+    "level": "Mahir",
+    "since": 2022,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SKI-003",
+    "name": "MySQL",
+    "level": "Menengah",
+    "since": 2022,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SKI-004",
+    "name": "PHP",
+    "level": "Mahir",
+    "since": 2022,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SKI-005",
+    "name": "HTML",
+    "level": "Mahir",
+    "since": 2022,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SKI-006",
+    "name": "Angular",
+    "level": "Pemula",
+    "since": 2025,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SKI-007",
+    "name": "JavaScript",
+    "level": "Pemula",
+    "since": 2025,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-08-31T02:25:37.000000Z"
+  },
+  {
+    "id": "SKI-008",
+    "name": "React",
+    "level": "Pemula",
+    "since": 2025,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-08-31T02:25:37.000000Z"
+  },
+  {
+    "id": "SKI-009",
+    "name": "AI Prompt",
+    "level": "Menengah",
+    "since": 2025,
+    "deleted_at": null,
+    "created_at": "2026-08-08T00:51:43.000000Z",
+    "updated_at": "2026-08-08T00:51:43.000000Z"
+  }
+]

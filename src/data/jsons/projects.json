@@ -1,0 +1,127 @@
+[
+  {
+    "id": "PRJ-001",
+    "profile_id": "PRO-001",
+    "portfolio_id": null,
+    "title": "Web Delta Sari (Indah dan Baru)",
+    "slug": "web-delta-sari-indah-dan-baru",
+    "category": "Personal Project",
+    "subcategory": "Full-Stack Development",
+    "type": "Aplikasi Web",
+    "image": "https://api.afrizahanif.com/api/storage/images/projects/PRJ-001.jpg",
+    "gallery": null,
+    "start_period": "2025-03-01",
+    "finish_period": null,
+    "status": "Delayed",
+    "description": "Proyek aplikasi web untuk manajemen dan informasi perumahan Delta Sari Indah dan Delta Sari Baru.",
+    "tags": [
+      "Estate"
+    ],
+    "technology": [
+      "Laravel",
+      "PHP"
+    ],
+    "sourcecode": "example.com",
+    "delay_reason": null,
+    "resume_date": null,
+    "is_private": false,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-08-31T02:25:37.000000Z"
+  },
+  {
+    "id": "PRJ-002",
+    "profile_id": "PRO-001",
+    "portfolio_id": null,
+    "title": "Curriculum Vitae API",
+    "slug": "curriculum-vitae-api",
+    "category": "Personal Project",
+    "subcategory": "Backend Development",
+    "type": "API",
+    "image": "https://api.afrizahanif.com/api/storage/images/projects/PRJ-002.jpg",
+    "gallery": null,
+    "start_period": "2026-03-10",
+    "finish_period": "2026-04-07",
+    "status": "Active",
+    "description": "Proyek API yang dirancang untuk menyediakan data bagi aplikasi web di masa mendatang. Saat ini sedang dalam tahap perencanaan dan arsitektur.",
+    "tags": [
+      "API",
+      "Backend"
+    ],
+    "technology": [
+      "Laravel",
+      "MySQL"
+    ],
+    "sourcecode": null,
+    "delay_reason": null,
+    "resume_date": null,
+    "is_private": true,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-08-31T02:25:37.000000Z"
+  },
+  {
+    "id": "PRJ-003",
+    "profile_id": "PRO-001",
+    "portfolio_id": null,
+    "title": "CV and Resume Generator",
+    "slug": "cv-and-resume-generator",
+    "category": "Personal Project",
+    "subcategory": "Full-Stack Development",
+    "type": "Aplikasi Web",
+    "image": "https://api.afrizahanif.com/api/storage/images/projects/PRJ-003.jpg",
+    "gallery": null,
+    "start_period": "2026-03-22",
+    "finish_period": null,
+    "status": "Planning",
+    "description": "Sebuah aplikasi untuk membuat CV dan resume secara otomatis dari data yang dimasukkan pengguna.",
+    "tags": [
+      "CV",
+      "Resume"
+    ],
+    "technology": [
+      "Laravel",
+      "PHP",
+      "Bootstrap",
+      "React"
+    ],
+    "sourcecode": null,
+    "delay_reason": null,
+    "resume_date": null,
+    "is_private": false,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "PRJ-004",
+    "profile_id": "PRO-001",
+    "portfolio_id": null,
+    "title": "Curriculum Vitae Admin Panel",
+    "slug": "curriculum-vitae-admin-panel",
+    "category": "Personal Project",
+    "subcategory": "Full-Stack Development",
+    "type": "Aplikasi Web",
+    "image": "https://api.afrizahanif.com/api/storage/images/projects/img-004-1784624070.PNG",
+    "gallery": null,
+    "start_period": "2026-04-08",
+    "finish_period": "2026-07-21",
+    "status": "Finished",
+    "description": "Proyek Admin Panel yang dirancang untuk mengelola data-data API melalui aplikasi web menggunakan Laravel",
+    "tags": [
+      "Admin Panel"
+    ],
+    "technology": [
+      "Laravel",
+      "React",
+      "PHP"
+    ],
+    "sourcecode": null,
+    "delay_reason": null,
+    "resume_date": null,
+    "is_private": true,
+    "deleted_at": null,
+    "created_at": "2026-07-21T08:54:30.000000Z",
+    "updated_at": "2026-07-25T05:54:21.000000Z"
+  }
+]

@@ -1,0 +1,48 @@
+/* Alternating Background */
+main section:not(#hero):not(#contact) {
+  transition: background-color 0.3s ease;
+}
+
+/* Odd Section */
+main section:nth-child(odd of section:not(#hero):not(#contact)) {
+  background-color: var(--bs-body-bg);
+}
+main section:nth-child(odd of section:not(#hero):not(#contact)) .card {
+  --bs-card-bg: var(--bs-tertiary-bg);
+}
+
+/* Even Section */
+main section:nth-child(even of section:not(#hero):not(#contact)) {
+  background-color: var(--bs-tertiary-bg);
+}
+main section:nth-child(even of section:not(#hero):not(#contact)) .card {
+  --bs-card-bg: var(--bs-body-bg);
+}
+
+/* Ambient Aurora Glow */
+main section#projects {
+  position: relative;
+}
+
+/* Aurora Glow */
+main section#projects::before {
+  content: "";
+  position: absolute;
+  top: 15%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(var(--bs-primary-rgb), 0.12) 0%,
+    transparent 70%
+  );
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+main section#projects > .container {
+  position: relative;
+  z-index: 1;
+}

@@ -1,0 +1,134 @@
+[
+  {
+    "id": "SET-001",
+    "profile_id": "PRO-001",
+    "name": "Komputer Utama",
+    "category": "Home Workstation",
+    "description": "PC Rakitan (AMD Ryzen 5, 16GB RAM)",
+    "why": "Komputer ini digunakan untuk melakukan pemrograman dengan cepat dan stabil tanpa bottleneck",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SET-002",
+    "profile_id": "PRO-001",
+    "name": "Monitor",
+    "category": "Home Workstation",
+    "description": "LG 19M38A 19 inch",
+    "why": "Menghasilkan layar yang cukup luas untuk melakukan multitasking saat melakukan pengerjaan",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SET-003",
+    "profile_id": "PRO-001",
+    "name": "Keyboard",
+    "category": "Home Workstation",
+    "description": "Logitech Pebble Keys 2 K380s",
+    "why": "Ringkas dan nyaman. Layout keyboard ini beradaptasi dengan keyboard laptop 14 inch",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SET-004",
+    "profile_id": "PRO-001",
+    "name": "Mouse",
+    "category": "Home Workstation",
+    "description": "Logitech Pebble M350",
+    "why": "Ringkas dan hening tanpa mengganggu aktivitas",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-08-07T10:18:55.000000Z"
+  },
+  {
+    "id": "SET-005",
+    "profile_id": "PRO-001",
+    "name": "Laptop",
+    "category": "Portable Setup",
+    "description": "Lenovo Ideapad 3 (2021)",
+    "why": "Laptop ini digunakan untuk melakukan programming dimana saja saat bepergian",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SET-006",
+    "profile_id": "PRO-001",
+    "name": "Mouse",
+    "category": "Portable Setup",
+    "description": "Logitech M240",
+    "why": "Ergonomic dan hening tanpa mengganggu aktivitas orang lain.",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SET-007",
+    "profile_id": "PRO-001",
+    "name": "Primary Phone",
+    "category": "Gadget Devices",
+    "description": "Samsung Galaxy A54 5G",
+    "why": null,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SET-008",
+    "profile_id": "PRO-001",
+    "name": "Wearable",
+    "category": "Gadget Devices",
+    "description": "Samsung Galaxy Fit3",
+    "why": null,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SET-009",
+    "profile_id": "PRO-001",
+    "name": "Code Editor",
+    "category": "Shared Development Tools",
+    "description": "Visual Studio Code",
+    "why": "Cepat, dapat disesuaikan dengan ekosistem ekstensi yang luas, dan memiliki dukungan bawaan yang hebat untuk banyak bahasa pemrograman yang saya gunakan",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SET-010",
+    "profile_id": "PRO-001",
+    "name": "Terminal",
+    "category": "Shared Development Tools",
+    "description": "Windows Terminal with PowerShell",
+    "why": "Terminal modern yang mendukung banyak tab, panel, dan profil. PowerShell sangat kuat untuk scripting dan otomatisasi di Windows",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SET-011",
+    "profile_id": "PRO-001",
+    "name": "Browser",
+    "category": "Shared Development Tools",
+    "description": "Google Chrome & Firefox Developer Edition",
+    "why": "Saya menggunakan Google Chrome karena alat pengembangnya yang tangguh dan kompatibilitasnya yang luas, dan Firefox Developer Edition karena inspector CSS grid-nya yang luar biasa dan fitur privasinya",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SET-012",
+    "profile_id": "PRO-001",
+    "name": "API Client",
+    "category": "Shared Development Tools",
+    "description": "Postman",
+    "why": "Sebuah alat yang tak tergantikan untuk menguji dan berinteraksi dengan API. Alat ini dapat menyederhanakan proses pengiriman permintaan dan pemeriksaan respons",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  }
+]

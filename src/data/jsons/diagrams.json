@@ -1,0 +1,22 @@
+[
+  {
+    "id": "DIA-001",
+    "case_study_id": "CAS-001",
+    "context": "https://api.afrizahanif.com/api/storage/images/portfolios/case-study/CAS-001-Context.jpg",
+    "dfd_0": "https://api.afrizahanif.com/api/storage/images/portfolios/case-study/CAS-001-DFD0.jpg",
+    "pdm": "https://api.afrizahanif.com/api/storage/images/portfolios/case-study/CAS-001-PDM.jpg",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "DIA-002",
+    "case_study_id": "CAS-002",
+    "context": "https://api.afrizahanif.com/api/storage/images/portfolios/case-study/CAS-002-Context.png",
+    "dfd_0": "https://api.afrizahanif.com/api/storage/images/portfolios/case-study/CAS-002-DFD0.png",
+    "pdm": "https://api.afrizahanif.com/api/storage/images/portfolios/case-study/CAS-002-PDM.png",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  }
+]

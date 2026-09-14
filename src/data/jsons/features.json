@@ -1,0 +1,56 @@
+[
+  {
+    "id": "FEA-001",
+    "portfolio_id": "POR-001",
+    "title": "Daftar buku dan daftar isi untuk pengunjung",
+    "description": "Pengunjung dapat melihat daftar buku dan daftar isi yang telah dirapikan",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "FEA-002",
+    "portfolio_id": "POR-001",
+    "title": "Export detail buku ke PDF",
+    "description": "Pengguna dapat export detail buku ke file PDF yang dapat disimpan oleh pengguna",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "FEA-003",
+    "portfolio_id": "POR-001",
+    "title": "Import data dari Excel",
+    "description": "Pegawai PST dapat melakukan import buku dan daftar isi dari Excel untuk memudahkan penambahan data",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "FEA-004",
+    "portfolio_id": "POR-002",
+    "title": "Dashboard interaktif",
+    "description": "Kepegawaian, dan kepala BPS Jawa Timur dapat melihat status-status data secara interaktif di halaman dashboard",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "FEA-005",
+    "portfolio_id": "POR-002",
+    "title": "CRUD dalam satu halaman",
+    "description": "Kepegawaian dapat melakukan penambahan, penghapusan, perubahan, dan membaca data yang ada hanya dalam satu halaman",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "FEA-006",
+    "portfolio_id": "POR-002",
+    "title": "Import data dari Excel",
+    "description": "Kepegawaian dapat mengimport data Excel ke aplikasi untuk memudahkan pemasukkan nilai untuk pengambilan keputusan",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  }
+]

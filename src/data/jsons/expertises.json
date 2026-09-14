@@ -1,0 +1,16 @@
+[
+  {
+    "id": "EPR-001",
+    "profile_id": "PRO-001",
+    "title": "Full-Stack Developer Laravel",
+    "description": "Saya adalah Full-Stack Developer dengan spesialisasi pada framework Laravel, berpengalaman dalam membangun aplikasi web yang scalable, aman, dan user-friendly. Memiliki pemahaman mendalam terhadap arsitektur MVC, RESTful API, dan pengembangan sisi frontend maupun backend.",
+    "projects": [
+      "POR-001",
+      "POR-002"
+    ],
+    "icon": "code-slash",
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  }
+]

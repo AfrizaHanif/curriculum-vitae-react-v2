@@ -1,0 +1,42 @@
+[
+  {
+    "id": "SOL-001",
+    "case_study_id": "CAS-001",
+    "title": "Penggunaan Bootstrap sebagai alat desain Frontend",
+    "context": "Saya telah melakukan desain ulang pada aplikasi ini agar tata letak antarmuka (Interface) terlihat lebih rapi menggunakan Bootstrap yang dapat memudahkan saya untuk merapikan elemen-elemen yang ada di halaman-halaman pada aplikasi tersebut",
+    "visual": null,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SOL-002",
+    "case_study_id": "CAS-001",
+    "title": "Aksesibilitas untuk non-pegawai PST",
+    "context": "Agar para pegawai dapat mengakses daftar buku apa saja yang ada di perpustakaan, saya telah membangun ulang halaman utama pada aplikasi agar pengguna dapat mengakses daftar buku yang ada",
+    "visual": null,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SOL-003",
+    "case_study_id": "CAS-002",
+    "title": "Menggantikan cara tradisional menjadi aplikasi web",
+    "context": "Saya membuat aplikasi web untuk menggantikan cara tradisional dari masalah yang ada agar memudahkan pengguna untuk mengisi data dengan cepat menggunakan fitur import file ke aplikasi web",
+    "visual": null,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "SOL-004",
+    "case_study_id": "CAS-002",
+    "title": "Menggunakan Simple Additive Weighting (SAW) sebagai metode pemilihan keputusan untuk perhitungan karyawan terbaik",
+    "context": "Untuk mementukan pemilihan karyawan terbaik menggunakan bobot, saya menggunakan Simple Additive Weighting (SAW) sebagai metode pemilihan keputusan",
+    "visual": null,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  }
+]

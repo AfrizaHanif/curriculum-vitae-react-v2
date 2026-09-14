@@ -1,0 +1,442 @@
+name: Pre-Deploy Quality Checklist & Atomic Deployment
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      check_api:
+        description: "Periksa kesehatan API sebelum deploy"
+        required: true
+        type: boolean
+        default: true
+      fail_on_api_error:
+        description: "Gagalkan deploy jika API tidak berhasil di-fetch (HTTP status bukan 2xx/3xx)"
+        required: true
+        type: boolean
+        default: true
+      api_endpoint:
+        description: "Endpoint API yang divalidasi"
+        required: true
+        type: string
+        default: "https://api.afrizahanif.com/api/profiles"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # =========================================================================
+  # JOB 1: SECURITY & DEPENDENCY AUDIT (Runs in parallel with build)
+  # =========================================================================
+  security_audit:
+    name: 🔒 Security & Vulnerability Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: "1. Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "2. Set up Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: "3. Run npm audit"
+        run: |
+          echo "🔍 Memeriksa potensi celah keamanan dependensi (npm audit)..."
+          npm audit --audit-level=high
+        continue-on-error: true
+
+  # =========================================================================
+  # JOB 2: CHECKLIST & QUALITY GATE (Runs on all pushes & PRs)
+  # =========================================================================
+  verify_and_build:
+    name: 🛡️ Pre-Deploy Checklist & Build
+    runs-on: ubuntu-latest
+
+    env:
+      NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}
+      NEXT_PUBLIC_FORMSPREE_FORM_ID: ${{ secrets.NEXT_PUBLIC_FORMSPREE_FORM_ID || vars.NEXT_PUBLIC_FORMSPREE_FORM_ID || 'mock_form_id' }}
+      NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || vars.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI' }}
+      NEXT_PUBLIC_MOCK_SUBMISSION: ${{ secrets.NEXT_PUBLIC_MOCK_SUBMISSION || vars.NEXT_PUBLIC_MOCK_SUBMISSION || 'false' }}
+
+    steps:
+      - name: "0a. Pre-Flight: Verify Build Configuration Variables"
+        run: |
+          echo "🔍 Memeriksa variabel konfigurasi build Next.js..."
+
+          FORMSPREE_ID="${{ secrets.NEXT_PUBLIC_FORMSPREE_FORM_ID || vars.NEXT_PUBLIC_FORMSPREE_FORM_ID || '' }}"
+          if [ -z "$FORMSPREE_ID" ] || [ "$FORMSPREE_ID" = "mock_form_id" ] || [ "$FORMSPREE_ID" = "your_form_id_here" ]; then
+            echo "::warning::⚠️ NEXT_PUBLIC_FORMSPREE_FORM_ID belum diset atau masih menggunakan mock ID. Form kontak akan berjalan dalam mode simulasi/mock."
+          else
+            echo "✅ NEXT_PUBLIC_FORMSPREE_FORM_ID terkonfigurasi."
+          fi
+
+          SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || '' }}"
+          if [ -z "$SITE_URL" ]; then
+            echo "ℹ️ NEXT_PUBLIC_SITE_URL tidak diset, memakai domain default: https://afrizahanif.com"
+          else
+            echo "✅ NEXT_PUBLIC_SITE_URL: $SITE_URL"
+          fi
+
+      - name: "0b. Pre-Flight: Verify External API Health"
+        if: github.event_name != 'workflow_dispatch' || inputs.check_api == true
+        run: |
+          API_URL="${{ inputs.api_endpoint || 'https://api.afrizahanif.com/api/profiles' }}"
+          FAIL_ON_ERROR="${{ inputs.fail_on_api_error != false }}"
+
+          echo "🔍 Memeriksa status kesehatan API: $API_URL"
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 10 --max-time 15 "$API_URL" || echo "000")
+
+          echo "📡 Respons API HTTP Status: $HTTP_STATUS"
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 400 ]; then
+            echo "✅ API aktif dan merespons normal (HTTP $HTTP_STATUS)."
+          else
+            echo "❌ Gagal mengambil data dari API! HTTP Status: $HTTP_STATUS"
+            if [ "$FAIL_ON_ERROR" = "true" ]; then
+              echo "🚫 Deployment dibatalkan karena API down atau tidak merespons."
+              exit 1
+            else
+              echo "⚠️ Peringatan: API tidak merespons, namun flag fail_on_api_error bernilai false. Melanjutkan proses..."
+            fi
+          fi
+
+      - name: "1. Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "2. Set up Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: "3. Setup Next.js Build Cache"
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: "4. Install dependencies"
+        run: npm ci
+
+      - name: "5. Checklist: Type Checking (TypeScript)"
+        run: npm run type-check
+
+      - name: "6. Checklist: Linting (ESLint)"
+        run: npm run lint
+
+      - name: "7. Checklist: Synchronize Latest Data from API"
+        run: npm run sync-data
+        env:
+          API_ENDPOINT: ${{ inputs.api_endpoint || 'https://api.afrizahanif.com/api/profiles' }}
+          FAIL_ON_SYNC_ERROR: ${{ inputs.fail_on_api_error != false }}
+          # [Jaga-jaga / Opsional]: Teruskan token rahasia jika didaftarkan di GitHub Secrets / Variables
+          API_SECRET_TOKEN: ${{ secrets.API_SECRET_TOKEN || '' }}
+
+      - name: "8. Checklist: Next.js Static Export Build"
+        run: npm run build
+
+      - name: "9. Checklist: Verify Build Output Integrity & SEO Assets"
+        run: |
+          echo "🔍 Memeriksa integritas file kritis hasil build..."
+          CRITICAL_FILES=("out/index.html" "out/.htaccess" "out/sitemap.xml" "out/robots.txt")
+          MISSING_FILES=()
+
+          for file in "${CRITICAL_FILES[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✅ Ditemukan: $file"
+            else
+              echo "❌ Tidak ditemukan: $file"
+              MISSING_FILES+=("$file")
+            fi
+          done
+
+          if [ ${#MISSING_FILES[@]} -ne 0 ]; then
+            echo "🚫 Gagal verifikasi build! File penting berikut tidak ditemukan: ${MISSING_FILES[*]}"
+            exit 1
+          fi
+
+          echo "✅ Semua file kritis (HTML, .htaccess, Sitemap, Robots) terverifikasi utuh."
+
+      - name: "10. Upload Artifact for Deployment"
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-build
+          path: out/
+          retention-days: 2
+
+  # =========================================================================
+  # JOB 3: ATOMIC DEPLOYMENT TO HOSTINGER (Only on push to main/master)
+  # =========================================================================
+  deploy:
+    name: 🚀 Atomic Deploy to Hostinger
+    needs: [verify_and_build, security_audit]
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "0. Pre-Flight: Validate Hostinger Deployment Credentials"
+        run: |
+          echo "🔍 Memeriksa kelengkapan kredensial deployment server..."
+          SERVER_HOST="${{ secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}"
+          SERVER_USER="${{ secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}"
+          SSH_KEY="${{ secrets.HOSTINGER_SSH_KEY }}"
+          SSH_PASS="${{ secrets.HOSTINGER_SSH_PASSWORD }}"
+          FTP_PASS="${{ secrets.HOSTINGER_FTP_PASSWORD }}"
+
+          MISSING_CREDS=()
+          if [ -z "$SERVER_HOST" ]; then
+            MISSING_CREDS+=("HOSTINGER_HOST (IP atau domain host server)")
+          fi
+          if [ -z "$SERVER_USER" ]; then
+            MISSING_CREDS+=("HOSTINGER_USERNAME (Username SSH/FTP server)")
+          fi
+          if [ -z "$SSH_KEY" ] && [ -z "$SSH_PASS" ] && [ -z "$FTP_PASS" ]; then
+            MISSING_CREDS+=("Metode Otentikasi: Mohon sediakan minimal salah satu dari HOSTINGER_SSH_KEY, HOSTINGER_SSH_PASSWORD, atau HOSTINGER_FTP_PASSWORD")
+          fi
+
+          if [ ${#MISSING_CREDS[@]} -gt 0 ]; then
+            echo "::error::❌ Deployment dibatalkan! Kredensial server belum lengkap di GitHub:"
+            for item in "${MISSING_CREDS[@]}"; do
+              echo "::error::   - $item"
+            done
+            echo "💡 Solusi: Buka repository di GitHub > Settings > Secrets and variables > Actions > Tambahkan secret yang diperlukan."
+            exit 1
+          fi
+
+          echo "✅ Kredensial dasar deployment Hostinger terverifikasi."
+
+      - name: "1. Download Build Artifact"
+        uses: actions/download-artifact@v4
+        with:
+          name: production-build
+          path: ./out
+
+      # ---------------------------------------------------------------------
+      # PRIMARY STRATEGY: SSH / SCP + ATOMIC SYMLINK
+      # ---------------------------------------------------------------------
+      - name: "2. Primary: Upload Release via SCP (SSH)"
+        id: scp_upload
+        continue-on-error: true
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          password: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
+          port: ${{ secrets.HOSTINGER_PORT || vars.HOSTINGER_PORT || 65002 }}
+          source: "out/*"
+          target: "releases/release-${{ github.run_number }}"
+          strip_components: 1
+
+      - name: "3. Primary: Atomic Selective Sync & Cleanup (SSH)"
+        id: ssh_sync
+        if: steps.scp_upload.outcome == 'success'
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          password: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
+          port: ${{ secrets.HOSTINGER_PORT || vars.HOSTINGER_PORT || 65002 }}
+          script: |
+            TARGET_PATH="${{ secrets.HOSTINGER_TARGET_PATH || vars.HOSTINGER_TARGET_PATH || 'public_html' }}"
+            RELEASE_DIR="$HOME/releases/release-${{ github.run_number }}"
+            DEST_DIR="$HOME/$TARGET_PATH"
+
+            echo "🚀 Menjalankan Atomic Selective Sync ke: $DEST_DIR"
+            mkdir -p "$DEST_DIR"
+
+            # Rsync dengan --delay-updates:
+            # 1. Menjaga sifat ATOMIC: Seluruh file baru di-stage dulu, lalu ditukar sekaligus di akhir.
+            # 2. PROTEKSI SUBDOMAIN & SHARED: Folder api, admin, storage, shared, uploads, .well-known DILINDUNGI & TIDAK AKAN DIHAPUS.
+            rsync -avz --delay-updates \
+              --exclude="api" \
+              --exclude="api/**" \
+              --exclude="admin" \
+              --exclude="admin/**" \
+              --exclude="storage" \
+              --exclude="storage/**" \
+              --exclude="shared" \
+              --exclude="shared/**" \
+              --exclude="uploads" \
+              --exclude="uploads/**" \
+              --exclude=".well-known" \
+              --exclude=".well-known/**" \
+              "$RELEASE_DIR/" "$DEST_DIR/"
+
+            echo "✅ Sinkronisasi atomik selesai! Subdomain dan folder shared (api, admin, storage, shared, uploads) aman dan tidak tersentuh."
+
+            # Pembersihan rilis usang (menyimpan 3 rilis terakhir untuk rollback instan)
+            cd "$HOME/releases" && ls -dt release-* | tail -n +4 | xargs -r rm -rf
+            echo "🧹 Pembersihan rilis lama selesai."
+
+      # ---------------------------------------------------------------------
+      # FALLBACK STRATEGY: FTP UPLOAD
+      # (Dijalankan jika primary SSH gagal atau kredensial SSH belum dipasang)
+      # ---------------------------------------------------------------------
+      - name: "4. Fallback: Deploy via FTP"
+        id: ftp_deploy
+        if: always() && (steps.scp_upload.outcome != 'success' || steps.ssh_sync.outcome != 'success')
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_HOST || vars.HOSTINGER_FTP_HOST || secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_FTP_USERNAME || vars.HOSTINGER_FTP_USERNAME || secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          port: ${{ secrets.HOSTINGER_FTP_PORT || vars.HOSTINGER_FTP_PORT || 21 }}
+          local-dir: ./out/
+          server-dir: ${{ secrets.HOSTINGER_FTP_TARGET_DIR || vars.HOSTINGER_FTP_TARGET_DIR || './public_html/' }}
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/api/**
+            **/admin/**
+            **/storage/**
+            **/shared/**
+            **/uploads/**
+            **/.well-known/**
+
+      # ---------------------------------------------------------------------
+      # STEP 5: POST-DEPLOY SMOKE TEST (LIVE HEALTHCHECK)
+      # ---------------------------------------------------------------------
+      - name: "5. Post-Deploy: Smoke Test Live Website"
+        id: smoke_test
+        run: |
+          SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}"
+          echo "🌐 Melakukan live smoke test ke: $SITE_URL"
+          sleep 3
+
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -L --connect-timeout 10 --max-time 20 "$SITE_URL" || echo "000")
+          echo "📡 Status HTTP Website Live: $HTTP_CODE"
+
+          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
+            echo "🎉 Website LIVE dan merespons normal (HTTP $HTTP_CODE)!"
+            echo "http_code=$HTTP_CODE" >> $GITHUB_OUTPUT
+          else
+            echo "⚠️ Peringatan: Website live merespons dengan kode HTTP $HTTP_CODE!"
+            echo "http_code=$HTTP_CODE" >> $GITHUB_OUTPUT
+          fi
+
+      # ---------------------------------------------------------------------
+      # STEP 6: GITHUB DEPLOYMENT DASHBOARD REPORT
+      # ---------------------------------------------------------------------
+      - name: "6. Summary: Generate GitHub Deployment Report"
+        if: always()
+        run: |
+          DEPLOY_METHOD="Tidak Terlaksana"
+          if [ "${{ steps.ssh_sync.outcome }}" = "success" ]; then
+            DEPLOY_METHOD="SSH Atomic (Rsync --delay-updates)"
+          elif [ "${{ steps.ftp_deploy.outcome }}" = "success" ]; then
+            DEPLOY_METHOD="FTP Fallback (Safe Sync)"
+          fi
+
+          SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}"
+          HTTP_CODE="${{ steps.smoke_test.outputs.http_code || 'N/A' }}"
+
+          cat << 'EOF' >> $GITHUB_STEP_SUMMARY
+          ## 🚀 Deployment & Quality Checklist Summary
+
+          | Pemeriksaan / Tahap | Status | Detail |
+          |---|:---:|---|
+          | **1. TypeScript Type Check** | ✅ PASS | Bebas error tipe data |
+          | **2. ESLint Code Standard** | ✅ PASS | Format kode sesuai standar |
+          | **3. API Data Sync** | ✅ SYNCED | Data profil terbaru dari API |
+          | **4. Next.js Static Export** | ✅ SUCCESS | File HTML, .htaccess, Sitemap utuh |
+          | **5. Metode Deployment** | 🚀 AKTIF | `$DEPLOY_METHOD` |
+          | **6. Proteksi Subdomain** | 🛡️ AMAN | `api`, `admin`, `storage`, `shared`, `uploads` |
+          | **7. Live Smoke Test** | 🌐 HTTP $HTTP_CODE | <$SITE_URL> |
+
+          > 💡 **Info Rilis**: Deployment dijalankan untuk commit `${{ github.sha }}` di branch `${{ github.ref_name }}`.
+          EOF
+          sed -i "s|\$DEPLOY_METHOD|$DEPLOY_METHOD|g" $GITHUB_STEP_SUMMARY
+          sed -i "s|\$HTTP_CODE|$HTTP_CODE|g" $GITHUB_STEP_SUMMARY
+          sed -i "s|\$SITE_URL|$SITE_URL|g" $GITHUB_STEP_SUMMARY
+
+  # =========================================================================
+  # JOB 4: LIGHTHOUSE SEO & PERFORMANCE AUDIT
+  # =========================================================================
+  lighthouse_audit:
+    name: 📊 Lighthouse SEO & Performance Audit
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: "1. Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "2. Audit Live Website with Lighthouse"
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            ${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  # =========================================================================
+  # JOB 5: DEPLOYMENT NOTIFICATION (Discord / Telegram)
+  # =========================================================================
+  notify:
+    name: 📢 Send Deployment Notification
+    needs: [verify_and_build, deploy, lighthouse_audit]
+    if: always() && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Send Notification"
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || vars.TELEGRAM_CHAT_ID }}
+          SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}
+          DEPLOY_STATUS: ${{ needs.deploy.result }}
+          BUILD_STATUS: ${{ needs.verify_and_build.result }}
+          LIGHTHOUSE_STATUS: ${{ needs.lighthouse_audit.result }}
+          COMMIT_SHA: ${{ github.sha }}
+          COMMIT_MSG: ${{ github.event.head_commit.message || 'Manual Workflow Trigger' }}
+          BRANCH: ${{ github.ref_name }}
+          REPO: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          echo "📢 Menyiapkan pengiriman notifikasi deployment..."
+
+          if [ "$DEPLOY_STATUS" = "success" ]; then
+            EMOJI="✅"
+            STATUS_TEXT="Deployment Berhasil"
+            COLOR_DECIMAL=3066993
+          else
+            EMOJI="❌"
+            STATUS_TEXT="Deployment Gagal"
+            COLOR_DECIMAL=15158332
+          fi
+
+          SUMMARY_TEXT="$EMOJI **$STATUS_TEXT**\n• **Repo**: \`$REPO\` ($BRANCH)\n• **Commit**: [\`${COMMIT_SHA:0:7}\`](https://github.com/$REPO/commit/$COMMIT_SHA) - $COMMIT_MSG\n• **Actor**: @$ACTOR\n• **Build**: $BUILD_STATUS | **Deploy**: $DEPLOY_STATUS | **Lighthouse**: $LIGHTHOUSE_STATUS\n• **URL**: $SITE_URL"
+
+          # 1. Kirim ke Discord jika DISCORD_WEBHOOK diset
+          if [ -n "$DISCORD_WEBHOOK" ]; then
+            echo "📨 Mengirim notifikasi ke Discord Webhook..."
+            curl -s -X POST -H "Content-Type: application/json" \
+              -d "{\"embeds\": [{\"title\": \"$EMOJI $STATUS_TEXT: $REPO\", \"url\": \"$SITE_URL\", \"description\": \"$SUMMARY_TEXT\", \"color\": $COLOR_DECIMAL, \"footer\": {\"text\": \"GitHub Actions CI/CD Notification\"}}]}" "$DISCORD_WEBHOOK" || echo "⚠️ Gagal mengirim ke Discord"
+          else
+            echo "ℹ️ DISCORD_WEBHOOK tidak diset di secrets/variables, melewati pengiriman Discord."
+          fi
+
+          # 2. Kirim ke Telegram jika TELEGRAM_BOT_TOKEN & TELEGRAM_CHAT_ID diset
+          if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            echo "📨 Mengirim notifikasi ke Telegram..."
+            TG_MSG="<b>$EMOJI $STATUS_TEXT</b>%0A<b>Repo:</b> $REPO ($BRANCH)%0A<b>Commit:</b> ${COMMIT_SHA:0:7}%0A<b>Deploy:</b> $DEPLOY_STATUS%0A<b>Lighthouse:</b> $LIGHTHOUSE_STATUS%0A<b>Live URL:</b> $SITE_URL"
+            curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+              -d "chat_id=$TELEGRAM_CHAT_ID" \
+              -d "text=$TG_MSG" \
+              -d "parse_mode=HTML" || echo "⚠️ Gagal mengirim ke Telegram"
+          else
+            echo "ℹ️ Kredensial Telegram tidak diset di secrets/variables, melewati pengiriman Telegram."
+          fi
+
+          echo "✅ Tahap notifikasi selesai."

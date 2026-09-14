@@ -1,0 +1,91 @@
+[
+  {
+    "id": "POR-001",
+    "profile_id": "PRO-001",
+    "title": "Rancang Bangun Aplikasi Pelayanan Perpustakaan pada Badan Pusat Statistik Provinsi Jawa Timur",
+    "slug": "rancang-bangun-aplikasi-pelayanan-perpustakaan-pada-badan-pusat-statistik-provinsi-jawa-timur",
+    "category": "Proyek Akademik",
+    "subcategory": "Full-Stack Development",
+    "type": "Aplikasi Web",
+    "image": "https://api.afrizahanif.com/api/storage/images/portfolios/POR-001.png",
+    "gallery": [
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-001-001.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-001-002.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-001-003.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-001-004.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-001-005.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-001-006.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-001-007.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-001-008.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-001-009.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-001-010.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-001-011.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-001-012.png"
+    ],
+    "start_period": "2023-01-01",
+    "finish_period": "2023-07-02",
+    "description": "Saya mengembangkan aplikasi manajemen perpustakaan digital untuk BPS Provinsi Jawa Timur menggunakan PHP dan Laravel. Fokus utama proyek ini adalah mentransformasi proses pelayanan manual menjadi sistem yang terintegrasi untuk meningkatkan efisiensi kerja pegawai dan kecepatan layanan konsumen",
+    "tags": [
+      "Kerja Praktik",
+      "Aplikasi Web",
+      "BPS",
+      "Perpustakaan"
+    ],
+    "technology": [
+      "Laravel",
+      "PHP",
+      "Bootstrap"
+    ],
+    "case_studies_count": 1,
+    "repositories_count": 1,
+    "features_count": 3,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  },
+  {
+    "id": "POR-002",
+    "profile_id": "PRO-001",
+    "title": "Rancang Bangun Aplikasi Penentuan Karyawan Terbaik Berbasis Web menggunakan Metode Simple Additive Weighting (SAW) pada BPS Provinsi Jawa Timur",
+    "slug": "rancang-bangun-aplikasi-penentuan-karyawan-terbaik-berbasis-web-menggunakan-metode-simple-additive-weighting-saw-pada-bps-provinsi-jawa-timur",
+    "category": "Proyek Akademik",
+    "subcategory": "Full-Stack Development",
+    "type": "Aplikasi Web",
+    "image": "https://api.afrizahanif.com/api/storage/images/portfolios/POR-002.png",
+    "gallery": [
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-002-001.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-002-002.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-002-003.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-002-004.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-002-005.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-002-006.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-002-007.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-002-008.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-002-009.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-002-010.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-002-011.png",
+      "https://api.afrizahanif.com/api/storage/images/portfolios/gallery/IMG-002-012.png"
+    ],
+    "start_period": "2024-10-01",
+    "finish_period": "2025-01-01",
+    "description": "Membangun aplikasi berbasis web untuk membantu proses penilaian dan pemilihan karyawan terbaik di BPS Provinsi Jawa Timur dengan menggunakan metode Simple Additive Weighting (SAW). Aplikasi ini dirancang untuk mempermudah pengambilan keputusan berbasis kriteria yang telah ditentukan, seperti kehadiran, capaian kinerja pegawai, dan tujuh indikator BerAkhlak.",
+    "tags": [
+      "Tugas Akhir",
+      "Aplikasi Web",
+      "BPS",
+      "Simple Additive Weighting",
+      "Sistem Pendukung Keputusan"
+    ],
+    "technology": [
+      "Laravel",
+      "PHP",
+      "Bootstrap"
+    ],
+    "case_studies_count": 1,
+    "repositories_count": 3,
+    "features_count": 3,
+    "deleted_at": null,
+    "created_at": "2026-07-20T15:44:14.000000Z",
+    "updated_at": "2026-07-20T15:44:14.000000Z"
+  }
+]
