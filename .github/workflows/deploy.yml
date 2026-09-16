@@ -399,17 +399,41 @@ jobs:
   # =========================================================================
   lighthouse_audit:
     name: 📊 Lighthouse SEO & Performance Audit
-    needs: deploy
+    needs: [verify_and_build, deploy]
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: "1. Checkout repository"
         uses: actions/checkout@v4
 
-      - name: "2. Audit Live Website with Lighthouse"
+      # ---------------------------------------------------------------------
+      # PRIMARY STRATEGY: Audit Live Website
+      # ---------------------------------------------------------------------
+      - name: "2. Primary: Audit Live Website with Lighthouse"
+        id: lighthouse_live
+        continue-on-error: true
         uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
             ${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+      # ---------------------------------------------------------------------
+      # FALLBACK STRATEGY: Audit Local Static Build (Dijalankan jika Live Website gagal / 403 WAF)
+      # ---------------------------------------------------------------------
+      - name: "3a. Fallback: Download Build Artifact"
+        if: steps.lighthouse_live.outcome != 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: production-build
+          path: ./out
+
+      - name: "3b. Fallback: Audit Static Build with Lighthouse"
+        if: steps.lighthouse_live.outcome != 'success'
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: './lighthouserc-static.json'
           uploadArtifacts: true
           temporaryPublicStorage: true
 
