@@ -12,13 +12,18 @@ import NavTab, { NavTabItem } from "@/components/ui/bootstrap/nav-tab";
 import { CardGrid } from "@/components/ui/bootstrap/card";
 import ContentCarousel from "@/components/ui/customs/content-carousel";
 import Alert from "@/components/ui/bootstrap/alert";
-import Spinner from "@/components/ui/bootstrap/spinner";
 import { useResponsiveItemsPerPage } from "@/hooks/useResponsiveItemsPerPage";
 
+import dynamic from "next/dynamic";
 import PortfolioCard from "./PortfolioCard";
 import ProjectCard from "./ProjectCard";
-import ProjectDetailModal from "./ProjectDetailModal";
-import CaseStudyOffcanvas from "./CaseStudyOffcanvas";
+import ProjectGridSkeleton from "./ProjectCardSkeleton";
+const CaseStudyOffcanvas = dynamic(() => import("./CaseStudyOffcanvas"), {
+  ssr: false,
+});
+const ProjectDetailModal = dynamic(() => import("./ProjectDetailModal"), {
+  ssr: false,
+});
 import "./project.css";
 import { sortByLatestPeriod } from "@/utils/date";
 import { useLanguage } from "@/context/LanguageContext";
@@ -49,7 +54,7 @@ interface ShowcaseTabContentProps<T extends { id: string | number }> {
   itemsPerPage: number;
   isLoading: boolean;
   error: Error | null;
-  loadingLabel: string;
+  loadingLabel?: string;
   errorLabel: string;
   emptyLabel: string;
   renderCard: (item: T) => ReactNode;
@@ -62,17 +67,12 @@ function ShowcaseTabContent<T extends { id: string | number }>({
   itemsPerPage,
   isLoading,
   error,
-  loadingLabel,
   errorLabel,
   emptyLabel,
   renderCard,
 }: ShowcaseTabContentProps<T>) {
   if (isLoading) {
-    return (
-      <div className="d-flex justify-content-center py-5">
-        <Spinner color="primary" label={loadingLabel} />
-      </div>
-    );
+    return <ProjectGridSkeleton count={itemsPerPage || 3} />;
   }
 
   if (error) {

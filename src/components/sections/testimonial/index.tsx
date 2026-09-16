@@ -7,8 +7,8 @@ import { TestimonialApiResponse } from "@/types/testimonial";
 import { CardGrid } from "@/components/ui/bootstrap/card";
 import { useLanguage } from "@/context/LanguageContext";
 
-import Spinner from "@/components/ui/bootstrap/spinner";
 import TestimonialCard from "./TestimonialCard";
+import TestimonialGridSkeleton from "./TestimonialCardSkeleton";
 import fallbackTestimonials from "@/data/jsons/testimonials.json";
 
 export default function TestimonialSection() {
@@ -34,9 +34,7 @@ export default function TestimonialSection() {
 
       <div className="mt-4">
         {isLoading ? (
-          <div className="d-flex justify-content-center py-5">
-            <Spinner color="primary" label={t.sections.testimonial.loading} />
-          </div>
+          <TestimonialGridSkeleton count={3} />
         ) : testimonials.length === 1 ? (
           <div className="row justify-content-center">
             <div className="col-12 col-md-8 col-lg-6">

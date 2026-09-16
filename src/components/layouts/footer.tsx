@@ -60,7 +60,8 @@ export default function Footer({ className = "" }: FooterProps) {
               width={24}
               height={24}
               className="object-fit-contain logo-light"
-              priority
+              // priority
+              loading="lazy"
             />
             <Image
               src={logoBlack}
@@ -68,7 +69,8 @@ export default function Footer({ className = "" }: FooterProps) {
               width={24}
               height={24}
               className="object-fit-contain logo-dark"
-              priority
+              // priority
+              loading="lazy"
             />
           </Link>
           <span className="text-body-secondary small">

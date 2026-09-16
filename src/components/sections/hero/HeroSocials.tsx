@@ -14,7 +14,7 @@ export default function HeroSocials({ socials }: HeroSocialsProps) {
 
   return (
     <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2 pt-2 border-top border-white border-opacity-25">
-      <small className="text-white-50 me-2">Hubungkan:</small>
+      <small className="text-white-75 me-2">Hubungkan:</small>
       {socials.map((social) => (
         <Tooltip key={social.id} title={social.name} placement="top">
           <Button
@@ -28,7 +28,7 @@ export default function HeroSocials({ socials }: HeroSocialsProps) {
             style={{ width: 36, height: 36 }}
             aria-label={social.name}
           >
-            <i className={`bi bi-${social.icon}`} />
+            <i className={`bi bi-${social.icon}`} aria-hidden="true" />
           </Button>
         </Tooltip>
       ))}

@@ -1,22 +1,28 @@
-"use client";
+import dynamic from "next/dynamic";
 
-import AboutSection from "@/components/sections/about";
-import CertificationSection from "@/components/sections/certification";
-import ContactSection from "@/components/sections/contact";
-import EduExpSection from "@/components/sections/edu-exp";
 import HeroSection from "@/components/sections/hero";
-import ProjectSection from "@/components/sections/project";
+import AboutSection from "@/components/sections/about";
 import SkillSection from "@/components/sections/skill";
-import TestimonialSection from "@/components/sections/testimonial";
+import ProjectSection from "@/components/sections/project";
+import EduExpSection from "@/components/sections/edu-exp";
+const CertificationSection = dynamic(
+  () => import("@/components/sections/certification"),
+);
+const TestimonialSection = dynamic(
+  () => import("@/components/sections/testimonial"),
+);
+const ContactSection = dynamic(() => import("@/components/sections/contact"));
 
 export default function Home() {
   return (
     <>
+      {/* Above-the-fold */}
       <HeroSection />
       <AboutSection />
       <SkillSection />
       <ProjectSection />
       <EduExpSection />
+      {/* Below-the-fold */}
       <CertificationSection />
       <TestimonialSection />
       <ContactSection />

@@ -223,9 +223,12 @@ export default function ProjectDetailModal({
             height={675}
             className="rounded-3 overflow-hidden mb-4 shadow-sm controls-inset"
             hoverControlsOnly
+            showSpinner
+            showSkeleton
+            enableZoom
           />
         ) : galleryImages.length === 1 ? (
-          <div className="position-relative rounded-3 overflow-hidden mb-4 shadow-sm border">
+          <div className="position-relative rounded-3 overflow-hidden mb-4 shadow-sm border bg-body-secondary bg-opacity-25">
             <NextImage
               src={galleryImages[0]}
               alt={item.title}
@@ -237,7 +240,12 @@ export default function ProjectDetailModal({
                 objectFit: "cover",
                 objectPosition: "top",
               }}
-              loading="eager"
+              loading="lazy"
+              showSpinner
+              showSkeleton
+              wrapperClassName="w-100"
+              enableZoom
+              modalTitle={`${item.title} - Screenshot Preview`}
             />
           </div>
         ) : null}

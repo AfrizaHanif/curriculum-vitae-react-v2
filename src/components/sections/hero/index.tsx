@@ -16,56 +16,7 @@ import fallbackProfiles from "@/data/jsons/profiles.json";
 import fallbackSocials from "@/data/jsons/socials.json";
 import HeroAvatar from "./HeroAvatar";
 import HeroSocials from "./HeroSocials";
-
-function HeroSkeleton() {
-  return (
-    <div className="placeholder-glow" aria-hidden="true">
-      {/* 1. Greeting & Status Pill */}
-      <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-3">
-        <span className="placeholder bg-light rounded-pill col-3 col-md-2 py-2 opacity-50" />
-        <span className="placeholder bg-light rounded-pill col-2 col-md-2 py-2 opacity-75" />
-      </div>
-
-      {/* 2. Large Display Heading (Fullname) */}
-      <h1 className="display-4 fw-bold mb-3">
-        <span className="placeholder bg-light rounded col-9 col-md-8 py-3" />
-      </h1>
-
-      {/* 3. Subtitle / Tagline */}
-      <p className="lead mb-3">
-        <span className="placeholder bg-light rounded col-10 col-md-9 py-2 opacity-75" />
-      </p>
-
-      {/* 4. Location */}
-      <p className="mb-4">
-        <span className="placeholder bg-light rounded col-5 col-md-4 py-1 opacity-50" />
-      </p>
-
-      {/* 5. CTA Button Skeletons */}
-      <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-3 mb-4">
-        <span
-          className="placeholder bg-light rounded-pill opacity-100"
-          style={{ width: "160px", height: "42px" }}
-        />
-        <span
-          className="placeholder bg-light rounded-pill opacity-50"
-          style={{ width: "140px", height: "42px" }}
-        />
-      </div>
-
-      {/* 6. Social Media Circle Skeletons */}
-      <div className="d-flex justify-content-center justify-content-md-start gap-3">
-        {[1, 2, 3, 4].map((i) => (
-          <span
-            key={i}
-            className="placeholder bg-light rounded-circle opacity-50"
-            style={{ width: "36px", height: "36px" }}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
+import HeroSkeleton from "./HeroSkeleton";
 
 export default function HeroSection() {
   const { t } = useLanguage();
@@ -115,7 +66,7 @@ export default function HeroSection() {
               <div>
                 {/* Greeting & Role */}
                 <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2 mb-2">
-                  <span className="text-white-50 text-uppercase fw-semibold tracking-wider small">
+                  <span className="text-white-75 text-uppercase fw-semibold tracking-wider small">
                     {t.hero.greeting}
                   </span>
                   {profile.status && (
@@ -132,14 +83,14 @@ export default function HeroSection() {
                 <h1 className="display-4 fw-bold mb-2">{profile.fullname}</h1>
 
                 {/* Tagline */}
-                <p className="lead fs-4 text-white-50 mb-3 fw-normal">
+                <p className="lead fs-4 text-white-75 mb-3 fw-normal">
                   {profile.tagline || t.hero.role}
                 </p>
 
                 {/* Location */}
                 {(profile.current_city || profile.current_province) && (
-                  <p className="text-white-50 small mb-4 d-flex align-items-center justify-content-center justify-content-md-start gap-1">
-                    <i className="bi bi-geo-alt-fill text-warning" />
+                  <p className="text-white-75 small mb-4 d-flex align-items-center justify-content-center justify-content-md-start gap-1">
+                    <i className="bi bi-geo-alt-fill text-warning" aria-hidden="true" />
                     <span>
                       {formatLocation(
                         profile.current_city,
@@ -198,12 +149,12 @@ export default function HeroSection() {
       {/* Scroll Down Indicator */}
       <a
         href="#about"
-        className="position-absolute bottom-0 start-50 translate-middle-x mb-3 text-white-50 text-decoration-none d-none d-lg-flex flex-column align-items-center gap-1 small opacity-75 z-2"
+        className="position-absolute bottom-0 start-50 translate-middle-x mb-3 text-white-75 text-decoration-none d-none d-lg-flex flex-column align-items-center gap-1 small opacity-75 z-2"
         style={{ cursor: "pointer" }}
         aria-label={t.hero.scrollAria}
       >
         <span>{t.hero.scroll}</span>
-        <i className="bi bi-chevron-down animate-bounce" />
+        <i className="bi bi-chevron-down animate-bounce" aria-hidden="true" />
       </a>
       <div className="hero-bottom-fade" />
     </Section>

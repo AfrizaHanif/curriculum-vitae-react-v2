@@ -6,12 +6,12 @@ import Section from "@/components/ui/customs/section";
 import SectionHeader from "@/components/ui/customs/section-header";
 import Button from "@/components/ui/bootstrap/button";
 import Alert from "@/components/ui/bootstrap/alert";
-import Spinner from "@/components/ui/bootstrap/spinner";
 import { CardGrid } from "@/components/ui/bootstrap/card";
 import type { Certificate } from "@/types/certificate";
 import { ApiResponse } from "@/types/api";
 
 import CertificateCard from "./CertificateCard";
+import CertificateGridSkeleton from "./CertificateCardSkeleton";
 import CertificateArchiveModal from "./CertificateArchiveModal";
 import { useLanguage } from "@/context/LanguageContext";
 import fallbackCertificates from "@/data/jsons/certificates.json";
@@ -42,9 +42,7 @@ export default function CertificationSection() {
 
       {/* Loading / Error / Empty States */}
       {isLoading ? (
-        <div className="d-flex justify-content-center py-5">
-          <Spinner color="primary" label={t.sections.certification.loading} />
-        </div>
+        <CertificateGridSkeleton count={FEATURED_LIMIT} />
       ) : error ? (
         <Alert
           color="danger"

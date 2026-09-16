@@ -122,8 +122,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             {/* <PageLoader /> */}
             <NavigationProvider>
               <BootstrapClient />
-              <main>
-                <Header />
+              <a
+                href="#main-content"
+                className="visually-hidden-focusable position-fixed top-0 start-0 m-3 btn btn-primary z-3"
+              >
+                Skip to main content
+              </a>
+              <Header />
+              <main id="main-content">
                 {children}
               </main>
               <SideNav />

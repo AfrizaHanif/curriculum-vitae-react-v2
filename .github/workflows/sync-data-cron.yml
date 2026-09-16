@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
   actions: write
 
 concurrency:
@@ -59,22 +60,47 @@ jobs:
             echo "✨ Ditemukan perubahan data baru dari API!"
           fi
 
-      - name: "6. Commit & Push Updated Data"
+      - name: "6. Create or Update Pull Request"
+        id: cpr
         if: steps.git_diff.outputs.has_changes == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/jsons/
-          git commit -m "chore(data): auto-sync latest API datasets [skip ci]"
-          git push origin ${{ github.ref_name }}
-          echo "✅ Seluruh perubahan data JSON berhasil di-commit dan di-push ke branch ${{ github.ref_name }}."
-
-      - name: "7. Trigger Deployment Workflow"
-        if: steps.git_diff.outputs.has_changes == 'true' || inputs.force_deploy == true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "🚀 Menjalankan alur deployment untuk mempublikasikan data terbaru..."
+          BRANCH_NAME="cron/sync-api-data"
+          BASE_BRANCH="${{ github.ref_name }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Buat atau perbarui branch sinkronisasi
+          git checkout -B "$BRANCH_NAME"
+          git add src/data/jsons/
+          git commit -m "chore(data): auto-sync latest API datasets"
+          git push origin "$BRANCH_NAME" --force
+
+          # Cek apakah PR sudah terbuka untuk branch ini
+          PR_URL=$(gh pr list --head "$BRANCH_NAME" --base "$BASE_BRANCH" --state open --json url --jq '.[0].url')
+
+          if [ -z "$PR_URL" ] || [ "$PR_URL" = "null" ]; then
+            echo "🚀 Membuat Pull Request baru..."
+            NEW_PR_URL=$(gh pr create \
+              --base "$BASE_BRANCH" \
+              --head "$BRANCH_NAME" \
+              --title "chore(data): auto-sync latest API datasets" \
+              --body "Sinkronisasi otomatis dataset profil dari \`api.afrizahanif.com\` oleh alur kerja \`sync-data-cron.yml\`.")
+            echo "pr_url=$NEW_PR_URL" >> $GITHUB_OUTPUT
+            echo "✅ Pull Request berhasil dibuat: $NEW_PR_URL"
+          else
+            echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
+            echo "ℹ️ Pull Request sudah ada dan telah diperbarui: $PR_URL"
+          fi
+
+      - name: "7. Trigger Deployment Workflow (Force Deploy)"
+        if: inputs.force_deploy == true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🚀 Menjalankan alur deployment manual (force_deploy)..."
           gh workflow run deploy.yml --ref ${{ github.ref_name }} || echo "⚠️ Tidak dapat memicu via gh CLI, pastikan Actions permission 'Read and write' aktif."
 
       - name: "8. Generate Summary"
@@ -82,6 +108,7 @@ jobs:
         run: |
           HAS_CHANGES="${{ steps.git_diff.outputs.has_changes }}"
           FORCE_DEPLOY="${{ inputs.force_deploy || 'false' }}"
+          PR_URL="${{ steps.cpr.outputs.pr_url || '-' }}"
 
           cat << EOF >> $GITHUB_STEP_SUMMARY
           ## 🔄 API Data Sync Summary
@@ -90,6 +117,7 @@ jobs:
           |---|:---:|---|
           | **Status Sinkronisasi** | ✅ SUKSES | Berhasil sinkronisasi seluruh dataset dari \`api.afrizahanif.com\` |
           | **Perubahan Data** | $([ "$HAS_CHANGES" = "true" ] && echo "✨ ADA PEMBARUAN" || echo "☕ TIDAK ADA PERUBAHAN") | Status berkas di folder \`src/data/jsons/\` |
-          | **Pemicu Deploy** | $([ "$HAS_CHANGES" = "true" ] || [ "$FORCE_DEPLOY" = "true" ] && echo "🚀 DIPICU" || echo "⏭️ DILEWATI") | Otomatis deploy jika ada data baru |
+          | **Pull Request** | $([ "$PR_URL" != "-" ] && echo "[Lihat PR]($PR_URL)" || echo "⏭️ DILEWATI") | PR otomatis ke branch \`${{ github.ref_name }}\` |
+          | **Pemicu Deploy** | $([ "$FORCE_DEPLOY" = "true" ] && echo "🚀 DIPICU (Force Deploy)" || echo "ℹ️ Mengikuti alur PR / Push") | Otomatis deploy jika PR di-merge |
           | **Target Folder** | 📂 \`src/data/jsons/\` (18 datasets) | Berkas penyimpanan data lokal |
           EOF

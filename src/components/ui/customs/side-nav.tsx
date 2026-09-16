@@ -42,9 +42,11 @@ export default function SideNav() {
             <li key={section.id} className="side-nav-item">
               <Tooltip title={section.label} placement="left">
                 <button
+                  type="button"
                   onClick={() => scrollToSection(section.id)}
                   className={`side-nav-dot-btn ${isActive ? "active" : ""}`}
                   aria-label={`Scroll to ${section.label}`}
+                  aria-current={isActive ? "location" : undefined}
                 >
                   <span className="side-nav-dot"></span>
                 </button>

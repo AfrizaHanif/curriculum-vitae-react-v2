@@ -46,6 +46,7 @@ export default function ThemeToggle() {
       buttonClass="nav-link p-2 d-flex align-items-center"
       menuClass="dropdown-menu-end shadow"
       showCaret={false}
+      aria-label={`Current theme: ${theme}. Change theme`}
     >
       <span className="text-body lh-1 d-inline-flex align-items-center">
         {getThemeIcon()}

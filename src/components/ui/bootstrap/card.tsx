@@ -45,6 +45,9 @@ export interface CardProps {
   imgGradient?: boolean;
   imgStyle?: React.CSSProperties;
   fallbackSrc?: string | StaticImageData;
+  imgLoading?: "lazy" | "eager";
+  /** Whether to show a spinner during image loading */
+  imgShowSpinner?: boolean;
   linkHref?: string;
   linkToggle?: toggleAllowed;
   linkTarget?: string;
@@ -67,10 +70,12 @@ export default function Card({
   imgPosition = "top",
   imgWidth = 600,
   imgHeight = 400,
-  imgAlt = "Card image",
+  imgAlt = "",
   imgGradient = false,
   imgStyle,
   fallbackSrc,
+  imgLoading = "lazy",
+  imgShowSpinner = false,
   linkHref,
   linkToggle,
   linkTarget,
@@ -102,12 +107,18 @@ export default function Card({
   );
 
   const linkHrefBtn = (
+    // <Link>
+    //   href={linkHref || ""}
+    //   className="stretched-link border-0 bg-transparent p-0"
+    // >
+    //   <span className="visually-hidden">Buka</span>
+    // </Link>
     <Link
-      href={linkHref || ""}
+      href={linkHref || "#"}
       className="stretched-link border-0 bg-transparent p-0"
-    >
-      <span className="visually-hidden">Buka</span>
-    </Link>
+      target={linkTarget}
+      aria-label={imgAlt || "Detail link"}
+    />
   );
 
   return (
@@ -118,40 +129,76 @@ export default function Card({
         ...style,
       }}
       onClick={onClick}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onKeyDown={
+        onClick
+          ? (e) => {
+              if (
+                e.target === e.currentTarget &&
+                (e.key === "Enter" || e.key === " ")
+              ) {
+                e.preventDefault();
+                onClick(e as unknown as React.MouseEvent<HTMLDivElement>);
+              }
+            }
+          : undefined
+      }
     >
       {cardLayout === "vertical" ? (
         <>
           {imgSrc && imgPosition === "top" && (
-            <NextImage
-              src={imgSrc}
-              width={imgWidth}
-              height={imgHeight}
-              className="card-img-top"
-              alt={imgAlt}
-              style={{ objectFit: "cover", height: "auto", ...imgStyle }}
-              loading="eager"
-              fallbackSrc={fallbackSrc}
-            />
+            <div
+              className="card-img-top-wrapper overflow-hidden position-relative bg-body-secondary bg-opacity-50"
+              style={{
+                borderTopLeftRadius: "inherit",
+                borderTopRightRadius: "inherit",
+              }}
+            >
+              <NextImage
+                src={imgSrc}
+                width={imgWidth}
+                height={imgHeight}
+                className="card-img-top"
+                alt={imgAlt}
+                style={{ objectFit: "cover", height: "auto", ...imgStyle }}
+                loading={imgLoading}
+                fallbackSrc={fallbackSrc}
+                showSpinner={imgShowSpinner}
+                wrapperClassName="w-100 h-100"
+              />
+            </div>
           )}
           {imgSrc && imgPosition === "overlay" && (
             <>
-              <NextImage
-                src={imgSrc}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                style={{ objectFit: "cover", ...imgStyle }}
-                className="card-img"
-                alt={imgAlt}
-                loading="eager"
-                fallbackSrc={fallbackSrc}
-              />
+              <div
+                className="position-absolute top-0 start-0 w-100 h-100 bg-body-secondary bg-opacity-50 overflow-hidden"
+                style={{
+                  borderRadius: "inherit",
+                  zIndex: 0,
+                }}
+              >
+                <NextImage
+                  src={imgSrc}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  style={{ objectFit: "cover", ...imgStyle }}
+                  className="card-img"
+                  alt={imgAlt}
+                  loading={imgLoading}
+                  fallbackSrc={fallbackSrc}
+                  showSpinner={imgShowSpinner}
+                />
+              </div>
               {imgGradient && (
                 <div
-                  className="position-absolute top-0 start-0 w-100 h-100 rounded"
+                  className="position-absolute top-0 start-0 w-100 h-100"
                   style={{
                     background:
                       "linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%)",
                     pointerEvents: "none",
+                    borderRadius: "inherit",
+                    zIndex: 1,
                   }}
                 />
               )}
@@ -180,21 +227,37 @@ export default function Card({
           )}
           {footer && <div className="card-footer">{footer}</div>}
           {imgSrc && imgPosition === "bottom" && (
-            <NextImage
-              src={imgSrc}
-              width={imgWidth}
-              height={imgHeight}
-              className="card-img-bottom"
-              alt={imgAlt}
-              style={{ objectFit: "cover", height: "auto", ...imgStyle }}
-              loading="eager"
-              fallbackSrc={fallbackSrc}
-            />
+            <div
+              className="card-img-bottom-wrapper overflow-hidden position-relative bg-body-secondary bg-opacity-50"
+              style={{
+                borderBottomLeftRadius: "inherit",
+                borderBottomRightRadius: "inherit",
+              }}
+            >
+              <NextImage
+                src={imgSrc}
+                width={imgWidth}
+                height={imgHeight}
+                className="card-img-bottom"
+                alt={imgAlt}
+                style={{ objectFit: "cover", height: "auto", ...imgStyle }}
+                loading={imgLoading}
+                fallbackSrc={fallbackSrc}
+                showSpinner={imgShowSpinner}
+                wrapperClassName="w-100 h-100"
+              />
+            </div>
           )}
         </>
       ) : (
         <div className="row g-0">
-          <div className="col-md-4">
+          <div
+            className="col-md-4 position-relative overflow-hidden bg-body-secondary bg-opacity-50"
+            style={{
+              borderTopLeftRadius: "inherit",
+              borderBottomLeftRadius: "inherit",
+            }}
+          >
             <NextImage
               src={imgSrc!}
               width={imgWidth}
@@ -202,8 +265,10 @@ export default function Card({
               className="img-fluid rounded-start"
               alt={imgAlt}
               style={{ objectFit: "cover", height: "auto", ...imgStyle }}
-              loading="eager"
+              loading={imgLoading}
               fallbackSrc={fallbackSrc}
+              showSpinner={imgShowSpinner}
+              wrapperClassName="w-100 h-100"
             />
           </div>
           <div className="col-md-8">

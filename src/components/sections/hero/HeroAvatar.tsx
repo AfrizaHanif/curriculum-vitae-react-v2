@@ -32,9 +32,13 @@ export default function HeroAvatar({ photo, fullname }: HeroAvatarProps) {
           width={600}
           height={750}
           priority
+          loading="eager"
+          showSkeleton
           enableZoom
           modalTitle={fullname || "Profile Photo"}
           className="img-fluid hero-avatar-img"
+          wrapperClassName="overflow-hidden"
+          wrapperStyle={{ borderRadius: "inherit" }}
           style={{
             objectFit: "cover",
             objectPosition: "center 20%",

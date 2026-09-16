@@ -26,9 +26,10 @@ export default function LanguageToggle() {
       buttonClass="nav-link p-2 d-flex align-items-center fw-semibold text-uppercase"
       menuClass="dropdown-menu-end shadow"
       showCaret={false}
+      aria-label={`Current language: ${lang === "en" ? "English" : "Bahasa Indonesia"}. Change language`}
     >
       <span className="text-body lh-1 d-inline-flex align-items-center gap-1">
-        <i className="bi bi-translate fs-5"></i>
+        <i className="bi bi-translate fs-5" aria-hidden="true"></i>
         <span className="small">{lang}</span>
       </span>
     </Dropdown>

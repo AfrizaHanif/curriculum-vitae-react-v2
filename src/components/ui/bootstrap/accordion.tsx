@@ -38,11 +38,11 @@ export default function Accordion({
             <div className="accordion-item" key={index}>
               <h2 className="accordion-header">
                 <button
-                  className="accordion-button collapsed"
+                  className={`accordion-button ${!accordionItem.show ? "collapsed" : ""}`}
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target={`#${itemCollapseId}`}
-                  aria-expanded="false"
+                  aria-expanded={accordionItem.show ? "true" : "false"}
                   aria-controls={itemCollapseId}
                 >
                   {accordionItem.title}
@@ -50,7 +50,7 @@ export default function Accordion({
               </h2>
               <div
                 id={itemCollapseId}
-                className={`accordion-collapse collapse ${accordionItem.show && "show"}`}
+                className={`accordion-collapse collapse ${accordionItem.show ? "show" : ""}`}
                 data-bs-parent={`#${accordionId}`}
               >
                 <div className="accordion-body">{accordionItem.content}</div>

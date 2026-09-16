@@ -25,6 +25,8 @@ export interface InputProps {
   readOnly?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  "aria-label"?: string;
+  "aria-describedby"?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -43,6 +45,8 @@ export default function Input({
   readOnly,
   className,
   style,
+  "aria-label": ariaLabel,
+  "aria-describedby": ariaDescribedBy,
   onChange,
 }: InputProps) {
   return (
@@ -57,6 +61,8 @@ export default function Input({
         name={name}
         id={id}
         placeholder={placeholder}
+        aria-label={ariaLabel}
+        aria-describedby={ariaDescribedBy || helpTextId}
         className={[
           "form-control",
           size === "sm" && "form-control-sm",

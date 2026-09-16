@@ -39,6 +39,7 @@ export type DropdownProps = DropdownDataSource & {
   showCaret?: boolean;
   children: React.ReactNode;
   disabled?: boolean;
+  "aria-label"?: string;
   /** Bootstrap container class (e.g., 'dropdown', 'btn-group', 'dropup') */
   className?: string;
   /** How the dropdown closes when elements are clicked */
@@ -77,6 +78,7 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
       boundary = "clippingParents",
       reference = "toggle",
       offset = [0, 2],
+      "aria-label": ariaLabel,
     },
     ref,
   ) {
@@ -155,6 +157,7 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
           className={`${showCaret ? "dropdown-toggle" : ""} ${buttonClass || ""}`}
           dataBsToggle="dropdown"
           aria-expanded="false"
+          aria-label={ariaLabel}
           style={buttonStyle}
           disabled={disabled}
         >

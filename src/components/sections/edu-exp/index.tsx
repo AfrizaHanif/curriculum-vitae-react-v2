@@ -10,20 +10,23 @@ import Section from "@/components/ui/customs/section";
 import SectionHeader from "@/components/ui/customs/section-header";
 import NavTab, { NavTabItem } from "@/components/ui/bootstrap/nav-tab";
 import Alert from "@/components/ui/bootstrap/alert";
-import Spinner from "@/components/ui/bootstrap/spinner";
-import LocationMapModal from "@/components/sections/edu-exp/location-map-modal";
+const LocationMapModal = dynamic(() => import("./location-map-modal"), {
+  ssr: false,
+});
 
 import TimelineItem, { TimelineItemData } from "./TimelineItem";
+import TimelineSkeleton from "./TimelineSkeleton";
 import "./timeline.css";
 import { useLanguage } from "@/context/LanguageContext";
 import fallbackEducations from "@/data/jsons/educations.json";
 import fallbackExperiences from "@/data/jsons/experiences.json";
+import dynamic from "next/dynamic";
 
 interface TimelineTabContentProps {
   isLoading: boolean;
   error: Error | null;
   itemsCount: number;
-  loadingLabel: string;
+  loadingLabel?: string;
   errorLabel: string;
   emptyLabel: string;
   children: ReactNode;
@@ -33,18 +36,13 @@ function TimelineTabContent({
   isLoading,
   error,
   itemsCount,
-  loadingLabel,
   errorLabel,
   emptyLabel,
   children,
 }: TimelineTabContentProps) {
   // Loading state
   if (isLoading) {
-    return (
-      <div className="d-flex justify-content-center py-5">
-        <Spinner color="primary" label={loadingLabel} />
-      </div>
-    );
+    return <TimelineSkeleton count={3} />;
   }
 
   // Error state

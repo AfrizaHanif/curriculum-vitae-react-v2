@@ -11,13 +11,12 @@ import Card from "@/components/ui/bootstrap/card";
 import { useLanguage } from "@/context/LanguageContext";
 import Badge from "@/components/ui/bootstrap/badge";
 import Button from "@/components/ui/bootstrap/button";
-import Spinner from "@/components/ui/bootstrap/spinner";
-
 import AboutStats from "./AboutStats";
 import { SetupApiResponse } from "@/types/setup";
 import ProfileDetailModal from "./ProfileDetailModal";
 import SetupModal from "./SetupModal";
 import AboutAvatar from "./AboutAvatar";
+import AboutSkeleton from "./AboutSkeleton";
 
 export default function AboutSection() {
   const { t } = useLanguage();
@@ -56,9 +55,7 @@ export default function AboutSection() {
         {/* Right: Bio & Profile Details */}
         <div className="col-12 col-lg-7 order-2 order-lg-2 align-items-center">
           {profileLoading ? (
-            <div className="d-flex justify-content-center py-5">
-              <Spinner color="primary" label={t.sections.about.loading} />
-            </div>
+            <AboutSkeleton />
           ) : profile ? (
             <div>
               {/* Quick Info Badges */}

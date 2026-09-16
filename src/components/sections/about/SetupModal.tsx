@@ -93,6 +93,8 @@ export default function SetupModal({
                     width={900}
                     height={450}
                     responsive
+                    showSkeleton
+                    showSpinner
                     enableZoom
                     modalTitle={t.sections.about.setupModal.title}
                     className="w-100 object-fit-cover"

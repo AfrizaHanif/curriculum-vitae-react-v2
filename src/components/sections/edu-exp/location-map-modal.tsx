@@ -1,10 +1,24 @@
 "use client";
 
 import React, { useMemo } from "react";
+import dynamic from "next/dynamic";
 import Modal from "@/components/ui/bootstrap/modal";
 import Alert from "@/components/ui/bootstrap/alert";
-import LeafletMap, { MapMarker } from "../../ui/customs/leaflet-map";
+import type { MapMarker } from "../../ui/customs/leaflet-map";
 import { useLanguage } from "@/context/LanguageContext";
+
+const LeafletMap = dynamic(() => import("../../ui/customs/leaflet-map"), {
+  ssr: false,
+  loading: () => (
+    <div
+      className="d-flex flex-column align-items-center justify-content-center bg-body-tertiary border rounded-3 text-muted"
+      style={{ height: "380px", width: "100%" }}
+    >
+      <div className="spinner-border spinner-border-sm text-primary mb-2" role="status" />
+      <span className="small">Loading map...</span>
+    </div>
+  ),
+});
 
 export interface LocationMapModalProps {
   id?: string;

@@ -5,7 +5,9 @@ import Link from "next/link";
 import Tooltip from "./tooltip";
 import Popover from "./popover";
 
-export interface ButtonProps {
+export interface ButtonProps extends React.AriaAttributes {
+  id?: string;
+  tabIndex?: number;
   as?: "button" | "a";
   color?:
     | "primary"
@@ -77,6 +79,9 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
       style,
       className = "",
       children,
+      id,
+      tabIndex,
+      ...ariaProps
     },
     ref,
   ) {
@@ -95,6 +100,8 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
     const content = as === "a" || href ? (
       <Link
         ref={ref as React.Ref<HTMLAnchorElement>}
+        id={id}
+        tabIndex={tabIndex}
         href={href || "#"}
         scroll={scroll}
         target={target}
@@ -106,6 +113,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
         data-bs-title={dataBsTitle}
         data-bs-trigger={dataBsTrigger}
         data-bs-dismiss={dataBsDismiss}
+        {...ariaProps}
         onClick={(e) => {
           if (disabled) {
             e.preventDefault();
@@ -126,6 +134,8 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
     ) : (
       <button
         ref={ref as React.Ref<HTMLButtonElement>}
+        id={id}
+        tabIndex={tabIndex}
         className={combinedClasses}
         style={disabled ? { ...style, pointerEvents: "none" } : style}
         type={type}
@@ -135,6 +145,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
         data-bs-title={dataBsTitle}
         data-bs-trigger={dataBsTrigger}
         data-bs-dismiss={dataBsDismiss}
+        {...ariaProps}
         onClick={(e) => {
           if (dataBsToggle === "modal" && dataBsSubject) {
             window.dispatchEvent(

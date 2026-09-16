@@ -6,13 +6,13 @@ import Section from "@/components/ui/customs/section";
 import SectionHeader from "@/components/ui/customs/section-header";
 import { SkillApiResponse } from "@/types/skill";
 import { CardGrid } from "@/components/ui/bootstrap/card";
-import Spinner from "@/components/ui/bootstrap/spinner";
 import { useLanguage } from "@/context/LanguageContext";
 import Badge from "@/components/ui/bootstrap/badge";
 import Alert from "@/components/ui/bootstrap/alert";
 import NavTab, { NavTabItem } from "@/components/ui/bootstrap/nav-tab";
 
 import SkillCard from "./SkillCard";
+import SkillGridSkeleton from "./SkillCardSkeleton";
 import fallbackSkills from "@/data/jsons/skills.json";
 
 export default function SkillSection() {
@@ -86,9 +86,7 @@ export default function SkillSection() {
       {/* Skills Content with NavTab */}
       <div className="mt-4">
         {isLoading ? (
-          <div className="d-flex justify-content-center py-5">
-            <Spinner color="primary" label={t.sections.skills.loading} />
-          </div>
+          <SkillGridSkeleton count={8} />
         ) : error ? (
           <Alert color="danger" className="mb-0">
             {t.sections.skills.error}: {error.message}

@@ -201,6 +201,8 @@ export default function Modal({
       style={style}
       tabIndex={-1}
       role="dialog"
+      aria-modal="true"
+      aria-labelledby={!noHeader ? `${id}-title` : undefined}
       data-bs-backdrop={isStatic ? "static" : "true"}
       data-bs-keyboard={!isStatic}
       aria-hidden={!show}
@@ -213,8 +215,14 @@ export default function Modal({
         <div className={`modal-content ${contentClassName}`}>
           {!noHeader && (
             <div className="modal-header">
-              <h5 className="modal-title">{title}</h5>
-              <Button className="btn-close" dataBsDismiss="modal"></Button>
+              <h5 className="modal-title" id={`${id}-title`}>
+                {title}
+              </h5>
+              <Button
+                className="btn-close"
+                dataBsDismiss="modal"
+                aria-label="Close"
+              />
             </div>
           )}
           <div className={`modal-body ${bodyClassName}`}>{children}</div>

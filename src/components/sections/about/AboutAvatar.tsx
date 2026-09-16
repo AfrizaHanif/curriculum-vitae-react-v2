@@ -24,10 +24,12 @@ export default function AboutAvatar({ photo, fullname }: AboutAvatarProps) {
             }
             width={600}
             height={750}
+            showSkeleton
             enableZoom
             modalTitle={fullname || "Profile Photo"}
             className="about-avatar-img"
-            loading="lazy"
+            wrapperClassName="w-100 h-100 rounded"
+            loading="eager"
           />
         </div>
       </div>

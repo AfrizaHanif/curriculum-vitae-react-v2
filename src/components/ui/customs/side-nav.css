@@ -38,7 +38,12 @@
   position: relative;
   width: 24px;
   height: 24px;
-  outline: none;
+  border-radius: 50%;
+
+  &:focus-visible {
+    outline: 2px solid var(--bs-primary, #0d6efd);
+    outline-offset: 3px;
+  }
 
   .side-nav-dot {
     width: 8px;

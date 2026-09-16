@@ -33,6 +33,23 @@ export interface CarouselProps {
   objectPosition?: string;
   hoverControlsOnly?: boolean;
   fallbackSrc?: string | StaticImageData;
+  /**
+   * If true, sets priority preloading on the first slide (index === 0).
+   * Recommended when Carousel is placed above-the-fold as an LCP candidate.
+   */
+  priority?: boolean;
+  /**
+   * If true, displays a loading spinner on each slide image while loading.
+   */
+  showSpinner?: boolean;
+  /**
+   * If true, displays a skeleton shimmer placeholder on each slide while loading.
+   */
+  showSkeleton?: boolean;
+  /**
+   * If true, enables clicking slide images to open enlarged preview modal.
+   */
+  enableZoom?: boolean;
 }
 
 export default function Carousel({
@@ -55,20 +72,22 @@ export default function Carousel({
   objectPosition = "center",
   hoverControlsOnly = false,
   fallbackSrc,
+  priority = false,
+  showSpinner = false,
+  showSkeleton = false,
+  enableZoom = false,
 }: CarouselProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const isCycling =
     autoPlay === "carousel" || autoPlay === "ride" || autoPlay === true;
   const autoPlayValue =
-    autoPlay === true
-      ? "carousel"
-      : autoPlay === false
-        ? undefined
-        : autoPlay;
+    autoPlay === true ? "carousel" : autoPlay === false ? undefined : autoPlay;
 
   const carouselInstanceRef = useRef<BootstrapCarousel | null>(null);
-  const pointerStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
+  const pointerStartRef = useRef<{ x: number; y: number; time: number } | null>(
+    null,
+  );
   const isPointerDownRef = useRef<boolean>(false);
 
   useEffect(() => {
@@ -82,7 +101,7 @@ export default function Carousel({
         {
           touch,
           interval: isCycling ? interval : false,
-        }
+        },
       );
       carouselInstanceRef.current = instance;
     });
@@ -174,7 +193,7 @@ export default function Carousel({
             className={`carousel-item ${index === 0 ? "active" : ""}`}
             key={index}
           >
-            <div className="carousel-image-container">
+            <div className="carousel-image-container position-relative bg-body-secondary bg-opacity-25">
               <NextImage
                 src={item.image}
                 className="d-block w-100"
@@ -188,10 +207,15 @@ export default function Carousel({
                   objectFit: "cover",
                   objectPosition: item.objectPosition || objectPosition,
                 }}
-                priority={index === 0}
-                loading="eager"
+                priority={priority && index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
                 draggable={false}
                 fallbackSrc={item.fallbackSrc || fallbackSrc}
+                showSpinner={showSpinner}
+                showSkeleton={showSkeleton}
+                wrapperClassName="w-100 h-100"
+                enableZoom={enableZoom}
+                modalTitle={item.title || item.alt}
               />
             </div>
             <div className="carousel-caption d-none d-md-block">
@@ -231,53 +255,55 @@ export default function Carousel({
       )}
 
       {/* Bottom unified navigation bar if controlsPosition is 'bottom' */}
-      {controlsPosition === "bottom" && items.length > 1 && (withControls || withIndicators) && (
-        <div className="d-flex justify-content-center align-items-center gap-3 mt-3 pt-1">
-          {withControls && (
-            <button
-              className={`btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center shadow-sm p-0 ${prevBtnClassName}`}
-              style={{ width: "36px", height: "36px", zIndex: 5 }}
-              type="button"
-              data-bs-target={`#${id}`}
-              data-bs-slide="prev"
-              aria-label="Previous slide"
-            >
-              <i className="bi bi-chevron-left" />
-            </button>
-          )}
+      {controlsPosition === "bottom" &&
+        items.length > 1 &&
+        (withControls || withIndicators) && (
+          <div className="d-flex justify-content-center align-items-center gap-3 mt-3 pt-1">
+            {withControls && (
+              <button
+                className={`btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center shadow-sm p-0 ${prevBtnClassName}`}
+                style={{ width: "36px", height: "36px", zIndex: 5 }}
+                type="button"
+                data-bs-target={`#${id}`}
+                data-bs-slide="prev"
+                aria-label="Previous slide"
+              >
+                <i className="bi bi-chevron-left" />
+              </button>
+            )}
 
-          {withIndicators && (
-            <div
-              className={`carousel-indicators position-static m-0 d-flex align-items-center ${indicatorClassName}`}
-            >
-              {items.map((_, index) => (
-                <button
-                  type="button"
-                  data-bs-target={`#${id}`}
-                  data-bs-slide-to={index}
-                  className={index === 0 ? "active" : ""}
-                  aria-current={index === 0 ? "true" : undefined}
-                  aria-label={`Slide ${index + 1}`}
-                  key={index}
-                ></button>
-              ))}
-            </div>
-          )}
+            {withIndicators && (
+              <div
+                className={`carousel-indicators position-static m-0 d-flex align-items-center ${indicatorClassName}`}
+              >
+                {items.map((_, index) => (
+                  <button
+                    type="button"
+                    data-bs-target={`#${id}`}
+                    data-bs-slide-to={index}
+                    className={index === 0 ? "active" : ""}
+                    aria-current={index === 0 ? "true" : undefined}
+                    aria-label={`Slide ${index + 1}`}
+                    key={index}
+                  ></button>
+                ))}
+              </div>
+            )}
 
-          {withControls && (
-            <button
-              className={`btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center shadow-sm p-0 ${nextBtnClassName}`}
-              style={{ width: "36px", height: "36px", zIndex: 5 }}
-              type="button"
-              data-bs-target={`#${id}`}
-              data-bs-slide="next"
-              aria-label="Next slide"
-            >
-              <i className="bi bi-chevron-right" />
-            </button>
-          )}
-        </div>
-      )}
+            {withControls && (
+              <button
+                className={`btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center shadow-sm p-0 ${nextBtnClassName}`}
+                style={{ width: "36px", height: "36px", zIndex: 5 }}
+                type="button"
+                data-bs-target={`#${id}`}
+                data-bs-slide="next"
+                aria-label="Next slide"
+              >
+                <i className="bi bi-chevron-right" />
+              </button>
+            )}
+          </div>
+        )}
     </div>
   );
 }

@@ -51,7 +51,7 @@ export default function Tooltip({
       tooltipInstance = new bootstrap.Tooltip(node, {
         title,
         placement,
-        trigger: "hover",
+        trigger: "hover focus",
       });
       tooltipInstanceRef.current = tooltipInstance;
     });

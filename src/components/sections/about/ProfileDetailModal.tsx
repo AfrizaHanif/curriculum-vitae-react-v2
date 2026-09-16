@@ -91,6 +91,7 @@ export default function ProfileDetailModal({
                   width={84}
                   height={84}
                   className="w-100 h-100 object-fit-cover"
+                  loading="eager"
                 />
               </div>
             </div>
@@ -153,10 +154,21 @@ export default function ProfileDetailModal({
                       ? t.sections.about.profileModal.emailCopied
                       : t.sections.about.profileModal.copyEmail
                   }
+                  aria-label={
+                    copiedEmail
+                      ? t.sections.about.profileModal.emailCopied
+                      : t.sections.about.profileModal.copyEmail
+                  }
                 >
                   <i
                     className={`bi ${copiedEmail ? "bi-check2 text-success" : "bi-clipboard"}`}
+                    aria-hidden="true"
                   />
+                  <span className="visually-hidden" aria-live="polite">
+                    {copiedEmail
+                      ? t.sections.about.profileModal.emailCopied
+                      : ""}
+                  </span>
                 </Button>
               </div>
             </Card>

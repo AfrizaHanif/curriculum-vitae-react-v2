@@ -22,9 +22,13 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
 
       <div>
         {/* 5 Stars Rating */}
-        <div className="d-flex align-items-center gap-1 text-warning mb-3">
+        <div
+          className="d-flex align-items-center gap-1 text-warning mb-3"
+          role="img"
+          aria-label="5 out of 5 stars"
+        >
           {[...Array(5)].map((_, i) => (
-            <i key={i} className="bi bi-star-fill small" />
+            <i key={i} className="bi bi-star-fill small" aria-hidden="true" />
           ))}
         </div>
 

@@ -92,6 +92,9 @@ export default function CertificateArchiveModal({
                 placeholder={
                   t.sections.certification.archiveModal.searchPlaceholder
                 }
+                aria-label={
+                  t.sections.certification.archiveModal.searchPlaceholder
+                }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -99,8 +102,9 @@ export default function CertificateArchiveModal({
                 <Button
                   color="outline-secondary"
                   onClick={() => setSearchQuery("")}
+                  aria-label="Clear search"
                 >
-                  <i className="bi bi-x" />
+                  <i className="bi bi-x" aria-hidden="true" />
                 </Button>
               )}
             </div>
@@ -128,6 +132,7 @@ export default function CertificateArchiveModal({
                     rounded
                     className="px-3"
                     onClick={() => setSelectedIssuer(issuer)}
+                    aria-pressed={isSelected}
                   >
                     {label} <span className="opacity-75">({count})</span>
                   </Button>
