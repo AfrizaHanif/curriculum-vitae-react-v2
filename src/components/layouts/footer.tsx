@@ -11,6 +11,8 @@ import Image from "next/image";
 import logoWhite from "@/assets/images/logo/logo-only-white.png";
 import logoBlack from "@/assets/images/logo/logo-only-black.png";
 import fallbackSocials from "@/data/jsons/socials.json";
+import fallbackProfiles from "@/data/jsons/profiles.json";
+import { ProfileApiResponse } from "@/types/profile";
 
 interface FooterProps {
   className?: string;
@@ -18,11 +20,17 @@ interface FooterProps {
 
 export default function Footer({ className = "" }: FooterProps) {
   const footerRef = useRef<HTMLElement>(null);
-  const { data } = useFetch<SocialApiResponse>(
+  const { data: socialData } = useFetch<SocialApiResponse>(
     `https://api.afrizahanif.com/api/socials`,
     { fallbackData: { data: fallbackSocials } },
   );
-  const social = data?.data;
+  const social = socialData?.data;
+
+  const { data: profileData } = useFetch<ProfileApiResponse>(
+    `https://api.afrizahanif.com/api/profiles`,
+    { fallbackData: { data: fallbackProfiles } },
+  );
+  const profile = profileData?.data?.[0];
 
   useEffect(() => {
     if (!footerRef.current) return;
@@ -74,7 +82,8 @@ export default function Footer({ className = "" }: FooterProps) {
             />
           </Link>
           <span className="text-body-secondary small">
-            © {new Date().getFullYear()} CV Portfolio. All rights reserved.
+            © {new Date().getFullYear()}{" "}
+            {profile?.fullname || "Muhammad Afriza Hanif"}. All rights reserved.
           </span>
         </div>
 
