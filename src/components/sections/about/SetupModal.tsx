@@ -5,6 +5,7 @@ import type { Setup } from "@/types/setup";
 import Modal from "@/components/ui/bootstrap/modal";
 import NextImage from "@/components/ui/react/image";
 import placeholderImage from "@/assets/images/placeholders/placeholder-image.png";
+import { getShimmerDataUrl } from "@/lib/shimmer";
 import { useLanguage } from "@/context/LanguageContext";
 import Accordion, {
   AccordionItemProps,
@@ -93,6 +94,8 @@ export default function SetupModal({
                     width={900}
                     height={450}
                     responsive
+                    placeholder="blur"
+                    blurDataURL={getShimmerDataUrl(900, 450)}
                     showSkeleton
                     showSpinner
                     enableZoom

@@ -24,6 +24,8 @@ export default function AboutAvatar({ photo, fullname }: AboutAvatarProps) {
             }
             width={600}
             height={750}
+            // placeholder="blur"
+            // blurDataURL={getShimmerDataUrl(600, 750)}
             showSkeleton
             enableZoom
             modalTitle={fullname || "Profile Photo"}

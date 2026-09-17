@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import NextImage from "@/components/ui/react/image";
+import { getShimmerDataUrl } from "@/lib/shimmer";
 import { CaseStudy, DiagramCS, SolutionCS } from "@/types/case-study";
 import Offcanvas from "@/components/ui/bootstrap/offcanvas";
 import Button from "@/components/ui/bootstrap/button";
@@ -236,6 +237,8 @@ export default function CaseStudyOffcanvas({
                             alt={sol.title}
                             width={600}
                             height={300}
+                            placeholder="blur"
+                            blurDataURL={getShimmerDataUrl(600, 300)}
                             className="img-fluid rounded border shadow-sm"
                             style={{ maxHeight: "180px", objectFit: "contain" }}
                           />
@@ -332,6 +335,8 @@ export default function CaseStudyOffcanvas({
                           alt={item.label}
                           width={800}
                           height={500}
+                          placeholder="blur"
+                          blurDataURL={getShimmerDataUrl(800, 500)}
                           className="img-fluid rounded"
                           style={{
                             maxHeight: "260px",

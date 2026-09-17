@@ -6,6 +6,7 @@ import NextImage from "../react/image";
 import Button from "./button";
 import { toggleAllowed } from "@/types/BootstrapAllowed";
 import Link from "next/link";
+import { getShimmerDataUrl } from "@/lib/shimmer";
 
 /*  NOTE:
     To fill the children / content of card with correct bootstrap classes, please read docs
@@ -48,6 +49,12 @@ export interface CardProps {
   imgLoading?: "lazy" | "eager";
   /** Whether to show a spinner during image loading */
   imgShowSpinner?: boolean;
+  /** Whether to show a skeleton shimmer placeholder during loading */
+  imgShowSkeleton?: boolean;
+  /** Image placeholder type ("blur" or "empty") */
+  placeholder?: "blur" | "empty";
+  /** Custom base64 blurDataURL for the image */
+  blurDataURL?: string;
   linkHref?: string;
   linkToggle?: toggleAllowed;
   linkTarget?: string;
@@ -76,6 +83,9 @@ export default function Card({
   fallbackSrc,
   imgLoading = "lazy",
   imgShowSpinner = false,
+  imgShowSkeleton = true,
+  placeholder = "empty",
+  blurDataURL,
   linkHref,
   linkToggle,
   linkTarget,
@@ -88,6 +98,10 @@ export default function Card({
   children,
   onClick,
 }: CardProps) {
+  const effectiveBlurDataURL =
+    placeholder === "blur"
+      ? blurDataURL || getShimmerDataUrl(imgWidth, imgHeight)
+      : undefined;
   const bgClass = cardColor
     ? cardColor === "transparent"
       ? "bg-transparent"
@@ -165,6 +179,9 @@ export default function Card({
                 loading={imgLoading}
                 fallbackSrc={fallbackSrc}
                 showSpinner={imgShowSpinner}
+                showSkeleton={imgShowSkeleton}
+                placeholder={placeholder}
+                blurDataURL={effectiveBlurDataURL}
                 wrapperClassName="w-100 h-100"
               />
             </div>
@@ -188,6 +205,9 @@ export default function Card({
                   loading={imgLoading}
                   fallbackSrc={fallbackSrc}
                   showSpinner={imgShowSpinner}
+                  showSkeleton={imgShowSkeleton}
+                  placeholder={placeholder}
+                  blurDataURL={effectiveBlurDataURL}
                 />
               </div>
               {imgGradient && (
@@ -244,6 +264,9 @@ export default function Card({
                 loading={imgLoading}
                 fallbackSrc={fallbackSrc}
                 showSpinner={imgShowSpinner}
+                showSkeleton={imgShowSkeleton}
+                placeholder={placeholder}
+                blurDataURL={effectiveBlurDataURL}
                 wrapperClassName="w-100 h-100"
               />
             </div>
@@ -268,6 +291,9 @@ export default function Card({
               loading={imgLoading}
               fallbackSrc={fallbackSrc}
               showSpinner={imgShowSpinner}
+              showSkeleton={imgShowSkeleton}
+              placeholder={placeholder}
+              blurDataURL={effectiveBlurDataURL}
               wrapperClassName="w-100 h-100"
             />
           </div>

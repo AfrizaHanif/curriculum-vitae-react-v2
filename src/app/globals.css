@@ -97,3 +97,26 @@ html {
     scroll-behavior: auto !important;
   }
 }
+
+/* Modern LQIP / Shimmer blur-up transition */
+.image-blur-loading {
+  filter: blur(10px);
+  transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.image-blur-loaded {
+  filter: blur(0);
+  transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth Image Fade-In Transition (After 100% Load) */
+.image-fade-loading {
+  opacity: 0 !important;
+}
+
+.image-fade-loaded {
+  opacity: 1 !important;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+

@@ -5,6 +5,7 @@ import type { Carousel as BootstrapCarousel } from "bootstrap";
 import type { StaticImageData } from "next/image";
 import NextImage from "../react/image";
 import "@/components/ui/bootstrap/carousel.css";
+import { getShimmerDataUrl } from "@/lib/shimmer";
 
 export interface CarouselProps {
   id?: string;
@@ -50,6 +51,8 @@ export interface CarouselProps {
    * If true, enables clicking slide images to open enlarged preview modal.
    */
   enableZoom?: boolean;
+  placeholder?: "blur" | "empty";
+  blurDataURL?: string;
 }
 
 export default function Carousel({
@@ -76,6 +79,8 @@ export default function Carousel({
   showSpinner = false,
   showSkeleton = false,
   enableZoom = false,
+  placeholder = "empty",
+  blurDataURL,
 }: CarouselProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -213,6 +218,13 @@ export default function Carousel({
                 fallbackSrc={item.fallbackSrc || fallbackSrc}
                 showSpinner={showSpinner}
                 showSkeleton={showSkeleton}
+                placeholder={placeholder}
+                blurDataURL={
+                  blurDataURL ||
+                  (placeholder === "blur"
+                    ? getShimmerDataUrl(width || 1200, height || 675)
+                    : undefined)
+                }
                 wrapperClassName="w-100 h-100"
                 enableZoom={enableZoom}
                 modalTitle={item.title || item.alt}

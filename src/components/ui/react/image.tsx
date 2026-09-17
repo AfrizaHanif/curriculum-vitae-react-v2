@@ -85,11 +85,16 @@ export default function NextImage({
     if (onClick) onClick(e);
   };
 
+  const isBlur = rest.placeholder === "blur";
+  const transitionClass = isBlur
+    ? (isLoading ? "image-blur-loading" : "image-blur-loaded")
+    : (isLoading ? "image-fade-loading" : "image-fade-loaded");
+
   const imageElement = (
     <Image
       src={resolvedSrc}
       alt={alt}
-      className={`${className || ""} ${isLoading ? "opacity-0" : "opacity-100 transition-opacity duration-300"}`}
+      className={`${className || ""} ${transitionClass}`}
       style={{
         ...(responsive ? { width: "100%", height: "auto" } : {}),
         ...(objectFit ? { objectFit } : {}),
@@ -139,22 +144,32 @@ export default function NextImage({
         ...wrapperStyle,
       }}
     >
-      {/* Skeleton Shimmer Placeholder */}
-      {showSkeleton && isLoading && (
+      {/* Skeleton Shimmer Placeholder with Smooth Cross-Fade */}
+      {showSkeleton && (
         <div
           className={`position-absolute top-0 start-0 w-100 h-100 bg-body-secondary bg-opacity-50 placeholder-wave ${skeletonClassName || ""}`}
           style={{
             zIndex: 0,
             borderRadius: "inherit",
+            opacity: isLoading ? 1 : 0,
+            transition: "opacity 0.4s ease-out",
+            pointerEvents: "none",
           }}
           aria-hidden="true"
         />
       )}
 
-      {/* Loading Spinner */}
-      {showSpinner && isLoading && (
+      {/* Loading Spinner with Smooth Fade-Out */}
+      {showSpinner && (
         <div
-          className={`position-absolute top-50 start-50 translate-middle z-1 ${spinnerClassName || ""}`}
+          className={`position-absolute top-50 start-50 z-1 ${spinnerClassName || ""}`}
+          style={{
+            opacity: isLoading ? 1 : 0,
+            transform: `translate(-50%, -50%) ${isLoading ? "scale(1)" : "scale(0.85)"}`,
+            transition: "opacity 0.35s ease-out, transform 0.35s ease-out",
+            pointerEvents: "none",
+          }}
+          aria-hidden={!isLoading}
         >
           <Spinner
             size={spinnerSize}
@@ -191,32 +206,44 @@ export default function NextImage({
             className="d-flex justify-content-center align-items-center w-100 position-relative rounded overflow-hidden"
             style={{ minHeight: "300px" }}
           >
-            {isModalLoading && (
-              <>
-                <div
-                  className="position-absolute top-0 start-0 w-100 h-100 bg-body-secondary bg-opacity-25 placeholder-wave"
-                  style={{ zIndex: 0 }}
-                  aria-hidden="true"
-                />
-                <div className="position-absolute top-50 start-50 translate-middle z-1">
-                  <Spinner
-                    size="lg"
-                    color="primary"
-                    label={
-                      typeof alt === "string" && alt
-                        ? `Loading ${alt}...`
-                        : "Loading image preview..."
-                    }
-                  />
-                </div>
-              </>
-            )}
+            {/* Modal Skeleton with Smooth Fade-Out */}
+            <div
+              className="position-absolute top-0 start-0 w-100 h-100 bg-body-secondary bg-opacity-25 placeholder-wave"
+              style={{
+                zIndex: 0,
+                opacity: isModalLoading ? 1 : 0,
+                transition: "opacity 0.4s ease-out",
+                pointerEvents: "none",
+              }}
+              aria-hidden="true"
+            />
+            {/* Modal Spinner with Smooth Fade-Out */}
+            <div
+              className="position-absolute top-50 start-50 z-1"
+              style={{
+                opacity: isModalLoading ? 1 : 0,
+                transform: `translate(-50%, -50%) ${isModalLoading ? "scale(1)" : "scale(0.85)"}`,
+                transition: "opacity 0.35s ease-out, transform 0.35s ease-out",
+                pointerEvents: "none",
+              }}
+              aria-hidden={!isModalLoading}
+            >
+              <Spinner
+                size="lg"
+                color="primary"
+                label={
+                  typeof alt === "string" && alt
+                    ? `Loading ${alt}...`
+                    : "Loading image preview..."
+                }
+              />
+            </div>
             <Image
               src={resolvedSrc}
               alt={alt || "Enlarged Preview"}
               width={1200}
               height={800}
-              className={`transition-opacity duration-300 ${isModalLoading ? "opacity-0" : "opacity-100"}`}
+              className={`${isModalLoading ? "image-fade-loading" : "image-fade-loaded"}`}
               style={{
                 maxWidth: "100%",
                 height: "auto",

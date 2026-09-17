@@ -8,6 +8,7 @@ import Card from "@/components/ui/bootstrap/card";
 import Button from "@/components/ui/bootstrap/button";
 import NextImage from "@/components/ui/react/image";
 import placeholderImage from "@/assets/images/placeholders/placeholder-image.png";
+import { getShimmerDataUrl } from "@/lib/shimmer";
 import { formatLocation } from "@/utils/format";
 import { formatDate } from "@/utils/date";
 import { useLanguage } from "@/context/LanguageContext";
@@ -90,6 +91,8 @@ export default function ProfileDetailModal({
                   alt={profile.fullname}
                   width={84}
                   height={84}
+                  placeholder="blur"
+                  blurDataURL={getShimmerDataUrl(84, 84)}
                   className="w-100 h-100 object-fit-cover"
                   loading="eager"
                 />

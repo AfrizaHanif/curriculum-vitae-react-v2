@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import NextImage from "@/components/ui/react/image";
+import { getShimmerDataUrl } from "@/lib/shimmer";
 import { Portfolio, Feature, Repository } from "@/types/portfolio";
 import { Project, FeatureProjectItem } from "@/types/project";
 import { CaseStudy } from "@/types/case-study";
@@ -226,6 +227,8 @@ export default function ProjectDetailModal({
             showSpinner
             showSkeleton
             enableZoom
+            placeholder="blur"
+            blurDataURL={getShimmerDataUrl(1200, 675)}
           />
         ) : galleryImages.length === 1 ? (
           <div className="position-relative rounded-3 overflow-hidden mb-4 shadow-sm border bg-body-secondary bg-opacity-25">
@@ -234,6 +237,8 @@ export default function ProjectDetailModal({
               alt={item.title}
               width={1200}
               height={675}
+              placeholder="blur"
+              blurDataURL={getShimmerDataUrl(1200, 675)}
               className="w-100 h-auto"
               style={{
                 aspectRatio: "16 / 9",

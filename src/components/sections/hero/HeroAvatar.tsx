@@ -31,6 +31,8 @@ export default function HeroAvatar({ photo, fullname }: HeroAvatarProps) {
           }
           width={600}
           height={750}
+          // placeholder="blur"
+          // blurDataURL={getShimmerDataUrl(600, 750)}
           priority
           loading="eager"
           showSkeleton

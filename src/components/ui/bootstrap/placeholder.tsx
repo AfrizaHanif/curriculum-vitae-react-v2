@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 
 export type PlaceholderSize = "xs" | "sm" | "lg";
@@ -54,8 +52,7 @@ export interface PlaceholderProps extends React.HTMLAttributes<HTMLElement> {
   height?: string | number;
 }
 
-export interface PlaceholderContainerProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface PlaceholderContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   as?: React.ElementType;
   animation?: PlaceholderAnimation;
   children: React.ReactNode;
@@ -102,7 +99,11 @@ export default function Placeholder({
 }: PlaceholderProps) {
   const colClass = col ? `col-${col}` : "";
   const sizeClass = size ? `placeholder-${size}` : "";
-  const bgClass = color ? (color.startsWith("bg-") ? color : `bg-${color}`) : "";
+  const bgClass = color
+    ? color.startsWith("bg-")
+      ? color
+      : `bg-${color}`
+    : "";
   const animClass = animation ? `placeholder-${animation}` : "";
 
   let roundedClass = "";
