@@ -93,8 +93,17 @@ export default function ProjectCard({
       <h5 className="card-title fw-bold mb-2">{project.title}</h5>
       <div className="text-muted small mb-2">
         <i className="bi bi-calendar3 me-1" />
-        {formatMonthYear(project.start_period, dateLocale, t.common.present)} &mdash;{" "}
-        {formatMonthYear(project.finish_period, dateLocale, t.common.present)}
+        <time dateTime={project.start_period}>
+          {formatMonthYear(project.start_period, dateLocale, t.common.present)}
+        </time>{" "}
+        &mdash;{" "}
+        {project.finish_period ? (
+          <time dateTime={project.finish_period}>
+            {formatMonthYear(project.finish_period, dateLocale, t.common.present)}
+          </time>
+        ) : (
+          formatMonthYear(project.finish_period, dateLocale, t.common.present)
+        )}
       </div>
       <p
         className="card-text text-muted small mb-3"

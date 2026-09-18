@@ -1,5 +1,5 @@
-export interface FormProps
-  extends React.FormHTMLAttributes<HTMLFormElement> {
+// Props
+export interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   className?: string;
   action?: string;
   method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD" | "OPTIONS";

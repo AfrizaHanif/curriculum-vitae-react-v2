@@ -61,7 +61,7 @@ function TimelineTabContent({
 
   return (
     <div className="timeline-container">
-      <div className="timeline">{children}</div>
+      <ol className="timeline">{children}</ol>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+// Props
 export interface InputCheckProps {
   type?: "checkbox" | "radio";
   label: string;
@@ -35,15 +36,12 @@ export default function InputCheck({
 }: InputCheckProps) {
   return (
     <div
-      className={[
-        "form-check",
-        inline && "form-check-inline",
-        className,
-      ]
+      className={["form-check", inline && "form-check-inline", className]
         .filter(Boolean)
         .join(" ")}
       style={style}
     >
+      {/* Input */}
       <input
         type={type}
         name={name}
@@ -56,9 +54,11 @@ export default function InputCheck({
         required={required}
         onChange={onChange}
       />
+      {/* Label */}
       <label htmlFor={id} className="form-check-label">
         {label}
       </label>
+      {/* Help Text */}
       {helpText && (
         <div id={helpTextId} className="form-text">
           {helpText}

@@ -291,13 +291,21 @@ export default function ProjectDetailModal({
             className="bg-body-tertiary text-muted border px-3 py-1 ms-auto"
           >
             <i className="bi bi-calendar3 me-1" />
-            {formatMonthYear(
-              item.start_period,
-              dateLocale,
-              t.common.present,
-            )}{" "}
+            <time dateTime={item.start_period}>
+              {formatMonthYear(
+                item.start_period,
+                dateLocale,
+                t.common.present,
+              )}
+            </time>{" "}
             &mdash;{" "}
-            {formatMonthYear(item.finish_period, dateLocale, t.common.present)}
+            {item.finish_period ? (
+              <time dateTime={item.finish_period}>
+                {formatMonthYear(item.finish_period, dateLocale, t.common.present)}
+              </time>
+            ) : (
+              formatMonthYear(item.finish_period, dateLocale, t.common.present)
+            )}
           </Badge>
         </div>
 
@@ -372,9 +380,9 @@ export default function ProjectDetailModal({
             <h6 className="fw-bold text-body-secondary text-uppercase small mb-2">
               {t.sections.projects.modal.keyFeatures}
             </h6>
-            <div className="list-group list-group-flush rounded-3 border">
+            <ul className="list-group list-group-flush rounded-3 border ps-0 mb-0">
               {features.map((feat) => (
-                <div
+                <li
                   key={feat.id}
                   className="list-group-item bg-transparent py-2"
                 >
@@ -387,9 +395,9 @@ export default function ProjectDetailModal({
                       {feat.description}
                     </div>
                   )}
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         )}
 
@@ -399,9 +407,9 @@ export default function ProjectDetailModal({
             <h6 className="fw-bold text-body-secondary text-uppercase small mb-2">
               {t.sections.projects.modal.featureProgress}
             </h6>
-            <div className="d-flex flex-column gap-2">
+            <ul className="list-unstyled d-flex flex-column gap-2 mb-0">
               {featureProjects.map((fp) => (
-                <div
+                <li
                   key={fp.id}
                   className="p-3 border rounded-3 bg-body-tertiary"
                 >
@@ -420,9 +428,9 @@ export default function ProjectDetailModal({
                     </div>
                   )}
                   <Progress value={fp.progress} color="primary" height="6px" />
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         )}
 

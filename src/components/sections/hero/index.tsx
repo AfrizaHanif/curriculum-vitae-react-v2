@@ -89,7 +89,7 @@ export default function HeroSection() {
 
                 {/* Location */}
                 {(profile.current_city || profile.current_province) && (
-                  <p className="text-white-75 small mb-4 d-flex align-items-center justify-content-center justify-content-md-start gap-1">
+                  <address className="text-white-75 small mb-4 d-flex align-items-center justify-content-center justify-content-md-start gap-1 fst-normal">
                     <i className="bi bi-geo-alt-fill text-warning" aria-hidden="true" />
                     <span>
                       {formatLocation(
@@ -97,7 +97,7 @@ export default function HeroSection() {
                         profile.current_province,
                       )}
                     </span>
-                  </p>
+                  </address>
                 )}
 
                 {/* Dual Action CTA Buttons */}

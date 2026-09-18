@@ -15,22 +15,22 @@ import CertificateGridSkeleton from "./CertificateCardSkeleton";
 import CertificateArchiveModal from "./CertificateArchiveModal";
 import { useLanguage } from "@/context/LanguageContext";
 import fallbackCertificates from "@/data/jsons/certificates.json";
+import { siteConfig } from "@/config/siteConfig";
 
 /*
   Thing that need to be improved:
   1. Featured column on API
  */
 
-const FEATURED_LIMIT = 6;
-
 export default function CertificationSection() {
   const { t } = useLanguage();
+  const featuredLimit = siteConfig.certifications.featuredLimit;
   const { data, isLoading, error } = useFetch<ApiResponse<Certificate[]>>(
     "https://api.afrizahanif.com/api/certificates?all=true",
     { fallbackData: { data: fallbackCertificates } },
   );
   const certificates = useMemo(() => data?.data ?? [], [data]);
-  const featuredCertificates = certificates.slice(0, FEATURED_LIMIT);
+  const featuredCertificates = certificates.slice(0, featuredLimit);
 
   return (
     <Section id="certifications" minFullHeight>
@@ -42,28 +42,33 @@ export default function CertificationSection() {
 
       {/* Loading / Error / Empty States */}
       {isLoading ? (
-        <CertificateGridSkeleton count={FEATURED_LIMIT} />
+        <CertificateGridSkeleton count={featuredLimit} />
       ) : error ? (
-        <Alert
-          color="danger"
-          className="mx-auto"
-          style={{ maxWidth: "600px" }}
-        >
+        <Alert color="danger" className="mx-auto" style={{ maxWidth: "600px" }}>
           {t.sections.certification.error}: {error.message}
         </Alert>
       ) : certificates.length === 0 ? (
-        <p className="text-center text-muted">{t.sections.certification.empty}</p>
+        <p className="text-center text-muted">
+          {t.sections.certification.empty}
+        </p>
       ) : (
         <>
           {/* Featured Top Certificates */}
-          <CardGrid cols={1} mdCols={2} lgCols={3} gap={4}>
+          <CardGrid
+            cols={1}
+            mdCols={2}
+            lgCols={3}
+            xlCols={3}
+            xxlCols={4}
+            gap={4}
+          >
             {featuredCertificates.map((cert) => (
               <CertificateCard key={cert.id} certificate={cert} />
             ))}
           </CardGrid>
 
           {/* Show More / View All Button trigger for Modal */}
-          {certificates.length > FEATURED_LIMIT && (
+          {certificates.length > featuredLimit && (
             <div className="text-center mt-5">
               <Button
                 color="primary"
@@ -82,7 +87,7 @@ export default function CertificationSection() {
               </Button>
               <div className="text-muted small mt-2">
                 {t.sections.certification.showingCount
-                  .replace("{limit}", FEATURED_LIMIT.toString())
+                  .replace("{limit}", featuredLimit.toString())
                   .replace("{count}", certificates.length.toString())}
               </div>
             </div>

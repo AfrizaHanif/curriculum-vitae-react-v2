@@ -1,3 +1,4 @@
+// Props
 export interface InputProps {
   type?:
     | "text"
@@ -51,11 +52,13 @@ export default function Input({
 }: InputProps) {
   return (
     <>
+      {/* Label */}
       {label && (
         <label htmlFor={id} className="form-label">
           {label}
         </label>
       )}
+      {/* Input */}
       <input
         type={type}
         name={name}
@@ -78,6 +81,7 @@ export default function Input({
         readOnly={readOnly}
         onChange={onChange}
       />
+      {/* Help Text */}
       {helpText && (
         <div id={helpTextId} className="form-text">
           {helpText}

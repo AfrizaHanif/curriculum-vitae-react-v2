@@ -274,9 +274,9 @@ export default function CaseStudyOffcanvas({
               <h6 className="fw-bold text-uppercase small text-body-secondary mb-2">
                 {t.sections.projects.caseStudy.process}
               </h6>
-              <div className="d-flex flex-column gap-2">
+              <ol className="list-unstyled d-flex flex-column gap-2 mb-0">
                 {caseStudy.progress.map((prog, idx) => (
-                  <div
+                  <li
                     key={idx}
                     className="p-3 rounded-3 bg-body-secondary border small d-flex align-items-start gap-2"
                   >
@@ -287,9 +287,9 @@ export default function CaseStudyOffcanvas({
                       {idx + 1}
                     </Badge>
                     <div className="flex-grow-1">{prog}</div>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ol>
             </div>
           )}
 
@@ -302,11 +302,11 @@ export default function CaseStudyOffcanvas({
               </h6>
               <div className="d-flex flex-column gap-3">
                 {diagramItems.map((item, idx) => (
-                  <div
+                  <figure
                     key={idx}
-                    className="border rounded-3 overflow-hidden bg-body-tertiary"
+                    className="border rounded-3 overflow-hidden bg-body-tertiary mb-0"
                   >
-                    <div className="p-2 px-3 border-bottom d-flex justify-content-between align-items-center bg-body-secondary">
+                    <figcaption className="p-2 px-3 border-bottom d-flex justify-content-between align-items-center bg-body-secondary">
                       <span className="small fw-semibold d-flex align-items-center gap-2">
                         <i className={`bi ${item.icon} text-primary`} />
                         {item.label}
@@ -323,7 +323,7 @@ export default function CaseStudyOffcanvas({
                         <span>{t.sections.projects.caseStudy.fullImage}</span>
                         <i className="bi bi-box-arrow-up-right small" />
                       </Button>
-                    </div>
+                    </figcaption>
                     <div className="p-2 text-center bg-white">
                       <a
                         href={item.src}
@@ -347,7 +347,7 @@ export default function CaseStudyOffcanvas({
                         />
                       </a>
                     </div>
-                  </div>
+                  </figure>
                 ))}
               </div>
             </div>

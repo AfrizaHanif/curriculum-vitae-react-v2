@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
+import { siteConfig } from "@/config/siteConfig";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://afrizahanif.com";
+  const baseUrl = siteConfig.site.url;
 
   return [
     {

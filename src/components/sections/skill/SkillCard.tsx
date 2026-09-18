@@ -65,7 +65,7 @@ export default function SkillCard({ skill, currentYear }: SkillCardProps) {
             style={{ cursor: "pointer" }}
           >
             <i className="bi bi-calendar-check text-primary" />
-            <span>{sinceText}</span>
+            <time dateTime={skill.since.toString()}>{sinceText}</time>
           </small>
         </Tooltip>
         <Badge pill className={`px-2 py-1 small ${levelCfg.badgeClass}`}>

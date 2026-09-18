@@ -12,6 +12,7 @@ import Card from "@/components/ui/bootstrap/card";
 import Alert from "@/components/ui/bootstrap/alert";
 import Badge from "@/components/ui/bootstrap/badge";
 import { useLanguage } from "@/context/LanguageContext";
+import { siteConfig } from "@/config/siteConfig";
 
 export default function ContactForm() {
   const { t } = useLanguage();
@@ -26,7 +27,7 @@ export default function ContactForm() {
   const charCount = trimmedMessage.length;
   const wordCount = trimmedMessage ? trimmedMessage.split(/\s+/).length : 0;
 
-  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  const recaptchaSiteKey = siteConfig.contact.recaptchaSiteKey;
   const isRecaptchaConfigured =
     Boolean(recaptchaSiteKey) &&
     recaptchaSiteKey !== "your_recaptcha_site_key_here";
@@ -39,8 +40,8 @@ export default function ContactForm() {
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const formId = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID;
-    const isMock = process.env.NEXT_PUBLIC_MOCK_SUBMISSION === "true";
+    const formId = siteConfig.contact.formspreeFormId;
+    const isMock = siteConfig.contact.isMockSubmission;
     const isPlaceholder =
       !formId || formId === "your_form_id_here" || formId.trim() === "";
 

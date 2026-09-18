@@ -4,6 +4,7 @@ import NextImage from "@/components/ui/react/image";
 import placeholderProfile from "@/assets/images/placeholders/placeholder-profile.png";
 import "./AboutAvatar.css";
 
+// AboutAvatar's Props
 interface AboutAvatarProps {
   photo?: string | null;
   fullname?: string | null;
@@ -12,7 +13,6 @@ interface AboutAvatarProps {
 export default function AboutAvatar({ photo, fullname }: AboutAvatarProps) {
   return (
     <div className="about-avatar-container position-relative">
-      {/* Outer Glassmorphic Frame dari Hero */}
       <div className="p-2 shadow-lg about-avatar-frame">
         <div className="about-avatar-img-wrapper">
           <NextImage
@@ -24,8 +24,6 @@ export default function AboutAvatar({ photo, fullname }: AboutAvatarProps) {
             }
             width={600}
             height={750}
-            // placeholder="blur"
-            // blurDataURL={getShimmerDataUrl(600, 750)}
             showSkeleton
             enableZoom
             modalTitle={fullname || "Profile Photo"}

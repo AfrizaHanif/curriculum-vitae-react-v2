@@ -82,7 +82,7 @@ export function ProjectCardSkeleton() {
 
 export default function ProjectGridSkeleton({ count = 3 }: { count?: number }) {
   return (
-    <CardGrid lgCols={3} mdCols={2} smCols={1}>
+    <CardGrid xxlCols={4} xlCols={3} lgCols={3} mdCols={2} smCols={1}>
       {Array.from({ length: count }).map((_, idx) => (
         <ProjectCardSkeleton key={idx} />
       ))}

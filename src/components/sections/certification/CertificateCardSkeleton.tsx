@@ -48,9 +48,13 @@ export function CertificateCardSkeleton() {
   );
 }
 
-export default function CertificateGridSkeleton({ count = 6 }: { count?: number }) {
+export default function CertificateGridSkeleton({
+  count = 6,
+}: {
+  count?: number;
+}) {
   return (
-    <CardGrid lgCols={3} mdCols={2} smCols={1} gap={4}>
+    <CardGrid xxlCols={4} xlCols={3} lgCols={3} mdCols={2} smCols={1} gap={4}>
       {Array.from({ length: count }).map((_, idx) => (
         <CertificateCardSkeleton key={idx} />
       ))}

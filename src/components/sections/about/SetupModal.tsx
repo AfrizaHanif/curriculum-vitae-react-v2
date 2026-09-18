@@ -25,8 +25,9 @@ export default function SetupModal({
 }: SetupModalProps) {
   const { t } = useLanguage();
 
+  // Accordion Items
   const setupItems: AccordionItemProps[] = useMemo(() => {
-    // Kelompokkan item per kategori
+    // Group items by category
     const grouped = setups.reduce<Record<string, Setup[]>>((acc, item) => {
       const cat = item.category || "General";
       if (!acc[cat]) acc[cat] = [];
@@ -34,6 +35,7 @@ export default function SetupModal({
       return acc;
     }, {});
 
+    // Map items to accordion items
     return Object.entries(grouped).map(([category, items], index) => ({
       id: `setup-cat-${index}`,
       title: `${category} (${items.length})`,
@@ -84,6 +86,7 @@ export default function SetupModal({
         </div>
       ) : (
         <div className="row g-4">
+          {/* Workspace Setup Image */}
           <div className="col-12 col-md-6">
             {setupImage && (
               <div className="sticky-md-top mb-4 mb-md-0" style={{ top: 0 }}>
@@ -116,6 +119,7 @@ export default function SetupModal({
               </div>
             )}
           </div>
+          {/* Setup Items */}
           <div className="col-12 col-md-6">
             <Accordion item={setupItems} />
           </div>

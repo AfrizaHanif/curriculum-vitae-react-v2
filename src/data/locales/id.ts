@@ -283,4 +283,9 @@ export const id: TranslationSchema = {
     scrollToTop: "Kembali ke Atas",
     pageLoader: "Memuat halaman...",
   },
+  resume: {
+    back: "Kembali",
+    originalPdf: "PDF Asli",
+    printPdf: "Cetak / PDF",
+  },
 };

@@ -18,7 +18,7 @@ export default function SectionHeader({
   children,
 }: SectionHeaderProps) {
   return (
-    <div className={className}>
+    <header className={className}>
       {typeof title === "string" ? (
         <h2 className={titleClassName}>{title}</h2>
       ) : (
@@ -32,6 +32,6 @@ export default function SectionHeader({
         )
       )}
       {children}
-    </div>
+    </header>
   );
 }

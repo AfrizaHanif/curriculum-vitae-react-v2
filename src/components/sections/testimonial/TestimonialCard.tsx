@@ -20,46 +20,48 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
         aria-hidden="true"
       />
 
-      <div>
-        {/* 5 Stars Rating */}
-        <div
-          className="d-flex align-items-center gap-1 text-warning mb-3"
-          role="img"
-          aria-label="5 out of 5 stars"
-        >
-          {[...Array(5)].map((_, i) => (
-            <i key={i} className="bi bi-star-fill small" aria-hidden="true" />
-          ))}
-        </div>
-
-        {/* Testimonial Quote Content */}
-        {testimonial.content && (
-          <p
-            className="text-body fst-italic mb-4"
-            style={{ lineHeight: "1.7", fontSize: "1.05rem" }}
+      <figure className="mb-0 d-flex flex-column h-100 justify-content-between">
+        <div>
+          {/* 5 Stars Rating */}
+          <div
+            className="d-flex align-items-center gap-1 text-warning mb-3"
+            role="img"
+            aria-label="5 out of 5 stars"
           >
-            &ldquo;{testimonial.content}&rdquo;
-          </p>
-        )}
-      </div>
+            {[...Array(5)].map((_, i) => (
+              <i key={i} className="bi bi-star-fill small" aria-hidden="true" />
+            ))}
+          </div>
 
-      {/* Author Footer Info */}
-      <div className="d-flex align-items-center gap-3 pt-3 border-top mt-auto">
-        <div
-          className="rounded-circle bg-primary-subtle text-primary border border-primary-subtle d-flex align-items-center justify-content-center fw-bold fs-5 flex-shrink-0"
-          style={{ width: 48, height: 48 }}
-        >
-          {testimonial.name.charAt(0)}
+          {/* Testimonial Quote Content */}
+          {testimonial.content && (
+            <blockquote
+              className="blockquote text-body fst-italic mb-4"
+              style={{ lineHeight: "1.7", fontSize: "1.05rem" }}
+            >
+              &ldquo;{testimonial.content}&rdquo;
+            </blockquote>
+          )}
         </div>
-        <div className="min-w-0">
-          <h6 className="fw-bold text-body mb-0 text-truncate">
-            {testimonial.name}
-          </h6>
-          <small className="text-body-secondary d-block text-truncate">
-            {testimonial.role}
-          </small>
-        </div>
-      </div>
+
+        {/* Author Footer Info */}
+        <figcaption className="d-flex align-items-center gap-3 pt-3 border-top mt-auto">
+          <div
+            className="rounded-circle bg-primary-subtle text-primary border border-primary-subtle d-flex align-items-center justify-content-center fw-bold fs-5 flex-shrink-0"
+            style={{ width: 48, height: 48 }}
+          >
+            {testimonial.name.charAt(0)}
+          </div>
+          <div className="min-w-0">
+            <cite className="fw-bold text-body mb-0 text-truncate d-block fst-normal">
+              {testimonial.name}
+            </cite>
+            <small className="text-body-secondary d-block text-truncate">
+              {testimonial.role}
+            </small>
+          </div>
+        </figcaption>
+      </figure>
     </Card>
   );
 }

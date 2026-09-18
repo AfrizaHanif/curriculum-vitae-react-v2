@@ -8,21 +8,11 @@ import React, {
   useCallback,
 } from "react";
 
-export interface SectionConfigItem {
-  id: string;
-  icon: string;
-}
+import { siteConfig, type SectionConfigItem } from "@/config/siteConfig";
+export type { SectionConfigItem };
 
-export const SECTION_CONFIG: readonly SectionConfigItem[] = [
-  { id: "hero", icon: "bi-house-door" },
-  { id: "about", icon: "bi-person" },
-  { id: "skills", icon: "bi-tools" },
-  { id: "projects", icon: "bi-code-square" },
-  { id: "edu-exp", icon: "bi-briefcase" },
-  { id: "certifications", icon: "bi-award" },
-  { id: "testimonials", icon: "bi-chat-quote" },
-  { id: "contact", icon: "bi-envelope" },
-] as const;
+export const SECTION_CONFIG: readonly SectionConfigItem[] =
+  siteConfig.navigation.sections;
 
 export const SECTION_IDS = SECTION_CONFIG.map((s) => s.id);
 
@@ -126,16 +116,18 @@ export function NavigationProvider({
     const element = document.getElementById(id);
     if (!element) return;
 
-    // --- Option B (Active): Update URL hash for deep-linking & browser history ---
-    // if (window.location.hash !== `#${id}`) {
-    //   window.history.pushState(null, "", `#${id}`);
-    // }
-
-    // --- Option A (Clean URL): If recruiter/client wants to hide '#' from the URL:
-    // 1. Comment out the window.history.pushState block above.
-    // 2. (Optional) Uncomment the line below to strip any remaining hash:
-    if (window.location.hash)
-      window.history.replaceState(null, "", window.location.pathname);
+    // Update URL hash or keep clean URL based on siteConfig.navigation.updateUrlHash
+    if (siteConfig.navigation.updateUrlHash) {
+      if (window.location.hash !== `#${id}`) {
+        window.history.pushState(null, "", `#${id}`);
+      }
+    } else if (window.location.hash) {
+      window.history.replaceState(
+        null,
+        "",
+        window.location.pathname + window.location.search,
+      );
+    }
 
     const currentScrollY = window.scrollY;
     const targetY = element.getBoundingClientRect().top + currentScrollY;

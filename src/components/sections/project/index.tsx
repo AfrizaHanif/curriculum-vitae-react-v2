@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState, ReactNode } from "react";
+import { useMemo, useState, useCallback, Suspense, ReactNode } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useFetch } from "@/hooks/useFetch";
 import Section from "@/components/ui/customs/section";
 import SectionHeader from "@/components/ui/customs/section-header";
@@ -18,6 +19,8 @@ import dynamic from "next/dynamic";
 import PortfolioCard from "./PortfolioCard";
 import ProjectCard from "./ProjectCard";
 import ProjectGridSkeleton from "./ProjectCardSkeleton";
+import ProjectFilterBar from "./ProjectFilterBar";
+import { matchCategory, matchTechnology, matchTag } from "./project-utils";
 const CaseStudyOffcanvas = dynamic(() => import("./CaseStudyOffcanvas"), {
   ssr: false,
 });
@@ -35,8 +38,7 @@ import fallbackFeatureProjects from "@/data/jsons/feature-projects.json";
 import fallbackCaseStudies from "@/data/jsons/case-studies.json";
 import fallbackDiagrams from "@/data/jsons/diagrams.json";
 import fallbackSolutions from "@/data/jsons/solutions.json";
-
-const DESKTOP_ITEMS_PER_PAGE = 3;
+import { siteConfig } from "@/config/siteConfig";
 
 function chunkArray<T>(arr: T[], size: number): T[][] {
   if (size <= 0) return [arr];
@@ -89,7 +91,7 @@ function ShowcaseTabContent<T extends { id: string | number }>({
 
   if (items.length <= itemsPerPage) {
     return (
-      <CardGrid lgCols={3} mdCols={2} smCols={1}>
+      <CardGrid xxlCols={4} xlCols={3} lgCols={3} mdCols={2} smCols={1}>
         {items.map((item) => renderCard(item))}
       </CardGrid>
     );
@@ -106,7 +108,7 @@ function ShowcaseTabContent<T extends { id: string | number }>({
     >
       {chunks.map((chunk, slideIdx) => (
         <div key={slideIdx} className="px-1 py-2">
-          <CardGrid lgCols={3} mdCols={2} smCols={1}>
+          <CardGrid xxlCols={4} xlCols={3} lgCols={3} mdCols={2} smCols={1}>
             {chunk.map((item) => renderCard(item))}
           </CardGrid>
         </div>
@@ -115,8 +117,40 @@ function ShowcaseTabContent<T extends { id: string | number }>({
   );
 }
 
-export default function ProjectSection() {
+function ProjectSectionContent() {
   const { t } = useLanguage();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // URL query params
+  const currentCategory = (searchParams.get("category") || "all").toLowerCase();
+  const currentTech = (searchParams.get("tech") || "").toLowerCase();
+  const currentTag = (searchParams.get("tag") || "").toLowerCase();
+
+  const setFilterParam = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (!value || value.toLowerCase() === "all") {
+        params.delete(name);
+      } else {
+        params.set(name, value.toLowerCase());
+      }
+      const qs = params.toString();
+      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    },
+    [pathname, router, searchParams],
+  );
+
+  const resetFilters = useCallback(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("category");
+    params.delete("tech");
+    params.delete("tag");
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+  }, [pathname, router, searchParams]);
+
   const {
     data: dataPortfolio,
     isLoading: isLoadingPortfolio,
@@ -263,16 +297,101 @@ export default function ProjectSection() {
     setShowCaseStudy(true);
   };
 
-  const itemsPerPage = useResponsiveItemsPerPage(DESKTOP_ITEMS_PER_PAGE);
+  const itemsPerPage = useResponsiveItemsPerPage(
+    siteConfig.projects.itemsPerPage,
+  );
+
+  // Available technologies across portfolios and projects
+  const availableTechs = useMemo(() => {
+    const techSet = new Set<string>();
+    portfolios.forEach((p) => p.technology?.forEach((t) => techSet.add(t)));
+    projects.forEach((p) => p.technology?.forEach((t) => techSet.add(t)));
+    return Array.from(techSet).sort((a, b) => a.localeCompare(b));
+  }, [portfolios, projects]);
+
+  // Available tags across portfolios and projects
+  const availableTags = useMemo(() => {
+    const tagSet = new Set<string>();
+    portfolios.forEach((p) => p.tags?.forEach((t) => tagSet.add(t)));
+    projects.forEach((p) => p.tags?.forEach((t) => tagSet.add(t)));
+    return Array.from(tagSet).sort((a, b) => a.localeCompare(b));
+  }, [portfolios, projects]);
+
+  // Filtered lists based on URL query params
+  const filteredPortfolios = useMemo(() => {
+    return portfolios.filter(
+      (item) =>
+        matchCategory(item, currentCategory) &&
+        matchTechnology(item, currentTech) &&
+        matchTag(item, currentTag),
+    );
+  }, [portfolios, currentCategory, currentTech, currentTag]);
+
+  const filteredProjects = useMemo(() => {
+    return projects.filter(
+      (item) =>
+        matchCategory(item, currentCategory) &&
+        matchTechnology(item, currentTech) &&
+        matchTag(item, currentTag),
+    );
+  }, [projects, currentCategory, currentTech, currentTag]);
+
+  // Dynamic category options with counts
+  const categoryOptions = useMemo(() => {
+    const combined = [...portfolios, ...projects];
+    const baseCategories = [
+      { key: "all", label: "All", count: combined.length },
+      {
+        key: "fullstack",
+        label: "Full-Stack",
+        count: combined.filter((item) => matchCategory(item, "fullstack"))
+          .length,
+      },
+      {
+        key: "backend",
+        label: "Backend / API",
+        count: combined.filter((item) => matchCategory(item, "backend")).length,
+      },
+      {
+        key: "frontend",
+        label: "Front-End",
+        count: combined.filter((item) => matchCategory(item, "frontend"))
+          .length,
+      },
+      {
+        key: "mobile",
+        label: "Mobile",
+        count: combined.filter((item) => matchCategory(item, "mobile")).length,
+      },
+    ];
+
+    const activeList = baseCategories.filter(
+      (c) => c.key === "all" || c.count > 0,
+    );
+
+    if (
+      currentCategory !== "all" &&
+      !activeList.some((c) => c.key === currentCategory)
+    ) {
+      activeList.push({
+        key: currentCategory,
+        label: currentCategory,
+        count: combined.filter((item) => matchCategory(item, currentCategory))
+          .length,
+      });
+    }
+
+    return activeList;
+  }, [portfolios, projects, currentCategory]);
 
   const portfolioChunks = useMemo(
-    () => chunkArray(portfolios, itemsPerPage),
-    [portfolios, itemsPerPage],
+    () => chunkArray(filteredPortfolios, itemsPerPage),
+    [filteredPortfolios, itemsPerPage],
   );
 
   const projectChunks = useMemo(
-    () => chunkArray(projects, itemsPerPage),
-    [projects, itemsPerPage],
+    () => chunkArray(filteredProjects, itemsPerPage),
+    [filteredProjects, itemsPerPage],
   );
 
   // Selected item for Dynamic Detail Modal
@@ -302,7 +421,7 @@ export default function ProjectSection() {
       content: (
         <ShowcaseTabContent
           carouselId="portfolio-content-carousel"
-          items={portfolios}
+          items={filteredPortfolios}
           chunks={portfolioChunks}
           itemsPerPage={itemsPerPage}
           isLoading={isLoadingPortfolio}
@@ -327,7 +446,7 @@ export default function ProjectSection() {
       content: (
         <ShowcaseTabContent
           carouselId="project-content-carousel"
-          items={projects}
+          items={filteredProjects}
           chunks={projectChunks}
           itemsPerPage={itemsPerPage}
           isLoading={isLoadingProject}
@@ -356,6 +475,28 @@ export default function ProjectSection() {
       />
 
       <div className="mt-4">
+        {/* Project & Portfolio Category, Tech, and Tags Filter Bar */}
+        <ProjectFilterBar
+          categories={categoryOptions}
+          activeCategory={currentCategory}
+          onSelectCategory={(cat) => setFilterParam("category", cat)}
+          availableTechs={availableTechs}
+          activeTech={currentTech}
+          onSelectTech={(tech) => setFilterParam("tech", tech)}
+          availableTags={availableTags}
+          activeTag={currentTag}
+          onSelectTag={(tag) => setFilterParam("tag", tag)}
+          onReset={resetFilters}
+          totalFiltered={filteredPortfolios.length + filteredProjects.length}
+          totalAll={portfolios.length + projects.length}
+          filterAllLabel={
+            t.sections.skills.filterAll
+              ? `${t.sections.skills.filterAll} Categories`
+              : "All Categories"
+          }
+          className="mb-4"
+        />
+
         <NavTab
           id="projects-tabs"
           items={tabItems}
@@ -416,5 +557,13 @@ export default function ProjectSection() {
         }}
       />
     </Section>
+  );
+}
+
+export default function ProjectSection() {
+  return (
+    <Suspense fallback={<ProjectGridSkeleton count={3} />}>
+      <ProjectSectionContent />
+    </Suspense>
   );
 }

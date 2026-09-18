@@ -40,15 +40,6 @@ export default function TimelineItem({
     : t.sections.eduExp.timeline.present;
   const isSameYear = startYear === finishYear;
   const yearLabel = isSameYear ? startYear : `${startYear} — ${finishYear}`;
-  const periodLabel = `${formatMonthYear(
-    item.start_period,
-    dateLocale,
-    t.sections.eduExp.timeline.present,
-  )} — ${formatMonthYear(
-    item.finish_period,
-    dateLocale,
-    t.sections.eduExp.timeline.present,
-  )}`;
 
   const hasCoordinates = Boolean(
     item.latitude &&
@@ -58,14 +49,14 @@ export default function TimelineItem({
   );
 
   return (
-    <div className="timeline-item">
+    <li className="timeline-item">
       {/* Circle marker */}
       <div className="timeline-dot" aria-hidden="true">
         <i className={`bi ${icon}`} />
       </div>
 
       {/* Content Card */}
-      <div className="timeline-card">
+      <article className="timeline-card">
         <div className="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
           {/* Year Badge */}
           <Badge
@@ -102,13 +93,31 @@ export default function TimelineItem({
           </span>
           <span>
             <i className="bi bi-clock-history me-1" />
-            {periodLabel}
+            <time dateTime={item.start_period}>
+              {formatMonthYear(
+                item.start_period,
+                dateLocale,
+                t.sections.eduExp.timeline.present,
+              )}
+            </time>
+            {" "}&mdash;{" "}
+            {item.finish_period ? (
+              <time dateTime={item.finish_period}>
+                {formatMonthYear(
+                  item.finish_period,
+                  dateLocale,
+                  t.sections.eduExp.timeline.present,
+                )}
+              </time>
+            ) : (
+              t.sections.eduExp.timeline.present
+            )}
           </span>
           {item.address && (
-            <span title={item.address}>
+            <address className="d-inline fst-normal mb-0" title={item.address}>
               <i className="bi bi-geo-alt me-1" />
               {item.address}
-            </span>
+            </address>
           )}
           {hasCoordinates && (
             <Button
@@ -137,7 +146,7 @@ export default function TimelineItem({
         ) : item.description ? (
           <p className="mb-0 text-secondary">{item.description}</p>
         ) : null}
-      </div>
-    </div>
+      </article>
+    </li>
   );
 }

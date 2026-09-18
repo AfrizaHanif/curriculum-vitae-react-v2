@@ -57,7 +57,15 @@ export default function SkillSection() {
         ),
         content:
           lvlSkills.length > 0 ? (
-            <CardGrid lgCols={4} mdCols={3} smCols={2} cols={1} gap={3}>
+            <CardGrid
+              xxlCols={5}
+              xlCols={4}
+              lgCols={4}
+              mdCols={3}
+              smCols={2}
+              cols={1}
+              gap={3}
+            >
               {lvlSkills.map((skill) => (
                 <SkillCard
                   key={skill.id}

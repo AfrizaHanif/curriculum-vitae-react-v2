@@ -43,8 +43,8 @@
   transition: background-color 0.3s ease;
 }
 
-main
-  section:nth-child(odd of section:not(#hero):not(#contact))
+main#main-content
+  > section:nth-child(odd of section:not(#hero):not(#contact))
   + #contact
   .contact-top-fade {
   background-color: var(--bs-body-bg);

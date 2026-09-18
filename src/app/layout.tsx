@@ -3,25 +3,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./globals.css";
 import BootstrapClient from "@/components/BootstrapClient";
-import Header from "@/components/layouts/header";
-// import Footer from "@/components/layouts/footer";
-import SideNav from "@/components/ui/customs/side-nav";
-import ScrollToTop from "@/components/ui/customs/scroll-to-top";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { ThemeProvider } from "@/context/ThemeContext";
-import { NavigationProvider } from "@/context/NavigationContext";
+import { siteConfig } from "@/config/siteConfig";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://afrizahanif.com";
+// Site URL
+const siteUrl = siteConfig.site.url;
 
+// Metadata
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default:
-      "Muhammad Afriza Hanif | Web Developer & Software Engineer Portfolio",
-    template: "%s | Muhammad Afriza Hanif",
+    default: `${siteConfig.site.name} | Web Developer & Software Engineer Portfolio`,
+    template: `%s | ${siteConfig.site.name}`,
   },
-  description:
-    "Curriculum Vitae & Professional Portfolio of Muhammad Afriza Hanif. Web Developer specializing in modern frontend, React, Next.js, and web application solutions.",
+  description: siteConfig.site.description,
   keywords: [
     "Muhammad Afriza Hanif",
     "Web Developer",
@@ -33,32 +29,32 @@ export const metadata: Metadata = {
     "Portofolio",
     "Curriculum Vitae",
   ],
-  authors: [{ name: "Muhammad Afriza Hanif", url: siteUrl }],
-  creator: "Muhammad Afriza Hanif",
+  authors: [{ name: siteConfig.site.name, url: siteUrl }],
+  creator: siteConfig.site.name,
   openGraph: {
     type: "profile",
     locale: "en_US",
     alternateLocale: ["id_ID"],
     url: siteUrl,
-    title: "Muhammad Afriza Hanif | Web Developer Portfolio",
+    title: `${siteConfig.site.name} | Web Developer Portfolio`,
     description:
       "Explore projects, verified certifications, and professional background of Muhammad Afriza Hanif.",
-    siteName: "Muhammad Afriza Hanif Portfolio",
+    siteName: `${siteConfig.site.name} Portfolio`,
     images: [
       {
-        url: "https://api.afrizahanif.com/api/storage/images/Profile.jpg",
+        url: siteConfig.site.profileImage,
         width: 1200,
         height: 630,
-        alt: "Muhammad Afriza Hanif Portfolio Preview",
+        alt: `${siteConfig.site.name} Portfolio Preview`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Muhammad Afriza Hanif | Web Developer Portfolio",
+    title: `${siteConfig.site.name} | Web Developer Portfolio`,
     description:
       "Explore projects, verified certifications, and professional background of Muhammad Afriza Hanif.",
-    images: ["https://api.afrizahanif.com/api/storage/images/Profile.jpg"],
+    images: [siteConfig.site.profileImage],
   },
   alternates: {
     canonical: "/",
@@ -69,33 +65,41 @@ export const metadata: Metadata = {
   },
 };
 
+// JSON-LD
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Muhammad Afriza Hanif",
-  url: "https://afrizahanif.com",
-  image: "https://api.afrizahanif.com/api/storage/images/Profile.jpg",
-  jobTitle: "Web Developer",
+  name: siteConfig.site.name,
+  url: siteConfig.site.url,
+  image: siteConfig.site.profileImage,
+  jobTitle: siteConfig.site.jobTitle,
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Sidoarjo",
-    addressRegion: "Jawa Timur",
-    addressCountry: "ID",
+    addressLocality: siteConfig.site.address.locality,
+    addressRegion: siteConfig.site.address.region,
+    addressCountry: siteConfig.site.address.country,
   },
   alumniOf: {
     "@type": "CollegeOrUniversity",
-    name: "Universitas Dinamika",
+    name: siteConfig.site.alumniOf,
   },
-  sameAs: [
-    "https://github.com/afrizahanif",
-    "https://linkedin.com/in/afrizahanif",
-  ],
+  sameAs: [siteConfig.site.socials.github, siteConfig.site.socials.linkedin],
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout(
+  // { children }: LayoutProps<"/">
+  { children }: { children: React.ReactNode },
+) {
   return (
-    <html lang="en" data-bs-theme="auto" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-bs-theme="auto"
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <head>
+        {/* Scripts (Exclusively on Head) */}
+        {/* Theme Detection (Vanilla Script) */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -111,6 +115,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             `,
           }}
         />
+        {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -119,25 +124,21 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <ThemeProvider>
           <LanguageProvider>
+            <BootstrapClient />
             {/* <PageLoader /> */}
-            <NavigationProvider>
-              <BootstrapClient />
-              <a
-                href="#main-content"
-                className="visually-hidden-focusable position-fixed top-0 start-0 m-3 btn btn-primary z-3"
-              >
-                Skip to main content
-              </a>
-              <Header />
-              <main id="main-content">
-                {children}
-              </main>
-              <SideNav />
-              <ScrollToTop />
-            </NavigationProvider>
+            {children}
           </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
   );
 }
+
+/*
+  Notes
+  - This is a global layout. The router will render the page inside this layout.
+  - Do not change the HTML code (Except when adding provider, or layout component (Like Header, Sidebar, or Footer))
+  - Do not edit meta, json-ld, or scripts tag, unless if there's a need to update
+  - Only put `<script>` tags before `</body>` for heavy executable JavaScript files (e.g., third-party widgets, analytics, large bundles) to prevent them from blocking HTML rendering.
+  - Only put `<script>` tags in `<head>` if the script is required for the page to function (e.g., theme detection, polyfills, essential third-party scripts).
+*/

@@ -276,6 +276,11 @@ export const en = {
     scrollToTop: "Back to Top",
     pageLoader: "Loading page...",
   },
+  resume: {
+    back: "Back",
+    originalPdf: "Original PDF",
+    printPdf: "Print / PDF",
+  },
 };
 
 export type TranslationSchema = typeof en;

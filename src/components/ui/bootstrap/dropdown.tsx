@@ -56,6 +56,8 @@ export type DropdownProps = DropdownDataSource & {
   offset?: [number, number] | string | (() => [number, number]);
 };
 
+const DEFAULT_OFFSET: [number, number] = [0, 2];
+
 const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
   function Dropdown(
     {
@@ -77,7 +79,7 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
       autoClose = true,
       boundary = "clippingParents",
       reference = "toggle",
-      offset = [0, 2],
+      offset = DEFAULT_OFFSET,
       "aria-label": ariaLabel,
     },
     ref,
@@ -106,30 +108,40 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
       const toggleEl = container.querySelector('[data-bs-toggle="dropdown"]');
       if (!toggleEl) return;
 
+      let isMounted = true;
       let dropdownInstance: BootstrapDropdown | null = null;
 
       // Dynamically import Bootstrap to prevent SSR errors in Next.js
       import("bootstrap").then((bootstrap) => {
-        if (!document.body.contains(toggleEl)) return;
+        if (!isMounted || !document.body.contains(toggleEl)) return;
 
-        // Clean up any existing instances on this element
-        const existing = bootstrap.Dropdown.getInstance(toggleEl);
-        if (existing) {
-          existing.dispose();
+        try {
+          // Clean up any existing instances on this element
+          const existing = bootstrap.Dropdown.getInstance(toggleEl);
+          if (existing) {
+            existing.dispose();
+          }
+
+          dropdownInstance = new bootstrap.Dropdown(toggleEl, {
+            autoClose,
+            boundary,
+            reference,
+            offset,
+          });
+          dropdownInstanceRef.current = dropdownInstance;
+        } catch {
+          // Ignore lifecycle teardown errors
         }
-
-        dropdownInstance = new bootstrap.Dropdown(toggleEl, {
-          autoClose,
-          boundary,
-          reference,
-          offset,
-        });
-        dropdownInstanceRef.current = dropdownInstance;
       });
 
       return () => {
+        isMounted = false;
         if (dropdownInstance) {
-          dropdownInstance.dispose();
+          try {
+            dropdownInstance.dispose();
+          } catch {
+            // Ignore lifecycle teardown errors
+          }
         }
         if (dropdownInstanceRef.current === dropdownInstance) {
           dropdownInstanceRef.current = null;

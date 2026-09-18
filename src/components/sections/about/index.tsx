@@ -101,12 +101,12 @@ export default function AboutSection() {
               {/* Philosophy Quote Card */}
               {profile.philosophy && (
                 <Card className="bg-body-tertiary border-0 border-start border-primary border-4 p-1 rounded-3 mb-4 shadow-sm">
-                  <div className="d-flex align-items-start gap-2">
-                    <i className="bi bi-quote fs-3 text-primary opacity-50 lh-1" />
-                    <p className="fst-italic text-body mb-0">
+                  <figure className="mb-0 d-flex align-items-start gap-2">
+                    <i className="bi bi-quote fs-3 text-primary opacity-50 lh-1" aria-hidden="true" />
+                    <blockquote className="blockquote fst-italic text-body mb-0 fs-6">
                       &ldquo;{profile.philosophy}&rdquo;
-                    </p>
-                  </div>
+                    </blockquote>
+                  </figure>
                 </Card>
               )}
             </div>

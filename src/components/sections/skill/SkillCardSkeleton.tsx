@@ -41,7 +41,15 @@ export function SkillCardSkeleton() {
 
 export default function SkillGridSkeleton({ count = 8 }: { count?: number }) {
   return (
-    <CardGrid lgCols={4} mdCols={3} smCols={2} cols={1} gap={3}>
+    <CardGrid
+      xxlCols={5}
+      xlCols={4}
+      lgCols={4}
+      mdCols={3}
+      smCols={2}
+      cols={1}
+      gap={3}
+    >
       {Array.from({ length: count }).map((_, idx) => (
         <SkillCardSkeleton key={idx} />
       ))}

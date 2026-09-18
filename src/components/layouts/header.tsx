@@ -16,7 +16,12 @@ import Button from "../ui/bootstrap/button";
 import logoWhite from "@/assets/images/logo/logo-only-white.png";
 import logoBlack from "@/assets/images/logo/logo-only-black.png";
 
-export default function Header() {
+// Header's Props
+interface HeaderProps {
+  className?: string;
+}
+
+export default function Header({ className = "" }: HeaderProps) {
   const { t } = useLanguage();
   const { activeSection, availableSections, sectionConfig, scrollToSection } =
     useNavigation();
@@ -26,12 +31,14 @@ export default function Header() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
 
+  // Fetch API Data
   const { data } = useFetch<ProfileApiResponse>(
     `https://api.afrizahanif.com/api/profiles`,
     { fallbackData: { data: fallbackProfiles } },
   );
   const profile = data?.data?.[0];
 
+  // Resize Observer (For Dynamic Header Height)
   useEffect(() => {
     if (!headerRef.current) return;
 
@@ -50,6 +57,7 @@ export default function Header() {
     return () => observer.disconnect();
   }, []);
 
+  // Scroll Effect (Auto-Hide Header)
   useEffect(() => {
     let lastScrollY = window.scrollY;
     let ticking = false;
@@ -80,22 +88,25 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Navigation Handler (For Offcanvas Menu)
   const handleNavClick = (id: string) => {
     setShowOffcanvas(false);
     scrollToSection(id);
   };
 
+  // Visible Menu Items (Filter from availableSections)
   const visibleMenuItems = sectionConfig.filter((cfg) =>
     availableSections.length > 0 ? availableSections.includes(cfg.id) : true,
   );
 
   return (
     <>
+      {/* Main Header */}
       <div
         ref={headerRef}
         className={`smart-header fixed-top ${
           isVisible ? "header-visible" : "header-hidden"
-        } ${isScrolled ? "shadow-sm scrolled" : ""}`}
+        } ${isScrolled ? "shadow-sm scrolled" : ""} ${className}`}
       >
         <div className="container">
           <header className="d-flex align-items-center justify-content-between py-3">
@@ -128,17 +139,19 @@ export default function Header() {
             {/* Desktop Navigation (Screens >= 1200px / xl) */}
             <div className="d-none d-xl-flex align-items-center gap-2">
               {profile?.resume && (
-                <Button
-                  as="a"
-                  href={profile.resume}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  color="outline-secondary"
-                  rounded
-                  className="px-3"
-                >
-                  {t.header.viewCv}
-                </Button>
+                <Link href="/resume">
+                  <Button
+                    // as="a"
+                    // href={profile.resume}
+                    // target="_blank"
+                    // rel="noopener noreferrer"
+                    color="outline-secondary"
+                    rounded
+                    className="px-3"
+                  >
+                    {t.header.viewCv}
+                  </Button>
+                </Link>
               )}
               <Button
                 type="button"

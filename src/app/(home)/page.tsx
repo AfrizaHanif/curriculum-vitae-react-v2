@@ -29,3 +29,9 @@ export default function Home() {
     </>
   );
 }
+
+/*
+  Notes
+  - For landing page, below-the-fold is usually last 3-5 sections. Use <dynamic> to import those sections (except when importing sections that are already imported). Do not add ssr: false.
+  - Sections should be ordered from top to bottom (from above-the-fold to below-the-fold).
+*/

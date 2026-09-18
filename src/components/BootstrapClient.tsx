@@ -48,6 +48,31 @@ export default function BootstrapClient() {
           }
         };
       }
+
+      // Patch Bootstrap Tooltip lifecycle issues for React SPA / Next.js
+      const Tooltip = bootstrap.Tooltip;
+      if (
+        Tooltip &&
+        !(Tooltip as unknown as { __reactPatched?: boolean }).__reactPatched
+      ) {
+        (Tooltip as unknown as { __reactPatched: boolean }).__reactPatched =
+          true;
+
+        const proto = Tooltip.prototype as unknown as {
+          _isWithActiveTrigger: () => boolean;
+          _activeTrigger?: Record<string, boolean> | null;
+        };
+
+        const origIsWithActiveTrigger = proto._isWithActiveTrigger;
+        proto._isWithActiveTrigger = function (this: typeof proto) {
+          if (!this || !this._activeTrigger) return false;
+          try {
+            return origIsWithActiveTrigger.call(this);
+          } catch {
+            return false;
+          }
+        };
+      }
     });
   }, []);
 

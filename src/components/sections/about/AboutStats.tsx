@@ -29,13 +29,11 @@ export default function AboutStats() {
   const { t } = useLanguage();
   const { scrollToSection } = useNavigation();
 
-  // Fetch experiences to calculate real start year and cumulative duration
+  // Fetch API Data
   const { data: expData } = useFetch<ApiResponse<Experience[]>>(
     "https://api.afrizahanif.com/api/experiences?all=true",
     { fallbackData: { data: fallbackExperiences } },
   );
-
-  // Fetch projects and portfolios for accurate project count
   const { data: projData } = useFetch<ApiResponse<Project[]>>(
     "https://api.afrizahanif.com/api/projects?all=true",
     { fallbackData: { data: fallbackProjects } },
@@ -44,15 +42,14 @@ export default function AboutStats() {
     "https://api.afrizahanif.com/api/portfolios?all=true",
     { fallbackData: { data: fallbackPortfolios } },
   );
-
-  // Fetch certificates for verified credentials count
   const { data: certData } = useFetch<ApiResponse<Certificate[]>>(
     "https://api.afrizahanif.com/api/certificates?all=true",
     { fallbackData: { data: fallbackCertificates } },
   );
 
-  // 1. Calculate Real Cumulative Experience & Start Year (Hybrid Opsi 1 & Opsi 3)
+  // Calculate Real Cumulative Experience & Start Year
   const { startYear, totalMonths, isOverOneYear, yearsCount } = useMemo(() => {
+    // Get experiences data
     const experiences = expData?.data ?? [];
     if (experiences.length === 0) {
       return {
@@ -63,9 +60,11 @@ export default function AboutStats() {
       };
     }
 
+    // Calculate total months and start year
     let monthsSum = 0;
     const startYearsList: number[] = [];
 
+    // Iterate over each experience to calculate total months and start year
     experiences.forEach((exp) => {
       const start = new Date(exp.start_period);
       const finish = exp.finish_period
@@ -87,11 +86,15 @@ export default function AboutStats() {
       }
     });
 
+    // Get the minimum year from the experiences
     const minYear =
       startYearsList.length > 0 ? Math.min(...startYearsList) : 2023;
+    // Check if the total months is over one year
     const isOver = monthsSum >= 12;
+    // Get the number of years
     const yearsCount = Math.floor(monthsSum / 12);
 
+    // Return the cumulative experience and start year
     return {
       startYear: minYear,
       totalMonths: monthsSum,
@@ -100,7 +103,7 @@ export default function AboutStats() {
     };
   }, [expData]);
 
-  // 2. Calculate Total Projects & Portfolios
+  // Calculate Total Projects & Portfolios
   const totalProjects = useMemo(() => {
     const pCount = projData?.data?.length ?? 0;
     const pfCount = portData?.data?.length ?? 0;
@@ -108,7 +111,7 @@ export default function AboutStats() {
     return sum > 0 ? sum : 4;
   }, [projData, portData]);
 
-  // 3. Calculate Total Verified Certifications
+  // Calculate Total Verified Certifications
   const totalCertificates = useMemo(() => {
     const cCount = certData?.data?.length ?? 0;
     return cCount > 0 ? cCount : 25;
@@ -119,10 +122,12 @@ export default function AboutStats() {
     ? `${yearsCount}+ ${t.sections.about.stats?.journey?.unitYears || "Yrs"}`
     : `${t.sections.about.stats?.journey?.since || "Since"} ${startYear}`;
 
+  // Dynamic experience card label based on cumulative duration
   const expLabel = isOverOneYear
     ? t.sections.about.stats?.journey?.yearsLabel || "Tahun Pengalaman"
     : t.sections.about.stats?.journey?.label || "Perjalanan Web Dev";
 
+  // Dynamic experience card description based on cumulative duration
   const expDescription = isOverOneYear
     ? t.sections.about.stats?.journey?.descYears ||
       "Membangun aplikasi web interaktif & modern"
@@ -131,6 +136,7 @@ export default function AboutStats() {
         "bulan magang & aktif berkarya"
       }`;
 
+  // All Stats Data
   const stats: StatItem[] = [
     {
       icon: "bi-clock-history",
@@ -196,3 +202,8 @@ export default function AboutStats() {
     </div>
   );
 }
+
+/*
+  Note
+  - Do not remove the comment code of Option A / B (Will be used for future updates)
+*/

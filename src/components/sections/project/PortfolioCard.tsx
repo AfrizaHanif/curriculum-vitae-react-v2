@@ -63,7 +63,9 @@ export default function PortfolioCard({
           </Badge>
           <small className="text-muted">
             <i className="bi bi-calendar3 me-1" />
-            {formatMonthYear(portfolio.start_period)}
+            <time dateTime={portfolio.start_period}>
+              {formatMonthYear(portfolio.start_period)}
+            </time>
           </small>
         </div>
       }

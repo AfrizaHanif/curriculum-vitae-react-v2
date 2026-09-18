@@ -40,7 +40,7 @@ export default function ContactInfoCard({ profile }: ContactInfoCardProps) {
         </p>
 
         {/* Contact Channels */}
-        <div className="d-flex flex-column gap-3 mb-4">
+        <address className="d-flex flex-column gap-3 mb-4 fst-normal">
           {/* Email Item */}
           {profile.email && (
             <div className="d-flex align-items-center gap-3">
@@ -111,7 +111,7 @@ export default function ContactInfoCard({ profile }: ContactInfoCardProps) {
               </div>
             </div>
           )}
-        </div>
+        </address>
       </div>
 
       {/* Footer Kartu: Response Time Note */}

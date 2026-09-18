@@ -1,5 +1,6 @@
 import React from "react";
 
+// Props
 export interface TextareaProps {
   label?: string;
   size?: "sm" | "lg";
@@ -37,11 +38,13 @@ export default function InputText({
 }: TextareaProps) {
   return (
     <>
+      {/* Label */}
       {label && (
         <label htmlFor={id} className="form-label">
           {label}
         </label>
       )}
+      {/* Input Textarea */}
       <textarea
         name={name}
         id={id}
@@ -62,6 +65,7 @@ export default function InputText({
         readOnly={readOnly}
         onChange={onChange}
       />
+      {/* Help Text */}
       {helpText && (
         <div id={helpTextId} className="form-text">
           {helpText}

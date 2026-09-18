@@ -1,11 +1,13 @@
 import React from "react";
 
+// Types
 export interface SelectOption {
   label: string;
   value: string | number;
   disabled?: boolean;
 }
 
+// Props
 export interface SelectProps {
   label?: string;
   size?: "sm" | "lg";
@@ -47,11 +49,13 @@ export default function InputSelect({
 }: SelectProps) {
   return (
     <>
+    {/* Label */}
       {label && (
         <label htmlFor={id} className="form-label">
           {label}
         </label>
       )}
+      {/* Input Select */}
       <select
         name={name}
         id={id}
@@ -71,11 +75,13 @@ export default function InputSelect({
         style={style}
         onChange={onChange}
       >
+        {/* Placeholder */}
         {placeholder && (
           <option value="" disabled hidden={required}>
             {placeholder}
           </option>
         )}
+        {/* Options */}
         {options
           ? options.map((option) => (
               <option
@@ -88,6 +94,7 @@ export default function InputSelect({
             ))
           : children}
       </select>
+      {/* Help Text */}
       {helpText && (
         <div id={helpTextId} className="form-text">
           {helpText}

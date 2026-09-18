@@ -14,24 +14,27 @@ import fallbackSocials from "@/data/jsons/socials.json";
 import fallbackProfiles from "@/data/jsons/profiles.json";
 import { ProfileApiResponse } from "@/types/profile";
 
+// Footer's Props
 interface FooterProps {
   className?: string;
 }
 
 export default function Footer({ className = "" }: FooterProps) {
   const footerRef = useRef<HTMLElement>(null);
+
+  // Fetch API Data
   const { data: socialData } = useFetch<SocialApiResponse>(
     `https://api.afrizahanif.com/api/socials`,
     { fallbackData: { data: fallbackSocials } },
   );
   const social = socialData?.data;
-
   const { data: profileData } = useFetch<ProfileApiResponse>(
     `https://api.afrizahanif.com/api/profiles`,
     { fallbackData: { data: fallbackProfiles } },
   );
   const profile = profileData?.data?.[0];
 
+  // Resize Observer (For Dynamic Footer Height)
   useEffect(() => {
     if (!footerRef.current) return;
 
@@ -56,7 +59,9 @@ export default function Footer({ className = "" }: FooterProps) {
       className={`position-absolute bottom-0 start-0 glass-footer w-100 ${className}`}
     >
       <div className="container py-4 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 text-center text-md-start">
+        {/* Copyright & Logo */}
         <div className="d-flex align-items-center justify-content-center justify-content-md-start">
+          {/* Logo */}
           <Link
             href="/"
             className="me-2 text-body-secondary text-decoration-none lh-1"
@@ -81,12 +86,14 @@ export default function Footer({ className = "" }: FooterProps) {
               loading="lazy"
             />
           </Link>
+          {/* Copyright */}
           <span className="text-body-secondary small">
             © {new Date().getFullYear()}{" "}
             {profile?.fullname || "Muhammad Afriza Hanif"}. All rights reserved.
           </span>
         </div>
 
+        {/* Social Media */}
         <ul className="nav justify-content-center justify-content-md-end list-unstyled d-flex mb-0">
           {social?.map((item) => (
             <li key={item.id} className="ms-3">

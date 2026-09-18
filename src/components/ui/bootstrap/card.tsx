@@ -325,6 +325,7 @@ export interface CardGridProps {
   mdCols?: number | string;
   lgCols?: number | string;
   xlCols?: number | string;
+  xxlCols?: number | string;
   gap?: number | string;
   className?: string;
 }
@@ -336,6 +337,7 @@ export function CardGrid({
   mdCols = 2,
   lgCols,
   xlCols,
+  xxlCols,
   gap = 4,
   className = "",
 }: CardGridProps) {
@@ -345,6 +347,7 @@ export function CardGrid({
     mdCols ? `row-cols-md-${mdCols}` : "",
     lgCols ? `row-cols-lg-${lgCols}` : "",
     xlCols ? `row-cols-xl-${xlCols}` : "",
+    xxlCols ? `row-cols-xxl-${xxlCols}` : "",
   ]
     .filter(Boolean)
     .join(" ");

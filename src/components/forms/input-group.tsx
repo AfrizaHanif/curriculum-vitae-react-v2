@@ -1,5 +1,6 @@
 import Button from "../ui/bootstrap/button";
 
+// Props
 export interface InputGroupProps {
   id?: string;
   label?: string;
@@ -19,6 +20,7 @@ export default function InputGroup({
   inputText,
   children,
 }: InputGroupProps) {
+  // Additional Input
   let additionalInput: React.ReactNode = "";
 
   if (type === "button") {
@@ -37,7 +39,9 @@ export default function InputGroup({
 
   return (
     <>
+      {/* Label */}
       {label && <label className="form-label">{label}</label>}
+      {/* Input Group */}
       <div
         className={[
           "input-group",

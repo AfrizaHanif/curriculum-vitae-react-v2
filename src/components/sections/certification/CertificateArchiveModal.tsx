@@ -173,9 +173,9 @@ export default function CertificateArchiveModal({
             {t.sections.certification.archiveModal.noMatch}
           </div>
         ) : (
-          <div className="list-group list-group-flush rounded-3 border">
+          <ul className="list-group list-group-flush rounded-3 border ps-0 mb-0">
             {filteredCertificates.map((cert) => (
-              <div
+              <li
                 key={cert.id}
                 className="list-group-item list-group-item-action py-3 px-3 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3"
               >
@@ -196,13 +196,17 @@ export default function CertificateArchiveModal({
                     )}
                     <small className="text-muted">
                       <i className="bi bi-calendar3 me-1" />
-                      {cert.issue_date
-                        ? formatMonthYear(
+                      {cert.issue_date ? (
+                        <time dateTime={cert.issue_date}>
+                          {formatMonthYear(
                             cert.issue_date,
                             dateLocale,
                             t.common.present,
-                          )
-                        : "N/A"}
+                          )}
+                        </time>
+                      ) : (
+                        "N/A"
+                      )}
                     </small>
                   </div>
 
@@ -276,9 +280,9 @@ export default function CertificateArchiveModal({
                     // </Badge>
                   )}
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </div>
     </Modal>

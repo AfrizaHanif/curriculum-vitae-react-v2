@@ -1,3 +1,14 @@
+/**
+ * Note: This component uses Google reCAPTCHA.
+ * Make sure to add your reCAPTCHA site key to the .env.local file.
+ *
+ * @example
+ * <Recaptcha
+ *   siteKey="your-site-key"
+ *   onChange={(token) => console.log(token)}
+ * />
+ */
+
 "use client";
 
 import React, {
@@ -86,7 +97,10 @@ const Recaptcha = forwardRef<RecaptchaRef, RecaptchaProps>(function Recaptcha(
         errorMsg.includes("Timeout (a)")
       ) {
         event.preventDefault();
-        console.warn("[reCAPTCHA] Suppressed third-party script timeout:", errorMsg);
+        console.warn(
+          "[reCAPTCHA] Suppressed third-party script timeout:",
+          errorMsg,
+        );
       }
     };
 
@@ -164,8 +178,7 @@ const Recaptcha = forwardRef<RecaptchaRef, RecaptchaProps>(function Recaptcha(
       if (!existingScript) {
         const script = document.createElement("script");
         script.id = "google-recaptcha-script";
-        script.src =
-          "https://www.google.com/recaptcha/api.js?render=explicit";
+        script.src = "https://www.google.com/recaptcha/api.js?render=explicit";
         script.async = true;
         script.defer = true;
         script.onload = () => {
@@ -188,7 +201,10 @@ const Recaptcha = forwardRef<RecaptchaRef, RecaptchaProps>(function Recaptcha(
     return () => {
       isMounted = false;
       if (checkInterval) clearInterval(checkInterval);
-      window.removeEventListener("unhandledrejection", handleUnhandledRejection);
+      window.removeEventListener(
+        "unhandledrejection",
+        handleUnhandledRejection,
+      );
     };
   }, [siteKey, resolvedTheme]);
 
@@ -205,3 +221,8 @@ const Recaptcha = forwardRef<RecaptchaRef, RecaptchaProps>(function Recaptcha(
 });
 
 export default Recaptcha;
+
+/*
+  Notes
+  - Do not change this code unless you know what you are doing.
+*/

@@ -34,9 +34,13 @@ export default function CertificateCard({
           {/* Issuer date */}
           <small className="text-muted">
             <i className="bi bi-calendar-event me-1" />
-            {cert.issue_date
-              ? formatMonthYear(cert.issue_date, dateLocale, t.common.present)
-              : "N/A"}
+            {cert.issue_date ? (
+              <time dateTime={cert.issue_date}>
+                {formatMonthYear(cert.issue_date, dateLocale, t.common.present)}
+              </time>
+            ) : (
+              "N/A"
+            )}
           </small>
         </div>
       }

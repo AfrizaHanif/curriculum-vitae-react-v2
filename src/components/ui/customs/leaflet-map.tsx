@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { Map as LeafletMapInstance, Marker as LeafletMarkerInstance } from "leaflet";
 import "./leaflet-map.css";
+import { siteConfig } from "@/config/siteConfig";
 
 export interface MapMarker {
   lat: number;
@@ -39,13 +40,13 @@ export interface LeafletMapProps {
 
 export default function LeafletMap({
   center,
-  zoom = 15,
+  zoom = siteConfig.map.defaultZoom,
   markers = [],
   height = "360px",
   width = "100%",
   scrollWheelZoom = false,
-  tileLayerUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  attribution = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+  tileLayerUrl = siteConfig.map.tileLayerUrl,
+  attribution = siteConfig.map.attribution,
   className = "",
   style,
   invalidateTrigger,
@@ -54,28 +55,30 @@ export default function LeafletMap({
   const mapInstanceRef = useRef<LeafletMapInstance | null>(null);
   const markersRef = useRef<LeafletMarkerInstance[]>([]);
   const [isReady, setIsReady] = useState(false);
+  const [centerLat, centerLng] = center;
 
   // Initialize Leaflet map client-side
   useEffect(() => {
     let isCancelled = false;
+    const container = containerRef.current;
 
-    if (!containerRef.current) return;
+    if (!container) return;
 
     // Dynamically import leaflet to avoid Next.js SSR window errors
     import("leaflet").then((L) => {
-      if (isCancelled || !containerRef.current) return;
+      if (isCancelled || !container) return;
 
       // Clean up previous instance and container ID if any
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
       }
-      if (containerRef.current && (containerRef.current as unknown as { _leaflet_id?: number })._leaflet_id) {
-        delete (containerRef.current as unknown as { _leaflet_id?: number })._leaflet_id;
+      if (container && (container as unknown as { _leaflet_id?: number })._leaflet_id) {
+        delete (container as unknown as { _leaflet_id?: number })._leaflet_id;
       }
 
-      const map = L.map(containerRef.current, {
-        center,
+      const map = L.map(container, {
+        center: [centerLat, centerLng],
         zoom,
         scrollWheelZoom,
       });
@@ -91,7 +94,7 @@ export default function LeafletMap({
       const refreshMap = () => {
         if (!isCancelled && mapInstanceRef.current) {
           mapInstanceRef.current.invalidateSize();
-          mapInstanceRef.current.setView(center, zoom, { animate: false });
+          mapInstanceRef.current.setView([centerLat, centerLng], zoom, { animate: false });
         }
       };
 
@@ -101,14 +104,14 @@ export default function LeafletMap({
       );
 
       // Listen to Bootstrap modal shown event if inside a modal
-      const modalParent = containerRef.current?.closest(".modal");
+      const modalParent = container.closest(".modal");
       if (modalParent) {
         modalParent.addEventListener("shown.bs.modal", refreshMap);
       }
 
       // Observe size changes via ResizeObserver
       let resizeObserver: ResizeObserver | null = null;
-      if (typeof ResizeObserver !== "undefined" && containerRef.current) {
+      if (typeof ResizeObserver !== "undefined" && container) {
         resizeObserver = new ResizeObserver((entries) => {
           for (const entry of entries) {
             if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
@@ -116,7 +119,7 @@ export default function LeafletMap({
             }
           }
         });
-        resizeObserver.observe(containerRef.current);
+        resizeObserver.observe(container);
       }
 
       return () => {
@@ -136,13 +139,13 @@ export default function LeafletMap({
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
       }
-      if (containerRef.current && (containerRef.current as unknown as { _leaflet_id?: number })._leaflet_id) {
-        delete (containerRef.current as unknown as { _leaflet_id?: number })._leaflet_id;
+      if (container && (container as unknown as { _leaflet_id?: number })._leaflet_id) {
+        delete (container as unknown as { _leaflet_id?: number })._leaflet_id;
       }
       setIsReady(false);
     };
-    // Recreate map if center changes radically or core configuration changes
-  }, [center[0], center[1], zoom, scrollWheelZoom, tileLayerUrl, attribution]);
+    // Recreate map if center coordinates or core configuration changes
+  }, [centerLat, centerLng, zoom, scrollWheelZoom, tileLayerUrl, attribution]);
 
   // Update markers and popups when map is ready or markers prop changes
   useEffect(() => {

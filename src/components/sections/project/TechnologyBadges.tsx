@@ -1,6 +1,7 @@
 "use client";
 
 import Badge from "@/components/ui/bootstrap/badge";
+import { siteConfig } from "@/config/siteConfig";
 
 interface TechnologyBadgesProps {
   technologies?: string[] | null;
@@ -10,7 +11,7 @@ interface TechnologyBadgesProps {
 
 export default function TechnologyBadges({
   technologies,
-  limit = 3,
+  limit = siteConfig.projects.technologyBadgesLimit,
   className = "d-flex flex-wrap gap-1 mt-auto",
 }: TechnologyBadgesProps) {
   if (!technologies || technologies.length === 0) return null;

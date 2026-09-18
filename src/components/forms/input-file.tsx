@@ -1,3 +1,4 @@
+// Props
 export interface InputFileProps {
   label?: string;
   size?: "sm" | "lg";
@@ -31,11 +32,13 @@ export default function InputFile({
 }: InputFileProps) {
   return (
     <>
+      {/* Label */}
       {label && (
         <label htmlFor={id} className="form-label">
           {label}
         </label>
       )}
+      {/* Input */}
       <input
         type="file"
         name={name}
@@ -55,6 +58,7 @@ export default function InputFile({
         required={required}
         onChange={onChange}
       />
+      {/* Help Text */}
       {helpText && (
         <div id={helpTextId} className="form-text">
           {helpText}

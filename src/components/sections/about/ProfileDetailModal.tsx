@@ -23,20 +23,24 @@ export default function ProfileDetailModal({
   const { t, lang } = useLanguage();
   const [copiedEmail, setCopiedEmail] = useState(false);
 
+  // Format Birthday
   const formattedBirthday = profile?.birthday
     ? formatDate(profile.birthday, lang === "id" ? "id-ID" : "en-US")
     : null;
 
+  // Format Location
   const location = profile
     ? formatLocation(profile.current_city, profile.current_province)
     : "";
 
+  // Handle Copy Email
   const handleCopyEmail = (email: string) => {
     navigator.clipboard.writeText(email);
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
+  // Check if profile is null
   if (!profile) return null;
 
   return (
@@ -47,6 +51,7 @@ export default function ProfileDetailModal({
       centered
       scrollable
       buttonItems={[
+        // Download CV Button
         ...(profile.resume
           ? [
               {
@@ -66,6 +71,7 @@ export default function ProfileDetailModal({
               },
             ]
           : []),
+        // Close Button
         {
           label: t.common.close,
           color: "secondary",
@@ -81,6 +87,7 @@ export default function ProfileDetailModal({
           bodyClassName="p-3 p-md-4"
         >
           <div className="row align-items-center g-3">
+            {/* Profile Photo */}
             <div className="col-auto">
               <div
                 className="rounded-circle overflow-hidden border border-2 border-primary shadow-sm"
@@ -98,6 +105,7 @@ export default function ProfileDetailModal({
                 />
               </div>
             </div>
+            {/* Full Name & Status */}
             <div className="col">
               <div className="d-flex flex-wrap align-items-center gap-2 mb-1">
                 <h4 className="fw-bold mb-0 text-body">{profile.fullname}</h4>
@@ -121,149 +129,157 @@ export default function ProfileDetailModal({
         </Card>
 
         {/* Detailed Information Grid */}
-        <div className="row g-3 mb-4">
-          {/* Email */}
-          <div className="col-12 col-md-6">
-            <Card
-              fullHeight
-              className="border rounded-3 bg-body"
-              bodyClassName="p-3"
-            >
-              <div className="d-flex align-items-center justify-content-between">
+        <address className="fst-normal mb-0">
+          <div className="row g-3 mb-4">
+            {/* Email */}
+            <div className="col-12 col-md-6">
+              <Card
+                fullHeight
+                className="border rounded-3 bg-body"
+                bodyClassName="p-3"
+              >
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="d-flex align-items-center gap-2">
+                    <div className="text-primary p-2 d-inline-flex">
+                      <i className="bi bi-envelope-fill fs-5" />
+                    </div>
+                    <div>
+                      <small className="text-body-secondary d-block">
+                        {t.sections.about.profileModal.email}
+                      </small>
+                      <a
+                        href={`mailto:${profile.email}`}
+                        className="text-body text-decoration-none fw-medium text-break"
+                      >
+                        {profile.email}
+                      </a>
+                    </div>
+                  </div>
+                  <Button
+                    color="outline-secondary"
+                    size="sm"
+                    className="border-0"
+                    onClick={() => handleCopyEmail(profile.email)}
+                    dataBsToggle="tooltip"
+                    dataBsTitle={
+                      copiedEmail
+                        ? t.sections.about.profileModal.emailCopied
+                        : t.sections.about.profileModal.copyEmail
+                    }
+                    aria-label={
+                      copiedEmail
+                        ? t.sections.about.profileModal.emailCopied
+                        : t.sections.about.profileModal.copyEmail
+                    }
+                  >
+                    <i
+                      className={`bi ${copiedEmail ? "bi-check2 text-success" : "bi-clipboard"}`}
+                      aria-hidden="true"
+                    />
+                    <span className="visually-hidden" aria-live="polite">
+                      {copiedEmail
+                        ? t.sections.about.profileModal.emailCopied
+                        : ""}
+                    </span>
+                  </Button>
+                </div>
+              </Card>
+            </div>
+
+            {/* Phone */}
+            <div className="col-12 col-md-6">
+              <Card
+                fullHeight
+                className="border rounded-3 bg-body"
+                bodyClassName="p-3"
+              >
                 <div className="d-flex align-items-center gap-2">
-                  <div className="text-primary p-2 d-inline-flex">
-                    <i className="bi bi-envelope-fill fs-5" />
+                  <div className="text-success p-2 d-inline-flex">
+                    <i className="bi bi-whatsapp fs-5" />
                   </div>
                   <div>
                     <small className="text-body-secondary d-block">
-                      {t.sections.about.profileModal.email}
+                      {t.sections.about.profileModal.phone}
                     </small>
                     <a
-                      href={`mailto:${profile.email}`}
-                      className="text-body text-decoration-none fw-medium text-break"
+                      href={`https://wa.me/${profile.phone.replace(/[^0-9]/g, "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-body text-decoration-none fw-medium"
                     >
-                      {profile.email}
+                      {profile.phone}
                     </a>
                   </div>
                 </div>
-                <Button
-                  color="outline-secondary"
-                  size="sm"
-                  className="border-0"
-                  onClick={() => handleCopyEmail(profile.email)}
-                  dataBsToggle="tooltip"
-                  dataBsTitle={
-                    copiedEmail
-                      ? t.sections.about.profileModal.emailCopied
-                      : t.sections.about.profileModal.copyEmail
-                  }
-                  aria-label={
-                    copiedEmail
-                      ? t.sections.about.profileModal.emailCopied
-                      : t.sections.about.profileModal.copyEmail
-                  }
+              </Card>
+            </div>
+
+            {/* Location */}
+            {location && (
+              <div className="col-12 col-md-6">
+                <Card
+                  fullHeight
+                  className="border rounded-3 bg-body"
+                  bodyClassName="p-3"
                 >
-                  <i
-                    className={`bi ${copiedEmail ? "bi-check2 text-success" : "bi-clipboard"}`}
-                    aria-hidden="true"
-                  />
-                  <span className="visually-hidden" aria-live="polite">
-                    {copiedEmail
-                      ? t.sections.about.profileModal.emailCopied
-                      : ""}
-                  </span>
-                </Button>
+                  <div className="d-flex align-items-center gap-2">
+                    <div className="text-info-emphasis p-2 d-inline-flex">
+                      <i className="bi bi-geo-alt-fill fs-5" />
+                    </div>
+                    <div>
+                      <small className="text-body-secondary d-block">
+                        {t.sections.about.profileModal.location}
+                      </small>
+                      <span className="text-body fw-medium">{location}</span>
+                    </div>
+                  </div>
+                </Card>
               </div>
-            </Card>
-          </div>
+            )}
 
-          {/* Phone */}
-          <div className="col-12 col-md-6">
-            <Card
-              fullHeight
-              className="border rounded-3 bg-body"
-              bodyClassName="p-3"
-            >
-              <div className="d-flex align-items-center gap-2">
-                <div className="text-success p-2 d-inline-flex">
-                  <i className="bi bi-whatsapp fs-5" />
-                </div>
-                <div>
-                  <small className="text-body-secondary d-block">
-                    {t.sections.about.profileModal.phone}
-                  </small>
-                  <a
-                    href={`https://wa.me/${profile.phone.replace(/[^0-9]/g, "")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-body text-decoration-none fw-medium"
-                  >
-                    {profile.phone}
-                  </a>
-                </div>
+            {/* Birthday */}
+            {formattedBirthday && (
+              <div className="col-12 col-md-6">
+                <Card
+                  fullHeight
+                  className="border rounded-3 bg-body"
+                  bodyClassName="p-3"
+                >
+                  <div className="d-flex align-items-center gap-2">
+                    <div className="text-warning-emphasis p-2 d-inline-flex">
+                      <i className="bi bi-calendar-event-fill fs-5" />
+                    </div>
+                    <div>
+                      <small className="text-body-secondary d-block">
+                        {t.sections.about.profileModal.birthday}
+                      </small>
+                      <span className="text-body fw-medium">
+                        {profile.birthday ? (
+                          <time dateTime={profile.birthday}>
+                            {formattedBirthday}
+                          </time>
+                        ) : (
+                          formattedBirthday
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </Card>
               </div>
-            </Card>
+            )}
           </div>
-
-          {/* Location */}
-          {location && (
-            <div className="col-12 col-md-6">
-              <Card
-                fullHeight
-                className="border rounded-3 bg-body"
-                bodyClassName="p-3"
-              >
-                <div className="d-flex align-items-center gap-2">
-                  <div className="text-info-emphasis p-2 d-inline-flex">
-                    <i className="bi bi-geo-alt-fill fs-5" />
-                  </div>
-                  <div>
-                    <small className="text-body-secondary d-block">
-                      {t.sections.about.profileModal.location}
-                    </small>
-                    <span className="text-body fw-medium">{location}</span>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          )}
-
-          {/* Birthday */}
-          {formattedBirthday && (
-            <div className="col-12 col-md-6">
-              <Card
-                fullHeight
-                className="border rounded-3 bg-body"
-                bodyClassName="p-3"
-              >
-                <div className="d-flex align-items-center gap-2">
-                  <div className="text-warning-emphasis p-2 d-inline-flex">
-                    <i className="bi bi-calendar-event-fill fs-5" />
-                  </div>
-                  <div>
-                    <small className="text-body-secondary d-block">
-                      {t.sections.about.profileModal.birthday}
-                    </small>
-                    <span className="text-body fw-medium">
-                      {formattedBirthday}
-                    </span>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          )}
-        </div>
+        </address>
 
         {/* Philosophy Quote */}
         {profile.philosophy && (
-          <div className="p-3 bg-body-tertiary rounded-3 border-start border-primary border-4 mb-3">
+          <figure className="p-3 bg-body-tertiary rounded-3 border-start border-primary border-4 mb-3">
             <div className="d-flex align-items-start gap-2">
-              <i className="bi bi-quote fs-4 text-primary opacity-50 lh-1" />
-              <p className="fst-italic text-body mb-0 small">
+              <i className="bi bi-quote fs-4 text-primary opacity-50 lh-1" aria-hidden="true" />
+              <blockquote className="blockquote fst-italic text-body mb-0 small">
                 &ldquo;{profile.philosophy}&rdquo;
-              </p>
+              </blockquote>
             </div>
-          </div>
+          </figure>
         )}
       </div>
     </Modal>

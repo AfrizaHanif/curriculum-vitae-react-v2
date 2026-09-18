@@ -1,0 +1,145 @@
+/* Resume ATS-Friendly Stylesheet */
+
+/* Spacing for fixed-top navbar */
+.resume-wrapper {
+  padding-top: 75px;
+}
+
+/* A4 Sheet Simulation on Screen */
+.resume-sheet {
+  max-width: 820px;
+  
+  /* 
+   * FONT SETTINGS:
+   * - Default (Modern ATS): -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+   * - Serif / Classic ATS (Times New Roman): "Times New Roman", Times, Georgia, serif
+   */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 0.925rem;
+}
+
+/* Class modifier jika ingin font Times New Roman */
+.resume-sheet.font-times {
+  font-family: "Times New Roman", Times, Georgia, serif !important;
+}
+
+/* Section Background Reset (mencegah striping dari landing page) */
+.resume-sheet section,
+.resume-sheet article {
+  background-color: transparent !important;
+}
+
+/* Section Titles with ATS standard underline */
+.resume-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1.5px solid #1f2937;
+  padding-bottom: 0.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.65rem;
+}
+
+/* Bullet list indentation */
+.resume-list {
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.resume-list li {
+  margin-bottom: 0.25rem;
+}
+
+/* Resume Page Footer Override */
+.resume-footer {
+  position: relative !important;
+}
+
+/* Print Specific Rules (A4 Export - Strictly Forced to Light Mode) */
+@media print {
+  :root,
+  html,
+  body,
+  [data-bs-theme="dark"],
+  [data-bs-theme="light"] {
+    color-scheme: light !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    --bs-body-color: #000000 !important;
+    --bs-body-bg: #ffffff !important;
+    --bs-emphasis-color: #000000 !important;
+    --bs-secondary-color: #374151 !important;
+    --bs-tertiary-color: #4b5563 !important;
+    --bs-border-color: #000000 !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0; /* Menghilangkan otomatis header (title & timestamp) serta footer (URL) bawaan browser */
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .resume-wrapper {
+    background: transparent !important;
+    padding: 0 !important;
+    min-height: auto !important;
+  }
+
+  .resume-sheet {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 14mm 16mm !important; /* Margin dokumen dialihkan ke dalam padding kertas */
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .resume-sheet.font-times {
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+  }
+
+  .resume-sheet .text-muted,
+  .resume-sheet .text-secondary {
+    color: #374151 !important;
+  }
+
+  .resume-sheet .text-dark,
+  .resume-sheet h1,
+  .resume-sheet h2,
+  .resume-sheet h3 {
+    color: #000000 !important;
+  }
+
+  .resume-section-title {
+    border-bottom: 1px solid #000000 !important;
+    color: #000000 !important;
+    margin-top: 10pt !important;
+    margin-bottom: 5pt !important;
+  }
+
+  .resume-list li {
+    color: #000000 !important;
+  }
+
+  a {
+    color: #000000 !important;
+    text-decoration: none !important;
+  }
+
+  .resume-item-block {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
