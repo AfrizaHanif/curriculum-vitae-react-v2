@@ -14,13 +14,16 @@ export default function TechnologyBadges({
   limit = siteConfig.projects.technologyBadgesLimit,
   className = "d-flex flex-wrap gap-1 mt-auto",
 }: TechnologyBadgesProps) {
+  // Check if technologies is null or empty array
   if (!technologies || technologies.length === 0) return null;
 
+  // Slicing the technologies array
   const visible = technologies.slice(0, limit);
   const remaining = technologies.length - limit;
 
   return (
     <div className={className}>
+      {/* Showing visible technologies */}
       {visible.map((tech, idx) => (
         <Badge
           key={idx}
@@ -30,6 +33,7 @@ export default function TechnologyBadges({
           {tech}
         </Badge>
       ))}
+      {/* Showing remaining technologies */}
       {remaining > 0 && (
         <Badge pill className="bg-body-tertiary text-muted border">
           +{remaining}

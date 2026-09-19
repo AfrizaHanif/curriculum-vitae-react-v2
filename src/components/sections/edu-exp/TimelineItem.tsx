@@ -32,8 +32,11 @@ export default function TimelineItem({
   locationIcon,
   onViewMap,
 }: TimelineItemProps) {
+  // Get language and date locale
   const { t, lang } = useLanguage();
   const dateLocale = lang === "id" ? "id-ID" : "en-US";
+
+  // Get year from start and finish period
   const startYear = getYear(item.start_period);
   const finishYear = item.finish_period
     ? getYear(item.finish_period)
@@ -41,11 +44,12 @@ export default function TimelineItem({
   const isSameYear = startYear === finishYear;
   const yearLabel = isSameYear ? startYear : `${startYear} — ${finishYear}`;
 
+  // Check if coordinates are valid
   const hasCoordinates = Boolean(
     item.latitude &&
-      item.longitude &&
-      !isNaN(parseFloat(item.latitude)) &&
-      !isNaN(parseFloat(item.longitude)),
+    item.longitude &&
+    !isNaN(parseFloat(item.latitude)) &&
+    !isNaN(parseFloat(item.longitude)),
   );
 
   return (
@@ -99,8 +103,8 @@ export default function TimelineItem({
                 dateLocale,
                 t.sections.eduExp.timeline.present,
               )}
-            </time>
-            {" "}&mdash;{" "}
+            </time>{" "}
+            &mdash;{" "}
             {item.finish_period ? (
               <time dateTime={item.finish_period}>
                 {formatMonthYear(

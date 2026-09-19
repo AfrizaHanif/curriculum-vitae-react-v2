@@ -33,7 +33,7 @@ export default function ContactInfoCard({ profile }: ContactInfoCardProps) {
           </Badge>
         </div>
 
-        {/* Headline & Deskripsi */}
+        {/* Headline & Descriptions */}
         <h4 className="fw-bold mb-2">{t.sections.contact.infoCard.headline}</h4>
         <p className="text-body-secondary small mb-4">
           {t.sections.contact.infoCard.description}
@@ -64,7 +64,7 @@ export default function ContactInfoCard({ profile }: ContactInfoCardProps) {
             </div>
           )}
 
-          {/* WhatsApp / Telepon */}
+          {/* WhatsApp / Phone */}
           {profile.phone && (
             <div className="d-flex align-items-center gap-3">
               <div
@@ -89,7 +89,7 @@ export default function ContactInfoCard({ profile }: ContactInfoCardProps) {
             </div>
           )}
 
-          {/* Lokasi */}
+          {/* Location */}
           {(profile.current_city || profile.current_province) && (
             <div className="d-flex align-items-center gap-3">
               <div
@@ -114,7 +114,7 @@ export default function ContactInfoCard({ profile }: ContactInfoCardProps) {
         </address>
       </div>
 
-      {/* Footer Kartu: Response Time Note */}
+      {/* Response Time Note */}
       <div className="pt-3 border-top mt-auto">
         <div className="d-flex align-items-center gap-2 text-body-secondary small">
           <i className="bi bi-lightning-charge-fill text-warning" />

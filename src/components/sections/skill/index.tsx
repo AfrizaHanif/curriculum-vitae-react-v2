@@ -19,15 +19,17 @@ export default function SkillSection() {
   const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
+  // Fetch API Data
   const { data, isLoading, error } = useFetch<SkillApiResponse>(
     `https://api.afrizahanif.com/api/skills?all=true`,
     { fallbackData: { data: fallbackSkills } },
   );
   const skills = useMemo(() => data?.data ?? [], [data?.data]);
 
+  // Set States
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-  // Dapatkan daftar level unik untuk filter
+  // Get Unique Levels for Filter
   const levels = useMemo(() => {
     const list = Array.from(new Set(skills.map((s) => s.level)));
     return ["All", ...list];

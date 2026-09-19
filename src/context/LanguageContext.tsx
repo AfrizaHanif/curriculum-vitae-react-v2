@@ -14,10 +14,12 @@ interface LanguageContextType {
   t: (typeof translations)["en"];
 }
 
+// Create Language Context
 const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined,
 );
 
+// Subscribe to language changes
 function subscribe(callback: () => void) {
   window.addEventListener("storage", callback);
   window.addEventListener("language-change", callback);
@@ -27,27 +29,34 @@ function subscribe(callback: () => void) {
   };
 }
 
+// Get snapshot of current language
 function getSnapshot(): Language {
   const savedLang = localStorage.getItem("preferred_lang");
   return savedLang === "id" || savedLang === "en" ? savedLang : "en";
 }
 
+// Get snapshot of current language for server
 function getServerSnapshot(): Language {
   return "en";
 }
 
+// Language Provider
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  // Get current language from localStorage
   const lang = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
+  // Set lang to html
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
 
+  // Set lang to localStorage
   const setLang = React.useCallback((newLang: Language) => {
     localStorage.setItem("preferred_lang", newLang);
     window.dispatchEvent(new Event("language-change"));
   }, []);
 
+  // Create context value
   const value = React.useMemo(
     () => ({
       lang,
@@ -64,6 +73,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Hook to get current language
 export function useLanguage() {
   const context = useContext(LanguageContext);
   if (!context) {

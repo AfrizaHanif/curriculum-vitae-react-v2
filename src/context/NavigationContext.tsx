@@ -23,22 +23,27 @@ interface NavigationContextType {
   scrollToSection: (id: string) => void;
 }
 
+// Create Navigation Context
 const NavigationContext = createContext<NavigationContextType | undefined>(
   undefined,
 );
 
+// Navigation Provider
 export function NavigationProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Active section
   const [activeSection, setActiveSection] = useState<string>("hero");
   const [availableSections, setAvailableSections] = useState<string[]>([]);
 
   // Dynamically observe which sections actually exist in the DOM with debounce
   useEffect(() => {
+    // Debounce timer
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
+    // Update available sections
     const updateAvailable = () => {
       const existing = SECTION_IDS.filter((id) =>
         Boolean(document.getElementById(id)),
@@ -54,17 +59,21 @@ export function NavigationProvider({
       });
     };
 
+    // Update available sections
     updateAvailable();
 
+    // Debounced update
     const debouncedUpdate = () => {
       if (debounceTimer) clearTimeout(debounceTimer);
       debounceTimer = setTimeout(updateAvailable, 150);
     };
 
+    // Observer
     const mainEl = document.querySelector("main") || document.body;
     const observer = new MutationObserver(debouncedUpdate);
     observer.observe(mainEl, { childList: true, subtree: true });
 
+    // Clean up
     return () => {
       if (debounceTimer) clearTimeout(debounceTimer);
       observer.disconnect();
@@ -73,15 +82,18 @@ export function NavigationProvider({
 
   // Track active section via IntersectionObserver
   useEffect(() => {
+    // Target ids
     const targetIds =
       availableSections.length > 0 ? availableSections : [...SECTION_IDS];
 
+    // Observer options
     const observerOptions: IntersectionObserverInit = {
       root: null,
       rootMargin: "-40% 0px -40% 0px",
       threshold: 0,
     };
 
+    // Observer callback
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -90,11 +102,13 @@ export function NavigationProvider({
       });
     };
 
+    // IntersectionObserver
     const observer = new IntersectionObserver(
       observerCallback,
       observerOptions,
     );
 
+    // Observe target ids
     targetIds.forEach((id) => {
       const element = document.getElementById(id);
       if (element) {
@@ -102,6 +116,7 @@ export function NavigationProvider({
       }
     });
 
+    // Clean up
     return () => {
       targetIds.forEach((id) => {
         const element = document.getElementById(id);
@@ -112,7 +127,9 @@ export function NavigationProvider({
     };
   }, [availableSections]);
 
+  // Scroll to section
   const scrollToSection = useCallback((id: string) => {
+    // Find element
     const element = document.getElementById(id);
     if (!element) return;
 
@@ -129,6 +146,7 @@ export function NavigationProvider({
       );
     }
 
+    // Current scrollY
     const currentScrollY = window.scrollY;
     const targetY = element.getBoundingClientRect().top + currentScrollY;
 
@@ -154,6 +172,7 @@ export function NavigationProvider({
 
   // Support initial hash on page load and browser back/forward buttons (Option B)
   useEffect(() => {
+    // Handle hash change
     const handleHashChange = () => {
       const hash = window.location.hash.replace("#", "");
       if (hash && document.getElementById(hash)) {
@@ -161,15 +180,18 @@ export function NavigationProvider({
       }
     };
 
+    // Handle hash change on page load
     if (window.location.hash) {
       const timer = setTimeout(handleHashChange, 200);
       return () => clearTimeout(timer);
     }
 
+    // Handle hash change on back/forward buttons
     window.addEventListener("popstate", handleHashChange);
     return () => window.removeEventListener("popstate", handleHashChange);
   }, [scrollToSection]);
 
+  // Create context value
   const value = React.useMemo(
     () => ({
       activeSection,
@@ -180,6 +202,7 @@ export function NavigationProvider({
     [activeSection, availableSections, scrollToSection],
   );
 
+  // Render Navigation Context Provider
   return (
     <NavigationContext.Provider value={value}>
       {children}
@@ -187,6 +210,7 @@ export function NavigationProvider({
   );
 }
 
+// Hook to get current navigation
 export function useNavigation() {
   const context = useContext(NavigationContext);
   if (!context) {

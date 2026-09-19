@@ -4,8 +4,10 @@ import Dropdown, { DropdownItem } from "./ui/bootstrap/dropdown";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function LanguageToggle() {
+  //
   const { lang, setLang } = useLanguage();
 
+  //
   const items: DropdownItem[] = [
     {
       label: "English (EN)",

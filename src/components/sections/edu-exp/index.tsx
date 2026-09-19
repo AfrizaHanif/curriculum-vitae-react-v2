@@ -68,7 +68,8 @@ function TimelineTabContent({
 
 export default function EduExpSection() {
   const { t } = useLanguage();
-  // Fetch education data
+
+  // Fetch API Data
   const {
     data: eduData,
     isLoading: eduLoading,
@@ -81,8 +82,6 @@ export default function EduExpSection() {
     () => sortByLatestPeriod(eduData?.data ?? []),
     [eduData?.data],
   );
-
-  // Fetch experience data
   const {
     data: expData,
     isLoading: expLoading,

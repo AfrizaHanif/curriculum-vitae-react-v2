@@ -8,6 +8,7 @@ import Offcanvas from "@/components/ui/bootstrap/offcanvas";
 import Button from "@/components/ui/bootstrap/button";
 import Badge from "@/components/ui/bootstrap/badge";
 import { useLanguage } from "@/context/LanguageContext";
+import { getYouTubeEmbedUrl } from "@/utils/youtube";
 
 interface CaseStudyOffcanvasProps {
   show: boolean;
@@ -18,35 +19,6 @@ interface CaseStudyOffcanvasProps {
   onClose: () => void;
 }
 
-function getYouTubeEmbedUrl(urlStr: string): string | null {
-  try {
-    const parsed = new URL(urlStr);
-    let videoId = "";
-    const hostname = parsed.hostname.toLowerCase();
-
-    if (hostname === "youtu.be" || hostname.endsWith(".youtu.be")) {
-      videoId = parsed.pathname.slice(1).split("/")[0];
-    } else if (
-      hostname === "youtube.com" ||
-      hostname === "www.youtube.com" ||
-      hostname === "m.youtube.com"
-    ) {
-      if (parsed.pathname === "/watch") {
-        videoId = parsed.searchParams.get("v") || "";
-      } else if (parsed.pathname.startsWith("/embed/")) {
-        videoId = parsed.pathname.replace("/embed/", "").split("/")[0];
-      }
-    }
-
-    if (videoId && /^[a-zA-Z0-9_-]+$/.test(videoId)) {
-      return `https://www.youtube-nocookie.com/embed/${videoId}`;
-    }
-  } catch {
-    return null;
-  }
-  return null;
-}
-
 export default function CaseStudyOffcanvas({
   show,
   caseStudy,
@@ -55,11 +27,14 @@ export default function CaseStudyOffcanvas({
   solutions = [],
   onClose,
 }: CaseStudyOffcanvasProps) {
+  // Get language
   const { t } = useLanguage();
+  // Get YouTube embed URL
   const youtubeEmbedUrl = caseStudy?.video
     ? getYouTubeEmbedUrl(caseStudy.video)
     : null;
 
+  // Get diagram items
   const diagramItems = useMemo(() => {
     if (!diagram) return [];
     const items: { label: string; src: string; icon: string }[] = [];
@@ -99,7 +74,7 @@ export default function CaseStudyOffcanvas({
           className="d-flex align-items-center gap-2 text-truncate"
           style={{ minWidth: 0 }}
         >
-          {/*  */}
+          {/* Case Study Badge */}
           <Badge
             pill
             className="bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 flex-shrink-0"

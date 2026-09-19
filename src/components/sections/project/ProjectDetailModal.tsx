@@ -61,6 +61,7 @@ export default function ProjectDetailModal({
     return images;
   }, [item]);
 
+  //
   if (!item) return null;
 
   return (
@@ -73,6 +74,7 @@ export default function ProjectDetailModal({
       scrollable
       centered
       buttonItems={[
+        //
         ...(isPortfolio && caseStudy
           ? [
               {
@@ -92,7 +94,7 @@ export default function ProjectDetailModal({
               },
             ]
           : []),
-
+        //
         ...(isPortfolio && repositories.length === 1
           ? [
               {
@@ -123,7 +125,7 @@ export default function ProjectDetailModal({
               },
             ]
           : []),
-
+        //
         ...(isPortfolio && repositories.length > 1
           ? [
               {
@@ -162,7 +164,7 @@ export default function ProjectDetailModal({
               },
             ]
           : []),
-
+        //
         ...(projectItem?.is_private
           ? [
               {
@@ -200,7 +202,7 @@ export default function ProjectDetailModal({
                 },
               ]
             : []),
-
+        //
         {
           label: t.common.close,
           color: "secondary" as const,
@@ -292,16 +294,16 @@ export default function ProjectDetailModal({
           >
             <i className="bi bi-calendar3 me-1" />
             <time dateTime={item.start_period}>
-              {formatMonthYear(
-                item.start_period,
-                dateLocale,
-                t.common.present,
-              )}
+              {formatMonthYear(item.start_period, dateLocale, t.common.present)}
             </time>{" "}
             &mdash;{" "}
             {item.finish_period ? (
               <time dateTime={item.finish_period}>
-                {formatMonthYear(item.finish_period, dateLocale, t.common.present)}
+                {formatMonthYear(
+                  item.finish_period,
+                  dateLocale,
+                  t.common.present,
+                )}
               </time>
             ) : (
               formatMonthYear(item.finish_period, dateLocale, t.common.present)

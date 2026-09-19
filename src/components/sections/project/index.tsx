@@ -39,15 +39,7 @@ import fallbackCaseStudies from "@/data/jsons/case-studies.json";
 import fallbackDiagrams from "@/data/jsons/diagrams.json";
 import fallbackSolutions from "@/data/jsons/solutions.json";
 import { siteConfig } from "@/config/siteConfig";
-
-function chunkArray<T>(arr: T[], size: number): T[][] {
-  if (size <= 0) return [arr];
-  const chunks: T[][] = [];
-  for (let i = 0; i < arr.length; i += size) {
-    chunks.push(arr.slice(i, i + size));
-  }
-  return chunks;
-}
+import { chunkArray } from "@/utils/array";
 
 interface ShowcaseTabContentProps<T extends { id: string | number }> {
   carouselId: string;
@@ -62,6 +54,7 @@ interface ShowcaseTabContentProps<T extends { id: string | number }> {
   renderCard: (item: T) => ReactNode;
 }
 
+// Showcase Tab Content
 function ShowcaseTabContent<T extends { id: string | number }>({
   carouselId,
   items,
@@ -117,6 +110,7 @@ function ShowcaseTabContent<T extends { id: string | number }>({
   );
 }
 
+// Project Section Content
 function ProjectSectionContent() {
   const { t } = useLanguage();
   const router = useRouter();
@@ -128,6 +122,7 @@ function ProjectSectionContent() {
   const currentTech = (searchParams.get("tech") || "").toLowerCase();
   const currentTag = (searchParams.get("tag") || "").toLowerCase();
 
+  // Set filter param
   const setFilterParam = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -142,6 +137,7 @@ function ProjectSectionContent() {
     [pathname, router, searchParams],
   );
 
+  // Reset filters
   const resetFilters = useCallback(() => {
     const params = new URLSearchParams(searchParams.toString());
     params.delete("category");
@@ -151,6 +147,7 @@ function ProjectSectionContent() {
     router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   }, [pathname, router, searchParams]);
 
+  // Fetch API Data
   const {
     data: dataPortfolio,
     isLoading: isLoadingPortfolio,
@@ -159,29 +156,14 @@ function ProjectSectionContent() {
     "https://api.afrizahanif.com/api/portfolios?all=true",
     { fallbackData: { data: fallbackPortfolios } },
   );
-  const portfolios = useMemo(
-    () => sortByLatestPeriod(dataPortfolio?.data ?? []),
-    [dataPortfolio],
-  );
-
   const { data: dataFeaturePortfolio } = useFetch<ApiResponse<Feature[]>>(
     "https://api.afrizahanif.com/api/features?all=true",
     { fallbackData: { data: fallbackFeatures } },
   );
-  const featurePortfolios = useMemo(
-    () => dataFeaturePortfolio?.data ?? [],
-    [dataFeaturePortfolio],
-  );
-
   const { data: dataRepositories } = useFetch<ApiResponse<Repository[]>>(
     "https://api.afrizahanif.com/api/repositories?all=true",
     { fallbackData: { data: fallbackRepositories } },
   );
-  const repositories = useMemo(
-    () => dataRepositories?.data ?? [],
-    [dataRepositories],
-  );
-
   const {
     data: dataProject,
     isLoading: isLoadingProject,
@@ -190,39 +172,48 @@ function ProjectSectionContent() {
     "https://api.afrizahanif.com/api/projects?all=true",
     { fallbackData: { data: fallbackProjects } },
   );
-  const projects = useMemo(
-    () => sortByLatestPeriod(dataProject?.data ?? []),
-    [dataProject],
-  );
-
   const { data: dataFeatureProjects } = useFetch<
     ApiResponse<FeatureProjectItem[]>
   >("https://api.afrizahanif.com/api/feature-projects?all=true", {
     fallbackData: { data: fallbackFeatureProjects },
   });
-  const featureProjects = useMemo(
-    () => dataFeatureProjects?.data ?? [],
-    [dataFeatureProjects],
-  );
-
   const { data: dataCaseStudy } = useFetch<ApiResponse<CaseStudy[]>>(
     "https://api.afrizahanif.com/api/case-studies?all=true",
     { fallbackData: { data: fallbackCaseStudies } },
   );
-  const caseStudies = useMemo(() => dataCaseStudy?.data ?? [], [dataCaseStudy]);
-
   const { data: dataDiagram } = useFetch<ApiResponse<DiagramCS[]>>(
     "https://api.afrizahanif.com/api/diagrams?all=true",
     { fallbackData: { data: fallbackDiagrams } },
   );
-  const diagrams = useMemo(() => dataDiagram?.data ?? [], [dataDiagram]);
-
   const { data: dataSolution } = useFetch<ApiResponse<SolutionCS[]>>(
     "https://api.afrizahanif.com/api/solutions?all=true",
     { fallbackData: { data: fallbackSolutions } },
   );
-  const solutions = useMemo(() => dataSolution?.data ?? [], [dataSolution]);
 
+  // Data Processing
+  const portfolios = useMemo(
+    () => sortByLatestPeriod(dataPortfolio?.data ?? []),
+    [dataPortfolio],
+  );
+  const featurePortfolios = useMemo(
+    () => dataFeaturePortfolio?.data ?? [],
+    [dataFeaturePortfolio],
+  );
+  const repositories = useMemo(
+    () => dataRepositories?.data ?? [],
+    [dataRepositories],
+  );
+  const projects = useMemo(
+    () => sortByLatestPeriod(dataProject?.data ?? []),
+    [dataProject],
+  );
+  const featureProjects = useMemo(
+    () => dataFeatureProjects?.data ?? [],
+    [dataFeatureProjects],
+  );
+  const caseStudies = useMemo(() => dataCaseStudy?.data ?? [], [dataCaseStudy]);
+  const diagrams = useMemo(() => dataDiagram?.data ?? [], [dataDiagram]);
+  const solutions = useMemo(() => dataSolution?.data ?? [], [dataSolution]);
   const caseStudyMap = useMemo(() => {
     const map = new Map<string, CaseStudy>();
     caseStudies.forEach((cs) => {
@@ -232,7 +223,6 @@ function ProjectSectionContent() {
     });
     return map;
   }, [caseStudies]);
-
   const diagramMap = useMemo(() => {
     const map = new Map<string, DiagramCS>();
     diagrams.forEach((diag) => {
@@ -242,7 +232,6 @@ function ProjectSectionContent() {
     });
     return map;
   }, [diagrams]);
-
   const solutionMap = useMemo(() => {
     const map = new Map<string, SolutionCS[]>();
     solutions.forEach((sol) => {
@@ -254,7 +243,6 @@ function ProjectSectionContent() {
     });
     return map;
   }, [solutions]);
-
   const featurePortfolioMap = useMemo(() => {
     const map = new Map<string, Feature[]>();
     featurePortfolios.forEach((feat) => {
@@ -264,7 +252,6 @@ function ProjectSectionContent() {
     });
     return map;
   }, [featurePortfolios]);
-
   const repositoryMap = useMemo(() => {
     const map = new Map<string, Repository[]>();
     repositories.forEach((repo) => {
@@ -274,7 +261,6 @@ function ProjectSectionContent() {
     });
     return map;
   }, [repositories]);
-
   const featureProjectMap = useMemo(() => {
     const map = new Map<string, FeatureProjectItem[]>();
     featureProjects.forEach((fp) => {
@@ -292,11 +278,13 @@ function ProjectSectionContent() {
   } | null>(null);
   const [showCaseStudy, setShowCaseStudy] = useState(false);
 
+  // Open case study
   const openCaseStudy = (caseStudy: CaseStudy, portfolioTitle: string) => {
     setSelectedCaseStudy({ caseStudy, portfolioTitle });
     setShowCaseStudy(true);
   };
 
+  // Items per page
   const itemsPerPage = useResponsiveItemsPerPage(
     siteConfig.projects.itemsPerPage,
   );
@@ -327,6 +315,7 @@ function ProjectSectionContent() {
     );
   }, [portfolios, currentCategory, currentTech, currentTag]);
 
+  // Filtered projects based on URL query params
   const filteredProjects = useMemo(() => {
     return projects.filter(
       (item) =>
@@ -384,11 +373,13 @@ function ProjectSectionContent() {
     return activeList;
   }, [portfolios, projects, currentCategory]);
 
+  // Portfolio chunks based on URL query params
   const portfolioChunks = useMemo(
     () => chunkArray(filteredPortfolios, itemsPerPage),
     [filteredPortfolios, itemsPerPage],
   );
 
+  // Project chunks based on URL query params
   const projectChunks = useMemo(
     () => chunkArray(filteredProjects, itemsPerPage),
     [filteredProjects, itemsPerPage],
@@ -401,6 +392,7 @@ function ProjectSectionContent() {
   } | null>(null);
   const [showModal, setShowModal] = useState(false);
 
+  // Open detail modal
   const openDetailModal = (
     item: Portfolio | Project,
     type: "portfolio" | "project",
@@ -409,11 +401,13 @@ function ProjectSectionContent() {
     setShowModal(true);
   };
 
+  // Close detail modal
   const closeDetailModal = () => {
     setShowModal(false);
     setSelectedItem(null);
   };
 
+  // Tab items
   const tabItems: NavTabItem[] = [
     {
       id: "portfolio-tab",
@@ -562,6 +556,7 @@ function ProjectSectionContent() {
 
 export default function ProjectSection() {
   return (
+    // Project Section (Using Suspense)
     <Suspense fallback={<ProjectGridSkeleton count={3} />}>
       <ProjectSectionContent />
     </Suspense>

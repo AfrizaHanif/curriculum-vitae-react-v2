@@ -5,11 +5,10 @@ import {
   TailwindIcon,
 } from "@/components/ui/react/icons";
 
-// Helper untuk icon teknologi dengan fallback SVG kustom
 export function renderSkillIcon(name: string) {
   const n = name.toLowerCase();
 
-  // 1. SVG Fallback dari icons.tsx untuk teknologi yang tidak ada di Bootstrap Icons
+  // Using custom SVG icons for some technologies
   if (n.includes("react")) {
     return <ReactIcon width={24} height={24} className="text-info" />;
   }
@@ -19,12 +18,11 @@ export function renderSkillIcon(name: string) {
   if (n.includes("tailwind")) {
     return <TailwindIcon width={24} height={24} className="text-info" />;
   }
-  // Gunakan regex batas kata (\b) agar kata seperti 'bootstrap' tidak terdeteksi 'ts'
   if (n.includes("typescript") || /\bts\b/i.test(n)) {
     return <TypeScriptIcon width={24} height={24} className="text-primary" />;
   }
 
-  // 2. Bootstrap Icons untuk teknologi lainnya
+  // Using Bootstrap Icons for other technologies
   let biClass = "bi-code-slash text-secondary";
   if (n.includes("bootstrap")) biClass = "bi-bootstrap-fill text-primary";
   else if (n.includes("laravel")) biClass = "bi-layers-fill text-danger";
@@ -44,7 +42,6 @@ export function renderSkillIcon(name: string) {
   return <i className={`bi ${biClass} fs-4`} />;
 }
 
-// Helper untuk badge level
 export function getLevelConfig(level: string) {
   const l = level.toLowerCase();
   if (l === "mahir" || l === "expert" || l === "advanced") {

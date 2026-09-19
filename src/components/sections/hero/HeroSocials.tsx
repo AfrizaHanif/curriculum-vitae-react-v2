@@ -18,9 +18,11 @@ export default function HeroSocials({ socials }: HeroSocialsProps) {
       className="pt-2 border-top border-white border-opacity-25"
     >
       <ul className="list-unstyled d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2 mb-0">
+        {/* Social media label */}
         <li>
           <small className="text-white-75 me-2">Hubungkan:</small>
         </li>
+        {/* Social media buttons */}
         {socials.map((social) => (
           <li key={social.id}>
             <Tooltip title={social.name} placement="top">

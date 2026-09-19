@@ -13,13 +13,15 @@ import fallbackTestimonials from "@/data/jsons/testimonials.json";
 
 export default function TestimonialSection() {
   const { t } = useLanguage();
+
+  // Fetch API Data
   const { data, isLoading, error } = useFetch<TestimonialApiResponse>(
     `https://api.afrizahanif.com/api/testimonies?all=true`,
     { fallbackData: { data: fallbackTestimonials } },
   );
   const testimonials = data?.data ?? [];
 
-  // Sembunyikan section hanya jika terjadi error atau data kosong setelah selesai dimuat
+  // Hide the section if there is an error or no data after loading
   if (error || (!isLoading && testimonials.length === 0)) {
     return null;
   }

@@ -4,8 +4,10 @@ import Dropdown, { DropdownItem } from "./ui/bootstrap/dropdown";
 import { useTheme } from "@/context/ThemeContext";
 
 export default function ThemeToggle() {
+  //
   const { theme, setTheme } = useTheme();
 
+  //
   const items: DropdownItem[] = [
     {
       label: "Light",
@@ -27,6 +29,7 @@ export default function ThemeToggle() {
     },
   ];
 
+  //
   const getThemeIcon = () => {
     switch (theme) {
       case "light":

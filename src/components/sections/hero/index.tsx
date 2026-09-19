@@ -21,6 +21,7 @@ import HeroSkeleton from "./HeroSkeleton";
 export default function HeroSection() {
   const { t } = useLanguage();
 
+  // Fetch API Data
   const {
     data: profileResponse,
     isLoading,
@@ -30,7 +31,6 @@ export default function HeroSection() {
     { fallbackData: { data: fallbackProfiles } },
   );
   const profile = profileResponse?.data?.[0];
-
   const { data: socialResponse } = useFetch<ApiResponse<Social[]>>(
     "https://api.afrizahanif.com/api/socials",
     { fallbackData: { data: fallbackSocials } },
@@ -53,12 +53,12 @@ export default function HeroSection() {
         }}
       >
         <div className="row align-items-center g-4 g-lg-5">
-          {/* Left: Avatar dengan Decorative Ring & Status Badge */}
+          {/* Avatar dengan Decorative Ring & Status Badge */}
           <div className="col-12 col-md-5 col-lg-5 order-md-2 text-center">
             <HeroAvatar photo={profile?.photo} fullname={profile?.fullname} />
           </div>
 
-          {/* Right: Personal Introduction & Dual CTA */}
+          {/* Personal Introduction & Dual CTA */}
           <div className="col-12 col-md-7 col-lg-7 order-md-1 text-center text-md-start">
             {isLoading ? (
               <HeroSkeleton />
@@ -90,7 +90,10 @@ export default function HeroSection() {
                 {/* Location */}
                 {(profile.current_city || profile.current_province) && (
                   <address className="text-white-75 small mb-4 d-flex align-items-center justify-content-center justify-content-md-start gap-1 fst-normal">
-                    <i className="bi bi-geo-alt-fill text-warning" aria-hidden="true" />
+                    <i
+                      className="bi bi-geo-alt-fill text-warning"
+                      aria-hidden="true"
+                    />
                     <span>
                       {formatLocation(
                         profile.current_city,

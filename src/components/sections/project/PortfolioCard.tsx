@@ -21,6 +21,8 @@ export default function PortfolioCard({
   onOpenDetails,
 }: PortfolioCardProps) {
   const { t } = useLanguage();
+
+  // Repository dropdown items
   const repoDropdownItems: DropdownItem[] = repositories.map((repo) => {
     const iconClass = repo.icon
       ? repo.icon.startsWith("bi-") || repo.icon.startsWith("bi ")
@@ -54,6 +56,7 @@ export default function PortfolioCard({
       onClick={() => onOpenDetails(portfolio)}
       header={
         <div className="d-flex justify-content-between align-items-center">
+          {/* Badge */}
           <Badge
             pill
             className="bg-primary-subtle text-primary border border-primary-subtle px-2 py-1"
@@ -61,6 +64,7 @@ export default function PortfolioCard({
             <i className="bi bi-folder2 me-1" />
             {portfolio.category || portfolio.type || "Portfolio"}
           </Badge>
+          {/* Date */}
           <small className="text-muted">
             <i className="bi bi-calendar3 me-1" />
             <time dateTime={portfolio.start_period}>
@@ -71,6 +75,7 @@ export default function PortfolioCard({
       }
       footer={
         <div className="d-flex justify-content-between align-items-center">
+          {/* Gallery */}
           <span className="text-muted small">
             {portfolio.gallery && portfolio.gallery.length > 0 ? (
               <span>
@@ -87,6 +92,7 @@ export default function PortfolioCard({
               </span>
             )}
           </span>
+          {/* Dropdown */}
           <div className="d-flex align-items-center gap-2">
             {repoDropdownItems.length > 0 && (
               <div onClick={(e) => e.stopPropagation()}>

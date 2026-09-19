@@ -38,6 +38,7 @@ export default function ProjectCard({
       onClick={() => onOpenDetails(project)}
       header={
         <div className="d-flex justify-content-between align-items-center">
+          {/* Category badge */}
           <Badge
             pill
             className="bg-info-subtle text-info-emphasis border border-info-subtle px-2 py-1"
@@ -45,6 +46,8 @@ export default function ProjectCard({
             <i className="bi bi-briefcase me-1" />
             {project.category || project.type || "Experience"}
           </Badge>
+
+          {/* Status badge */}
           <Badge
             pill
             className={`px-2 py-1 ${getProjectStatusBadgeClass(project.status)}`}
@@ -55,6 +58,7 @@ export default function ProjectCard({
       }
       footer={
         <div className="d-flex justify-content-between align-items-center">
+          {/* Source or private badge */}
           <span className="text-muted small">
             {project.is_private ? (
               <span>
@@ -73,6 +77,7 @@ export default function ProjectCard({
               </span>
             )}
           </span>
+          {/*  */}
           <Button
             as="button"
             color="outline-primary"
@@ -99,7 +104,11 @@ export default function ProjectCard({
         &mdash;{" "}
         {project.finish_period ? (
           <time dateTime={project.finish_period}>
-            {formatMonthYear(project.finish_period, dateLocale, t.common.present)}
+            {formatMonthYear(
+              project.finish_period,
+              dateLocale,
+              t.common.present,
+            )}
           </time>
         ) : (
           formatMonthYear(project.finish_period, dateLocale, t.common.present)

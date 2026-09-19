@@ -14,7 +14,11 @@ interface SkillCardProps {
 
 export default function SkillCard({ skill, currentYear }: SkillCardProps) {
   const { t } = useLanguage();
+
+  // Calculate years of experience
   const years = currentYear - skill.since;
+
+  // Set text for experience
   const expText =
     years <= 0
       ? t.sections.skills.card.experienceUnderYear
@@ -29,10 +33,7 @@ export default function SkillCard({ skill, currentYear }: SkillCardProps) {
   const badgeText =
     years <= 0
       ? t.sections.skills.card.badgeNew
-      : t.sections.skills.card.badgeYears.replace(
-          "{years}",
-          years.toString(),
-        );
+      : t.sections.skills.card.badgeYears.replace("{years}", years.toString());
   const levelCfg = getLevelConfig(skill.level);
 
   return (
@@ -49,6 +50,7 @@ export default function SkillCard({ skill, currentYear }: SkillCardProps) {
           {renderSkillIcon(skill.name)}
         </div>
 
+        {/* Skill Name and Level */}
         <div className="flex-grow-1 min-w-0">
           <h6 className="fw-bold text-body mb-1 text-truncate">{skill.name}</h6>
           <Badge pill className={`px-2 py-1 small ${levelCfg.badgeClass}`}>

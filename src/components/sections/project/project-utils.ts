@@ -2,6 +2,7 @@
  * Utility functions for Project and Portfolio sections
  */
 
+// Get project status badge class
 export function getProjectStatusBadgeClass(status?: string | null): string {
   if (!status) {
     return "bg-secondary-subtle text-secondary border border-secondary-subtle";
@@ -19,6 +20,7 @@ export function getProjectStatusBadgeClass(status?: string | null): string {
   return "bg-secondary-subtle text-secondary border border-secondary-subtle";
 }
 
+// Match category for portfolio and portfolio
 export function matchCategory(
   item: {
     category?: string | null;
@@ -71,19 +73,16 @@ export function matchCategory(
 
   if (target === "web") {
     return (
-      type.includes("web") ||
-      subcat.includes("web") ||
-      cat.includes("web")
+      type.includes("web") || subcat.includes("web") || cat.includes("web")
     );
   }
 
   return (
-    subcat.includes(target) ||
-    cat.includes(target) ||
-    type.includes(target)
+    subcat.includes(target) || cat.includes(target) || type.includes(target)
   );
 }
 
+// Match technology for portfolio and project
 export function matchTechnology(
   item: { technology?: string[] | null },
   activeTech: string,
@@ -95,15 +94,12 @@ export function matchTechnology(
   );
 }
 
+// Match tag for portfolio and project
 export function matchTag(
   item: { tags?: string[] | null },
   activeTag: string,
 ): boolean {
   if (!activeTag) return true;
   const target = activeTag.toLowerCase().trim();
-  return (item.tags || []).some(
-    (tag) => tag.toLowerCase().trim() === target,
-  );
+  return (item.tags || []).some((tag) => tag.toLowerCase().trim() === target);
 }
-
-

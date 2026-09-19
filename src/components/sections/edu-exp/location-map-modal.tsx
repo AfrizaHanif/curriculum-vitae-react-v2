@@ -7,6 +7,7 @@ import Alert from "@/components/ui/bootstrap/alert";
 import type { MapMarker } from "../../ui/customs/leaflet-map";
 import { useLanguage } from "@/context/LanguageContext";
 
+// Dynamic import for LeafletMap to avoid SSR issues
 const LeafletMap = dynamic(() => import("../../ui/customs/leaflet-map"), {
   ssr: false,
   loading: () => (
@@ -14,7 +15,10 @@ const LeafletMap = dynamic(() => import("../../ui/customs/leaflet-map"), {
       className="d-flex flex-column align-items-center justify-content-center bg-body-tertiary border rounded-3 text-muted"
       style={{ height: "380px", width: "100%" }}
     >
-      <div className="spinner-border spinner-border-sm text-primary mb-2" role="status" />
+      <div
+        className="spinner-border spinner-border-sm text-primary mb-2"
+        role="status"
+      />
       <span className="small">Loading map...</span>
     </div>
   ),
@@ -46,12 +50,16 @@ export default function LocationMapModal({
   size = "lg",
 }: LocationMapModalProps) {
   const { t } = useLanguage();
+
+  // Convert latitude and longitude to numbers
   const numLat = typeof latitude === "number" ? latitude : parseFloat(latitude);
   const numLng =
     typeof longitude === "number" ? longitude : parseFloat(longitude);
 
+  // Check if coordinates are valid
   const isValidCoordinates = !isNaN(numLat) && !isNaN(numLng);
 
+  // Create markers for map
   const markers: MapMarker[] = useMemo(() => {
     if (!isValidCoordinates) return [];
     return [
@@ -80,6 +88,7 @@ export default function LocationMapModal({
       scrollable
       bodyClassName="p-3 p-md-4"
       buttonItems={[
+        // Open OpenStreetMap button
         ...(isValidCoordinates
           ? [
               {
@@ -99,12 +108,14 @@ export default function LocationMapModal({
               },
             ]
           : []),
+        // Close button
         {
           label: t.common.close,
           color: "secondary",
           size: "sm",
           dismiss: true,
         },
+        // Open Google Maps button
         ...(isValidCoordinates
           ? [
               {
@@ -128,20 +139,24 @@ export default function LocationMapModal({
       <div>
         {/* Info header inside modal body */}
         <div className="d-flex flex-column gap-1 mb-3">
+          {/* Subtitle */}
           {subtitle && (
             <span className="fw-semibold text-primary">{subtitle}</span>
           )}
+          {/* Address */}
           {address && (
             <div className="d-flex align-items-start gap-2 text-secondary small">
               <i className="bi bi-pin-map text-danger mt-1 flex-shrink-0" />
               <span>{address}</span>
             </div>
           )}
+          {/* Coordinates */}
           {isValidCoordinates && (
             <div className="text-muted small">
               <i className="bi bi-compass me-1" />
               <span>
-                {t.sections.eduExp.mapModal.coordinates}: {numLat.toFixed(5)}, {numLng.toFixed(5)}
+                {t.sections.eduExp.mapModal.coordinates}: {numLat.toFixed(5)},{" "}
+                {numLng.toFixed(5)}
               </span>
             </div>
           )}
