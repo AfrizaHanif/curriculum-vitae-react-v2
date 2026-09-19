@@ -19,18 +19,30 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined,
 );
 
-// Subscribe to language changes
+// Subscribe to language changes (localStorage, custom event, dan browser back/forward URL)
 function subscribe(callback: () => void) {
   window.addEventListener("storage", callback);
   window.addEventListener("language-change", callback);
+  window.addEventListener("popstate", callback);
   return () => {
     window.removeEventListener("storage", callback);
     window.removeEventListener("language-change", callback);
+    window.removeEventListener("popstate", callback);
   };
 }
 
 // Get snapshot of current language
 function getSnapshot(): Language {
+  if (typeof window !== "undefined") {
+    // 1. Prioritaskan parameter dari URL (?lang=id atau ?lang=en)
+    const params = new URLSearchParams(window.location.search);
+    const urlLang = params.get("lang");
+    if (urlLang === "id" || urlLang === "en") {
+      return urlLang;
+    }
+  }
+
+  // 2. Fallback ke preferensi yang tersimpan di localStorage
   const savedLang = localStorage.getItem("preferred_lang");
   return savedLang === "id" || savedLang === "en" ? savedLang : "en";
 }
@@ -42,17 +54,25 @@ function getServerSnapshot(): Language {
 
 // Language Provider
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  // Get current language from localStorage
+  // Get current language
   const lang = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  // Set lang to html
+  // Set lang attribute to <html> and sync to localStorage
   useEffect(() => {
     document.documentElement.lang = lang;
+    localStorage.setItem("preferred_lang", lang);
   }, [lang]);
 
-  // Set lang to localStorage
+  // Set lang to localStorage and update URL query param
   const setLang = React.useCallback((newLang: Language) => {
     localStorage.setItem("preferred_lang", newLang);
+
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("lang", newLang);
+      window.history.replaceState({}, "", url.toString());
+    }
+
     window.dispatchEvent(new Event("language-change"));
   }, []);
 
