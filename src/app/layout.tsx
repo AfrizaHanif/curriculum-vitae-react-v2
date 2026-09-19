@@ -68,22 +68,40 @@ export const metadata: Metadata = {
 // JSON-LD
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: siteConfig.site.name,
-  url: siteConfig.site.url,
-  image: siteConfig.site.profileImage,
-  jobTitle: siteConfig.site.jobTitle,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: siteConfig.site.address.locality,
-    addressRegion: siteConfig.site.address.region,
-    addressCountry: siteConfig.site.address.country,
-  },
-  alumniOf: {
-    "@type": "CollegeOrUniversity",
-    name: siteConfig.site.alumniOf,
-  },
-  sameAs: [siteConfig.site.socials.github, siteConfig.site.socials.linkedin],
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${siteConfig.site.url}#person`,
+      name: siteConfig.site.name,
+      url: siteConfig.site.url,
+      image: siteConfig.site.profileImage,
+      jobTitle: siteConfig.site.jobTitle,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: siteConfig.site.address.locality,
+        addressRegion: siteConfig.site.address.region,
+        addressCountry: siteConfig.site.address.country,
+      },
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: siteConfig.site.alumniOf,
+      },
+      sameAs: [
+        siteConfig.site.socials.github,
+        siteConfig.site.socials.linkedin,
+      ],
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": `${siteConfig.site.url}#portfolio`,
+      name: `${siteConfig.site.name} Portfolio`,
+      url: siteConfig.site.url,
+      author: { "@id": `${siteConfig.site.url}#person` },
+      creator: { "@id": `${siteConfig.site.url}#person` },
+      description: siteConfig.site.description,
+      inLanguage: ["en", "id"],
+    },
+  ],
 };
 
 export default function RootLayout(
