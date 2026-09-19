@@ -20,6 +20,7 @@ const cspHeader = `
 
 const nextConfig: NextConfig = {
   output: "export",
+  trailingSlash: true,
   sassOptions: {
     includePaths: [path.join(process.cwd(), "node_modules")],
   },
@@ -56,7 +57,8 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+            value:
+              "camera=(), microphone=(), geolocation=(), browsing-topics=()",
           },
           {
             key: "Strict-Transport-Security",
