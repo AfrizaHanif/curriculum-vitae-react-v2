@@ -5,7 +5,7 @@ import Link from "next/link";
 import "./footer.css";
 import { useFetch } from "@/hooks/useFetch";
 import { SocialApiResponse } from "@/types/social";
-import Tooltip from "../ui/bootstrap/tooltip";
+import Tooltip from "../../ui/bootstrap/tooltip";
 import Image from "next/image";
 // import logoSite from "@/assets/images/logo/logo-only-white.png";
 import logoWhite from "@/assets/images/logo/logo-only-white.png";
@@ -17,9 +17,10 @@ import { ProfileApiResponse } from "@/types/profile";
 // Footer's Props
 interface FooterProps {
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export default function Footer({ className = "" }: FooterProps) {
+export default function Footer({ className = "", style }: FooterProps) {
   const footerRef = useRef<HTMLElement>(null);
 
   // Fetch API Data
@@ -57,6 +58,7 @@ export default function Footer({ className = "" }: FooterProps) {
     <footer
       ref={footerRef}
       className={`position-absolute bottom-0 start-0 glass-footer w-100 ${className}`}
+      style={style}
     >
       <div className="container py-4 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 text-center text-md-start">
         {/* Copyright & Logo */}

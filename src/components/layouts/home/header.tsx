@@ -3,16 +3,16 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import "./header.css";
-import ThemeToggle from "../ThemeToggle";
-import LanguageToggle from "../LanguageToggle";
+import ThemeToggle from "../../ThemeToggle";
+import LanguageToggle from "../../LanguageToggle";
 import { useLanguage } from "@/context/LanguageContext";
 import { useNavigation } from "@/context/NavigationContext";
 import { useFetch } from "@/hooks/useFetch";
 import fallbackProfiles from "@/data/jsons/profiles.json";
 import { ProfileApiResponse } from "@/types/profile";
-import Offcanvas from "../ui/bootstrap/offcanvas";
+import Offcanvas from "../../ui/bootstrap/offcanvas";
 import Image from "next/image";
-import Button from "../ui/bootstrap/button";
+import Button from "../../ui/bootstrap/button";
 import logoWhite from "@/assets/images/logo/logo-only-white.png";
 import logoBlack from "@/assets/images/logo/logo-only-black.png";
 

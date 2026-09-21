@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import Footer from "@/components/layouts/footer";
+import Footer from "@/components/layouts/home/footer";
 import { useFetch } from "@/hooks/useFetch";
 import { getApiUrl, siteConfig } from "@/config/siteConfig";
 import { formatMonthYear, sortByLatestPeriod } from "@/utils/date";
@@ -19,7 +19,7 @@ import fallbackEducations from "@/data/jsons/educations.json";
 import fallbackSkills from "@/data/jsons/skills.json";
 
 import "./resume.css";
-import ResumeHeader from "./ResumeHeader";
+import PageHeader from "../../../components/layouts/pages/page-header";
 
 export default function ResumePage() {
   // 1. Fetch Profile Data (Priority API, Fallback JSON)
@@ -76,7 +76,7 @@ export default function ResumePage() {
   return (
     <div className="resume-wrapper bg-body-tertiary min-vh-100">
       {/* Top Navbar Header (Follows header.tsx styling, hidden during print) */}
-      <ResumeHeader
+      <PageHeader
         fullname={profile?.fullname}
         originalPdfUrl={profile?.resume}
         onPrint={handlePrint}

@@ -2,7 +2,7 @@
 
 import Section from "@/components/ui/customs/section";
 import SectionHeader from "@/components/ui/customs/section-header";
-import Footer from "@/components/layouts/footer";
+import Footer from "@/components/layouts/home/footer";
 import { useFetch } from "@/hooks/useFetch";
 import fallbackProfiles from "@/data/jsons/profiles.json";
 import type { ProfileApiResponse } from "@/types/profile";

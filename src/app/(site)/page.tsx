@@ -13,7 +13,7 @@ const TestimonialSection = dynamic(
 );
 const ContactSection = dynamic(() => import("@/components/sections/contact"));
 
-export default function Home() {
+export default function SitePage() {
   return (
     <>
       {/* Above-the-fold */}

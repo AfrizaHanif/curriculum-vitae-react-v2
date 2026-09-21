@@ -1,9 +1,9 @@
-import Header from "@/components/layouts/header";
+import Header from "@/components/layouts/home/header";
 import SideNav from "@/components/ui/customs/side-nav";
 import ScrollToTop from "@/components/ui/customs/scroll-to-top";
 import { NavigationProvider } from "@/context/NavigationContext";
 
-export default function SiteLayout({
+export default function HomeLayout({
   children,
 }: {
   children: React.ReactNode;

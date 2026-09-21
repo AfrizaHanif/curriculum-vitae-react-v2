@@ -288,4 +288,29 @@ export const id: TranslationSchema = {
     originalPdf: "PDF Asli",
     printPdf: "Cetak / PDF",
   },
+  errorPages: {
+    notFound: {
+      code: "404",
+      badge: "Halaman Tidak Ditemukan",
+      title: "Tersesat di Dunia Maya?",
+      description:
+        "Halaman yang Anda tuju tidak ditemukan, telah dipindahkan, atau tautan yang dimasukkan keliru.",
+      backHome: "Kembali ke Beranda",
+      backPrev: "Halaman Sebelumnya",
+      quickLinksTitle: "Atau kunjungi bagian lainnya:",
+      projects: "Lihat Proyek",
+      resume: "Lihat Resume",
+      contact: "Hubungi Saya",
+    },
+    serverError: {
+      code: "500",
+      badge: "Kesalahan Server",
+      title: "Terjadi Kesalahan",
+      description:
+        "Terjadi kendala tak terduga saat memuat halaman ini. Silakan coba kembali atau kembali ke beranda.",
+      retry: "Coba Lagi",
+      backHome: "Kembali ke Beranda",
+      technicalDetails: "Detail Teknis",
+    },
+  },
 };

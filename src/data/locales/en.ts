@@ -281,6 +281,31 @@ export const en = {
     originalPdf: "Original PDF",
     printPdf: "Print / PDF",
   },
+  errorPages: {
+    notFound: {
+      code: "404",
+      badge: "Page Not Found",
+      title: "Lost in Cyberspace?",
+      description:
+        "The page you are looking for doesn't exist, has been removed, or the link is broken.",
+      backHome: "Back to Home",
+      backPrev: "Previous Page",
+      quickLinksTitle: "Or explore other sections:",
+      projects: "View Projects",
+      resume: "View Resume",
+      contact: "Contact Me",
+    },
+    serverError: {
+      code: "500",
+      badge: "Server Error",
+      title: "Something Went Wrong",
+      description:
+        "An unexpected error occurred while loading this page. Please try refreshing or return to the home page.",
+      retry: "Try Again",
+      backHome: "Back to Home",
+      technicalDetails: "Technical Details",
+    },
+  },
 };
 
 export type TranslationSchema = typeof en;

@@ -1,26 +1,27 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import Button from "@/components/ui/bootstrap/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageToggle from "@/components/LanguageToggle";
-import { useLanguage } from "@/context/LanguageContext";
-import "@/components/layouts/header.css";
+import "@/components/layouts/home/header.css";
+import Link from "next/link";
+import { useFetch } from "@/hooks/useFetch";
+import { ProfileApiResponse } from "@/types/profile";
+import fallbackProfiles from "@/data/jsons/profiles.json";
+import Image from "next/image";
+import logoWhite from "@/assets/images/logo/logo-only-white.png";
+import logoBlack from "@/assets/images/logo/logo-only-black.png";
 
-interface ResumeHeaderProps {
-  fullname?: string;
-  originalPdfUrl?: string | null;
-  onPrint: () => void;
-}
-
-export default function ResumeHeader({
-  originalPdfUrl,
-  onPrint,
-}: ResumeHeaderProps) {
-  const { t } = useLanguage();
+export default function ErrorHeader() {
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  // Fetch API Data
+  const { data } = useFetch<ProfileApiResponse>(
+    `https://api.afrizahanif.com/api/profiles`,
+    { fallbackData: { data: fallbackProfiles } },
+  );
+  const profile = data?.data?.[0];
 
   // Scroll Effect (Auto-Hide Header)
   useEffect(() => {
@@ -55,37 +56,38 @@ export default function ResumeHeader({
 
   return (
     <header
-      className={`smart-header fixed-top border-bottom ${
+      className={`smart-header sticky-top border-bottom ${
         isVisible ? "header-visible" : "header-hidden"
       } ${isScrolled ? "shadow-sm scrolled" : ""} d-print-none`}
     >
       <div className="container d-flex align-items-center justify-content-between py-2 py-md-3">
-        {/* Back Button */}
-        <Link href="/">
-          <Button color="outline-secondary" rounded>
-            <i className="bi bi-arrow-left me-1" /> {t.resume.back}
-          </Button>
+        {/* Brand Logo & Name */}
+        <Link
+          href="/"
+          className="d-flex align-items-center link-body-emphasis text-decoration-none min-w-0 me-2"
+        >
+          <Image
+            src={logoWhite}
+            alt="Logo"
+            width={36}
+            height={36}
+            className="me-2 flex-shrink-0 object-fit-contain logo-light"
+            priority
+          />
+          <Image
+            src={logoBlack}
+            alt="Logo"
+            width={36}
+            height={36}
+            className="me-2 flex-shrink-0 object-fit-contain logo-dark"
+            priority
+          />
+          <span className="fs-5 fs-md-4 fw-bold text-truncate d-none d-sm-inline">
+            {profile?.fullname || "Muhammad Afriza Hanif"}
+          </span>
         </Link>
 
-        {/* Actions */}
         <div className="d-flex align-items-center gap-2">
-          {originalPdfUrl && (
-            <Button
-              as="a"
-              href={originalPdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              color="outline-secondary"
-              className="d-none d-md-flex align-items-center gap-1"
-              rounded
-            >
-              <i className="bi bi-file-earmark-arrow-down" />
-              <span>{t.resume.originalPdf}</span>
-            </Button>
-          )}
-          <Button color="primary" rounded onClick={onPrint}>
-            <i className="bi bi-printer me-1" /> {t.resume.printPdf}
-          </Button>
           <ThemeToggle />
           <LanguageToggle />
         </div>
