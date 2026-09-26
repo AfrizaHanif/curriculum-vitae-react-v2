@@ -7,12 +7,12 @@
     "current_province": "Jawa Timur",
     "email": "afrizahanif728@gmail.com",
     "birthday": "1996-04-08",
-    "tagline": "Bersemangat untuk Berkontribusi pada Web Developer",
+    "tagline": "Bersemangat untuk Berkontribsi pada Web Developer",
     "description": "Lulusan S1 Sistem Informasi dari Universitas Dinamika dengan IPK 3.2. Memiliki pengalaman magang di BPS Jawa Timur (Jan–Mar 2023) sebagai intern Kerja Praktik, terlibat dalam pengelolaan data dan sistem informasi. Berpengalaman dalam pengembangan aplikasi web menggunakan Laravel, serta aktif mempelajari Python, Artificial Intelligence (AI), desain grafis, CSS, dan JavaScript. Tertarik pada posisi Web Developer dan antusias untuk terus berkembang di lingkungan kerja yang dinamis dan kolaboratif",
     "philosophy": "Sebagai web programmer, saya meyakini bahwa teknologi harus memberikan solusi yang efisien, aman, dan berkelanjutan. Saya berkomitmen untuk menulis kode yang terstruktur dan mudah dipelihara, mengikuti standar industri, serta beradaptasi dengan perkembangan teknologi dan kebutuhan bisnis. Dalam setiap proyek, saya menjunjung tinggi profesionalisme, komunikasi yang jelas, dan integritas kerja untuk menghasilkan sistem yang fungsional dan berdampak",
     "status": "Fresh Graduate",
-    "photo": "/images/profile.jpg",
-    "setup_image": "/images/setup.png",
-    "resume": "/docs/profile-resume.pdf"
+    "photo": "https://api.afrizahanif.com/api/storage/images/Profile.jpg",
+    "setup_image": "https://api.afrizahanif.com/api/storage/images/Setup.png",
+    "resume": "https://api.afrizahanif.com/api/storage/images/profile-resume.pdf"
   }
 ]
