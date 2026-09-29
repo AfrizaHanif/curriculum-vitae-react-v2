@@ -38,7 +38,7 @@ import fallbackFeatureProjects from "@/data/jsons/feature-projects.json";
 import fallbackCaseStudies from "@/data/jsons/case-studies.json";
 import fallbackDiagrams from "@/data/jsons/diagrams.json";
 import fallbackSolutions from "@/data/jsons/solutions.json";
-import { siteConfig } from "@/config/siteConfig";
+import { getApiUrl, siteConfig } from "@/config/siteConfig";
 import { chunkArray } from "@/utils/array";
 
 interface ShowcaseTabContentProps<T extends { id: string | number }> {
@@ -153,15 +153,15 @@ function ProjectSectionContent() {
     isLoading: isLoadingPortfolio,
     error: errorPortfolio,
   } = useFetch<ApiResponse<Portfolio[]>>(
-    "https://api.afrizahanif.com/api/portfolios?all=true",
+    getApiUrl("portfolios"),
     { fallbackData: { data: fallbackPortfolios } },
   );
   const { data: dataFeaturePortfolio } = useFetch<ApiResponse<Feature[]>>(
-    "https://api.afrizahanif.com/api/features?all=true",
+    getApiUrl("features"),
     { fallbackData: { data: fallbackFeatures } },
   );
   const { data: dataRepositories } = useFetch<ApiResponse<Repository[]>>(
-    "https://api.afrizahanif.com/api/repositories?all=true",
+    getApiUrl("repositories"),
     { fallbackData: { data: fallbackRepositories } },
   );
   const {
@@ -169,24 +169,24 @@ function ProjectSectionContent() {
     isLoading: isLoadingProject,
     error: errorProject,
   } = useFetch<ApiResponse<Project[]>>(
-    "https://api.afrizahanif.com/api/projects?all=true",
+    getApiUrl("projects"),
     { fallbackData: { data: fallbackProjects } },
   );
   const { data: dataFeatureProjects } = useFetch<
     ApiResponse<FeatureProjectItem[]>
-  >("https://api.afrizahanif.com/api/feature-projects?all=true", {
+  >(getApiUrl("featureProjects"), {
     fallbackData: { data: fallbackFeatureProjects },
   });
   const { data: dataCaseStudy } = useFetch<ApiResponse<CaseStudy[]>>(
-    "https://api.afrizahanif.com/api/case-studies?all=true",
+    getApiUrl("caseStudies"),
     { fallbackData: { data: fallbackCaseStudies } },
   );
   const { data: dataDiagram } = useFetch<ApiResponse<DiagramCS[]>>(
-    "https://api.afrizahanif.com/api/diagrams?all=true",
+    getApiUrl("diagrams"),
     { fallbackData: { data: fallbackDiagrams } },
   );
   const { data: dataSolution } = useFetch<ApiResponse<SolutionCS[]>>(
-    "https://api.afrizahanif.com/api/solutions?all=true",
+    getApiUrl("solutions"),
     { fallbackData: { data: fallbackSolutions } },
   );
 

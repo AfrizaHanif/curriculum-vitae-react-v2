@@ -7,6 +7,7 @@ import "@/components/layouts/home/header.css";
 import Link from "next/link";
 import { useFetch } from "@/hooks/useFetch";
 import { ProfileApiResponse } from "@/types/profile";
+import { getApiUrl } from "@/config/siteConfig";
 import fallbackProfiles from "@/data/jsons/profiles.json";
 import Image from "next/image";
 import logoWhite from "@/assets/images/logo/logo-only-white.png";
@@ -18,7 +19,7 @@ export default function ErrorHeader() {
 
   // Fetch API Data
   const { data } = useFetch<ProfileApiResponse>(
-    `https://api.afrizahanif.com/api/profiles`,
+    getApiUrl("profiles"),
     { fallbackData: { data: fallbackProfiles } },
   );
   const profile = data?.data?.[0];

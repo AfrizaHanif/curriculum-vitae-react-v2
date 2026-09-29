@@ -15,7 +15,7 @@ import CertificateGridSkeleton from "./CertificateCardSkeleton";
 import CertificateArchiveModal from "./CertificateArchiveModal";
 import { useLanguage } from "@/context/LanguageContext";
 import fallbackCertificates from "@/data/jsons/certificates.json";
-import { siteConfig } from "@/config/siteConfig";
+import { getApiUrl, siteConfig } from "@/config/siteConfig";
 
 /*
   Thing that need to be improved:
@@ -26,7 +26,7 @@ export default function CertificationSection() {
   const { t } = useLanguage();
   const featuredLimit = siteConfig.certifications.featuredLimit;
   const { data, isLoading, error } = useFetch<ApiResponse<Certificate[]>>(
-    "https://api.afrizahanif.com/api/certificates?all=true",
+    getApiUrl("certificates"),
     { fallbackData: { data: fallbackCertificates } },
   );
   const certificates = useMemo(() => data?.data ?? [], [data]);

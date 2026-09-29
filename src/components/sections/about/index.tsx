@@ -17,17 +17,18 @@ import ProfileDetailModal from "./ProfileDetailModal";
 import SetupModal from "./SetupModal";
 import AboutAvatar from "./AboutAvatar";
 import AboutSkeleton from "./AboutSkeleton";
+import { getApiUrl } from "@/config/siteConfig";
 
 export default function AboutSection() {
   const { t } = useLanguage();
   const { data: profileData, isLoading: profileLoading } =
-    useFetch<ProfileApiResponse>(`https://api.afrizahanif.com/api/profiles`, {
+    useFetch<ProfileApiResponse>(getApiUrl("profiles"), {
       fallbackData: { data: fallbackProfiles },
     });
   const profile = profileData?.data?.[0];
   const { data: setupData, isLoading: setupLoading } =
     useFetch<SetupApiResponse>(
-      `https://api.afrizahanif.com/api/setups?all=true`,
+      getApiUrl("setups"),
       {
         fallbackData: { data: fallbackSetups },
       },

@@ -45,7 +45,7 @@ jobs:
       - name: "4. Synchronize Latest Data from API"
         run: npm run sync-data
         env:
-          API_BASE_URL: "https://api.afrizahanif.com/api"
+          API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL || vars.NEXT_PUBLIC_API_BASE_URL || 'https://api.afrizahanif.com/api' }}
           FAIL_ON_SYNC_ERROR: true
           API_SECRET_TOKEN: ${{ secrets.API_SECRET_TOKEN || '' }}
 

@@ -62,6 +62,7 @@ jobs:
       NEXT_PUBLIC_FORMSPREE_FORM_ID: ${{ secrets.NEXT_PUBLIC_FORMSPREE_FORM_ID || vars.NEXT_PUBLIC_FORMSPREE_FORM_ID || 'mock_form_id' }}
       NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || vars.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI' }}
       NEXT_PUBLIC_MOCK_SUBMISSION: ${{ secrets.NEXT_PUBLIC_MOCK_SUBMISSION || vars.NEXT_PUBLIC_MOCK_SUBMISSION || 'false' }}
+      NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL || vars.NEXT_PUBLIC_API_BASE_URL || 'https://api.afrizahanif.com/api' }}
 
     steps:
       - name: "0a. Pre-Flight: Verify Build Configuration Variables"
@@ -82,10 +83,21 @@ jobs:
             echo "✅ NEXT_PUBLIC_SITE_URL: $SITE_URL"
           fi
 
+          API_BASE="${{ secrets.NEXT_PUBLIC_API_BASE_URL || vars.NEXT_PUBLIC_API_BASE_URL || '' }}"
+          if [ -z "$API_BASE" ]; then
+            echo "ℹ️ NEXT_PUBLIC_API_BASE_URL tidak diset, memakai default: https://api.afrizahanif.com/api"
+          else
+            echo "✅ NEXT_PUBLIC_API_BASE_URL: $API_BASE"
+          fi
+
       - name: "0b. Pre-Flight: Verify External API Health"
         if: github.event_name != 'workflow_dispatch' || inputs.check_api == true
         run: |
-          API_URL="${{ inputs.api_endpoint || 'https://api.afrizahanif.com/api/profiles' }}"
+          API_BASE="${{ secrets.NEXT_PUBLIC_API_BASE_URL || vars.NEXT_PUBLIC_API_BASE_URL || 'https://api.afrizahanif.com/api' }}"
+          API_URL="${{ inputs.api_endpoint || '' }}"
+          if [ -z "$API_URL" ]; then
+            API_URL="${API_BASE%/}/profiles"
+          fi
           FAIL_ON_ERROR="${{ inputs.fail_on_api_error != false }}"
 
           echo "🔍 Memeriksa status kesehatan API: $API_URL"
@@ -135,7 +147,8 @@ jobs:
       - name: "7. Checklist: Synchronize Latest Data from API"
         run: npm run sync-data
         env:
-          API_ENDPOINT: ${{ inputs.api_endpoint || 'https://api.afrizahanif.com/api/profiles' }}
+          API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL || vars.NEXT_PUBLIC_API_BASE_URL || 'https://api.afrizahanif.com/api' }}
+          API_ENDPOINT: ${{ inputs.api_endpoint || '' }}
           FAIL_ON_SYNC_ERROR: ${{ inputs.fail_on_api_error != false }}
           # [Jaga-jaga / Opsional]: Teruskan token rahasia jika didaftarkan di GitHub Secrets / Variables
           API_SECRET_TOKEN: ${{ secrets.API_SECRET_TOKEN || '' }}

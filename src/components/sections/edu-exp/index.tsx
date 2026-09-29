@@ -21,6 +21,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import fallbackEducations from "@/data/jsons/educations.json";
 import fallbackExperiences from "@/data/jsons/experiences.json";
 import dynamic from "next/dynamic";
+import { getApiUrl } from "@/config/siteConfig";
 
 interface TimelineTabContentProps {
   isLoading: boolean;
@@ -75,7 +76,7 @@ export default function EduExpSection() {
     isLoading: eduLoading,
     error: eduError,
   } = useFetch<ApiResponse<Education[]>>(
-    "https://api.afrizahanif.com/api/educations?all=true",
+    getApiUrl("educations"),
     { fallbackData: { data: fallbackEducations } },
   );
   const educations = useMemo(
@@ -87,7 +88,7 @@ export default function EduExpSection() {
     isLoading: expLoading,
     error: expError,
   } = useFetch<ApiResponse<Experience[]>>(
-    "https://api.afrizahanif.com/api/experiences?all=true",
+    getApiUrl("experiences"),
     { fallbackData: { data: fallbackExperiences } },
   );
   const experiences = useMemo(

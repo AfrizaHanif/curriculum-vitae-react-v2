@@ -10,13 +10,14 @@ import { useLanguage } from "@/context/LanguageContext";
 import TestimonialCard from "./TestimonialCard";
 import TestimonialGridSkeleton from "./TestimonialCardSkeleton";
 import fallbackTestimonials from "@/data/jsons/testimonials.json";
+import { getApiUrl } from "@/config/siteConfig";
 
 export default function TestimonialSection() {
   const { t } = useLanguage();
 
   // Fetch API Data
   const { data, isLoading, error } = useFetch<TestimonialApiResponse>(
-    `https://api.afrizahanif.com/api/testimonies?all=true`,
+    getApiUrl("testimonies"),
     { fallbackData: { data: fallbackTestimonials } },
   );
   const testimonials = data?.data ?? [];

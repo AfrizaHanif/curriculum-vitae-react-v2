@@ -13,6 +13,7 @@ import logoBlack from "@/assets/images/logo/logo-only-black.png";
 import fallbackSocials from "@/data/jsons/socials.json";
 import fallbackProfiles from "@/data/jsons/profiles.json";
 import { ProfileApiResponse } from "@/types/profile";
+import { getApiUrl } from "@/config/siteConfig";
 
 // Footer's Props
 interface FooterProps {
@@ -25,12 +26,12 @@ export default function Footer({ className = "", style }: FooterProps) {
 
   // Fetch API Data
   const { data: socialData } = useFetch<SocialApiResponse>(
-    `https://api.afrizahanif.com/api/socials`,
+    getApiUrl("socials"),
     { fallbackData: { data: fallbackSocials } },
   );
   const social = socialData?.data;
   const { data: profileData } = useFetch<ProfileApiResponse>(
-    `https://api.afrizahanif.com/api/profiles`,
+    getApiUrl("profiles"),
     { fallbackData: { data: fallbackProfiles } },
   );
   const profile = profileData?.data?.[0];

@@ -37,7 +37,8 @@ jobs:
       - name: "2. Check Backend API Health"
         id: api_check
         run: |
-          API_URL="https://api.afrizahanif.com/api/profiles"
+          API_BASE="${{ secrets.NEXT_PUBLIC_API_BASE_URL || vars.NEXT_PUBLIC_API_BASE_URL || 'https://api.afrizahanif.com/api' }}"
+          API_URL="${API_BASE%/}/profiles"
           echo "🔍 Memeriksa ketersediaan backend API: $API_URL"
 
           HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -L --connect-timeout 10 --max-time 15 "$API_URL" || echo "000")

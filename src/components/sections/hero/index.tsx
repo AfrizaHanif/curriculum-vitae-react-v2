@@ -17,6 +17,7 @@ import fallbackSocials from "@/data/jsons/socials.json";
 import HeroAvatar from "./HeroAvatar";
 import HeroSocials from "./HeroSocials";
 import HeroSkeleton from "./HeroSkeleton";
+import { getApiUrl } from "@/config/siteConfig";
 
 export default function HeroSection() {
   const { t } = useLanguage();
@@ -27,12 +28,12 @@ export default function HeroSection() {
     isLoading,
     error,
   } = useFetch<ApiResponse<Profile[]>>(
-    "https://api.afrizahanif.com/api/profiles",
+    getApiUrl("profiles"),
     { fallbackData: { data: fallbackProfiles } },
   );
   const profile = profileResponse?.data?.[0];
   const { data: socialResponse } = useFetch<ApiResponse<Social[]>>(
-    "https://api.afrizahanif.com/api/socials",
+    getApiUrl("socials"),
     { fallbackData: { data: fallbackSocials } },
   );
   const socials = socialResponse?.data ?? [];

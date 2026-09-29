@@ -10,6 +10,7 @@ import { useNavigation } from "@/context/NavigationContext";
 import { useFetch } from "@/hooks/useFetch";
 import fallbackProfiles from "@/data/jsons/profiles.json";
 import { ProfileApiResponse } from "@/types/profile";
+import { getApiUrl } from "@/config/siteConfig";
 import Offcanvas from "../../ui/bootstrap/offcanvas";
 import Image from "next/image";
 import Button from "../../ui/bootstrap/button";
@@ -33,7 +34,7 @@ export default function Header({ className = "" }: HeaderProps) {
 
   // Fetch API Data
   const { data } = useFetch<ProfileApiResponse>(
-    `https://api.afrizahanif.com/api/profiles`,
+    getApiUrl("profiles"),
     { fallbackData: { data: fallbackProfiles } },
   );
   const profile = data?.data?.[0];

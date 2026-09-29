@@ -14,6 +14,7 @@ import fallbackExperiences from "@/data/jsons/experiences.json";
 import fallbackCertificates from "@/data/jsons/certificates.json";
 import fallbackProjects from "@/data/jsons/projects.json";
 import fallbackPortfolios from "@/data/jsons/portfolios.json";
+import { getApiUrl } from "@/config/siteConfig";
 
 interface StatItem {
   icon: string;
@@ -31,19 +32,19 @@ export default function AboutStats() {
 
   // Fetch API Data
   const { data: expData } = useFetch<ApiResponse<Experience[]>>(
-    "https://api.afrizahanif.com/api/experiences?all=true",
+    getApiUrl("experiences"),
     { fallbackData: { data: fallbackExperiences } },
   );
   const { data: projData } = useFetch<ApiResponse<Project[]>>(
-    "https://api.afrizahanif.com/api/projects?all=true",
+    getApiUrl("projects"),
     { fallbackData: { data: fallbackProjects } },
   );
   const { data: portData } = useFetch<ApiResponse<Portfolio[]>>(
-    "https://api.afrizahanif.com/api/portfolios?all=true",
+    getApiUrl("portfolios"),
     { fallbackData: { data: fallbackPortfolios } },
   );
   const { data: certData } = useFetch<ApiResponse<Certificate[]>>(
-    "https://api.afrizahanif.com/api/certificates?all=true",
+    getApiUrl("certificates"),
     { fallbackData: { data: fallbackCertificates } },
   );
 

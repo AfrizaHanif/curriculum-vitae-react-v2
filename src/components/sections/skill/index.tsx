@@ -14,6 +14,7 @@ import NavTab, { NavTabItem } from "@/components/ui/bootstrap/nav-tab";
 import SkillCard from "./SkillCard";
 import SkillGridSkeleton from "./SkillCardSkeleton";
 import fallbackSkills from "@/data/jsons/skills.json";
+import { getApiUrl } from "@/config/siteConfig";
 
 export default function SkillSection() {
   const { t } = useLanguage();
@@ -21,7 +22,7 @@ export default function SkillSection() {
 
   // Fetch API Data
   const { data, isLoading, error } = useFetch<SkillApiResponse>(
-    `https://api.afrizahanif.com/api/skills?all=true`,
+    getApiUrl("skills"),
     { fallbackData: { data: fallbackSkills } },
   );
   const skills = useMemo(() => data?.data ?? [], [data?.data]);

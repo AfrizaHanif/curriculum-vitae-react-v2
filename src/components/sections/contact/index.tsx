@@ -6,6 +6,7 @@ import Footer from "@/components/layouts/home/footer";
 import { useFetch } from "@/hooks/useFetch";
 import fallbackProfiles from "@/data/jsons/profiles.json";
 import type { ProfileApiResponse } from "@/types/profile";
+import { getApiUrl } from "@/config/siteConfig";
 import Spinner from "@/components/ui/bootstrap/spinner";
 import ContactInfoCard from "./ContactInfoCard";
 import ContactForm from "./ContactForm";
@@ -16,7 +17,7 @@ export default function ContactSection() {
   const { t } = useLanguage();
   // Fetch profile data
   const { data, isLoading } = useFetch<ProfileApiResponse>(
-    `https://api.afrizahanif.com/api/profiles`,
+    getApiUrl("profiles"),
     { fallbackData: { data: fallbackProfiles } },
   );
   const profile = data?.data?.[0];
