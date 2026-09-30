@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: "1. Checkout repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: "2. Scan Website for Dead Links with Lychee"
         id: lychee
