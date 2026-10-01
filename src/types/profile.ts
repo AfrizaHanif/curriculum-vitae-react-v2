@@ -7,7 +7,8 @@ export interface Profile {
   current_city?: string | null;
   current_province?: string | null;
   email: string;
-  birthday: string;
+  age?: number | null;
+  birthday?: string | null;
   tagline?: LocalizedString | null;
   description?: LocalizedString | null;
   philosophy?: LocalizedString | null;
