@@ -19,25 +19,27 @@
     "diagrams": [
       {
         "name": "Context Diagram",
-        "images": null
+        "images": "https://api.afrizahanif.com/storage/images/portfolios/case-study/CAS-001-Context.jpg"
       },
       {
         "name": "DFD Level 0",
-        "images": null
+        "images": "https://api.afrizahanif.com/storage/images/portfolios/case-study/CAS-001-DFD0.jpg"
       },
       {
         "name": "PDM",
-        "images": null
+        "images": "https://api.afrizahanif.com/storage/images/portfolios/case-study/CAS-001-PDM.jpg"
       }
     ],
     "solutions": [
       {
         "title": "Penggunaan Bootstrap sebagai alat desain Frontend",
-        "context": "Saya telah melakukan desain ulang pada aplikasi ini agar tata letak antarmuka (Interface) terlihat lebih rapi menggunakan Bootstrap yang dapat memudahkan saya untuk merapikan elemen-elemen yang ada di halaman-halaman pada aplikasi tersebut"
+        "context": "Saya telah melakukan desain ulang pada aplikasi ini agar tata letak antarmuka (Interface) terlihat lebih rapi menggunakan Bootstrap yang dapat memudahkan saya untuk merapikan elemen-elemen yang ada di halaman-halaman pada aplikasi tersebut",
+        "visual": null
       },
       {
         "title": "Aksesibilitas untuk non-pegawai PST",
-        "context": "Agar para pegawai dapat mengakses daftar buku apa saja yang ada di perpustakaan, saya telah membangun ulang halaman utama pada aplikasi agar pengguna dapat mengakses daftar buku yang ada"
+        "context": "Agar para pegawai dapat mengakses daftar buku apa saja yang ada di perpustakaan, saya telah membangun ulang halaman utama pada aplikasi agar pengguna dapat mengakses daftar buku yang ada",
+        "visual": null
       }
     ],
     "benefits": [
@@ -67,8 +69,8 @@
       "Saya akan melakukan ekspesimen CRUD hanya dalam satu halaman"
     ],
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   },
   {
     "id": "CAS-002",
@@ -90,25 +92,27 @@
     "diagrams": [
       {
         "name": "Context Diagram",
-        "images": null
+        "images": "https://api.afrizahanif.com/storage/images/portfolios/case-study/CAS-002-Context.png"
       },
       {
         "name": "DFD Level 0",
-        "images": null
+        "images": "https://api.afrizahanif.com/storage/images/portfolios/case-study/CAS-002-DFD0.png"
       },
       {
         "name": "PDM",
-        "images": null
+        "images": "https://api.afrizahanif.com/storage/images/portfolios/case-study/CAS-002-PDM.png"
       }
     ],
     "solutions": [
       {
         "title": "Menggantikan cara tradisional menjadi aplikasi web",
-        "context": "Saya membuat aplikasi web untuk menggantikan cara tradisional dari masalah yang ada agar memudahkan pengguna untuk mengisi data dengan cepat menggunakan fitur import file ke aplikasi web"
+        "context": "Saya membuat aplikasi web untuk menggantikan cara tradisional dari masalah yang ada agar memudahkan pengguna untuk mengisi data dengan cepat menggunakan fitur import file ke aplikasi web",
+        "visual": null
       },
       {
         "title": "Menggunakan Simple Additive Weighting (SAW) sebagai metode pemilihan keputusan untuk perhitungan karyawan terbaik",
-        "context": "Untuk mementukan pemilihan karyawan terbaik menggunakan bobot, saya menggunakan Simple Additive Weighting (SAW) sebagai metode pemilihan keputusan"
+        "context": "Untuk mementukan pemilihan karyawan terbaik menggunakan bobot, saya menggunakan Simple Additive Weighting (SAW) sebagai metode pemilihan keputusan",
+        "visual": null
       }
     ],
     "benefits": [
@@ -135,7 +139,7 @@
       "Dari proyek yang saya kerjakan, untuk kedepannya saya akan mempelajari cara mempersingkat kodingan agar terlihat lebih ringkas"
     ],
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   }
 ]

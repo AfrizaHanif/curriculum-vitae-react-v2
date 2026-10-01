@@ -7,8 +7,8 @@
     "description": "Pengunjung dapat melihat daftar buku dan daftar isi yang telah dirapikan.",
     "progress": 100,
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   },
   {
     "id": "FEA-002",
@@ -18,8 +18,8 @@
     "description": "Pengguna dapat export detail buku ke file PDF yang dapat disimpan oleh pengguna.",
     "progress": 100,
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   },
   {
     "id": "FEA-003",
@@ -29,8 +29,8 @@
     "description": "Pegawai PST dapat melakukan import buku dan daftar isi dari Excel untuk memudahkan penambahan data dan export ke Excel untuk memudahkan pengambilan data.",
     "progress": 100,
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   },
   {
     "id": "FEA-004",
@@ -40,8 +40,8 @@
     "description": "Kepegawaian, dan kepala BPS Jawa Timur dapat melihat status-status data secara interaktif di halaman dashboard.",
     "progress": 100,
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   },
   {
     "id": "FEA-005",
@@ -51,8 +51,8 @@
     "description": "Kepegawaian dapat melakukan penambahan, penghapusan, perubahan, dan membaca data yang ada hanya dalam satu halaman.",
     "progress": 100,
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   },
   {
     "id": "FEA-006",
@@ -62,8 +62,8 @@
     "description": "Kepegawaian dapat mengimport data Excel ke aplikasi untuk memudahkan pemasukkan nilai dalam pengambilan keputusan.",
     "progress": 100,
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   },
   {
     "id": "FEA-007",
@@ -71,10 +71,10 @@
     "featureable_id": "PRJ-001",
     "title": "Desain Informatif dan Interaktif",
     "description": null,
-    "progress": 40,
+    "progress": 75,
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   },
   {
     "id": "FEA-008",
@@ -84,8 +84,8 @@
     "description": "Implementasi sistem autentikasi menggunakan Laravel Sanctum untuk keamanan aplikasi.",
     "progress": 100,
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   },
   {
     "id": "FEA-009",
@@ -95,18 +95,40 @@
     "description": "Implementasi endpoint untuk mengakses dan memanipulasi data melalui API.",
     "progress": 100,
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   },
   {
     "id": "FEA-010",
     "featureable_type": "App\\Models\\Project",
     "featureable_id": "PRJ-003",
-    "title": "Pembuatan CV dan Resume Secara Instan",
-    "description": "Fitur untuk membuat CV dan resume secara otomatis dari data yang dimasukkan pengguna dalam satu klik.",
-    "progress": 0,
+    "title": "Integrasi Dinamis & Multibahasa",
+    "description": "Implementasi sistem switching bahasa, navigasi halus, serta konsumsi data API terpusat.",
+    "progress": 85,
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
+  },
+  {
+    "id": "FEA-011",
+    "featureable_type": "App\\Models\\Project",
+    "featureable_id": "PRJ-003",
+    "title": "Desain Responsif & Interaktif",
+    "description": "Antarmuka pengguna yang responsif, animasi halus, dan navigasi intuitif untuk pengalaman pengguna yang optimal di berbagai perangkat.",
+    "progress": 90,
+    "deleted_at": null,
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
+  },
+  {
+    "id": "FEA-012",
+    "featureable_type": "App\\Models\\Project",
+    "featureable_id": "PRJ-003",
+    "title": "Konsumsi Data Terpusat",
+    "description": "Integrasi dengan CV API untuk menyediakan konten dinamis dan terstruktur di seluruh halaman web.",
+    "progress": 100,
+    "deleted_at": null,
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   }
 ]

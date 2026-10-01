@@ -4,15 +4,15 @@
     "name": "Fotografi",
     "icon": "camera",
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   },
   {
     "id": "HOB-002",
     "name": "Musik",
     "icon": "music-note",
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-01T06:45:58.000000Z",
+    "updated_at": "2026-10-01T06:45:58.000000Z"
   }
 ]
