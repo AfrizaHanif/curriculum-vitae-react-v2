@@ -2,7 +2,7 @@ import type { ApiResponse } from "./api";
 
 export interface Hobby {
   id?: string;
-  title: string;
+  name: string;
   icon?: string;
 }
 

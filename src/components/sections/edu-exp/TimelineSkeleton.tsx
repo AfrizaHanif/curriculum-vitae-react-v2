@@ -7,8 +7,10 @@ export function TimelineItemSkeleton() {
     <div className="timeline-item">
       {/* Circle marker skeleton */}
       <div className="timeline-dot" aria-hidden="true">
-        <span
-          className="placeholder rounded-circle bg-primary opacity-50"
+        <Placeholder
+          rounded="circle"
+          color="primary"
+          className="opacity-50"
           style={{ width: "12px", height: "12px" }}
         />
       </div>

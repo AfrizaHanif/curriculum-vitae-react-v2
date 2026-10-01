@@ -18,19 +18,19 @@ import HeroAvatar from "./HeroAvatar";
 import HeroSocials from "./HeroSocials";
 import HeroSkeleton from "./HeroSkeleton";
 import { getApiUrl } from "@/config/siteConfig";
+import { getLocalizedText } from "@/utils/formatters";
 
 export default function HeroSection() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   // Fetch API Data
   const {
     data: profileResponse,
     isLoading,
     error,
-  } = useFetch<ApiResponse<Profile[]>>(
-    getApiUrl("profiles"),
-    { fallbackData: { data: fallbackProfiles } },
-  );
+  } = useFetch<ApiResponse<Profile[]>>(getApiUrl("profiles"), {
+    fallbackData: { data: fallbackProfiles },
+  });
   const profile = profileResponse?.data?.[0];
   const { data: socialResponse } = useFetch<ApiResponse<Social[]>>(
     getApiUrl("socials"),
@@ -56,7 +56,10 @@ export default function HeroSection() {
         <div className="row align-items-center g-4 g-lg-5">
           {/* Avatar dengan Decorative Ring & Status Badge */}
           <div className="col-12 col-md-5 col-lg-5 order-md-2 text-center">
-            <HeroAvatar photo={profile?.photo} fullname={profile?.fullname} />
+            <HeroAvatar
+              photo={profile?.formal_photo}
+              fullname={profile?.fullname}
+            />
           </div>
 
           {/* Personal Introduction & Dual CTA */}
@@ -85,7 +88,7 @@ export default function HeroSection() {
 
                 {/* Tagline */}
                 <p className="lead fs-4 text-white-75 mb-3 fw-normal">
-                  {profile.tagline || t.hero.role}
+                  {getLocalizedText(profile.tagline, lang) || t.hero.role}
                 </p>
 
                 {/* Location */}

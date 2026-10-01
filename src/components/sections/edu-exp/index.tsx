@@ -75,10 +75,9 @@ export default function EduExpSection() {
     data: eduData,
     isLoading: eduLoading,
     error: eduError,
-  } = useFetch<ApiResponse<Education[]>>(
-    getApiUrl("educations"),
-    { fallbackData: { data: fallbackEducations } },
-  );
+  } = useFetch<ApiResponse<Education[]>>(getApiUrl("educations"), {
+    fallbackData: { data: fallbackEducations },
+  });
   const educations = useMemo(
     () => sortByLatestPeriod(eduData?.data ?? []),
     [eduData?.data],
@@ -87,10 +86,9 @@ export default function EduExpSection() {
     data: expData,
     isLoading: expLoading,
     error: expError,
-  } = useFetch<ApiResponse<Experience[]>>(
-    getApiUrl("experiences"),
-    { fallbackData: { data: fallbackExperiences } },
-  );
+  } = useFetch<ApiResponse<Experience[]>>(getApiUrl("experiences"), {
+    fallbackData: { data: fallbackExperiences },
+  });
   const experiences = useMemo(
     () => sortByLatestPeriod(expData?.data ?? []),
     [expData?.data],
@@ -122,12 +120,13 @@ export default function EduExpSection() {
               item={{
                 id: edu.id,
                 title: `${edu.degree} — ${edu.major}`,
-                location: edu.location,
+                location: edu.institution || edu.location || "",
                 start_period: edu.start_period,
                 finish_period: edu.finish_period,
-                status: edu.status,
+                status: edu.status || edu.status_label,
                 address: edu.address,
                 gpa: edu.gpa,
+                type: edu.type || edu.type_label,
                 description: edu.description,
                 latitude: edu.latitude,
                 longitude: edu.longitude,
@@ -158,11 +157,12 @@ export default function EduExpSection() {
               item={{
                 id: exp.id,
                 title: exp.title,
-                location: exp.location,
+                location: exp.company || exp.location || "",
                 start_period: exp.start_period,
                 finish_period: exp.finish_period,
-                status: exp.status,
+                status: exp.status || exp.status_label,
                 address: exp.address,
+                type: exp.type || exp.type_label,
                 description: exp.description,
                 latitude: exp.latitude,
                 longitude: exp.longitude,
@@ -201,7 +201,7 @@ export default function EduExpSection() {
           <LocationMapModal
             show={!!selectedMapItem}
             onClose={() => setSelectedMapItem(null)}
-            title={selectedMapItem.location}
+            title={selectedMapItem.location || ""}
             subtitle={selectedMapItem.title}
             address={selectedMapItem.address}
             latitude={selectedMapItem.latitude}

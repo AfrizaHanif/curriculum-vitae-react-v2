@@ -32,12 +32,8 @@ import { sortByLatestPeriod } from "@/utils/date";
 import { useLanguage } from "@/context/LanguageContext";
 import fallbackPortfolios from "@/data/jsons/portfolios.json";
 import fallbackFeatures from "@/data/jsons/features.json";
-import fallbackRepositories from "@/data/jsons/repositories.json";
 import fallbackProjects from "@/data/jsons/projects.json";
-import fallbackFeatureProjects from "@/data/jsons/feature-projects.json";
 import fallbackCaseStudies from "@/data/jsons/case-studies.json";
-import fallbackDiagrams from "@/data/jsons/diagrams.json";
-import fallbackSolutions from "@/data/jsons/solutions.json";
 import { getApiUrl, siteConfig } from "@/config/siteConfig";
 import { chunkArray } from "@/utils/array";
 
@@ -160,10 +156,6 @@ function ProjectSectionContent() {
     getApiUrl("features"),
     { fallbackData: { data: fallbackFeatures } },
   );
-  const { data: dataRepositories } = useFetch<ApiResponse<Repository[]>>(
-    getApiUrl("repositories"),
-    { fallbackData: { data: fallbackRepositories } },
-  );
   const {
     data: dataProject,
     isLoading: isLoadingProject,
@@ -172,22 +164,9 @@ function ProjectSectionContent() {
     getApiUrl("projects"),
     { fallbackData: { data: fallbackProjects } },
   );
-  const { data: dataFeatureProjects } = useFetch<
-    ApiResponse<FeatureProjectItem[]>
-  >(getApiUrl("featureProjects"), {
-    fallbackData: { data: fallbackFeatureProjects },
-  });
   const { data: dataCaseStudy } = useFetch<ApiResponse<CaseStudy[]>>(
     getApiUrl("caseStudies"),
     { fallbackData: { data: fallbackCaseStudies } },
-  );
-  const { data: dataDiagram } = useFetch<ApiResponse<DiagramCS[]>>(
-    getApiUrl("diagrams"),
-    { fallbackData: { data: fallbackDiagrams } },
-  );
-  const { data: dataSolution } = useFetch<ApiResponse<SolutionCS[]>>(
-    getApiUrl("solutions"),
-    { fallbackData: { data: fallbackSolutions } },
   );
 
   // Data Processing
@@ -199,21 +178,12 @@ function ProjectSectionContent() {
     () => dataFeaturePortfolio?.data ?? [],
     [dataFeaturePortfolio],
   );
-  const repositories = useMemo(
-    () => dataRepositories?.data ?? [],
-    [dataRepositories],
-  );
   const projects = useMemo(
     () => sortByLatestPeriod(dataProject?.data ?? []),
     [dataProject],
   );
-  const featureProjects = useMemo(
-    () => dataFeatureProjects?.data ?? [],
-    [dataFeatureProjects],
-  );
   const caseStudies = useMemo(() => dataCaseStudy?.data ?? [], [dataCaseStudy]);
-  const diagrams = useMemo(() => dataDiagram?.data ?? [], [dataDiagram]);
-  const solutions = useMemo(() => dataSolution?.data ?? [], [dataSolution]);
+
   const caseStudyMap = useMemo(() => {
     const map = new Map<string, CaseStudy>();
     caseStudies.forEach((cs) => {
@@ -221,55 +191,90 @@ function ProjectSectionContent() {
         map.set(cs.portfolio_id, cs);
       }
     });
+    portfolios.forEach((p) => {
+      if (p.case_studies && p.case_studies.length > 0) {
+        map.set(p.id, p.case_studies[0]);
+      }
+    });
     return map;
-  }, [caseStudies]);
+  }, [caseStudies, portfolios]);
+
   const diagramMap = useMemo(() => {
     const map = new Map<string, DiagramCS>();
-    diagrams.forEach((diag) => {
-      if (diag.case_study_id) {
-        map.set(diag.case_study_id, diag);
+    caseStudies.forEach((cs) => {
+      if (cs.diagrams && cs.diagrams.length > 0) {
+        const first = cs.diagrams[0];
+        map.set(cs.id, {
+          case_study_id: cs.id,
+          name: first.name,
+          images: first.images,
+          ...first,
+        });
       }
     });
     return map;
-  }, [diagrams]);
+  }, [caseStudies]);
+
   const solutionMap = useMemo(() => {
     const map = new Map<string, SolutionCS[]>();
-    solutions.forEach((sol) => {
-      if (sol.case_study_id) {
-        const list = map.get(sol.case_study_id) ?? [];
-        list.push(sol);
-        map.set(sol.case_study_id, list);
+    caseStudies.forEach((cs) => {
+      if (cs.solutions && cs.solutions.length > 0) {
+        map.set(cs.id, cs.solutions as SolutionCS[]);
       }
     });
     return map;
-  }, [solutions]);
+  }, [caseStudies]);
+
   const featurePortfolioMap = useMemo(() => {
     const map = new Map<string, Feature[]>();
     featurePortfolios.forEach((feat) => {
-      const list = map.get(feat.portfolio_id) ?? [];
-      list.push(feat);
-      map.set(feat.portfolio_id, list);
+      const key =
+        feat.portfolio_id ||
+        (feat.featureable_type?.includes("Portfolio")
+          ? feat.featureable_id
+          : undefined);
+      if (key) {
+        const list = map.get(key) ?? [];
+        list.push(feat);
+        map.set(key, list);
+      }
+    });
+    portfolios.forEach((p) => {
+      if (p.features && p.features.length > 0) {
+        map.set(p.id, p.features);
+      }
     });
     return map;
-  }, [featurePortfolios]);
+  }, [featurePortfolios, portfolios]);
+
   const repositoryMap = useMemo(() => {
     const map = new Map<string, Repository[]>();
-    repositories.forEach((repo) => {
-      const list = map.get(repo.portfolio_id) ?? [];
-      list.push(repo);
-      map.set(repo.portfolio_id, list);
+    portfolios.forEach((p) => {
+      if (p.repositories && p.repositories.length > 0) {
+        map.set(p.id, p.repositories);
+      }
     });
     return map;
-  }, [repositories]);
+  }, [portfolios]);
+
   const featureProjectMap = useMemo(() => {
     const map = new Map<string, FeatureProjectItem[]>();
-    featureProjects.forEach((fp) => {
-      const list = map.get(fp.project_id) ?? [];
-      list.push(fp);
-      map.set(fp.project_id, list);
+    featurePortfolios.forEach((feat) => {
+      if (feat.featureable_type?.includes("Project") && feat.featureable_id) {
+        const list = map.get(feat.featureable_id) ?? [];
+        if (!list.some((item) => item.id === feat.id)) {
+          list.push(feat);
+          map.set(feat.featureable_id, list);
+        }
+      }
+    });
+    projects.forEach((prj) => {
+      if (prj.features && prj.features.length > 0) {
+        map.set(prj.id, prj.features);
+      }
     });
     return map;
-  }, [featureProjects]);
+  }, [featurePortfolios, projects]);
 
   // Selected item for Case Study Offcanvas
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<{
@@ -354,9 +359,34 @@ function ProjectSectionContent() {
       },
     ];
 
-    const activeList = baseCategories.filter(
-      (c) => c.key === "all" || c.count > 0,
-    );
+    // Dynamically discover any additional categories present in items
+    const extraCategories: { key: string; label: string; count: number }[] = [];
+    combined.forEach((item) => {
+      const rawCat = item.category?.trim();
+      if (!rawCat) return;
+      const isBase = ["fullstack", "backend", "frontend", "mobile"].some(
+        (baseKey) => matchCategory(item, baseKey),
+      );
+      if (!isBase) {
+        const existing = extraCategories.find(
+          (c) => c.key.toLowerCase() === rawCat.toLowerCase(),
+        );
+        if (existing) {
+          existing.count += 1;
+        } else {
+          extraCategories.push({
+            key: rawCat.toLowerCase(),
+            label: rawCat,
+            count: 1,
+          });
+        }
+      }
+    });
+
+    const activeList = [
+      ...baseCategories.filter((c) => c.key === "all" || c.count > 0),
+      ...extraCategories,
+    ];
 
     if (
       currentCategory !== "all" &&

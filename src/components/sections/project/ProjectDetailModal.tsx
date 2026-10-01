@@ -9,12 +9,15 @@ import { CaseStudy } from "@/types/case-study";
 import Modal from "@/components/ui/bootstrap/modal";
 import Carousel from "@/components/ui/bootstrap/carousel";
 import Badge from "@/components/ui/bootstrap/badge";
+import Button from "@/components/ui/bootstrap/button";
 import Dropdown from "@/components/ui/bootstrap/dropdown";
 import Alert from "@/components/ui/bootstrap/alert";
 import Progress from "@/components/ui/bootstrap/progress";
 import { formatMonthYear } from "@/utils/date";
-import { getProjectStatusBadgeClass } from "./project-utils";
+import { getProjectStatusColor } from "./project-utils";
 import { useLanguage } from "@/context/LanguageContext";
+import { getLocalizedText } from "@/utils/formatters";
+import { getYouTubeEmbedUrl } from "@/utils/youtube";
 
 interface ProjectDetailModalProps {
   show: boolean;
@@ -44,6 +47,20 @@ export default function ProjectDetailModal({
   const isPortfolio = type === "portfolio";
   const projectItem = !isPortfolio && item ? (item as Project) : null;
 
+  // Normalize and translate project status
+  const rawStatus = projectItem?.status || projectItem?.status_label || "";
+  const normalizedStatusKey = rawStatus
+    .toLowerCase()
+    .replace(/[\s-]+/g, "_") as keyof typeof t.sections.projects.statuses;
+  const projectStatusLabel =
+    (normalizedStatusKey &&
+      t.sections.projects.statuses?.[normalizedStatusKey]) ||
+    projectItem?.status_label ||
+    projectItem?.status;
+
+  // Get YouTube embed URL
+  const youtubeEmbedUrl = item?.video ? getYouTubeEmbedUrl(item.video) : null;
+
   // Extract gallery images for active modal item
   const galleryImages = useMemo(() => {
     if (!item) return [];
@@ -61,6 +78,14 @@ export default function ProjectDetailModal({
     return images;
   }, [item]);
 
+  const validRepositories = useMemo(
+    () =>
+      repositories.filter(
+        (repo) => (repo.url || repo.href || "").trim().length > 0,
+      ),
+    [repositories],
+  );
+
   //
   if (!item) return null;
 
@@ -69,7 +94,10 @@ export default function ProjectDetailModal({
       id="project-detail-modal"
       show={show}
       onClose={onClose}
-      title={item.title || t.sections.projects.modal.titleDefault}
+      title={
+        getLocalizedText(item.title, lang) ||
+        t.sections.projects.modal.titleDefault
+      }
       size="lg"
       scrollable
       centered
@@ -89,33 +117,41 @@ export default function ProjectDetailModal({
                 // rounded: true,
                 className: "px-3",
                 onClick: () => {
-                  onOpenCaseStudy(caseStudy, item.title);
+                  onOpenCaseStudy(
+                    caseStudy,
+                    getLocalizedText(item.title, lang),
+                  );
                 },
               },
             ]
           : []),
         //
-        ...(isPortfolio && repositories.length === 1
+        ...(isPortfolio && validRepositories.length === 1
           ? [
               {
                 label: (
                   <span className="d-inline-flex align-items-center gap-2">
                     <i
                       className={
-                        repositories[0].icon
-                          ? repositories[0].icon.startsWith("bi-") ||
-                            repositories[0].icon.startsWith("bi ")
-                            ? repositories[0].icon
-                            : `bi bi-${repositories[0].icon}`
+                        validRepositories[0].icon
+                          ? validRepositories[0].icon.startsWith("bi-") ||
+                            validRepositories[0].icon.startsWith("bi ")
+                            ? validRepositories[0].icon
+                            : `bi bi-${validRepositories[0].icon}`
                           : "bi bi-link-45deg"
                       }
                     />
-                    <span>{repositories[0].label}</span>
+                    <span>
+                      {validRepositories[0].name ||
+                        validRepositories[0].label ||
+                        "Repository"}
+                    </span>
                     <i className="bi bi-box-arrow-up-right small" />
                   </span>
                 ),
                 as: "a" as const,
-                href: repositories[0].href,
+                href:
+                  validRepositories[0].url || validRepositories[0].href || "#",
                 target: "_blank",
                 rel: "noopener noreferrer",
                 color: "outline-secondary" as const,
@@ -126,7 +162,7 @@ export default function ProjectDetailModal({
             ]
           : []),
         //
-        ...(isPortfolio && repositories.length > 1
+        ...(isPortfolio && validRepositories.length > 1
           ? [
               {
                 custom: (
@@ -135,7 +171,7 @@ export default function ProjectDetailModal({
                     size="sm"
                     buttonColor="outline-secondary"
                     buttonClass="px-3 d-inline-flex align-items-center gap-2"
-                    items={repositories.map((repo) => {
+                    items={validRepositories.map((repo) => {
                       const iconClass = repo.icon
                         ? repo.icon.startsWith("bi-") ||
                           repo.icon.startsWith("bi ")
@@ -144,9 +180,9 @@ export default function ProjectDetailModal({
                         : "bi bi-link-45deg";
 
                       return {
-                        label: repo.label,
+                        label: repo.name || repo.label || "Repository",
                         icon: iconClass,
-                        href: repo.href,
+                        href: repo.url || repo.href || "#",
                         hrefType: "external",
                         newTab: true,
                       };
@@ -156,7 +192,7 @@ export default function ProjectDetailModal({
                     <span>
                       {t.sections.projects.modal.repositories.replace(
                         "{count}",
-                        repositories.length.toString(),
+                        validRepositories.length.toString(),
                       )}
                     </span>
                   </Dropdown>
@@ -203,6 +239,27 @@ export default function ProjectDetailModal({
               ]
             : []),
         //
+        ...(item?.demo_url
+          ? [
+              {
+                label: (
+                  <span className="d-inline-flex align-items-center gap-2">
+                    <i className="bi bi-play-circle-fill" />
+                    <span>{t.sections.projects.modal.viewDemo}</span>
+                    <i className="bi bi-box-arrow-up-right small" />
+                  </span>
+                ),
+                as: "a" as const,
+                href: item.demo_url,
+                target: "_blank",
+                rel: "noopener noreferrer",
+                color: "outline-dark" as const,
+                size: "sm" as const,
+                // rounded: true,
+                className: "px-3",
+              },
+            ]
+          : []),
         {
           label: t.common.close,
           color: "secondary" as const,
@@ -236,7 +293,7 @@ export default function ProjectDetailModal({
           <div className="position-relative rounded-3 overflow-hidden mb-4 shadow-sm border bg-body-secondary bg-opacity-25">
             <NextImage
               src={galleryImages[0]}
-              alt={item.title}
+              alt={getLocalizedText(item.title, lang)}
               width={1200}
               height={675}
               placeholder="blur"
@@ -269,22 +326,21 @@ export default function ProjectDetailModal({
             </Badge>
           )}
 
-          {item.subcategory && (
-            <Badge
-              pill
-              className="bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle px-3 py-1"
-            >
-              {item.subcategory}
+          {item.type && (
+            <Badge pill color="secondary" subtle className="px-3 py-1">
+              {item.type}
             </Badge>
           )}
 
-          {projectItem?.status && (
+          {projectStatusLabel && (
             <Badge
               pill
-              className={`px-3 py-1 ${getProjectStatusBadgeClass(projectItem.status)}`}
+              color={getProjectStatusColor(normalizedStatusKey || rawStatus)}
+              subtle
+              className="px-3 py-1"
             >
               <i className="bi bi-circle-fill me-1 small" />
-              {projectItem.status}
+              {projectStatusLabel}
             </Badge>
           )}
 
@@ -351,9 +407,45 @@ export default function ProjectDetailModal({
               lineHeight: "1.7",
             }}
           >
-            {item.description}
+            {getLocalizedText(item.description, lang)}
           </p>
         </div>
+
+        {/* Video Walkthrough (if available) */}
+        {item.video && (
+          <div className="mb-4">
+            <h6 className="fw-bold text-body-secondary text-uppercase small mb-2 d-flex align-items-center gap-2">
+              <i className="bi bi-camera-video-fill text-danger" />
+              {t.sections.projects.modal.walkthrough}
+            </h6>
+            {youtubeEmbedUrl ? (
+              <div className="ratio ratio-16x9 rounded-3 overflow-hidden border shadow-sm">
+                <iframe
+                  src={youtubeEmbedUrl}
+                  title={`${getLocalizedText(item.title, lang)} Video Walkthrough`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  sandbox="allow-scripts allow-same-origin allow-presentation"
+                />
+              </div>
+            ) : (
+              <Button
+                as="a"
+                href={item.video}
+                target="_blank"
+                rel="noopener noreferrer"
+                color="outline-danger"
+                size="sm"
+                rounded
+                className="px-3 d-inline-flex align-items-center gap-2"
+              >
+                <i className="bi bi-play-circle-fill" />
+                <span>{t.sections.projects.modal.watchVideo}</span>
+                <i className="bi bi-box-arrow-up-right small" />
+              </Button>
+            )}
+          </div>
+        )}
 
         {/* Technologies */}
         {item.technology && item.technology.length > 0 && (
@@ -390,11 +482,11 @@ export default function ProjectDetailModal({
                 >
                   <div className="fw-semibold small d-flex align-items-center gap-2">
                     <i className="bi bi-check-circle-fill text-success" />
-                    {feat.title}
+                    {getLocalizedText(feat.title, lang)}
                   </div>
                   {feat.description && (
                     <div className="text-muted small ps-4 mt-1">
-                      {feat.description}
+                      {getLocalizedText(feat.description, lang)}
                     </div>
                   )}
                 </li>
@@ -416,7 +508,9 @@ export default function ProjectDetailModal({
                   className="p-3 border rounded-3 bg-body-tertiary"
                 >
                   <div className="d-flex justify-content-between align-items-center mb-1">
-                    <span className="fw-semibold small">{fp.title}</span>
+                    <span className="fw-semibold small">
+                      {getLocalizedText(fp.title, lang)}
+                    </span>
                     <Badge
                       pill
                       className="bg-primary-subtle text-primary border border-primary-subtle"
@@ -426,10 +520,14 @@ export default function ProjectDetailModal({
                   </div>
                   {fp.description && (
                     <div className="text-muted small mb-2">
-                      {fp.description}
+                      {getLocalizedText(fp.description, lang)}
                     </div>
                   )}
-                  <Progress value={fp.progress} color="primary" height="6px" />
+                  <Progress
+                    value={fp.progress ?? 0}
+                    color="primary"
+                    height="6px"
+                  />
                 </li>
               ))}
             </ul>

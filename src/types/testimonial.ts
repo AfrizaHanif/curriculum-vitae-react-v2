@@ -6,6 +6,10 @@ export interface Testimonial {
   name: string;
   role: string;
   content: string;
+  deleted_at?: string | null;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export type TestimonialApiResponse = ApiResponse<Testimonial[]>;
+export type TestimonialDetailApiResponse = ApiResponse<Testimonial>;

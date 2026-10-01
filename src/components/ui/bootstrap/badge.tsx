@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export interface BadgeProps {
+export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   color?:
     | "primary"
     | "secondary"
@@ -13,6 +13,7 @@ export interface BadgeProps {
     | "light"
     | "dark"
     | (string & {});
+  subtle?: boolean;
   pill?: boolean;
   rounded?: boolean;
   className?: string;
@@ -22,24 +23,35 @@ export interface BadgeProps {
 
 export default function Badge({
   color,
+  subtle = false,
   pill,
   rounded,
   className = "",
   style,
   children,
+  ...rest
 }: BadgeProps) {
   // If color is specified, use bg-{color}. If omitted, only default to bg-primary if no custom bg-* exists in className.
   const hasCustomBg = /\bbg-/.test(className);
   const resolvedColor = color ?? (hasCustomBg ? undefined : "primary");
-  const bgClass = resolvedColor ? `bg-${resolvedColor}` : "";
+
+  let colorClasses = "";
+  if (resolvedColor) {
+    if (subtle) {
+      colorClasses = `bg-${resolvedColor}-subtle text-${resolvedColor}-emphasis border border-${resolvedColor}-subtle`;
+    } else {
+      colorClasses = `bg-${resolvedColor}`;
+    }
+  }
+
   const shapeClass = pill ? "rounded-pill" : rounded ? "rounded" : "";
 
-  const badgeClasses = `badge ${bgClass} ${shapeClass} ${className}`
+  const badgeClasses = `badge ${colorClasses} ${shapeClass} ${className}`
     .trim()
     .replace(/\s+/g, " ");
 
   return (
-    <span className={badgeClasses} style={style}>
+    <span className={badgeClasses} style={style} {...rest}>
       {children}
     </span>
   );

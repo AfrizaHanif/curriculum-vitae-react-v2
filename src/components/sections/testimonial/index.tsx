@@ -17,7 +17,7 @@ export default function TestimonialSection() {
 
   // Fetch API Data
   const { data, isLoading, error } = useFetch<TestimonialApiResponse>(
-    getApiUrl("testimonies"),
+    getApiUrl("testimonials"),
     { fallbackData: { data: fallbackTestimonials } },
   );
   const testimonials = data?.data ?? [];

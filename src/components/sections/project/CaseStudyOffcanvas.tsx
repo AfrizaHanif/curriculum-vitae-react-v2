@@ -8,7 +8,6 @@ import Offcanvas from "@/components/ui/bootstrap/offcanvas";
 import Button from "@/components/ui/bootstrap/button";
 import Badge from "@/components/ui/bootstrap/badge";
 import { useLanguage } from "@/context/LanguageContext";
-import { getYouTubeEmbedUrl } from "@/utils/youtube";
 
 interface CaseStudyOffcanvasProps {
   show: boolean;
@@ -29,38 +28,69 @@ export default function CaseStudyOffcanvas({
 }: CaseStudyOffcanvasProps) {
   // Get language
   const { t } = useLanguage();
-  // Get YouTube embed URL
-  const youtubeEmbedUrl = caseStudy?.video
-    ? getYouTubeEmbedUrl(caseStudy.video)
-    : null;
 
   // Get diagram items
   const diagramItems = useMemo(() => {
-    if (!diagram) return [];
     const items: { label: string; src: string; icon: string }[] = [];
-    if (diagram.context) {
-      items.push({
-        label: "Context Diagram",
-        src: diagram.context,
-        icon: "bi-diagram-3",
+
+    // 1. Check embedded diagrams array on caseStudy (API v2)
+    if (caseStudy?.diagrams && Array.isArray(caseStudy.diagrams)) {
+      caseStudy.diagrams.forEach((diag) => {
+        const src = diag.images || "";
+        const label = diag.name || "Diagram";
+        if (src) {
+          items.push({
+            label,
+            src,
+            icon: "bi-diagram-3",
+          });
+        }
       });
     }
-    if (diagram.dfd_0) {
-      items.push({
-        label: "Data Flow Diagram (Level 0)",
-        src: diagram.dfd_0,
-        icon: "bi-diagram-2",
-      });
+
+    // 2. Fallback to passed diagram prop (legacy or single diagram object)
+    if (items.length === 0 && diagram) {
+      if (diagram.images && diagram.name) {
+        items.push({
+          label: diagram.name,
+          src: diagram.images,
+          icon: "bi-diagram-3",
+        });
+      }
+      if (diagram.context) {
+        items.push({
+          label: "Context Diagram",
+          src: diagram.context,
+          icon: "bi-diagram-3",
+        });
+      }
+      if (diagram.dfd_0) {
+        items.push({
+          label: "Data Flow Diagram (Level 0)",
+          src: diagram.dfd_0,
+          icon: "bi-diagram-2",
+        });
+      }
+      if (diagram.pdm) {
+        items.push({
+          label: "Physical Data Model (PDM)",
+          src: diagram.pdm,
+          icon: "bi-database",
+        });
+      }
     }
-    if (diagram.pdm) {
-      items.push({
-        label: "Physical Data Model (PDM)",
-        src: diagram.pdm,
-        icon: "bi-database",
-      });
-    }
+
     return items;
-  }, [diagram]);
+  }, [caseStudy, diagram]);
+
+  const goals = caseStudy?.goals || caseStudy?.goal || [];
+  const responsibilities =
+    caseStudy?.responsibilities || caseStudy?.responsibles || [];
+  const processList = caseStudy?.process || caseStudy?.progress || [];
+  const solutionList =
+    solutions && solutions.length > 0
+      ? solutions
+      : ((caseStudy?.solutions as SolutionCS[]) ?? []);
 
   return (
     <Offcanvas
@@ -108,49 +138,14 @@ export default function CaseStudyOffcanvas({
             </div>
           )}
 
-          {/* Video Walkthrough (if available) */}
-          {caseStudy.video && (
-            <div>
-              <h6 className="fw-bold text-uppercase small text-body-secondary mb-2">
-                {t.sections.projects.caseStudy.walkthrough}
-              </h6>
-              {youtubeEmbedUrl ? (
-                <div className="ratio ratio-16x9 rounded-3 overflow-hidden border shadow-sm">
-                  <iframe
-                    src={youtubeEmbedUrl}
-                    title="Case Study Video"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    sandbox="allow-scripts allow-same-origin allow-presentation"
-                  />
-                </div>
-              ) : (
-                <Button
-                  as="a"
-                  href={caseStudy.video}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  color="outline-danger"
-                  size="sm"
-                  rounded
-                  className="px-3 d-inline-flex align-items-center gap-2"
-                >
-                  <i className="bi bi-play-circle-fill" />
-                  <span>{t.sections.projects.caseStudy.watchVideo}</span>
-                  <i className="bi bi-box-arrow-up-right small" />
-                </Button>
-              )}
-            </div>
-          )}
-
           {/* Goal & Objectives */}
-          {caseStudy.goal && caseStudy.goal.length > 0 && (
+          {goals.length > 0 && (
             <div className="border-start border-primary border-3 ps-3">
               <h6 className="fw-bold text-uppercase small text-body-secondary mb-2">
                 {t.sections.projects.caseStudy.goal}
               </h6>
               <ul className="mb-0 ps-3 text-body small">
-                {caseStudy.goal.map((g, idx) => (
+                {goals.map((g, idx) => (
                   <li key={idx} className="mb-1">
                     {g}
                   </li>
@@ -177,16 +172,16 @@ export default function CaseStudyOffcanvas({
           )}
 
           {/* Implemented Solutions */}
-          {solutions && solutions.length > 0 && (
+          {solutionList && solutionList.length > 0 && (
             <div>
               <h6 className="fw-bold text-uppercase small text-body-secondary mb-2 d-flex align-items-center gap-2">
                 <i className="bi bi-lightbulb-fill text-warning" />
                 {t.sections.projects.caseStudy.solutions}
               </h6>
               <div className="d-flex flex-column gap-3">
-                {solutions.map((sol) => (
+                {solutionList.map((sol, solIdx) => (
                   <div
-                    key={sol.id}
+                    key={sol.id || solIdx}
                     className="p-3 rounded-3 bg-body-tertiary border"
                   >
                     <div className="fw-semibold text-body mb-1 d-flex align-items-center gap-2">
@@ -227,13 +222,13 @@ export default function CaseStudyOffcanvas({
           )}
 
           {/* Responsibilities */}
-          {caseStudy.responsibles && caseStudy.responsibles.length > 0 && (
+          {responsibilities.length > 0 && (
             <div>
               <h6 className="fw-bold text-uppercase small text-body-secondary mb-2">
                 {t.sections.projects.caseStudy.responsibilities}
               </h6>
               <ul className="list-group list-group-flush rounded-3 border">
-                {caseStudy.responsibles.map((r, idx) => (
+                {responsibilities.map((r, idx) => (
                   <li key={idx} className="list-group-item small text-body">
                     <i className="bi bi-check2-circle text-primary me-2" />
                     {r}
@@ -244,13 +239,13 @@ export default function CaseStudyOffcanvas({
           )}
 
           {/* Methodology & Progress */}
-          {caseStudy.progress && caseStudy.progress.length > 0 && (
+          {processList.length > 0 && (
             <div>
               <h6 className="fw-bold text-uppercase small text-body-secondary mb-2">
                 {t.sections.projects.caseStudy.process}
               </h6>
               <ol className="list-unstyled d-flex flex-column gap-2 mb-0">
-                {caseStudy.progress.map((prog, idx) => (
+                {processList.map((prog, idx) => (
                   <li
                     key={idx}
                     className="p-3 rounded-3 bg-body-secondary border small d-flex align-items-start gap-2"

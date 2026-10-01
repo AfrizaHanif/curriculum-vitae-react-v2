@@ -42,16 +42,21 @@ export function renderSkillIcon(name: string) {
   return <i className={`bi ${biClass} fs-4`} />;
 }
 
-export function getLevelConfig(level: string) {
-  const l = level.toLowerCase();
-  if (l === "mahir" || l === "expert" || l === "advanced") {
+export function getLevelConfig(level?: string | null) {
+  const l = level ? level.toLowerCase() : "";
+  if (l === "mahir" || l === "expert" || l === "advanced" || l.includes("front")) {
     return {
       badgeClass: "bg-primary-subtle text-primary border border-primary-subtle",
     };
   }
-  if (l === "menengah" || l === "intermediate") {
+  if (l === "menengah" || l === "intermediate" || l.includes("back")) {
     return {
       badgeClass: "bg-info-subtle text-info-emphasis border border-info-subtle",
+    };
+  }
+  if (l.includes("data")) {
+    return {
+      badgeClass: "bg-warning-subtle text-warning-emphasis border border-warning-subtle",
     };
   }
   return {

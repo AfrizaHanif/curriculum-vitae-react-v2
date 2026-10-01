@@ -1,16 +1,102 @@
 [
   {
-    "id": "EPR-001",
-    "profile_id": "PRO-001",
+    "id": "XPT-001",
     "title": "Full-Stack Developer Laravel",
-    "description": "Saya adalah Full-Stack Developer dengan spesialisasi pada framework Laravel, berpengalaman dalam membangun aplikasi web yang scalable, aman, dan user-friendly. Memiliki pemahaman mendalam terhadap arsitektur MVC, RESTful API, dan pengembangan sisi frontend maupun backend.",
-    "projects": [
-      "POR-001",
-      "POR-002"
-    ],
+    "description": {
+      "en": "I am a Full-Stack Developer specializing in the Laravel framework, experienced in building scalable, secure, and user-friendly web applications. I possess a deep understanding of MVC architecture, RESTful APIs, and both frontend and backend development.",
+      "id": "Saya adalah Full-Stack Developer dengan spesialisasi pada framework Laravel, berpengalaman dalam membangun aplikasi web yang scalable, aman, dan user-friendly. Memiliki pemahaman mendalam terhadap arsitektur MVC, RESTful API, dan pengembangan sisi frontend maupun backend."
+    },
     "icon": "code-slash",
+    "portfolios": [
+      {
+        "id": "POR-001",
+        "parent_id": null,
+        "title": "Rancang Bangun Aplikasi Pelayanan Perpustakaan pada Badan Pusat Statistik Provinsi Jawa Timur",
+        "slug": "rancang-bangun-aplikasi-pelayanan-perpustakaan-pada-badan-pusat-statistik-provinsi-jawa-timur",
+        "type": "Proyek Akademik",
+        "category": "Full-Stack Development",
+        "image": null,
+        "gallery": null,
+        "video": null,
+        "start_period": "2023-01-01",
+        "finish_period": "2023-07-02",
+        "description": {
+          "en": [
+            "Developed a web-based library system using Laravel, PHP, MySQL, HTML, and Bootstrap.",
+            "Implemented CRUD functionality to manage books, table of contents, staff records, and loan/return transactions.",
+            "Designed features to help staff quickly search books and contents without navigating multiple pages.",
+            "Built Excel import capability to streamline bulk data entry and reduce manual input during server migration or downtime.",
+            "Added export to Excel/PDF functionality, enabling staff to generate reports and print records efficiently."
+          ],
+          "id": [
+            "Mengembangkan sistem perpustakaan berbasis web menggunakan Laravel, PHP, MySQL, HTML, dan Bootstrap.",
+            "Mengimplementasikan fungsionalitas CRUD untuk mengelola data buku, daftar isi, data staf, serta transaksi peminjaman/pengembalian.",
+            "Merancang fitur pencarian agar staf dapat menemukan buku dan isi dengan cepat tanpa harus membuka banyak halaman.",
+            "Membangun kemampuan import Excel untuk mempercepat entri data massal dan mengurangi pemasukan data secara manual saat migrasi server atau downtime.",
+            "Menambahkan fitur ekspor ke Excel/PDF, memungkinkan staf menghasilkan laporan dan mencetak data dengan lebih efisien."
+          ]
+        },
+        "tags": ["Kerja Praktik", "Aplikasi Web", "BPS", "Perpustakaan"],
+        "technology": ["Laravel", "PHP", "Bootstrap"],
+        "repositories": [
+          {
+            "url": "",
+            "name": ""
+          }
+        ],
+        "demo_url": null,
+        "deleted_at": null,
+        "created_at": "2026-09-28T16:04:39.000000Z",
+        "updated_at": "2026-09-28T16:04:39.000000Z"
+      },
+      {
+        "id": "POR-002",
+        "parent_id": null,
+        "title": "Rancang Bangun Aplikasi Penentuan Karyawan Terbaik Berbasis Web menggunakan Metode Simple Additive Weighting (SAW) pada BPS Provinsi Jawa Timur",
+        "slug": "rancang-bangun-aplikasi-penentuan-karyawan-terbaik-berbasis-web-menggunakan-metode-simple-additive-weighting-saw-pada-bps-provinsi-jawa-timur",
+        "type": "Proyek Akademik",
+        "category": "Full-Stack Development",
+        "image": null,
+        "gallery": null,
+        "video": null,
+        "start_period": "2024-10-01",
+        "finish_period": "2025-01-01",
+        "description": {
+          "en": [
+            "Designed and developed a full-stack solution using Laravel, PHP, MySQL, HTML, and Bootstrap.",
+            "Implemented the Simple Additive Weighting (SAW) algorithm to automate criteria evaluation, improving decision-making efficiency.",
+            "Built secure user authentication and role-based access control to protect sensitive evaluation data.",
+            "Optimized the employee selection process to 1.79 minutes for 10 criteria, reducing the manual timeline of 4–5 weeks."
+          ],
+          "id": [
+            "Merancang dan mengembangkan solusi full-stack menggunakan Laravel, PHP, MySQL, HTML, dan Bootstrap.",
+            "Mengimplementasikan algoritma Simple Additive Weighting (SAW) untuk mengotomatisasi evaluasi kriteria, sehingga meningkatkan efisiensi pengambilan keputusan.",
+            "Membangun sistem autentikasi pengguna yang aman serta kontrol akses berbasis peran untuk melindungi data evaluasi yang sensitif.",
+            "Mengoptimalkan proses pemilihan karyawan terbaik menjadi 1,79 menit untuk 10 kriteria, memangkas waktu dari proses manual sebelumnya yang membutuhkan 4–5 minggu."
+          ]
+        },
+        "tags": [
+          "Tugas Akhir",
+          "Aplikasi Web",
+          "BPS",
+          "Simple Additive Weighting",
+          "Sistem Pendukung Keputusan"
+        ],
+        "technology": ["Laravel", "PHP", "Bootstrap"],
+        "repositories": [
+          {
+            "url": "",
+            "name": ""
+          }
+        ],
+        "demo_url": null,
+        "deleted_at": null,
+        "created_at": "2026-09-28T16:04:39.000000Z",
+        "updated_at": "2026-09-28T16:04:39.000000Z"
+      }
+    ],
     "deleted_at": null,
-    "created_at": "2026-07-20T15:44:14.000000Z",
-    "updated_at": "2026-07-20T15:44:14.000000Z"
+    "created_at": "2026-09-28T16:04:40.000000Z",
+    "updated_at": "2026-09-28T16:04:40.000000Z"
   }
 ]

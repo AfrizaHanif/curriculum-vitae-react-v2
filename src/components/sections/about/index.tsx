@@ -18,21 +18,19 @@ import SetupModal from "./SetupModal";
 import AboutAvatar from "./AboutAvatar";
 import AboutSkeleton from "./AboutSkeleton";
 import { getApiUrl } from "@/config/siteConfig";
+import { getLocalizedText } from "@/utils/formatters";
 
 export default function AboutSection() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { data: profileData, isLoading: profileLoading } =
     useFetch<ProfileApiResponse>(getApiUrl("profiles"), {
       fallbackData: { data: fallbackProfiles },
     });
   const profile = profileData?.data?.[0];
   const { data: setupData, isLoading: setupLoading } =
-    useFetch<SetupApiResponse>(
-      getApiUrl("setups"),
-      {
-        fallbackData: { data: fallbackSetups },
-      },
-    );
+    useFetch<SetupApiResponse>(getApiUrl("setups"), {
+      fallbackData: { data: fallbackSetups },
+    });
   const setup = setupData?.data;
 
   return (
@@ -49,7 +47,10 @@ export default function AboutSection() {
         <div className="col-12 col-lg-5 order-1 order-lg-1">
           {/* Profile Photo Frame with Zoom */}
           <div className="position-relative text-center">
-            <AboutAvatar photo={profile?.photo} fullname={profile?.fullname} />
+            <AboutAvatar
+              photo={profile?.casual_photo || profile?.formal_photo}
+              fullname={profile?.fullname}
+            />
           </div>
         </div>
 
@@ -87,7 +88,7 @@ export default function AboutSection() {
               {/* Tagline / Subtitle */}
               {profile.tagline && (
                 <h4 className="fw-semibold text-primary mb-3">
-                  {profile.tagline}
+                  {getLocalizedText(profile.tagline, lang)}
                 </h4>
               )}
 
@@ -96,16 +97,20 @@ export default function AboutSection() {
                 className="lead text-body mb-4"
                 style={{ lineHeight: "1.8", fontSize: "1.1rem" }}
               >
-                {profile.description || t.sections.about.empty}
+                {getLocalizedText(profile.description, lang) ||
+                  t.sections.about.empty}
               </p>
 
               {/* Philosophy Quote Card */}
               {profile.philosophy && (
                 <Card className="bg-body-tertiary border-0 border-start border-primary border-4 p-1 rounded-3 mb-4 shadow-sm">
                   <figure className="mb-0 d-flex align-items-start gap-2">
-                    <i className="bi bi-quote fs-3 text-primary opacity-50 lh-1" aria-hidden="true" />
+                    <i
+                      className="bi bi-quote fs-3 text-primary opacity-50 lh-1"
+                      aria-hidden="true"
+                    />
                     <blockquote className="blockquote fst-italic text-body mb-0 fs-6">
-                      &ldquo;{profile.philosophy}&rdquo;
+                      &ldquo;{getLocalizedText(profile.philosophy, lang)}&rdquo;
                     </blockquote>
                   </figure>
                 </Card>
@@ -142,7 +147,7 @@ export default function AboutSection() {
           {/* Contact Me */}
           <Button
             as="a"
-            color="outline-primary"
+            color="secondary"
             rounded
             href="#contact"
             className="px-4 py-2 d-inline-flex align-items-center gap-2"

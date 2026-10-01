@@ -15,7 +15,7 @@ const FAIL_ON_ERROR = process.env.FAIL_ON_SYNC_ERROR !== "false";
 const API_SECRET_TOKEN = process.env.API_SECRET_TOKEN || "";
 const JSON_DIR = path.resolve(__dirname, "../src/data/jsons");
 
-// Daftar 18 endpoint API dan target berkas JSON lokal yang disinkronkan
+// Daftar 14 endpoint API v2 dan target berkas JSON lokal yang disinkronkan
 const SYNC_RESOURCES = [
   { endpoint: "profiles", file: "profiles.json", allowEmpty: false },
   { endpoint: "socials", file: "socials.json", allowEmpty: false },
@@ -27,12 +27,8 @@ const SYNC_RESOURCES = [
   { endpoint: "portfolios?all=true", file: "portfolios.json", allowEmpty: false },
   { endpoint: "projects?all=true", file: "projects.json", allowEmpty: false },
   { endpoint: "features?all=true", file: "features.json", allowEmpty: false },
-  { endpoint: "feature-projects?all=true", file: "feature-projects.json", allowEmpty: false },
   { endpoint: "case-studies?all=true", file: "case-studies.json", allowEmpty: false },
-  { endpoint: "diagrams?all=true", file: "diagrams.json", allowEmpty: false },
-  { endpoint: "solutions?all=true", file: "solutions.json", allowEmpty: false },
-  { endpoint: "repositories?all=true", file: "repositories.json", allowEmpty: false },
-  { endpoint: "testimonies?all=true", file: "testimonials.json", allowEmpty: true }, // array kosong [] diperbolehkan
+  { endpoint: "testimonials?all=true", file: "testimonials.json", allowEmpty: true }, // array kosong [] diperbolehkan
   { endpoint: "hobbies?all=true", file: "hobbies.json", allowEmpty: false },
   { endpoint: "expertises?all=true", file: "expertises.json", allowEmpty: false },
 ];

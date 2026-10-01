@@ -6,8 +6,9 @@ import Badge from "@/components/ui/bootstrap/badge";
 import Button from "@/components/ui/bootstrap/button";
 import { formatMonthYear } from "@/utils/date";
 import TechnologyBadges from "./TechnologyBadges";
-import { getProjectStatusBadgeClass } from "./project-utils";
+import { getProjectStatusColor } from "./project-utils";
 import { useLanguage } from "@/context/LanguageContext";
+import { getLocalizedText } from "@/utils/formatters";
 
 interface ProjectCardProps {
   project: Project;
@@ -21,11 +22,23 @@ export default function ProjectCard({
   const { t, lang } = useLanguage();
   const dateLocale = lang === "id" ? "id-ID" : "en-US";
 
+  // Normalize and translate status
+  const rawStatus = project.status || project.status_label || "";
+  const normalizedStatusKey = rawStatus
+    .toLowerCase()
+    .replace(/[\s-]+/g, "_") as keyof typeof t.sections.projects.statuses;
+  const statusLabel =
+    (normalizedStatusKey &&
+      t.sections.projects.statuses?.[normalizedStatusKey]) ||
+    project.status_label ||
+    project.status ||
+    t.sections.projects.card.ongoing;
+
   return (
     <Card
       key={project.id}
-      imgSrc={project.image}
-      imgAlt={project.title}
+      imgSrc={project.image ?? undefined}
+      imgAlt={getLocalizedText(project.title, lang)}
       imgWidth={1920}
       imgHeight={1080}
       imgStyle={{
@@ -39,10 +52,7 @@ export default function ProjectCard({
       header={
         <div className="d-flex justify-content-between align-items-center">
           {/* Category badge */}
-          <Badge
-            pill
-            className="bg-info-subtle text-info-emphasis border border-info-subtle px-2 py-1"
-          >
+          <Badge pill color="info" subtle className="px-2 py-1">
             <i className="bi bi-briefcase me-1" />
             {project.category || project.type || "Experience"}
           </Badge>
@@ -50,9 +60,11 @@ export default function ProjectCard({
           {/* Status badge */}
           <Badge
             pill
-            className={`px-2 py-1 ${getProjectStatusBadgeClass(project.status)}`}
+            color={getProjectStatusColor(normalizedStatusKey || rawStatus)}
+            subtle
+            className="px-2 py-1"
           >
-            {project.status || t.sections.projects.card.ongoing}
+            {statusLabel}
           </Badge>
         </div>
       }
@@ -80,7 +92,7 @@ export default function ProjectCard({
           {/*  */}
           <Button
             as="button"
-            color="outline-primary"
+            color="primary"
             rounded
             size="sm"
             className="px-3 d-inline-flex align-items-center gap-1"
@@ -95,7 +107,9 @@ export default function ProjectCard({
         </div>
       }
     >
-      <h5 className="card-title fw-bold mb-2">{project.title}</h5>
+      <h5 className="card-title fw-bold mb-2">
+        {getLocalizedText(project.title, lang)}
+      </h5>
       <div className="text-muted small mb-2">
         <i className="bi bi-calendar3 me-1" />
         <time dateTime={project.start_period}>
@@ -123,7 +137,7 @@ export default function ProjectCard({
           overflow: "hidden",
         }}
       >
-        {project.description}
+        {getLocalizedText(project.description, lang)}
       </p>
       <TechnologyBadges technologies={project.technology} />
     </Card>

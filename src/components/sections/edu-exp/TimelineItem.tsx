@@ -2,19 +2,23 @@
 
 import Badge from "@/components/ui/bootstrap/badge";
 import Button from "@/components/ui/bootstrap/button";
+import Spinner from "@/components/ui/bootstrap/spinner";
 import { formatMonthYear, getYear } from "@/utils/date";
 import { useLanguage } from "@/context/LanguageContext";
+import { getLocalizedContent } from "@/utils/formatters";
+import type { LocalizedContent } from "@/types/api";
 
 export interface TimelineItemData {
   id: string | number;
   title: string;
-  location: string;
+  location?: string;
   start_period: string;
   finish_period?: string | null;
   status?: string | null;
   address?: string | null;
   gpa?: number | null;
-  description?: string | string[] | null;
+  type?: string | null;
+  description?: LocalizedContent | null;
   latitude?: string | null;
   longitude?: string | null;
 }
@@ -26,6 +30,27 @@ interface TimelineItemProps {
   onViewMap?: (item: TimelineItemData) => void;
 }
 
+function getTimelineStatusColor(
+  status?: string | null,
+): "success" | "warning" | "secondary" {
+  if (!status) return "secondary";
+
+  const normalized = status.toLowerCase().replace(/[\s-]+/g, "_");
+
+  switch (normalized) {
+    case "graduated":
+    case "finished":
+    case "completed":
+      return "success";
+    case "ongoing":
+    case "in_progress":
+    case "active":
+      return "warning";
+    default:
+      return "secondary";
+  }
+}
+
 export default function TimelineItem({
   item,
   icon,
@@ -35,6 +60,7 @@ export default function TimelineItem({
   // Get language and date locale
   const { t, lang } = useLanguage();
   const dateLocale = lang === "id" ? "id-ID" : "en-US";
+  const descContent = getLocalizedContent(item.description, lang);
 
   // Get year from start and finish period
   const startYear = getYear(item.start_period);
@@ -52,6 +78,29 @@ export default function TimelineItem({
     !isNaN(parseFloat(item.longitude)),
   );
 
+  // Normalize and translate status label
+  const rawStatus = item.status?.trim() || "";
+  const normalizedStatusKey = rawStatus
+    .toLowerCase()
+    .replace(
+      /[\s-]+/g,
+      "_",
+    ) as keyof typeof t.sections.eduExp.timeline.statuses;
+  const statusLabel =
+    (normalizedStatusKey &&
+      t.sections.eduExp.timeline.statuses?.[normalizedStatusKey]) ||
+    item.status;
+
+  // Normalize and translate type label
+  const rawType = item.type?.trim() || "";
+  const normalizedTypeKey = rawType
+    .toLowerCase()
+    .replace(/[\s-]+/g, "_") as keyof typeof t.sections.eduExp.timeline.types;
+  const typeLabel =
+    (normalizedTypeKey &&
+      t.sections.eduExp.timeline.types?.[normalizedTypeKey]) ||
+    item.type;
+
   return (
     <li className="timeline-item">
       {/* Circle marker */}
@@ -65,22 +114,56 @@ export default function TimelineItem({
           {/* Year Badge */}
           <Badge
             pill
-            className="bg-primary-subtle text-primary border border-primary-subtle px-3 py-1 timeline-year-badge"
+            color="primary"
+            subtle
+            className="px-3 py-1 timeline-year-badge"
           >
             <i className="bi bi-calendar-event me-1" />
             {yearLabel}
           </Badge>
 
-          {/* GPA and Status Badges */}
+          {/* GPA, Type, and Status Badges */}
           <div className="d-flex align-items-center gap-2">
             {item.gpa !== undefined && item.gpa !== null && (
-              <Badge className="bg-success-subtle text-success-emphasis border border-success-subtle px-2 py-1">
+              <Badge color="success" subtle className="px-2 py-1">
                 {t.sections.eduExp.timeline.gpa} {item.gpa.toFixed(2)}
               </Badge>
             )}
-            {item.status && (
-              <Badge className="bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle px-2 py-1">
-                {item.status}
+            {typeLabel && (
+              <Badge
+                pill
+                className="bg-body-tertiary text-muted border border-secondary-subtle px-2 py-1"
+              >
+                {typeLabel}
+              </Badge>
+            )}
+            {statusLabel && (
+              // <Badge
+              //   color={getTimelineStatusColor(
+              //     normalizedStatusKey || item.status,
+              //   )}
+              //   subtle
+              //   className="px-2 py-1"
+              // >
+              //   {statusLabel}
+              // </Badge>
+              <Badge
+                color={getTimelineStatusColor(
+                  normalizedStatusKey || item.status,
+                )}
+                subtle
+                className="px-2 py-1 d-inline-flex align-items-center gap-1"
+              >
+                {(normalizedStatusKey === "ongoing" ||
+                  normalizedStatusKey === "active") && (
+                  <Spinner
+                    variant="grow"
+                    size="sm"
+                    color="warning"
+                    style={{ width: "6px", height: "6px" }}
+                  />
+                )}
+                {statusLabel}
               </Badge>
             )}
           </div>
@@ -139,16 +222,16 @@ export default function TimelineItem({
         </div>
 
         {/* Description */}
-        {Array.isArray(item.description) ? (
+        {Array.isArray(descContent) ? (
           <ul className="mb-0 ps-3">
-            {item.description.map((desc, idx) => (
+            {descContent.map((desc, idx) => (
               <li key={idx} className="mb-1 text-secondary">
                 {desc}
               </li>
             ))}
           </ul>
-        ) : item.description ? (
-          <p className="mb-0 text-secondary">{item.description}</p>
+        ) : descContent ? (
+          <p className="mb-0 text-secondary">{descContent}</p>
         ) : null}
       </article>
     </li>

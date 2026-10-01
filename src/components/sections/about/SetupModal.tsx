@@ -49,9 +49,9 @@ export default function SetupModal({
             >
               <h6 className="fw-bold mb-1 text-primary">{item.name}</h6>
               <p className="mb-1 small text-body">{item.description}</p>
-              {item.why && (
+              {item.reason && (
                 <small className="text-body-secondary fst-italic">
-                  &ldquo;{item.why}&rdquo;
+                  &ldquo;{item.reason}&rdquo;
                 </small>
               )}
             </div>

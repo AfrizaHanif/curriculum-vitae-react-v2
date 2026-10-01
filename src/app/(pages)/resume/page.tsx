@@ -20,8 +20,13 @@ import fallbackSkills from "@/data/jsons/skills.json";
 
 import "./resume.css";
 import PageHeader from "../../../components/layouts/pages/page-header";
+import { getLocalizedContent, getLocalizedText } from "@/utils/formatters";
+import { useLanguage } from "@/context/LanguageContext";
+import { LocalizedContent } from "@/types/api";
 
 export default function ResumePage() {
+  const { lang } = useLanguage();
+
   // 1. Fetch Profile Data (Priority API, Fallback JSON)
   const { data: profileData } = useFetch<ProfileApiResponse>(
     getApiUrl("profiles"),
@@ -59,18 +64,19 @@ export default function ResumePage() {
     window.print();
   };
 
-  const renderDescription = (desc?: string | string[] | null) => {
-    if (!desc) return null;
-    if (Array.isArray(desc)) {
+  const renderDescription = (desc?: LocalizedContent | null) => {
+    const content = getLocalizedContent(desc, lang);
+    if (!content) return null;
+    if (Array.isArray(content)) {
       return (
         <ul className="resume-list">
-          {desc.map((item, idx) => (
+          {content.map((item, idx) => (
             <li key={idx}>{item}</li>
           ))}
         </ul>
       );
     }
-    return <p className="mb-1">{desc}</p>;
+    return <p className="mb-0 text-muted small">{content}</p>;
   };
 
   return (
@@ -93,7 +99,8 @@ export default function ResumePage() {
             {profile?.fullname || siteConfig.site.name}
           </h1>
           <p className="fw-semibold text-muted mb-2">
-            {profile?.tagline || siteConfig.site.jobTitle}
+            {getLocalizedText(profile?.tagline, lang) ||
+              siteConfig.site.jobTitle}
           </p>
           <div className="d-flex flex-wrap justify-content-center gap-2 small text-muted">
             {profile?.current_city && (
@@ -162,7 +169,7 @@ export default function ResumePage() {
           <section className="resume-section mt-3">
             <h2 className="resume-section-title">Ringkasan Profesional</h2>
             <p className="mb-0 text-justify leading-relaxed">
-              {profile.description}
+              {getLocalizedText(profile?.description, lang)}
             </p>
           </section>
         )}
@@ -183,7 +190,7 @@ export default function ResumePage() {
                   </div>
                   <div className="d-flex justify-content-between align-items-baseline mb-2">
                     <span className="fst-italic text-secondary small">
-                      {exp.location}
+                      {exp.company}
                     </span>
                     {exp.address && (
                       <span className="small text-muted d-print-none">
@@ -216,7 +223,7 @@ export default function ResumePage() {
                   </div>
                   <div className="d-flex justify-content-between align-items-baseline mb-1">
                     <span className="fst-italic text-secondary small">
-                      {edu.location}
+                      {edu.institution}
                     </span>
                     {edu.gpa && (
                       <span className="small fw-semibold text-dark">

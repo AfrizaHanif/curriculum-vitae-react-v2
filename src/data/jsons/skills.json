@@ -2,82 +2,121 @@
   {
     "id": "SKI-001",
     "name": "Bootstrap",
-    "level": "Mahir",
-    "since": 2023,
+    "type": "frontend",
+    "type_label": "Frontend",
+    "display_order": 3,
     "deleted_at": null,
-    "created_at": "2026-07-20T15:44:14.000000Z",
-    "updated_at": "2026-07-21T09:45:19.000000Z"
+    "created_at": "2026-10-01T03:39:41.000000Z",
+    "updated_at": "2026-10-01T03:39:41.000000Z"
   },
   {
     "id": "SKI-002",
     "name": "Laravel",
-    "level": "Mahir",
-    "since": 2022,
+    "type": "backend",
+    "type_label": "Backend",
+    "display_order": 1,
     "deleted_at": null,
-    "created_at": "2026-07-20T15:44:14.000000Z",
-    "updated_at": "2026-07-20T15:44:14.000000Z"
+    "created_at": "2026-10-01T03:39:41.000000Z",
+    "updated_at": "2026-10-01T03:39:41.000000Z"
   },
   {
     "id": "SKI-003",
     "name": "MySQL",
-    "level": "Menengah",
-    "since": 2022,
+    "type": "database",
+    "type_label": "Database",
+    "display_order": 8,
     "deleted_at": null,
-    "created_at": "2026-07-20T15:44:14.000000Z",
-    "updated_at": "2026-07-20T15:44:14.000000Z"
+    "created_at": "2026-10-01T03:39:41.000000Z",
+    "updated_at": "2026-10-01T03:39:41.000000Z"
   },
   {
     "id": "SKI-004",
     "name": "PHP",
-    "level": "Mahir",
-    "since": 2022,
+    "type": "backend",
+    "type_label": "Backend",
+    "display_order": 7,
     "deleted_at": null,
-    "created_at": "2026-07-20T15:44:14.000000Z",
-    "updated_at": "2026-07-20T15:44:14.000000Z"
+    "created_at": "2026-10-01T03:39:41.000000Z",
+    "updated_at": "2026-10-01T03:39:41.000000Z"
   },
   {
     "id": "SKI-005",
     "name": "HTML",
-    "level": "Mahir",
-    "since": 2022,
+    "type": "frontend",
+    "type_label": "Frontend",
+    "display_order": 4,
     "deleted_at": null,
-    "created_at": "2026-07-20T15:44:14.000000Z",
-    "updated_at": "2026-07-20T15:44:14.000000Z"
+    "created_at": "2026-10-01T03:39:41.000000Z",
+    "updated_at": "2026-10-01T03:39:41.000000Z"
   },
   {
     "id": "SKI-006",
-    "name": "Angular",
-    "level": "Pemula",
-    "since": 2025,
+    "name": "TypeScript",
+    "type": "frontend",
+    "type_label": "Frontend",
+    "display_order": 6,
     "deleted_at": null,
-    "created_at": "2026-07-20T15:44:14.000000Z",
-    "updated_at": "2026-07-20T15:44:14.000000Z"
+    "created_at": "2026-10-01T03:39:41.000000Z",
+    "updated_at": "2026-10-01T03:39:41.000000Z"
   },
   {
     "id": "SKI-007",
     "name": "JavaScript",
-    "level": "Pemula",
-    "since": 2025,
+    "type": "frontend",
+    "type_label": "Frontend",
+    "display_order": 5,
     "deleted_at": null,
-    "created_at": "2026-07-20T15:44:14.000000Z",
-    "updated_at": "2026-08-31T02:25:37.000000Z"
+    "created_at": "2026-10-01T03:39:41.000000Z",
+    "updated_at": "2026-10-01T03:39:41.000000Z"
   },
   {
     "id": "SKI-008",
     "name": "React",
-    "level": "Pemula",
-    "since": 2025,
+    "type": "frontend",
+    "type_label": "Frontend",
+    "display_order": 2,
     "deleted_at": null,
-    "created_at": "2026-07-20T15:44:14.000000Z",
-    "updated_at": "2026-08-31T02:25:37.000000Z"
+    "created_at": "2026-10-01T03:39:41.000000Z",
+    "updated_at": "2026-10-01T03:39:41.000000Z"
   },
   {
     "id": "SKI-009",
-    "name": "AI Prompt",
-    "level": "Menengah",
-    "since": 2025,
+    "name": "Git",
+    "type": "tool",
+    "type_label": "Tools",
+    "display_order": 9,
     "deleted_at": null,
-    "created_at": "2026-08-08T00:51:43.000000Z",
-    "updated_at": "2026-08-08T00:51:43.000000Z"
+    "created_at": "2026-10-01T03:39:41.000000Z",
+    "updated_at": "2026-10-01T03:39:41.000000Z"
+  },
+  {
+    "id": "SKI-010",
+    "name": "GitHub",
+    "type": "tool",
+    "type_label": "Tools",
+    "display_order": 10,
+    "deleted_at": null,
+    "created_at": "2026-10-01T03:39:41.000000Z",
+    "updated_at": "2026-10-01T03:39:41.000000Z"
+  },
+  {
+    "id": "SKI-011",
+    "name": "Postman",
+    "type": "tool",
+    "type_label": "Tools",
+    "display_order": 11,
+    "deleted_at": null,
+    "created_at": "2026-10-01T03:39:41.000000Z",
+    "updated_at": "2026-10-01T03:39:41.000000Z"
+  },
+  {
+    "id": "SKI-012",
+    "name": "AI-Assisted Development",
+    "type": "tool",
+    "type_label": "Tools",
+    "display_order": 12,
+    "deleted_at": null,
+    "created_at": "2026-10-01T03:39:41.000000Z",
+    "updated_at": "2026-10-01T03:39:41.000000Z"
   }
 ]

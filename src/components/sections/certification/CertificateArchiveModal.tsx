@@ -8,6 +8,7 @@ import Badge from "@/components/ui/bootstrap/badge";
 import Input from "@/components/forms/input";
 import { formatMonthYear } from "@/utils/date";
 import { useLanguage } from "@/context/LanguageContext";
+import { IssuerLogo } from "./cert-utils";
 
 interface CertificateArchiveModalProps {
   certificates: Certificate[];
@@ -40,7 +41,7 @@ export default function CertificateArchiveModal({
       const q = searchQuery.toLowerCase().trim();
       const matchesSearch =
         !q ||
-        cert.name?.toLowerCase().includes(q) ||
+        cert.title.toLowerCase().includes(q) ||
         cert.issuer?.toLowerCase().includes(q) ||
         cert.type?.toLowerCase().includes(q) ||
         cert.credential_id?.toLowerCase().includes(q);
@@ -78,9 +79,9 @@ export default function CertificateArchiveModal({
     >
       <div className="p-1">
         {/* Search & Filter Controls */}
-        <div className="row g-3 mb-4 align-items-center">
-          {/* Search bar */}
-          <div className="col-12 col-md-6">
+        <div className="mb-4">
+          {/* Search Bar - Full Width on Top */}
+          <div className="mb-3">
             <div className="input-group">
               <span className="input-group-text bg-body-tertiary">
                 <i className="bi bi-search" />
@@ -110,35 +111,33 @@ export default function CertificateArchiveModal({
             </div>
           </div>
 
-          {/* Filter Pills for Issuers */}
-          <div className="col-12 col-md-6">
-            <div className="d-flex flex-wrap gap-1 justify-content-md-end">
-              {issuers.map((issuer) => {
-                const isSelected = selectedIssuer === issuer;
-                const count =
-                  issuer === "All"
-                    ? certificates.length
-                    : certificates.filter((c) => c.issuer === issuer).length;
-                const label =
-                  issuer === "All"
-                    ? t.sections.certification.archiveModal.filterAll
-                    : issuer;
+          {/* Filter Pills for Issuers Below */}
+          <div className="d-flex flex-wrap gap-1">
+            {issuers.map((issuer) => {
+              const isSelected = selectedIssuer === issuer;
+              const count =
+                issuer === "All"
+                  ? certificates.length
+                  : certificates.filter((c) => c.issuer === issuer).length;
+              const label =
+                issuer === "All"
+                  ? t.sections.certification.archiveModal.filterAll
+                  : issuer;
 
-                return (
-                  <Button
-                    key={issuer}
-                    color={isSelected ? "primary" : "outline-secondary"}
-                    size="sm"
-                    rounded
-                    className="px-3"
-                    onClick={() => setSelectedIssuer(issuer)}
-                    aria-pressed={isSelected}
-                  >
-                    {label} <span className="opacity-75">({count})</span>
-                  </Button>
-                );
-              })}
-            </div>
+              return (
+                <Button
+                  key={issuer}
+                  color={isSelected ? "primary" : "outline-secondary"}
+                  size="sm"
+                  rounded
+                  className="px-3"
+                  onClick={() => setSelectedIssuer(issuer)}
+                  aria-pressed={isSelected}
+                >
+                  {label} <span className="opacity-75">({count})</span>
+                </Button>
+              );
+            })}
           </div>
         </div>
 
@@ -185,21 +184,57 @@ export default function CertificateArchiveModal({
                   <div className="d-flex flex-wrap align-items-center gap-2 mb-1">
                     <Badge
                       pill
-                      className="bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle"
+                      className="bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle d-inline-flex align-items-center gap-1"
                     >
-                      {cert.issuer}
+                      <IssuerLogo
+                        issuer={cert.issuer}
+                        logo={cert.issuer_logo || cert.logo}
+                        size={14}
+                      />
+                      <span>{cert.issuer}</span>
                     </Badge>
                     {cert.type && (
                       <Badge className="bg-secondary border border-secondary">
                         {cert.type}
                       </Badge>
                     )}
+                    {cert.credential_url && (
+                      <Badge
+                        pill
+                        className="bg-success-subtle text-success border border-success-subtle"
+                        title="Online verifiable credential"
+                      >
+                        <i className="bi bi-patch-check-fill me-1" />
+                        {t.sections.certification.card.verified}
+                      </Badge>
+                    )}
+                    {cert.expired_date && (
+                      <Badge
+                        pill
+                        className={
+                          new Date(cert.expired_date) >= new Date()
+                            ? "bg-success-subtle text-success border border-success-subtle"
+                            : "bg-danger-subtle text-danger border border-danger-subtle"
+                        }
+                      >
+                        <i
+                          className={`bi ${
+                            new Date(cert.expired_date) >= new Date()
+                              ? "bi-check-circle-fill"
+                              : "bi-exclamation-triangle-fill"
+                          } me-1`}
+                        />
+                        {new Date(cert.expired_date) >= new Date()
+                          ? t.sections.certification.card.active
+                          : t.sections.certification.card.expired}
+                      </Badge>
+                    )}
                     <small className="text-muted">
                       <i className="bi bi-calendar3 me-1" />
-                      {cert.issue_date ? (
-                        <time dateTime={cert.issue_date}>
+                      {cert.issued_date ? (
+                        <time dateTime={cert.issued_date}>
                           {formatMonthYear(
-                            cert.issue_date,
+                            cert.issued_date,
                             dateLocale,
                             t.common.present,
                           )}
@@ -211,7 +246,7 @@ export default function CertificateArchiveModal({
                   </div>
 
                   {/* Certificate name */}
-                  <h6 className="mb-1 fw-bold text-body">{cert.name}</h6>
+                  <h6 className="mb-1 fw-bold text-body">{cert.title}</h6>
 
                   {/* Certificate description */}
                   {cert.description && (
@@ -259,7 +294,7 @@ export default function CertificateArchiveModal({
                       href={cert.credential_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      color="outline-primary"
+                      color="primary"
                       size="sm"
                       className="d-inline-flex align-items-center gap-1"
                     >

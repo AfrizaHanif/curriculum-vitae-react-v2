@@ -11,6 +11,7 @@ import Button from "@/components/ui/bootstrap/button";
 import Card from "@/components/ui/bootstrap/card";
 import Alert from "@/components/ui/bootstrap/alert";
 import Badge from "@/components/ui/bootstrap/badge";
+import Spinner from "@/components/ui/bootstrap/spinner";
 import { useLanguage } from "@/context/LanguageContext";
 import { siteConfig } from "@/config/siteConfig";
 
@@ -325,11 +326,7 @@ export default function ContactForm() {
         >
           {isLoading ? (
             <>
-              <span
-                className="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              />
+              <Spinner size="sm" />
               <span>{t.sections.contact.form.submittingButton}</span>
             </>
           ) : (

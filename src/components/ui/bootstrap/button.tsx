@@ -8,6 +8,7 @@ import Popover from "./popover";
 export interface ButtonProps extends React.AriaAttributes {
   id?: string;
   tabIndex?: number;
+  title?: string;
   as?: "button" | "a";
   color?:
     | "primary"
@@ -81,6 +82,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
       children,
       id,
       tabIndex,
+      title,
       ...ariaProps
     },
     ref,
@@ -102,6 +104,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
         ref={ref as React.Ref<HTMLAnchorElement>}
         id={id}
         tabIndex={tabIndex}
+        title={title}
         href={href || "#"}
         scroll={scroll}
         target={target}
@@ -136,6 +139,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
         ref={ref as React.Ref<HTMLButtonElement>}
         id={id}
         tabIndex={tabIndex}
+        title={title}
         className={combinedClasses}
         style={disabled ? { ...style, pointerEvents: "none" } : style}
         type={type}

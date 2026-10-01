@@ -2,29 +2,48 @@
  * Utility functions for Project and Portfolio sections
  */
 
-// Get project status badge class
-export function getProjectStatusBadgeClass(status?: string | null): string {
-  if (!status) {
-    return "bg-secondary-subtle text-secondary border border-secondary-subtle";
-  }
+export type ProjectStatusColor =
+  | "success"
+  | "warning"
+  | "danger"
+  | "info"
+  | "secondary";
 
-  const normalized = status.toLowerCase();
-  if (normalized === "completed" || normalized === "finished") {
-    return "bg-success-subtle text-success border border-success-subtle";
-  }
+// Get project status semantic color for Badge component
+export function getProjectStatusColor(
+  status?: string | null,
+): ProjectStatusColor {
+  if (!status) return "secondary";
 
-  if (normalized === "in progress" || normalized === "ongoing") {
-    return "bg-warning-subtle text-warning-emphasis border border-warning-subtle";
-  }
+  const normalized = status.toLowerCase().replace(/[\s-]+/g, "_");
 
-  return "bg-secondary-subtle text-secondary border border-secondary-subtle";
+  switch (normalized) {
+    case "completed":
+    case "finished":
+      return "success";
+    case "active":
+    case "ongoing":
+    case "in_progress":
+      return "warning";
+    case "delayed":
+      return "danger";
+    case "planning":
+      return "info";
+    default:
+      return "secondary";
+  }
 }
 
-// Match category for portfolio and portfolio
+// Get project status badge class
+export function getProjectStatusBadgeClass(status?: string | null): string {
+  const color = getProjectStatusColor(status);
+  return `bg-${color}-subtle text-${color}-emphasis border border-${color}-subtle`;
+}
+
+// Match category for portfolio and project
 export function matchCategory(
   item: {
     category?: string | null;
-    subcategory?: string | null;
     type?: string | null;
   },
   activeCategory: string,
@@ -32,53 +51,43 @@ export function matchCategory(
   if (!activeCategory || activeCategory.toLowerCase() === "all") return true;
 
   const target = activeCategory.toLowerCase().trim();
-  const subcat = (item.subcategory || "").toLowerCase();
-  const cat = (item.category || "").toLowerCase();
-  const type = (item.type || "").toLowerCase();
+  const normalize = (s?: string | null) =>
+    (s || "").toLowerCase().replace(/[\s-_]+/g, "");
 
-  if (target === "backend" || target === "back-end") {
+  const cleanTarget = normalize(target);
+  const cleanCat = normalize(item.category);
+  const cleanType = normalize(item.type);
+
+  if (cleanTarget === "backend") {
     return (
-      subcat.includes("backend") ||
-      type.includes("api") ||
-      type.includes("backend") ||
-      cat.includes("backend")
+      cleanType.includes("backend") ||
+      cleanType.includes("api") ||
+      cleanCat.includes("backend") ||
+      cleanCat.includes("api")
     );
   }
 
-  if (target === "frontend" || target === "front-end") {
-    return (
-      subcat.includes("frontend") ||
-      subcat.includes("front-end") ||
-      type.includes("frontend") ||
-      cat.includes("frontend")
-    );
+  if (cleanTarget === "frontend") {
+    return cleanType.includes("frontend") || cleanCat.includes("frontend");
   }
 
-  if (target === "fullstack" || target === "full-stack") {
-    return (
-      subcat.includes("full-stack") ||
-      subcat.includes("fullstack") ||
-      type.includes("fullstack") ||
-      cat.includes("fullstack")
-    );
+  if (cleanTarget === "fullstack") {
+    return cleanType.includes("fullstack") || cleanCat.includes("fullstack");
   }
 
-  if (target === "mobile") {
-    return (
-      subcat.includes("mobile") ||
-      type.includes("mobile") ||
-      cat.includes("mobile")
-    );
+  if (cleanTarget === "mobile") {
+    return cleanType.includes("mobile") || cleanCat.includes("mobile");
   }
 
-  if (target === "web") {
-    return (
-      type.includes("web") || subcat.includes("web") || cat.includes("web")
-    );
+  if (cleanTarget === "web") {
+    return cleanType.includes("web") || cleanCat.includes("web");
   }
 
   return (
-    subcat.includes(target) || cat.includes(target) || type.includes(target)
+    cleanCat.includes(cleanTarget) ||
+    cleanType.includes(cleanTarget) ||
+    (item.category || "").toLowerCase().includes(target) ||
+    (item.type || "").toLowerCase().includes(target)
   );
 }
 

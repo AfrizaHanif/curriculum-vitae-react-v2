@@ -25,41 +25,54 @@ export default function SkillSection() {
     getApiUrl("skills"),
     { fallbackData: { data: fallbackSkills } },
   );
-  const skills = useMemo(() => data?.data ?? [], [data?.data]);
+  const skills = useMemo(() => {
+    const list = data?.data ?? [];
+    return [...list].sort(
+      (a, b) => (a.display_order ?? 0) - (b.display_order ?? 0),
+    );
+  }, [data?.data]);
 
   // Set States
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-  // Get Unique Levels for Filter
-  const levels = useMemo(() => {
-    const list = Array.from(new Set(skills.map((s) => s.level)));
+  // Get Unique Categories/Types for Filter
+  const categories = useMemo(() => {
+    const list = Array.from(
+      new Set(
+        skills
+          .map((s) => s.type_label || s.type)
+          .filter((v): v is string => Boolean(v)),
+      ),
+    );
     return ["All", ...list];
   }, [skills]);
 
   // Tab items for NavTab
   const tabItems: NavTabItem[] = useMemo(() => {
-    return levels.map((lvl, index) => {
-      const lvlSkills =
-        lvl === "All" ? skills : skills.filter((s) => s.level === lvl);
+    return categories.map((cat, index) => {
+      const catSkills =
+        cat === "All"
+          ? skills
+          : skills.filter((s) => (s.type_label || s.type) === cat);
       const isActive = index === activeTabIndex;
 
       return {
-        id: `skills-tab-${lvl.toLowerCase().replace(/\s+/g, "-")}`,
+        id: `skills-tab-${cat.toLowerCase().replace(/\s+/g, "-")}`,
         title: (
           <span className="d-inline-flex align-items-center gap-2">
-            <span>{lvl === "All" ? t.sections.skills.filterAll : lvl}</span>
+            <span>{cat === "All" ? t.sections.skills.filterAll : cat}</span>
             <Badge
               pill
               className={`rounded-pill ${
                 isActive ? "bg-light text-primary" : "bg-secondary text-white"
               }`}
             >
-              {lvlSkills.length}
+              {catSkills.length}
             </Badge>
           </span>
         ),
         content:
-          lvlSkills.length > 0 ? (
+          catSkills.length > 0 ? (
             <CardGrid
               xxlCols={5}
               xlCols={4}
@@ -69,9 +82,9 @@ export default function SkillSection() {
               cols={1}
               gap={3}
             >
-              {lvlSkills.map((skill) => (
+              {catSkills.map((skill) => (
                 <SkillCard
-                  key={skill.id}
+                  key={skill.id || skill.name}
                   skill={skill}
                   currentYear={currentYear}
                 />
@@ -84,7 +97,7 @@ export default function SkillSection() {
           ),
       };
     });
-  }, [levels, skills, activeTabIndex, currentYear, t]);
+  }, [categories, skills, activeTabIndex, currentYear, t]);
 
   return (
     <Section id="skills" minFullHeight>

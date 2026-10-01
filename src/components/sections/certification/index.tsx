@@ -30,7 +30,11 @@ export default function CertificationSection() {
     { fallbackData: { data: fallbackCertificates } },
   );
   const certificates = useMemo(() => data?.data ?? [], [data]);
-  const featuredCertificates = certificates.slice(0, featuredLimit);
+  const featuredCertificates = useMemo(() => {
+    const featured = certificates.filter((cert) => cert.is_featured === true);
+    const listToDisplay = featured.length > 0 ? featured : certificates;
+    return listToDisplay.slice(0, featuredLimit); // <-- Caps display to 6 max
+  }, [certificates, featuredLimit]);
 
   return (
     <Section id="certifications" minFullHeight>
@@ -78,12 +82,7 @@ export default function CertificationSection() {
                 dataBsTarget="#all-certificates-modal"
               >
                 <i className="bi bi-collection-fill" />
-                <span>
-                  {t.sections.certification.browseAll.replace(
-                    "{count}",
-                    certificates.length.toString(),
-                  )}
-                </span>
+                <span>{t.sections.certification.browseAll}</span>
               </Button>
               <div className="text-muted small mt-2">
                 {t.sections.certification.showingCount

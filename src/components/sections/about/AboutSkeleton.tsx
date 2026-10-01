@@ -1,5 +1,6 @@
 "use client";
 
+import Card from "@/components/ui/bootstrap/card";
 import Placeholder from "@/components/ui/bootstrap/placeholder";
 
 export default function AboutSkeleton() {
@@ -35,12 +36,12 @@ export default function AboutSkeleton() {
       </div>
 
       {/* Philosophy Quote Card Skeleton */}
-      <div className="card bg-body-tertiary border-0 border-start border-primary border-4 p-3 rounded-3 mb-4 shadow-sm">
+      <Card className="bg-body-tertiary border-0 border-start border-primary border-4 p-3 rounded-3 mb-4 shadow-sm">
         <div className="d-flex flex-column gap-2">
           <Placeholder as="div" col={10} className="rounded py-1 opacity-75" />
           <Placeholder as="div" col={7} className="rounded py-1 opacity-50" />
         </div>
-      </div>
+      </Card>
     </Placeholder.Glow>
   );
 }

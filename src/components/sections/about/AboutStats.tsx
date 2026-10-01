@@ -50,9 +50,9 @@ export default function AboutStats() {
 
   // Calculate Real Cumulative Experience & Start Year
   const { startYear, totalMonths, isOverOneYear, yearsCount } = useMemo(() => {
-    // Get experiences data
-    const experiences = expData?.data ?? [];
-    if (experiences.length === 0) {
+    // Get experiences data with fallback
+    const experiences = expData?.data ?? fallbackExperiences;
+    if (!experiences || experiences.length === 0) {
       return {
         startYear: 2023,
         totalMonths: 7,
@@ -77,7 +77,7 @@ export default function AboutStats() {
         const finishTime = isNaN(finish.getTime())
           ? new Date().getTime()
           : finish.getTime();
-        const diffMs = finishTime - start.getTime();
+        const diffMs = Math.max(0, finishTime - start.getTime());
         // Calculate months based on average 30.44 days/month
         const months = Math.max(
           1,
@@ -106,36 +106,41 @@ export default function AboutStats() {
 
   // Calculate Total Projects & Portfolios
   const totalProjects = useMemo(() => {
-    const pCount = projData?.data?.length ?? 0;
-    const pfCount = portData?.data?.length ?? 0;
+    const pCount = projData?.data?.length ?? fallbackProjects.length;
+    const pfCount = portData?.data?.length ?? fallbackPortfolios.length;
     const sum = pCount + pfCount;
-    return sum > 0 ? sum : 4;
+    return sum > 0 ? sum : fallbackPortfolios.length;
   }, [projData, portData]);
 
   // Calculate Total Verified Certifications
   const totalCertificates = useMemo(() => {
-    const cCount = certData?.data?.length ?? 0;
-    return cCount > 0 ? cCount : 25;
+    const cCount = certData?.data?.length;
+    return typeof cCount === "number" && cCount > 0
+      ? cCount
+      : fallbackCertificates.length;
   }, [certData]);
+
+  // Format counter to avoid premature "+" on small numbers
+  const formatStatCount = (count: number, threshold = 10) => {
+    return count >= threshold ? `${count}+` : `${count}`;
+  };
 
   // Dynamic experience card values based on cumulative duration
   const expValue = isOverOneYear
-    ? `${yearsCount}+ ${t.sections.about.stats?.journey?.unitYears || "Yrs"}`
-    : `${t.sections.about.stats?.journey?.since || "Since"} ${startYear}`;
+    ? `${yearsCount}+ ${t.sections.about.stats?.journey?.unitYears || "Thn"}`
+    : `${totalMonths} ${t.sections.about.stats?.journey?.unitMonths || "Bln"}`;
 
   // Dynamic experience card label based on cumulative duration
   const expLabel = isOverOneYear
     ? t.sections.about.stats?.journey?.yearsLabel || "Tahun Pengalaman"
-    : t.sections.about.stats?.journey?.label || "Perjalanan Web Dev";
+    : t.sections.about.stats?.journey?.label || "Pengalaman Magang";
 
   // Dynamic experience card description based on cumulative duration
   const expDescription = isOverOneYear
     ? t.sections.about.stats?.journey?.descYears ||
-      "Membangun aplikasi web interaktif & modern"
-    : `± ${totalMonths} ${
-        t.sections.about.stats?.journey?.descUnderYear ||
-        "bulan magang & aktif berkarya"
-      }`;
+      "Pengembangan aplikasi web & integrasi sistem"
+    : t.sections.about.stats?.journey?.descUnderYear ||
+      "Magang industri di BPS & Kominfo Jatim";
 
   // All Stats Data
   const stats: StatItem[] = [
@@ -152,7 +157,7 @@ export default function AboutStats() {
       icon: "bi-code-square",
       badgeBg: "bg-success-subtle",
       textColor: "text-success",
-      value: `${totalProjects}+`,
+      value: formatStatCount(totalProjects),
       label: t.sections.about.stats?.projects.label || "Proyek & Portofolio",
       description:
         t.sections.about.stats?.projects.description ||
@@ -163,13 +168,13 @@ export default function AboutStats() {
       icon: "bi-patch-check-fill",
       badgeBg: "bg-warning-subtle",
       textColor: "text-warning",
-      value: `${totalCertificates}+`,
+      value: formatStatCount(totalCertificates),
       label:
         t.sections.about.stats?.certifications.label ||
         "Sertifikasi Terverifikasi",
       description:
         t.sections.about.stats?.certifications.description ||
-        "Kualifikasi bersertifikat & lisensi profesional",
+        "Sertifikat kursus teknologi, bootcamp & keahlian",
       targetSection: "certifications",
     },
   ];
@@ -185,6 +190,7 @@ export default function AboutStats() {
             onClick={() => scrollToSection(stat.targetSection)}
             className="h-100 p-4 border-0 shadow-sm text-center position-relative transition-all"
             style={{
+              cursor: "pointer",
               transition: "transform 0.2s ease, box-shadow 0.2s ease",
             }}
           >

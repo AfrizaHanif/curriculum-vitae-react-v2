@@ -8,6 +8,7 @@ import Dropdown, { DropdownItem } from "@/components/ui/bootstrap/dropdown";
 import { formatMonthYear } from "@/utils/date";
 import TechnologyBadges from "./TechnologyBadges";
 import { useLanguage } from "@/context/LanguageContext";
+import { getLocalizedText } from "@/utils/formatters";
 
 interface PortfolioCardProps {
   portfolio: Portfolio;
@@ -20,10 +21,14 @@ export default function PortfolioCard({
   repositories = [],
   onOpenDetails,
 }: PortfolioCardProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   // Repository dropdown items
-  const repoDropdownItems: DropdownItem[] = repositories.map((repo) => {
+  const validRepositories = repositories.filter(
+    (repo) => (repo.url || repo.href || "").trim().length > 0,
+  );
+
+  const repoDropdownItems: DropdownItem[] = validRepositories.map((repo) => {
     const iconClass = repo.icon
       ? repo.icon.startsWith("bi-") || repo.icon.startsWith("bi ")
         ? repo.icon
@@ -31,9 +36,9 @@ export default function PortfolioCard({
       : "bi bi-link-45deg";
 
     return {
-      label: repo.label,
+      label: repo.name || repo.label || "Repository",
       icon: iconClass,
-      href: repo.href,
+      href: repo.url || repo.href || "#",
       hrefType: "external",
       newTab: true,
     };
@@ -42,8 +47,8 @@ export default function PortfolioCard({
   return (
     <Card
       key={portfolio.id}
-      imgSrc={portfolio.image}
-      imgAlt={portfolio.title}
+      imgSrc={portfolio.image ?? undefined}
+      imgAlt={getLocalizedText(portfolio.title, lang)}
       imgWidth={1920}
       imgHeight={1080}
       imgStyle={{
@@ -114,7 +119,7 @@ export default function PortfolioCard({
 
             <Button
               as="button"
-              color="outline-primary"
+              color="primary"
               rounded
               size="sm"
               className="px-3 d-inline-flex align-items-center gap-1"
@@ -130,7 +135,9 @@ export default function PortfolioCard({
         </div>
       }
     >
-      <h5 className="card-title fw-bold mb-2">{portfolio.title}</h5>
+      <h5 className="card-title fw-bold mb-2">
+        {getLocalizedText(portfolio.title, lang)}
+      </h5>
       <p
         className="card-text text-muted small mb-3"
         style={{
@@ -140,7 +147,7 @@ export default function PortfolioCard({
           overflow: "hidden",
         }}
       >
-        {portfolio.description}
+        {getLocalizedText(portfolio.description, lang)}
       </p>
       <TechnologyBadges technologies={portfolio.technology} />
     </Card>

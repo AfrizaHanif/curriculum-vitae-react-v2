@@ -10,8 +10,8 @@ import NextImage from "@/components/ui/react/image";
 import placeholderImage from "@/assets/images/placeholders/placeholder-image.png";
 import { getShimmerDataUrl } from "@/lib/shimmer";
 import { formatLocation } from "@/utils/format";
-import { formatDate } from "@/utils/date";
 import { useLanguage } from "@/context/LanguageContext";
+import { getLocalizedText } from "@/utils/formatters";
 
 interface ProfileDetailModalProps {
   profile?: Profile | null;
@@ -22,11 +22,6 @@ export default function ProfileDetailModal({
 }: ProfileDetailModalProps) {
   const { t, lang } = useLanguage();
   const [copiedEmail, setCopiedEmail] = useState(false);
-
-  // Format Birthday
-  const formattedBirthday = profile?.birthday
-    ? formatDate(profile.birthday, lang === "id" ? "id-ID" : "en-US")
-    : null;
 
   // Format Location
   const location = profile
@@ -94,7 +89,11 @@ export default function ProfileDetailModal({
                 style={{ width: 84, height: 84 }}
               >
                 <NextImage
-                  src={profile.photo || placeholderImage}
+                  src={
+                    profile.casual_photo ||
+                    profile.formal_photo ||
+                    placeholderImage
+                  }
                   alt={profile.fullname}
                   width={84}
                   height={84}
@@ -121,7 +120,7 @@ export default function ProfileDetailModal({
               </div>
               {profile.tagline && (
                 <p className="text-primary fw-medium mb-0 small">
-                  {profile.tagline}
+                  {getLocalizedText(profile.tagline, lang)}
                 </p>
               )}
             </div>
@@ -237,36 +236,34 @@ export default function ProfileDetailModal({
               </div>
             )}
 
-            {/* Birthday */}
-            {formattedBirthday && (
-              <div className="col-12 col-md-6">
-                <Card
-                  fullHeight
-                  className="border rounded-3 bg-body"
-                  bodyClassName="p-3"
-                >
-                  <div className="d-flex align-items-center gap-2">
-                    <div className="text-warning-emphasis p-2 d-inline-flex">
-                      <i className="bi bi-calendar-event-fill fs-5" />
-                    </div>
-                    <div>
-                      <small className="text-body-secondary d-block">
-                        {t.sections.about.profileModal.birthday}
-                      </small>
-                      <span className="text-body fw-medium">
-                        {profile.birthday ? (
-                          <time dateTime={profile.birthday}>
-                            {formattedBirthday}
-                          </time>
-                        ) : (
-                          formattedBirthday
-                        )}
-                      </span>
-                    </div>
+            {/* Professional Network (LinkedIn) */}
+            <div className="col-12 col-md-6">
+              <Card
+                fullHeight
+                className="border rounded-3 bg-body"
+                bodyClassName="p-3"
+              >
+                <div className="d-flex align-items-center gap-2">
+                  <div className="text-primary p-2 d-inline-flex">
+                    <i className="bi bi-linkedin fs-5" />
                   </div>
-                </Card>
-              </div>
-            )}
+                  <div>
+                    <small className="text-body-secondary d-block">
+                      LinkedIn
+                    </small>
+                    <a
+                      href="https://linkedin.com/in/afrizahanif"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-body text-decoration-none fw-medium d-inline-flex align-items-center gap-1"
+                    >
+                      <span>linkedin.com/in/afrizahanif</span>
+                      <i className="bi bi-box-arrow-up-right small text-muted" />
+                    </a>
+                  </div>
+                </div>
+              </Card>
+            </div>
           </div>
         </address>
 
@@ -274,9 +271,12 @@ export default function ProfileDetailModal({
         {profile.philosophy && (
           <figure className="p-3 bg-body-tertiary rounded-3 border-start border-primary border-4 mb-3">
             <div className="d-flex align-items-start gap-2">
-              <i className="bi bi-quote fs-4 text-primary opacity-50 lh-1" aria-hidden="true" />
+              <i
+                className="bi bi-quote fs-4 text-primary opacity-50 lh-1"
+                aria-hidden="true"
+              />
               <blockquote className="blockquote fst-italic text-body mb-0 small">
-                &ldquo;{profile.philosophy}&rdquo;
+                &ldquo;{getLocalizedText(profile.philosophy, lang)}&rdquo;
               </blockquote>
             </div>
           </figure>

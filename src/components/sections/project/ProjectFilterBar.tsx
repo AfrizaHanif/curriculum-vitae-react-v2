@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import Button from "@/components/ui/bootstrap/button";
+import Badge from "@/components/ui/bootstrap/badge";
+import InputSelect from "@/components/forms/input-select";
 
 export interface FilterCategoryOption {
   key: string;
@@ -65,11 +68,11 @@ export default function ProjectFilterBar({
     >
       {/* Mobile / Tablet Toggle Header */}
       <div className="d-flex d-lg-none justify-content-between align-items-center">
-        <button
-          type="button"
-          className={`btn btn-sm ${
-            isFiltered ? "btn-primary" : "btn-outline-secondary"
-          } d-flex align-items-center gap-2 rounded-pill px-3 py-1 transition-all`}
+        <Button
+          color={isFiltered ? "primary" : "outline-secondary"}
+          size="sm"
+          rounded
+          className="d-flex align-items-center gap-2 px-3 py-1 transition-all"
           onClick={() => setUserExpanded(!isMobileOpen)}
           aria-expanded={isMobileOpen}
           aria-controls="project-filter-controls"
@@ -79,30 +82,33 @@ export default function ProjectFilterBar({
             {isMobileOpen ? "Hide Filters" : "Filter Projects"}
           </span>
           {activeCount > 0 && (
-            <span
-              className={`badge rounded-pill ${
+            <Badge
+              pill
+              className={
                 isFiltered ? "bg-white text-primary" : "bg-primary text-white"
-              }`}
+              }
             >
               {activeCount}
-            </span>
+            </Badge>
           )}
           <i
             className={`bi bi-chevron-${isMobileOpen ? "up" : "down"} ms-1 small`}
           />
-        </button>
+        </Button>
 
         {/* Quick Reset on Mobile when filters active */}
         {isFiltered && (
-          <button
-            type="button"
-            className="btn btn-sm btn-outline-danger rounded-pill d-inline-flex align-items-center gap-1 px-2 py-1"
+          <Button
+            color="outline-danger"
+            size="sm"
+            rounded
+            className="d-inline-flex align-items-center gap-1 px-2 py-1"
             onClick={onReset}
             title="Reset all filters"
           >
             <i className="bi bi-x-circle" />
             <span className="small">{resetLabel}</span>
-          </button>
+          </Button>
         )}
       </div>
 
@@ -118,22 +124,23 @@ export default function ProjectFilterBar({
               <span className="input-group-text bg-body text-muted border-secondary-subtle">
                 <i className="bi bi-funnel" />
               </span>
-              <select
-                className="form-select form-select-sm border-secondary-subtle text-capitalize"
+              <InputSelect
+                name="categoryFilter"
+                id="category-filter"
+                size="sm"
+                className="border-secondary-subtle text-capitalize"
                 value={activeCategory}
                 onChange={(e) => onSelectCategory(e.target.value)}
-                aria-label="Filter by Category"
-              >
-                <option value="all">{filterAllLabel}</option>
-                {categories
-                  .filter((c) => c.key !== "all")
-                  .map((cat) => (
-                    <option key={cat.key} value={cat.key.toLowerCase()}>
-                      {cat.label}{" "}
-                      {cat.count !== undefined ? `(${cat.count})` : ""}
-                    </option>
-                  ))}
-              </select>
+                options={[
+                  { value: "all", label: filterAllLabel },
+                  ...categories
+                    .filter((c) => c.key !== "all")
+                    .map((cat) => ({
+                      value: cat.key.toLowerCase(),
+                      label: `${cat.label} ${cat.count !== undefined ? `(${cat.count})` : ""}`.trim(),
+                    })),
+                ]}
+              />
             </div>
           </div>
 
@@ -143,19 +150,21 @@ export default function ProjectFilterBar({
               <span className="input-group-text bg-body text-muted border-secondary-subtle">
                 <i className="bi bi-code-slash" />
               </span>
-              <select
-                className="form-select form-select-sm border-secondary-subtle"
+              <InputSelect
+                name="techFilter"
+                id="tech-filter"
+                size="sm"
+                className="border-secondary-subtle"
                 value={activeTech}
                 onChange={(e) => onSelectTech(e.target.value)}
-                aria-label="Filter by Technology"
-              >
-                <option value="">{allTechLabel}</option>
-                {availableTechs.map((tech) => (
-                  <option key={tech} value={tech.toLowerCase()}>
-                    {tech}
-                  </option>
-                ))}
-              </select>
+                options={[
+                  { value: "", label: allTechLabel },
+                  ...availableTechs.map((tech) => ({
+                    value: tech.toLowerCase(),
+                    label: tech,
+                  })),
+                ]}
+              />
             </div>
           </div>
 
@@ -166,19 +175,21 @@ export default function ProjectFilterBar({
                 <span className="input-group-text bg-body text-muted border-secondary-subtle">
                   <i className="bi bi-tag" />
                 </span>
-                <select
-                  className="form-select form-select-sm border-secondary-subtle"
+                <InputSelect
+                  name="tagFilter"
+                  id="tag-filter"
+                  size="sm"
+                  className="border-secondary-subtle"
                   value={activeTag}
                   onChange={(e) => onSelectTag(e.target.value)}
-                  aria-label="Filter by Tag"
-                >
-                  <option value="">{allTagsLabel}</option>
-                  {availableTags.map((tag) => (
-                    <option key={tag} value={tag.toLowerCase()}>
-                      {tag}
-                    </option>
-                  ))}
-                </select>
+                  options={[
+                    { value: "", label: allTagsLabel },
+                    ...availableTags.map((tag) => ({
+                      value: tag.toLowerCase(),
+                      label: tag,
+                    })),
+                  ]}
+                />
               </div>
             </div>
           )}
@@ -186,15 +197,17 @@ export default function ProjectFilterBar({
           {/* Desktop Reset Button */}
           <div className="col-12 col-sm-6 col-lg d-none d-lg-flex justify-content-lg-end align-items-center gap-2">
             {isFiltered && (
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-danger rounded-pill d-inline-flex align-items-center gap-1 px-3 py-1"
+              <Button
+                color="outline-danger"
+                size="sm"
+                rounded
+                className="d-inline-flex align-items-center gap-1 px-3 py-1"
                 onClick={onReset}
                 title="Reset all filters"
               >
                 <i className="bi bi-x-circle" />
                 <span>{resetLabel}</span>
-              </button>
+              </Button>
             )}
           </div>
         </div>
@@ -231,13 +244,14 @@ export default function ProjectFilterBar({
                 </>
               )}
             </span>
-            <button
-              type="button"
-              className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill cursor-pointer"
+            <Button
+              color="link"
+              size="sm"
+              className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill text-decoration-none cursor-pointer"
               onClick={onReset}
             >
               Clear filters
-            </button>
+            </Button>
           </div>
         )}
       </div>
