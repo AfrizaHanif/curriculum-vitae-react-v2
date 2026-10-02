@@ -58,7 +58,7 @@ export default function ProfileDetailModal({
                   </span>
                 ),
                 as: "a" as const,
-                href: profile.resume,
+                href: getLocalizedText(profile.resume, lang),
                 target: "_blank",
                 rel: "noopener noreferrer",
                 color: "primary" as const,

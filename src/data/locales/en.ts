@@ -316,6 +316,13 @@ export const en = {
     back: "Back",
     originalPdf: "Original PDF",
     printPdf: "Print / PDF",
+    sections: {
+      summary: "Professional Summary",
+      experience: "Work Experience",
+      education: "Education",
+      skills: "Technical Skills",
+      skillsLabel: "Skills",
+    },
   },
   errorPages: {
     notFound: {

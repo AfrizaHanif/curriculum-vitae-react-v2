@@ -323,6 +323,13 @@ export const id: TranslationSchema = {
     back: "Kembali",
     originalPdf: "PDF Asli",
     printPdf: "Cetak / PDF",
+    sections: {
+      summary: "Ringkasan Profesional",
+      experience: "Pengalaman Kerja",
+      education: "Pendidikan",
+      skills: "Keahlian Teknis",
+      skillsLabel: "Keahlian",
+    },
   },
   errorPages: {
     notFound: {

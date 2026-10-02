@@ -25,7 +25,8 @@ import { useLanguage } from "@/context/LanguageContext";
 import { LocalizedContent } from "@/types/api";
 
 export default function ResumePage() {
-  const { lang } = useLanguage();
+  const { t, lang } = useLanguage();
+  const dateLocale = lang === "id" ? "id-ID" : "en-US";
 
   // 1. Fetch Profile Data (Priority API, Fallback JSON)
   const { data: profileData } = useFetch<ProfileApiResponse>(
@@ -84,7 +85,10 @@ export default function ResumePage() {
       {/* Top Navbar Header (Follows header.tsx styling, hidden during print) */}
       <PageHeader
         fullname={profile?.fullname}
-        originalPdfUrl={profile?.resume}
+        originalPdfUrl={
+          getLocalizedText(profile?.resume, lang) ||
+          (typeof profile?.resume === "string" ? profile.resume : undefined)
+        }
         onPrint={handlePrint}
       />
 
@@ -167,7 +171,7 @@ export default function ResumePage() {
         {/* Section: Professional Summary */}
         {profile?.description && (
           <section className="resume-section mt-3">
-            <h2 className="resume-section-title">Ringkasan Profesional</h2>
+            <h2 className="resume-section-title">{t.resume.sections.summary}</h2>
             <p className="mb-0 text-justify leading-relaxed">
               {getLocalizedText(profile?.description, lang)}
             </p>
@@ -177,15 +181,15 @@ export default function ResumePage() {
         {/* Section: Work Experience */}
         {experiences.length > 0 && (
           <section className="resume-section">
-            <h2 className="resume-section-title">Pengalaman Kerja</h2>
+            <h2 className="resume-section-title">{t.resume.sections.experience}</h2>
             <div className="d-flex flex-column gap-3">
               {experiences.map((exp) => (
                 <article key={exp.id} className="resume-item-block">
                   <div className="d-flex justify-content-between align-items-baseline">
                     <h3 className="h6 fw-bold mb-0 text-dark">{exp.title}</h3>
                     <span className="small text-muted fw-medium">
-                      {formatMonthYear(exp.start_period)} –{" "}
-                      {formatMonthYear(exp.finish_period)}
+                      {formatMonthYear(exp.start_period, dateLocale, t.common.present)} –{" "}
+                      {formatMonthYear(exp.finish_period, dateLocale, t.common.present)}
                     </span>
                   </div>
                   <div className="d-flex justify-content-between align-items-baseline mb-2">
@@ -208,7 +212,7 @@ export default function ResumePage() {
         {/* Section: Education */}
         {educations.length > 0 && (
           <section className="resume-section">
-            <h2 className="resume-section-title">Pendidikan</h2>
+            <h2 className="resume-section-title">{t.resume.sections.education}</h2>
             <div className="d-flex flex-column gap-3">
               {educations.map((edu) => (
                 <article key={edu.id} className="resume-item-block">
@@ -217,8 +221,8 @@ export default function ResumePage() {
                       {edu.degree} {edu.major}
                     </h3>
                     <span className="small text-muted fw-medium">
-                      {formatMonthYear(edu.start_period)} –{" "}
-                      {formatMonthYear(edu.finish_period)}
+                      {formatMonthYear(edu.start_period, dateLocale, t.common.present)} –{" "}
+                      {formatMonthYear(edu.finish_period, dateLocale, t.common.present)}
                     </span>
                   </div>
                   <div className="d-flex justify-content-between align-items-baseline mb-1">
@@ -227,7 +231,7 @@ export default function ResumePage() {
                     </span>
                     {edu.gpa && (
                       <span className="small fw-semibold text-dark">
-                        IPK: {edu.gpa}
+                        {t.sections.eduExp.timeline.gpa}: {edu.gpa}
                       </span>
                     )}
                   </div>
@@ -241,10 +245,10 @@ export default function ResumePage() {
         {/* Section: Technical Skills */}
         {skills.length > 0 && (
           <section className="resume-section">
-            <h2 className="resume-section-title">Keahlian Teknis</h2>
+            <h2 className="resume-section-title">{t.resume.sections.skills}</h2>
             <div className="resume-item-block">
               <p className="mb-0">
-                <span className="fw-semibold text-dark">Skills: </span>
+                <span className="fw-semibold text-dark">{t.resume.sections.skillsLabel}: </span>
                 {skills.map((s) => s.name).join(" • ")}
               </p>
             </div>

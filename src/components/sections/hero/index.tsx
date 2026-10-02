@@ -125,7 +125,7 @@ export default function HeroSection() {
                   {profile.resume && (
                     <Button
                       as="a"
-                      href={profile.resume}
+                      href={getLocalizedText(profile.resume, lang)}
                       target="_blank"
                       rel="noopener noreferrer"
                       color="outline-light"

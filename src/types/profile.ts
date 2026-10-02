@@ -17,7 +17,7 @@ export interface Profile {
   casual_photo?: string | null;
   photo?: string | null; // Legacy alias (for formal_photo/casual_photo)
   setup_image?: string | null;
-  resume?: string | null;
+  resume?: LocalizedString | null;
 }
 
 export type ProfileApiResponse = ApiResponse<Profile[]>;

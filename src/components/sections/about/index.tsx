@@ -133,7 +133,7 @@ export default function AboutSection() {
               as="a"
               color="primary"
               rounded
-              href={profile.resume}
+              href={getLocalizedText(profile.resume, lang)}
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 d-inline-flex align-items-center gap-2 shadow-sm"

@@ -16,6 +16,7 @@ import Image from "next/image";
 import Button from "../../ui/bootstrap/button";
 import logoWhite from "@/assets/images/logo/logo-only-white.png";
 import logoBlack from "@/assets/images/logo/logo-only-black.png";
+import { getLocalizedText } from "@/utils/formatters";
 
 // Header's Props
 interface HeaderProps {
@@ -23,7 +24,7 @@ interface HeaderProps {
 }
 
 export default function Header({ className = "" }: HeaderProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { activeSection, availableSections, sectionConfig, scrollToSection } =
     useNavigation();
 
@@ -245,7 +246,7 @@ export default function Header({ className = "" }: HeaderProps) {
             {profile?.resume && (
               <Button
                 as="a"
-                href={profile.resume}
+                href={getLocalizedText(profile.resume, lang)}
                 target="_blank"
                 rel="noopener noreferrer"
                 color="outline-primary"
