@@ -49,7 +49,7 @@ export default function AboutStats() {
   );
 
   // Calculate Real Cumulative Experience & Start Year
-  const { startYear, totalMonths, isOverOneYear, yearsCount } = useMemo(() => {
+  const { totalMonths, isOverOneYear, yearsCount } = useMemo(() => {
     // Get experiences data with fallback
     const experiences = expData?.data ?? fallbackExperiences;
     if (!experiences || experiences.length === 0) {

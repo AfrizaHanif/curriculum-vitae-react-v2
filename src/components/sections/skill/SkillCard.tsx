@@ -4,16 +4,12 @@ import { Skill } from "@/types/skill";
 import Card from "@/components/ui/bootstrap/card";
 import Badge from "@/components/ui/bootstrap/badge";
 import { renderSkillIcon, getLevelConfig } from "./skill-utils";
-import { useLanguage } from "@/context/LanguageContext";
 
 interface SkillCardProps {
   skill: Skill;
-  currentYear: number;
 }
 
-export default function SkillCard({ skill, currentYear }: SkillCardProps) {
-  const { t } = useLanguage();
-
+export default function SkillCard({ skill }: SkillCardProps) {
   const labelText = skill.type_label || skill.type || skill.level || "";
   const levelCfg = getLevelConfig(labelText);
 

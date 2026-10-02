@@ -7,7 +7,6 @@ import Button from "@/components/ui/bootstrap/button";
 import { siteConfig } from "@/config/siteConfig";
 import ErrorHeader from "./error-header";
 import Badge from "@/components/ui/bootstrap/badge";
-import Footer from "../home/footer";
 import "./error-footer.css";
 
 export interface QuickLinkItem {

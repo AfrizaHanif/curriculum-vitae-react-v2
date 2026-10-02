@@ -18,7 +18,6 @@ import { getApiUrl } from "@/config/siteConfig";
 
 export default function SkillSection() {
   const { t } = useLanguage();
-  const currentYear = new Date().getFullYear();
 
   // Fetch API Data
   const { data, isLoading, error } = useFetch<SkillApiResponse>(
@@ -86,7 +85,6 @@ export default function SkillSection() {
                 <SkillCard
                   key={skill.id || skill.name}
                   skill={skill}
-                  currentYear={currentYear}
                 />
               ))}
             </CardGrid>
@@ -97,7 +95,7 @@ export default function SkillSection() {
           ),
       };
     });
-  }, [categories, skills, activeTabIndex, currentYear, t]);
+  }, [categories, skills, activeTabIndex, t]);
 
   return (
     <Section id="skills" minFullHeight>
