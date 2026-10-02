@@ -11,6 +11,7 @@ import {
   HTMLIcon,
   CSSIcon,
   JavaScriptIcon,
+  PHPIcon,
 } from "@/components/ui/react/icons";
 
 export function renderSkillIcon(name: string) {
@@ -44,6 +45,9 @@ export function renderSkillIcon(name: string) {
   if (n.includes("mysql") || n.includes("sql")) {
     return <MySQLIcon width={24} height={24} className="text-primary" />;
   }
+  if (n.includes("php")) {
+    return <PHPIcon width={24} height={24} className="text-primary" />;
+  }
   if (n.includes("postman")) {
     return <PostmanIcon width={24} height={24} className="text-primary" />;
   }
@@ -58,12 +62,6 @@ export function renderSkillIcon(name: string) {
   let biClass = "bi-code-slash text-secondary";
   if (n.includes("bootstrap")) biClass = "bi-bootstrap-fill text-primary";
   else if (n.includes("database")) biClass = "bi-database-fill text-primary";
-  else if (n.includes("php")) biClass = "bi-filetype-php text-primary";
-  // else if (n.includes("html")) biClass = "bi-filetype-html text-warning";
-  // else if (n.includes("css") || n.includes("sass") || n.includes("scss"))
-  //   biClass = "bi-filetype-css text-info";
-  // else if (n.includes("javascript") || /\bjs\b/i.test(n))
-  //   biClass = "bi-filetype-js text-warning";
   else if (n.includes("angular")) biClass = "bi-shield-shaded text-danger";
   else if (n.includes("vue")) biClass = "bi-triangle-fill text-success";
   else if (n.includes("python") || /\bpy\b/i.test(n))
