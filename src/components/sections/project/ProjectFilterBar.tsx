@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Button from "@/components/ui/bootstrap/button";
 import Badge from "@/components/ui/bootstrap/badge";
+import Dropdown from "@/components/ui/bootstrap/dropdown";
 import InputSelect from "@/components/forms/input-select";
 
 export interface FilterCategoryOption {
@@ -47,7 +48,7 @@ export default function ProjectFilterBar({
   filterAllLabel = "All Categories",
   allTechLabel = "All Technologies",
   allTagsLabel = "All Tags",
-  resetLabel = "Reset Filter",
+  resetLabel = "Reset",
   className = "",
 }: ProjectFilterBarProps) {
   const activeCount =
@@ -57,204 +58,344 @@ export default function ProjectFilterBar({
 
   const isFiltered = activeCount > 0;
 
-  // Mobile / Tablet collapse state (auto-expanded if there are active filters, or follows user manual toggle)
-  const [userExpanded, setUserExpanded] = useState<boolean | null>(null);
-  const isMobileOpen = userExpanded ?? isFiltered;
-
-  return (
-    <search
-      className={`project-filter-bar bg-body-tertiary p-3 rounded-4 border shadow-sm ${className}`}
-      role="search"
-    >
-      {/* Mobile / Tablet Toggle Header */}
-      <div className="d-flex d-lg-none justify-content-between align-items-center">
-        <Button
-          color={isFiltered ? "primary" : "outline-secondary"}
-          size="sm"
-          rounded
-          className="d-flex align-items-center gap-2 px-3 py-1 transition-all"
-          onClick={() => setUserExpanded(!isMobileOpen)}
-          aria-expanded={isMobileOpen}
-          aria-controls="project-filter-controls"
-        >
-          <i className="bi bi-funnel-fill" />
-          <span className="fw-semibold">
-            {isMobileOpen ? "Hide Filters" : "Filter Projects"}
+  const dropdownContent = (
+    <div className="project-filter-dropdown-content" style={{ minWidth: "270px" }}>
+      {/* Dropdown Header */}
+      <div className="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+        <div className="d-flex align-items-center gap-2">
+          <i className="bi bi-funnel-fill text-primary" />
+          <span className="fw-bold small text-uppercase tracking-wider">
+            Filter Projects
           </span>
-          {activeCount > 0 && (
-            <Badge
-              pill
-              className={
-                isFiltered ? "bg-white text-primary" : "bg-primary text-white"
-              }
-            >
-              {activeCount}
-            </Badge>
-          )}
-          <i
-            className={`bi bi-chevron-${isMobileOpen ? "up" : "down"} ms-1 small`}
-          />
-        </Button>
-
-        {/* Quick Reset on Mobile when filters active */}
+        </div>
         {isFiltered && (
           <Button
-            color="outline-danger"
+            color="link"
             size="sm"
-            rounded
-            className="d-inline-flex align-items-center gap-1 px-2 py-1"
+            className="text-danger text-decoration-none p-0 small fw-semibold"
             onClick={onReset}
             title="Reset all filters"
           >
-            <i className="bi bi-x-circle" />
-            <span className="small">{resetLabel}</span>
+            <i className="bi bi-x-circle me-1" />
+            {resetLabel}
           </Button>
         )}
       </div>
 
-      {/* Filter Controls (Collapsible on mobile/tablet, always visible on desktop) */}
-      <div
-        id="project-filter-controls"
-        className={`${isMobileOpen ? "d-block mt-3 mt-lg-0" : "d-none"} d-lg-block`}
-      >
-        <div className="row g-2 align-items-center">
-          {/* Category Select Box */}
-          <div className="col-12 col-sm-6 col-lg-3">
-            <div className="input-group input-group-sm">
-              <span className="input-group-text bg-body text-muted border-secondary-subtle">
-                <i className="bi bi-funnel" />
-              </span>
-              <InputSelect
-                name="categoryFilter"
-                id="category-filter"
-                size="sm"
-                className="border-secondary-subtle text-capitalize"
-                value={activeCategory}
-                onChange={(e) => onSelectCategory(e.target.value)}
-                options={[
-                  { value: "all", label: filterAllLabel },
-                  ...categories
-                    .filter((c) => c.key !== "all")
-                    .map((cat) => ({
-                      value: cat.key.toLowerCase(),
-                      label: `${cat.label} ${cat.count !== undefined ? `(${cat.count})` : ""}`.trim(),
-                    })),
-                ]}
-              />
-            </div>
-          </div>
-
-          {/* Technology Select Box */}
-          <div className="col-12 col-sm-6 col-lg-3">
-            <div className="input-group input-group-sm">
-              <span className="input-group-text bg-body text-muted border-secondary-subtle">
-                <i className="bi bi-code-slash" />
-              </span>
-              <InputSelect
-                name="techFilter"
-                id="tech-filter"
-                size="sm"
-                className="border-secondary-subtle"
-                value={activeTech}
-                onChange={(e) => onSelectTech(e.target.value)}
-                options={[
-                  { value: "", label: allTechLabel },
-                  ...availableTechs.map((tech) => ({
-                    value: tech.toLowerCase(),
-                    label: tech,
-                  })),
-                ]}
-              />
-            </div>
-          </div>
-
-          {/* Tag Select Box (if tags available) */}
-          {availableTags.length > 0 && onSelectTag && (
-            <div className="col-12 col-sm-6 col-lg-3">
-              <div className="input-group input-group-sm">
-                <span className="input-group-text bg-body text-muted border-secondary-subtle">
-                  <i className="bi bi-tag" />
-                </span>
-                <InputSelect
-                  name="tagFilter"
-                  id="tag-filter"
-                  size="sm"
-                  className="border-secondary-subtle"
-                  value={activeTag}
-                  onChange={(e) => onSelectTag(e.target.value)}
-                  options={[
-                    { value: "", label: allTagsLabel },
-                    ...availableTags.map((tag) => ({
-                      value: tag.toLowerCase(),
-                      label: tag,
-                    })),
-                  ]}
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Desktop Reset Button */}
-          <div className="col-12 col-sm-6 col-lg d-none d-lg-flex justify-content-lg-end align-items-center gap-2">
-            {isFiltered && (
-              <Button
-                color="outline-danger"
-                size="sm"
-                rounded
-                className="d-inline-flex align-items-center gap-1 px-3 py-1"
-                onClick={onReset}
-                title="Reset all filters"
-              >
-                <i className="bi bi-x-circle" />
-                <span>{resetLabel}</span>
-              </Button>
-            )}
-          </div>
+      {/* Filter Form Controls */}
+      <div className="d-flex flex-column gap-3">
+        {/* Category Select */}
+        <div>
+          <label
+            htmlFor="dropdown-category-filter"
+            className="form-label small fw-semibold text-muted mb-1 d-flex align-items-center gap-1"
+          >
+            <i className="bi bi-grid text-primary small" />
+            <span>Category</span>
+          </label>
+          <InputSelect
+            name="categoryFilter"
+            id="dropdown-category-filter"
+            size="sm"
+            className="border-secondary-subtle text-capitalize rounded-3"
+            value={activeCategory}
+            onChange={(e) => onSelectCategory(e.target.value)}
+            options={[
+              { value: "all", label: filterAllLabel },
+              ...categories
+                .filter((c) => c.key !== "all")
+                .map((cat) => ({
+                  value: cat.key.toLowerCase(),
+                  label: `${cat.label} ${cat.count !== undefined ? `(${cat.count})` : ""}`.trim(),
+                })),
+            ]}
+          />
         </div>
 
-        {/* Filter status summary when active */}
-        {isFiltered && (
-          <div className="d-flex flex-wrap align-items-center justify-content-between mt-2 pt-2 border-top border-secondary-subtle small text-muted gap-2">
-            <span>
-              Found <strong>{totalFiltered}</strong> of {totalAll} items
-              {activeCategory && activeCategory !== "all" && (
-                <>
-                  {" "}in category &ldquo;
-                  <span className="text-capitalize fw-semibold">
-                    {categories.find(
-                      (c) =>
-                        c.key.toLowerCase() === activeCategory.toLowerCase(),
-                    )?.label || activeCategory}
-                  </span>
-                  &rdquo;
-                </>
-              )}
-              {activeTech && (
-                <>
-                  {" "}with tech &ldquo;
-                  <span className="text-capitalize fw-semibold">{activeTech}</span>
-                  &rdquo;
-                </>
-              )}
-              {activeTag && (
-                <>
-                  {" "}tagged &ldquo;
-                  <span className="text-capitalize fw-semibold">{activeTag}</span>
-                  &rdquo;
-                </>
-              )}
-            </span>
-            <Button
-              color="link"
-              size="sm"
-              className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill text-decoration-none cursor-pointer"
-              onClick={onReset}
+        {/* Technology Select */}
+        <div>
+          <label
+            htmlFor="dropdown-tech-filter"
+            className="form-label small fw-semibold text-muted mb-1 d-flex align-items-center gap-1"
+          >
+            <i className="bi bi-code-slash text-primary small" />
+            <span>Technology</span>
+          </label>
+          <InputSelect
+            name="techFilter"
+            id="dropdown-tech-filter"
+            size="sm"
+            className="border-secondary-subtle rounded-3"
+            value={activeTech}
+            onChange={(e) => onSelectTech(e.target.value)}
+            options={[
+              { value: "", label: allTechLabel },
+              ...availableTechs.map((tech) => ({
+                value: tech.toLowerCase(),
+                label: tech,
+              })),
+            ]}
+          />
+        </div>
+
+        {/* Tag Select (if tags available) */}
+        {availableTags.length > 0 && onSelectTag && (
+          <div>
+            <label
+              htmlFor="dropdown-tag-filter"
+              className="form-label small fw-semibold text-muted mb-1 d-flex align-items-center gap-1"
             >
-              Clear filters
-            </Button>
+              <i className="bi bi-tag text-primary small" />
+              <span>Tag</span>
+            </label>
+            <InputSelect
+              name="tagFilter"
+              id="dropdown-tag-filter"
+              size="sm"
+              className="border-secondary-subtle rounded-3"
+              value={activeTag}
+              onChange={(e) => onSelectTag(e.target.value)}
+              options={[
+                { value: "", label: allTagsLabel },
+                ...availableTags.map((tag) => ({
+                  value: tag.toLowerCase(),
+                  label: tag,
+                })),
+              ]}
+            />
           </div>
         )}
       </div>
-    </search>
+
+      {/* Dropdown Footer */}
+      <div className="d-flex align-items-center justify-content-between mt-3 pt-2 border-top border-secondary-subtle small text-muted">
+        <span>
+          Found <strong>{totalFiltered}</strong> of {totalAll}
+        </span>
+        {isFiltered && (
+          <Button
+            color="link"
+            size="sm"
+            className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill text-decoration-none cursor-pointer py-1 px-2"
+            onClick={onReset}
+          >
+            Clear filters
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <div className={`project-filter-dropdown-container ${className}`}>
+      <Dropdown
+        direction="down"
+        autoClose="outside"
+        showCaret={false}
+        buttonColor={isFiltered ? "primary" : "outline-secondary"}
+        size="sm"
+        buttonClass="d-inline-flex align-items-center gap-2 px-3 py-1-5 rounded-pill shadow-sm"
+        menuClass="dropdown-menu-end p-3 shadow-lg border rounded-4"
+        menuStyle={{ width: "320px", maxWidth: "90vw" }}
+        content={dropdownContent}
+      >
+        <i className="bi bi-funnel-fill" />
+        <span className="fw-semibold">Filter</span>
+        {activeCount > 0 && (
+          <Badge
+            pill
+            className={
+              isFiltered ? "bg-white text-primary" : "bg-primary text-white"
+            }
+          >
+            {activeCount}
+          </Badge>
+        )}
+        <i className="bi bi-chevron-down small opacity-75" />
+      </Dropdown>
+    </div>
   );
 }
+
+export interface ProjectActiveFilterChipsProps {
+  categories: FilterCategoryOption[];
+  activeCategory: string;
+  onClearCategory: () => void;
+  activeTech: string;
+  onClearTech: () => void;
+  activeTag?: string;
+  onClearTag?: () => void;
+  onReset: () => void;
+  totalFiltered: number;
+  totalAll: number;
+  className?: string;
+}
+
+export function ProjectActiveFilterChips({
+  categories,
+  activeCategory,
+  onClearCategory,
+  activeTech,
+  onClearTech,
+  activeTag = "",
+  onClearTag,
+  onReset,
+  totalFiltered,
+  totalAll,
+  className = "",
+}: ProjectActiveFilterChipsProps) {
+  const isCategoryFiltered = Boolean(activeCategory && activeCategory !== "all");
+  const isTechFiltered = Boolean(activeTech);
+  const isTagFiltered = Boolean(activeTag);
+  const isFiltered = isCategoryFiltered || isTechFiltered || isTagFiltered;
+
+  if (!isFiltered) return null;
+
+  const categoryLabel =
+    categories.find((c) => c.key.toLowerCase() === activeCategory.toLowerCase())
+      ?.label || activeCategory;
+
+  return (
+    <div
+      className={`project-active-filter-chips d-flex flex-wrap align-items-center gap-2 p-2 px-3 rounded-4 bg-body-tertiary border small text-muted ${className}`}
+    >
+      <span className="fw-medium me-1">
+        Found <strong>{totalFiltered}</strong> of {totalAll}:
+      </span>
+
+      {isCategoryFiltered && (
+        <span className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill d-inline-flex align-items-center gap-1 py-1 px-2">
+          <span>
+            Category:{" "}
+            <strong className="text-capitalize">{categoryLabel}</strong>
+          </span>
+          <button
+            type="button"
+            className="btn-close btn-close-sm"
+            style={{ fontSize: "0.55rem" }}
+            aria-label="Remove category filter"
+            onClick={onClearCategory}
+          />
+        </span>
+      )}
+
+      {isTechFiltered && (
+        <span className="badge bg-info-subtle text-info-emphasis border border-info-subtle rounded-pill d-inline-flex align-items-center gap-1 py-1 px-2">
+          <span>
+            Tech: <strong className="text-capitalize">{activeTech}</strong>
+          </span>
+          <button
+            type="button"
+            className="btn-close btn-close-sm"
+            style={{ fontSize: "0.55rem" }}
+            aria-label="Remove technology filter"
+            onClick={onClearTech}
+          />
+        </span>
+      )}
+
+      {isTagFiltered && onClearTag && (
+        <span className="badge bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle rounded-pill d-inline-flex align-items-center gap-1 py-1 px-2">
+          <span>
+            Tag: <strong className="text-capitalize">{activeTag}</strong>
+          </span>
+          <button
+            type="button"
+            className="btn-close btn-close-sm"
+            style={{ fontSize: "0.55rem" }}
+            aria-label="Remove tag filter"
+            onClick={onClearTag}
+          />
+        </span>
+      )}
+
+      <Button
+        color="link"
+        size="sm"
+        className="text-danger text-decoration-none p-0 ms-auto small fw-semibold"
+        onClick={onReset}
+      >
+        Clear all
+      </Button>
+    </div>
+  );
+}
+
+export function ProjectFilterToolbar({
+  categories,
+  activeCategory,
+  onSelectCategory,
+  availableTechs,
+  activeTech,
+  onSelectTech,
+  availableTags = [],
+  activeTag = "",
+  onSelectTag,
+  onReset,
+  totalFiltered,
+  totalAll,
+  filterAllLabel = "All Categories",
+  allTechLabel = "All Technologies",
+  allTagsLabel = "All Tags",
+  resetLabel = "Reset",
+  className = "",
+}: ProjectFilterBarProps) {
+  const isCategoryFiltered = Boolean(activeCategory && activeCategory !== "all");
+  const isTechFiltered = Boolean(activeTech);
+  const isTagFiltered = Boolean(activeTag);
+  const isFiltered = isCategoryFiltered || isTechFiltered || isTagFiltered;
+
+  return (
+    <div
+      className={`project-filter-toolbar d-flex flex-wrap align-items-center justify-content-between gap-2 ${className}`}
+    >
+      {/* Left side: Active filter chips or subtle item counter */}
+      <div className="d-flex flex-wrap align-items-center gap-2">
+        {isFiltered ? (
+          <ProjectActiveFilterChips
+            categories={categories}
+            activeCategory={activeCategory}
+            onClearCategory={() => onSelectCategory("all")}
+            activeTech={activeTech}
+            onClearTech={() => onSelectTech("")}
+            activeTag={activeTag}
+            onClearTag={onSelectTag ? () => onSelectTag("") : undefined}
+            onReset={onReset}
+            totalFiltered={totalFiltered}
+            totalAll={totalAll}
+          />
+        ) : (
+          <span className="text-muted small d-inline-flex align-items-center gap-1">
+            <i className="bi bi-collection opacity-75" />
+            <span>
+              Showing <strong>{totalAll}</strong> {totalAll === 1 ? "item" : "items"}
+            </span>
+          </span>
+        )}
+      </div>
+
+      {/* Right side: Dropdown filter button */}
+      <div className="ms-auto">
+        <ProjectFilterBar
+          categories={categories}
+          activeCategory={activeCategory}
+          onSelectCategory={onSelectCategory}
+          availableTechs={availableTechs}
+          activeTech={activeTech}
+          onSelectTech={onSelectTech}
+          availableTags={availableTags}
+          activeTag={activeTag}
+          onSelectTag={onSelectTag}
+          onReset={onReset}
+          totalFiltered={totalFiltered}
+          totalAll={totalAll}
+          filterAllLabel={filterAllLabel}
+          allTechLabel={allTechLabel}
+          allTagsLabel={allTagsLabel}
+          resetLabel={resetLabel}
+        />
+      </div>
+    </div>
+  );
+}
+

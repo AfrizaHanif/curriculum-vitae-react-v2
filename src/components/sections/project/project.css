@@ -16,3 +16,27 @@
 .offcanvas {
   z-index: 1065;
 }
+
+/* Ensure the projects section renders above subsequent sections (like edu-exp) so dropdowns aren't overlapped */
+#projects,
+main#main-content > section#projects {
+  position: relative;
+  z-index: 10;
+}
+
+/* Ensure all dropdown menus in project section have high z-index and stay on top */
+#projects .dropdown-menu {
+  z-index: 1060 !important;
+}
+
+/* Elevate card and its column wrapper when a dropdown inside it is open so neighboring cards don't overlap on hover */
+.card:has(.dropdown-menu.show),
+.card:has([data-bs-toggle="dropdown"][aria-expanded="true"]),
+.col:has(.card:has(.dropdown-menu.show)),
+.col:has(.card:has([data-bs-toggle="dropdown"][aria-expanded="true"])),
+.col:has(.dropdown-menu.show),
+.col:has([data-bs-toggle="dropdown"][aria-expanded="true"]) {
+  z-index: 1050 !important;
+  position: relative;
+}
+

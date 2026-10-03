@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode, useEffect, useRef } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import type { Dropdown as BootstrapDropdown } from "bootstrap";
 import Button, { ButtonProps } from "./button";
 import Link from "next/link";
@@ -36,6 +36,7 @@ export type DropdownProps = DropdownDataSource & {
   buttonClass?: string;
   buttonColor?: ButtonProps["color"];
   menuClass?: string;
+  menuStyle?: React.CSSProperties;
   showCaret?: boolean;
   children: React.ReactNode;
   disabled?: boolean;
@@ -54,6 +55,8 @@ export type DropdownProps = DropdownDataSource & {
     | { width: number; height: number; x: number; y: number };
   /** Offset of the dropdown menu relative to its target */
   offset?: [number, number] | string | (() => [number, number]);
+  /** Callback fired when dropdown opens or closes */
+  onOpenChange?: (isOpen: boolean) => void;
 };
 
 const DEFAULT_OFFSET: [number, number] = [0, 2];
@@ -72,6 +75,7 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
       buttonClass,
       buttonColor = "secondary",
       menuClass,
+      menuStyle,
       showCaret = true,
       children,
       disabled = false,
@@ -80,12 +84,14 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
       boundary = "clippingParents",
       reference = "toggle",
       offset = DEFAULT_OFFSET,
+      onOpenChange,
       "aria-label": ariaLabel,
     },
     ref,
   ) {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const dropdownInstanceRef = useRef<BootstrapDropdown | null>(null);
+    const [isOpen, setIsOpen] = useState(false);
 
     // Merge forwarded ref and local containerRef
     const setRefs = React.useCallback(
@@ -110,6 +116,21 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
 
       let isMounted = true;
       let dropdownInstance: BootstrapDropdown | null = null;
+
+      const handleShow = () => {
+        if (!isMounted) return;
+        setIsOpen(true);
+        onOpenChange?.(true);
+      };
+
+      const handleHidden = () => {
+        if (!isMounted) return;
+        setIsOpen(false);
+        onOpenChange?.(false);
+      };
+
+      toggleEl.addEventListener("show.bs.dropdown", handleShow);
+      toggleEl.addEventListener("hidden.bs.dropdown", handleHidden);
 
       // Dynamically import Bootstrap to prevent SSR errors in Next.js
       import("bootstrap").then((bootstrap) => {
@@ -136,6 +157,9 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
 
       return () => {
         isMounted = false;
+        toggleEl.removeEventListener("show.bs.dropdown", handleShow);
+        toggleEl.removeEventListener("hidden.bs.dropdown", handleHidden);
+
         if (dropdownInstance) {
           try {
             dropdownInstance.dispose();
@@ -147,7 +171,37 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
           dropdownInstanceRef.current = null;
         }
       };
-    }, [autoClose, boundary, reference, offset]);
+    }, [autoClose, boundary, reference, offset, onOpenChange]);
+
+    // Resilient click-outside handler to ensure background clicks always close the dropdown
+    // even after React re-renders or Next.js route/query param updates
+    useEffect(() => {
+      if (!isOpen) return;
+
+      const handleDocumentClick = (e: MouseEvent) => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        if (!container.contains(e.target as Node)) {
+          if (autoClose === true || autoClose === "outside") {
+            const toggleEl = container.querySelector('[data-bs-toggle="dropdown"]');
+            if (toggleEl) {
+              import("bootstrap").then((bootstrap) => {
+                const instance = bootstrap.Dropdown.getInstance(toggleEl);
+                instance?.hide();
+              });
+            }
+            setIsOpen(false);
+            onOpenChange?.(false);
+          }
+        }
+      };
+
+      document.addEventListener("click", handleDocumentClick, true);
+      return () => {
+        document.removeEventListener("click", handleDocumentClick, true);
+      };
+    }, [isOpen, autoClose, onOpenChange]);
 
     return (
       <div
@@ -166,16 +220,19 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
         <Button
           color={buttonColor}
           size={size}
-          className={`${showCaret ? "dropdown-toggle" : ""} ${buttonClass || ""}`}
+          className={`${showCaret ? "dropdown-toggle" : ""} ${isOpen ? "show" : ""} ${buttonClass || ""}`}
           dataBsToggle="dropdown"
-          aria-expanded="false"
+          aria-expanded={isOpen ? "true" : "false"}
           aria-label={ariaLabel}
           style={buttonStyle}
           disabled={disabled}
         >
           {children}
         </Button>
-        <ul className={`dropdown-menu ${menuClass || ""}`}>
+        <ul
+          className={`dropdown-menu ${isOpen ? "show" : ""} ${menuClass || ""}`}
+          style={menuStyle}
+        >
           {content
             ? content
             : items.map((item: DropdownItem, index: number) => {

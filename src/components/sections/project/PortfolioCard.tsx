@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState } from "react";
 import { Portfolio, Repository } from "@/types/portfolio";
 import Card from "@/components/ui/bootstrap/card";
 import Badge from "@/components/ui/bootstrap/badge";
@@ -22,6 +23,7 @@ export default function PortfolioCard({
   onOpenDetails,
 }: PortfolioCardProps) {
   const { t, lang } = useLanguage();
+  const [isRepoOpen, setIsRepoOpen] = useState(false);
 
   // Repository dropdown items
   const validRepositories = repositories.filter(
@@ -56,7 +58,10 @@ export default function PortfolioCard({
         objectFit: "cover",
         objectPosition: "top",
       }}
-      className="shadow-sm rounded-4 border transition-all h-100"
+      className={`shadow-sm rounded-4 border transition-all h-100 ${isRepoOpen ? "position-relative" : ""}`}
+      style={{
+        zIndex: isRepoOpen ? 1050 : undefined,
+      }}
       fullHeight
       onClick={() => onOpenDetails(portfolio)}
       header={
@@ -106,8 +111,10 @@ export default function PortfolioCard({
                   direction="up"
                   buttonColor="outline-secondary"
                   buttonClass="px-2 py-1 rounded-pill d-inline-flex align-items-center gap-1"
+                  menuClass="dropdown-menu-end shadow-lg border rounded-3"
                   showCaret={repoDropdownItems.length > 1}
                   items={repoDropdownItems}
+                  onOpenChange={setIsRepoOpen}
                 >
                   <i className="bi bi-box-arrow-up-right" />
                   <span className="small d-none d-sm-inline">

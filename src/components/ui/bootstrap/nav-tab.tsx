@@ -18,6 +18,9 @@ export interface NavTabProps {
   className?: string;
   navClassName?: string;
   contentClassName?: string;
+  headerClassName?: string;
+  headerActions?: React.ReactNode;
+  headerBottomSlot?: React.ReactNode;
   defaultActiveIndex?: number;
   activeIndex?: number;
   onTabChange?: (index: number) => void;
@@ -32,6 +35,9 @@ export default function NavTab({
   className = "",
   navClassName = "",
   contentClassName = "",
+  headerClassName = "",
+  headerActions,
+  headerBottomSlot,
   defaultActiveIndex = 0,
   activeIndex: controlledActiveIndex,
   onTabChange,
@@ -71,36 +77,52 @@ export default function NavTab({
     .filter(Boolean)
     .join(" ");
 
+  const navList = (
+    <ul className={navClasses} id={tabId} role="tablist">
+      {items.map((item, index) => {
+        const itemTabId = item.id || `${tabId}-tab-${index}`;
+        const itemPaneId = `${itemTabId}-pane`;
+        const isActive = index === activeIndex;
+
+        return (
+          <li className="nav-item" role="presentation" key={index}>
+            <button
+              className={`nav-link ${isActive ? "active" : ""}`}
+              id={itemTabId}
+              data-bs-toggle="tab"
+              data-bs-target={`#${itemPaneId}`}
+              type="button"
+              role="tab"
+              aria-controls={itemPaneId}
+              aria-selected={isActive ? "true" : "false"}
+              disabled={item.disabled}
+              onClick={() => handleTabClick(index)}
+            >
+              {item.title}
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
+
   return (
     <div className={className}>
-      <ul className={navClasses} id={tabId} role="tablist">
-        {items.map((item, index) => {
-          const itemTabId = item.id || `${tabId}-tab-${index}`;
-          const itemPaneId = `${itemTabId}-pane`;
-          const isActive = index === activeIndex;
-
-          return (
-            <li className="nav-item" role="presentation" key={index}>
-              <button
-                className={`nav-link ${isActive ? "active" : ""}`}
-                id={itemTabId}
-                data-bs-toggle="tab"
-                data-bs-target={`#${itemPaneId}`}
-                type="button"
-                role="tab"
-                aria-controls={itemPaneId}
-                aria-selected={isActive ? "true" : "false"}
-                disabled={item.disabled}
-                onClick={() => handleTabClick(index)}
-              >
-                {item.title}
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+      {headerActions ? (
+        <div
+          className={`d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 ${headerClassName}`}
+        >
+          {navList}
+          <div className="tab-header-actions ms-auto">{headerActions}</div>
+        </div>
+      ) : (
+        navList
+      )}
+      {headerBottomSlot && (
+        <div className="tab-header-bottom mt-2 mb-3">{headerBottomSlot}</div>
+      )}
       <div
-        className={`tab-content mt-3 ${contentClassName}`}
+        className={`tab-content ${headerActions || headerBottomSlot ? "" : "mt-3"} ${contentClassName}`}
         id={`${tabId}-content`}
       >
         {items.map((item, index) => {

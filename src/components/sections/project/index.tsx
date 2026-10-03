@@ -19,7 +19,7 @@ import dynamic from "next/dynamic";
 import PortfolioCard from "./PortfolioCard";
 import ProjectCard from "./ProjectCard";
 import ProjectGridSkeleton from "./ProjectCardSkeleton";
-import ProjectFilterBar from "./ProjectFilterBar";
+import { ProjectFilterToolbar } from "./ProjectFilterBar";
 import { matchCategory, matchTechnology, matchTag } from "./project-utils";
 const CaseStudyOffcanvas = dynamic(() => import("./CaseStudyOffcanvas"), {
   ssr: false,
@@ -491,7 +491,7 @@ function ProjectSectionContent() {
   ];
 
   return (
-    <Section id="projects" minFullHeight>
+    <Section id="projects" minFullHeight overflow="visible">
       {/* Section Header */}
       <SectionHeader
         title={t.sections.projects.title}
@@ -499,28 +499,6 @@ function ProjectSectionContent() {
       />
 
       <div className="mt-4">
-        {/* Project & Portfolio Category, Tech, and Tags Filter Bar */}
-        <ProjectFilterBar
-          categories={categoryOptions}
-          activeCategory={currentCategory}
-          onSelectCategory={(cat) => setFilterParam("category", cat)}
-          availableTechs={availableTechs}
-          activeTech={currentTech}
-          onSelectTech={(tech) => setFilterParam("tech", tech)}
-          availableTags={availableTags}
-          activeTag={currentTag}
-          onSelectTag={(tag) => setFilterParam("tag", tag)}
-          onReset={resetFilters}
-          totalFiltered={filteredPortfolios.length + filteredProjects.length}
-          totalAll={portfolios.length + projects.length}
-          filterAllLabel={
-            t.sections.skills.filterAll
-              ? `${t.sections.skills.filterAll} Categories`
-              : "All Categories"
-          }
-          className="mb-4"
-        />
-
         <NavTab
           id="projects-tabs"
           items={tabItems}
@@ -528,6 +506,27 @@ function ProjectSectionContent() {
           className="timeline-pills-container"
           navClassName="justify-content-center gap-1"
           defaultActiveIndex={0}
+          headerBottomSlot={
+            <ProjectFilterToolbar
+              categories={categoryOptions}
+              activeCategory={currentCategory}
+              onSelectCategory={(cat) => setFilterParam("category", cat)}
+              availableTechs={availableTechs}
+              activeTech={currentTech}
+              onSelectTech={(tech) => setFilterParam("tech", tech)}
+              availableTags={availableTags}
+              activeTag={currentTag}
+              onSelectTag={(tag) => setFilterParam("tag", tag)}
+              onReset={resetFilters}
+              totalFiltered={filteredPortfolios.length + filteredProjects.length}
+              totalAll={portfolios.length + projects.length}
+              filterAllLabel={
+                t.sections.skills.filterAll
+                  ? `${t.sections.skills.filterAll} Categories`
+                  : "All Categories"
+              }
+            />
+          }
         />
       </div>
 
