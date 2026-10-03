@@ -15,6 +15,7 @@ export interface CarouselProps {
     title?: string;
     description?: string;
     objectPosition?: string;
+    objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
     fallbackSrc?: string | StaticImageData;
   }>;
   withIndicators?: boolean;
@@ -32,6 +33,7 @@ export interface CarouselProps {
   width?: number;
   height?: number;
   objectPosition?: string;
+  objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
   hoverControlsOnly?: boolean;
   fallbackSrc?: string | StaticImageData;
   /**
@@ -51,6 +53,18 @@ export interface CarouselProps {
    * If true, enables clicking slide images to open enlarged preview modal.
    */
   enableZoom?: boolean;
+  /**
+   * Callback invoked when a slide or its image is clicked.
+   */
+  onSlideClick?: (index: number) => void;
+  /**
+   * Initial active slide index (defaults to 0).
+   */
+  initialIndex?: number;
+  /**
+   * Callback invoked when the active slide changes.
+   */
+  onSlideChange?: (index: number) => void;
   placeholder?: "blur" | "empty";
   blurDataURL?: string;
 }
@@ -73,12 +87,16 @@ export default function Carousel({
   width = 1200,
   height = 500,
   objectPosition = "center",
+  objectFit = "cover",
   hoverControlsOnly = false,
   fallbackSrc,
   priority = false,
   showSpinner = false,
   showSkeleton = false,
   enableZoom = false,
+  onSlideClick,
+  initialIndex = 0,
+  onSlideChange,
   placeholder = "empty",
   blurDataURL,
 }: CarouselProps) {
@@ -96,7 +114,8 @@ export default function Carousel({
   const isPointerDownRef = useRef<boolean>(false);
 
   useEffect(() => {
-    if (!carouselRef.current) return;
+    const carouselEl = carouselRef.current;
+    if (!carouselEl) return;
     let isMounted = true;
 
     import("bootstrap").then((bootstrap) => {
@@ -111,8 +130,17 @@ export default function Carousel({
       carouselInstanceRef.current = instance;
     });
 
+    const handleSlid = (e: Event) => {
+      const customEvt = e as unknown as { to?: number };
+      if (typeof customEvt.to === "number") {
+        onSlideChange?.(customEvt.to);
+      }
+    };
+    carouselEl.addEventListener("slid.bs.carousel", handleSlid);
+
     return () => {
       isMounted = false;
+      carouselEl.removeEventListener("slid.bs.carousel", handleSlid);
       const instance = carouselInstanceRef.current;
       carouselInstanceRef.current = null;
       if (instance) {
@@ -124,7 +152,7 @@ export default function Carousel({
         }
       }
     };
-  }, [touch, isCycling, interval]);
+  }, [touch, isCycling, interval, onSlideChange]);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!e.isPrimary) return;
@@ -162,11 +190,13 @@ export default function Carousel({
     }
   };
 
+  const isZoomable = Boolean(enableZoom || onSlideClick);
+
   return (
     <div
       ref={carouselRef}
       id={id}
-      className={`carousel slide ${className} ${crossFade ? "carousel-fade" : ""} ${hoverControlsOnly ? "hover-controls-only" : ""}`}
+      className={`carousel slide ${className} ${crossFade ? "carousel-fade" : ""} ${hoverControlsOnly ? "hover-controls-only" : ""} ${isZoomable ? "carousel-zoomable" : ""}`}
       data-bs-ride={autoPlayValue}
       data-bs-interval={isCycling ? interval : "false"}
       data-bs-touch={touch ? "true" : "false"}
@@ -179,8 +209,8 @@ export default function Carousel({
               type="button"
               data-bs-target={`#${id}`}
               data-bs-slide-to={index}
-              className={index === 0 ? "active" : ""}
-              aria-current={index === 0 ? "true" : undefined}
+              className={index === initialIndex ? "active" : ""}
+              aria-current={index === initialIndex ? "true" : undefined}
               aria-label={`Slide ${index + 1}`}
               key={index}
             ></button>
@@ -195,25 +225,33 @@ export default function Carousel({
       >
         {items.map((item, index) => (
           <div
-            className={`carousel-item ${index === 0 ? "active" : ""}`}
+            className={`carousel-item ${index === initialIndex ? "active" : ""}`}
             key={index}
           >
-            <div className="carousel-image-container position-relative bg-body-secondary bg-opacity-25">
+            <div
+              className="carousel-image-container position-relative bg-body-secondary bg-opacity-25 d-block w-100"
+              style={{
+                cursor: isZoomable ? "zoom-in" : undefined,
+              }}
+              onClick={() => onSlideClick?.(index)}
+            >
               <NextImage
                 src={item.image}
                 className="d-block w-100"
                 alt={item.alt}
                 width={width}
                 height={height}
+                responsive
                 style={{
                   width: "100%",
                   height: "auto",
                   aspectRatio: `${width} / ${height}`,
-                  objectFit: "cover",
+                  objectFit: item.objectFit || objectFit,
                   objectPosition: item.objectPosition || objectPosition,
+                  cursor: isZoomable ? "zoom-in" : undefined,
                 }}
-                priority={priority && index === 0}
-                loading={index === 0 ? "eager" : "lazy"}
+                priority={priority && index === initialIndex}
+                loading={index === initialIndex ? "eager" : "lazy"}
                 draggable={false}
                 fallbackSrc={item.fallbackSrc || fallbackSrc}
                 showSpinner={showSpinner}
@@ -225,15 +263,17 @@ export default function Carousel({
                     ? getShimmerDataUrl(width || 1200, height || 675)
                     : undefined)
                 }
-                wrapperClassName="w-100 h-100"
-                enableZoom={enableZoom}
+                wrapperClassName="w-100 d-block"
+                enableZoom={enableZoom && !onSlideClick}
                 modalTitle={item.title || item.alt}
               />
             </div>
-            <div className="carousel-caption d-none d-md-block">
-              {item.title && <h5>{item.title}</h5>}
-              {item.description && <p>{item.description}</p>}
-            </div>
+            {(item.title || item.description) && (
+              <div className="carousel-caption d-none d-md-block">
+                {item.title && <h5>{item.title}</h5>}
+                {item.description && <p>{item.description}</p>}
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -293,8 +333,8 @@ export default function Carousel({
                     type="button"
                     data-bs-target={`#${id}`}
                     data-bs-slide-to={index}
-                    className={index === 0 ? "active" : ""}
-                    aria-current={index === 0 ? "true" : undefined}
+                    className={index === initialIndex ? "active" : ""}
+                    aria-current={index === initialIndex ? "true" : undefined}
                     aria-label={`Slide ${index + 1}`}
                     key={index}
                   ></button>

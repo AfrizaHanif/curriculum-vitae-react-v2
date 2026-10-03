@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import NextImage from "@/components/ui/react/image";
 import { getShimmerDataUrl } from "@/lib/shimmer";
 import { Portfolio, Feature, Repository } from "@/types/portfolio";
@@ -18,6 +18,7 @@ import { getProjectStatusColor } from "./project-utils";
 import { useLanguage } from "@/context/LanguageContext";
 import { getLocalizedText } from "@/utils/formatters";
 import { getYouTubeEmbedUrl } from "@/utils/youtube";
+import GalleryLightbox from "@/components/ui/customs/gallery-lightbox";
 
 interface ProjectDetailModalProps {
   show: boolean;
@@ -77,6 +78,16 @@ export default function ProjectDetailModal({
     }
     return images;
   }, [item]);
+
+  // Lightbox state for full-resolution screenshot preview
+  const [activeLightboxIndex, setActiveLightboxIndex] = useState<number | null>(
+    null,
+  );
+
+  const handleModalClose = () => {
+    setActiveLightboxIndex(null);
+    onClose();
+  };
 
   const validRepositories = useMemo(
     () =>
@@ -186,11 +197,12 @@ export default function ProjectDetailModal({
     t.sections.projects.modal.titleDefault;
 
   return (
-    <Modal
-      id="project-detail-modal"
-      show={show}
-      onClose={onClose}
-      title={resolvedTitle}
+    <>
+      <Modal
+        id="project-detail-modal"
+        show={show}
+        onClose={handleModalClose}
+        title={resolvedTitle}
       size="lg"
       fullscreen="sm-down"
       scrollable
@@ -244,12 +256,16 @@ export default function ProjectDetailModal({
             hoverControlsOnly
             showSpinner
             showSkeleton
-            enableZoom
+            onSlideClick={(idx) => setActiveLightboxIndex(idx)}
             placeholder="blur"
             blurDataURL={getShimmerDataUrl(1200, 675)}
           />
         ) : galleryImages.length === 1 ? (
-          <div className="position-relative rounded-3 overflow-hidden mb-4 shadow-sm border bg-body-secondary bg-opacity-25">
+          <div
+            className="position-relative rounded-3 overflow-hidden mb-4 shadow-sm border bg-body-secondary bg-opacity-25"
+            style={{ cursor: "zoom-in" }}
+            onClick={() => setActiveLightboxIndex(0)}
+          >
             <NextImage
               src={galleryImages[0]}
               alt={getLocalizedText(item.title, lang)}
@@ -262,13 +278,13 @@ export default function ProjectDetailModal({
                 aspectRatio: "16 / 9",
                 objectFit: "cover",
                 objectPosition: "top",
+                cursor: "zoom-in",
               }}
               loading="lazy"
               showSpinner
               showSkeleton
-              wrapperClassName="w-100"
-              enableZoom
-              modalTitle={`${item.title} - Screenshot Preview`}
+              responsive
+              wrapperClassName="w-100 d-block"
             />
           </div>
         ) : null}
@@ -384,9 +400,9 @@ export default function ProjectDetailModal({
                 <iframe
                   src={youtubeEmbedUrl}
                   title={`${getLocalizedText(item.title, lang)} Video Walkthrough`}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
-                  sandbox="allow-scripts allow-same-origin allow-presentation"
+                  referrerPolicy="strict-origin-when-cross-origin"
                 />
               </div>
             ) : (
@@ -516,5 +532,17 @@ export default function ProjectDetailModal({
         )}
       </div>
     </Modal>
+
+      {/* Dedicated Fullscreen Lightbox Overlay */}
+      <GalleryLightbox
+        key={item ? `${type}-${item.id}` : undefined}
+        show={show && activeLightboxIndex !== null}
+        images={galleryImages}
+        activeIndex={activeLightboxIndex ?? 0}
+        title={resolvedTitle}
+        onClose={() => setActiveLightboxIndex(null)}
+        onIndexChange={(idx) => setActiveLightboxIndex(idx)}
+      />
+    </>
   );
 }

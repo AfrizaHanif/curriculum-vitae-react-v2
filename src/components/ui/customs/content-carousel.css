@@ -52,19 +52,18 @@
 }
 
 /* Touch and pointer gesture optimization for content carousels */
-.carousel .carousel-inner {
+.content-carousel .carousel-inner {
   touch-action: pan-y pinch-zoom;
   user-select: none;
   -webkit-user-select: none;
   cursor: grab;
 }
 
-.carousel .carousel-inner:active {
+.content-carousel .carousel-inner:active {
   cursor: grabbing;
 }
 
-.carousel .carousel-inner img {
+.content-carousel .carousel-inner img {
   user-select: none;
   -webkit-user-drag: none;
-  pointer-events: none;
 }

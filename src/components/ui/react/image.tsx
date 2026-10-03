@@ -1,8 +1,8 @@
 "use client";
 
 import Image, { StaticImageData, type ImageProps } from "next/image";
-import { useState, useId } from "react";
-import Modal from "../bootstrap/modal";
+import { useState } from "react";
+import GalleryLightbox from "@/components/ui/customs/gallery-lightbox";
 import Spinner, { type SpinnerProps } from "../bootstrap/spinner";
 import placeholderImage from "@/assets/images/placeholders/placeholder-image.png";
 
@@ -10,8 +10,6 @@ export interface NextImageProps extends ImageProps {
   fallbackSrc?: string | StaticImageData;
   enableZoom?: boolean;
   modalTitle?: string;
-  modalSize?: "sm" | "md" | "lg" | "xl" | "fullscreen";
-  modalZIndex?: number;
   /** Automatically scales image to 100% width with auto height to preserve aspect ratio */
   responsive?: boolean;
   /** Controls image fitting (e.g. 'cover', 'contain') */
@@ -42,8 +40,6 @@ export default function NextImage({
   fallbackSrc = placeholderImage,
   enableZoom = false,
   modalTitle,
-  modalSize = "xl",
-  modalZIndex = 1090,
   responsive = false,
   objectFit,
   showSpinner = false,
@@ -64,22 +60,24 @@ export default function NextImage({
   const [prevSrc, setPrevSrc] = useState(src);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalLoading, setIsModalLoading] = useState(true);
-  const uniqueId = useId().replace(/:/g, "_");
 
   // Adjust state during render when `src` prop changes (React recommended pattern without useEffect)
   if (src !== prevSrc) {
     setPrevSrc(src);
     setHasError(false);
     setIsLoading(true);
-    setIsModalLoading(true);
   }
 
   const resolvedSrc = hasError && fallbackSrc ? fallbackSrc : src;
+  const previewImageUrl =
+    typeof resolvedSrc === "string"
+      ? resolvedSrc
+      : "default" in resolvedSrc
+        ? resolvedSrc.default.src
+        : resolvedSrc.src;
 
   const handleClick = (e: React.MouseEvent<HTMLImageElement>) => {
     if (enableZoom) {
-      setIsModalLoading(true);
       setIsModalOpen(true);
     }
     if (onClick) onClick(e);
@@ -190,74 +188,13 @@ export default function NextImage({
       {renderedContent}
 
       {enableZoom && (
-        <Modal
-          id={`modal-image-preview-${uniqueId}`}
+        <GalleryLightbox
           show={isModalOpen}
+          images={[previewImageUrl]}
+          activeIndex={0}
+          title={modalTitle || (typeof alt === "string" && alt ? alt : undefined)}
           onClose={() => setIsModalOpen(false)}
-          title={modalTitle || alt || "Image Preview"}
-          size={modalSize}
-          animation={false}
-          centered
-          scrollable
-          style={{ zIndex: modalZIndex }}
-          noFooter
-        >
-          <div
-            className="d-flex justify-content-center align-items-center w-100 position-relative rounded overflow-hidden"
-            style={{ minHeight: "300px" }}
-          >
-            {/* Modal Skeleton with Smooth Fade-Out */}
-            <div
-              className="position-absolute top-0 start-0 w-100 h-100 bg-body-secondary bg-opacity-25 placeholder-wave"
-              style={{
-                zIndex: 0,
-                opacity: isModalLoading ? 1 : 0,
-                transition: "opacity 0.4s ease-out",
-                pointerEvents: "none",
-              }}
-              aria-hidden="true"
-            />
-            {/* Modal Spinner with Smooth Fade-Out */}
-            <div
-              className="position-absolute top-50 start-50 z-1"
-              style={{
-                opacity: isModalLoading ? 1 : 0,
-                transform: `translate(-50%, -50%) ${isModalLoading ? "scale(1)" : "scale(0.85)"}`,
-                transition: "opacity 0.35s ease-out, transform 0.35s ease-out",
-                pointerEvents: "none",
-              }}
-              aria-hidden={!isModalLoading}
-            >
-              <Spinner
-                size="lg"
-                color="primary"
-                label={
-                  typeof alt === "string" && alt
-                    ? `Loading ${alt}...`
-                    : "Loading image preview..."
-                }
-              />
-            </div>
-            <Image
-              src={resolvedSrc}
-              alt={alt || "Enlarged Preview"}
-              width={1200}
-              height={800}
-              className={`${isModalLoading ? "image-fade-loading" : "image-fade-loaded"}`}
-              style={{
-                maxWidth: "100%",
-                height: "auto",
-                objectFit: "contain",
-                zIndex: 1,
-              }}
-              onLoad={() => setIsModalLoading(false)}
-              onError={() => {
-                setHasError(true);
-                setIsModalLoading(false);
-              }}
-            />
-          </div>
-        </Modal>
+        />
       )}
     </>
   );

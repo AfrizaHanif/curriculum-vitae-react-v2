@@ -154,7 +154,7 @@ export default function ContentCarousel({
     <div
       ref={carouselRef}
       id={carouselId}
-      className={`carousel slide ${className} ${crossFade ? "carousel-fade" : ""}`}
+      className={`carousel slide content-carousel ${className} ${crossFade ? "carousel-fade" : ""}`}
       data-bs-ride={autoPlayValue}
       data-bs-interval={isCycling ? interval : "false"}
       data-bs-touch={touch ? "true" : "false"}
