@@ -31,9 +31,17 @@ export interface ModalProps {
   /** Callback triggered when the modal is closed */
   onClose?: () => void;
   /** Modal header title */
-  title: string;
+  title?: React.ReactNode;
   /** Sizing class for the modal dialog */
   size?: "sm" | "md" | "lg" | "xl" | "fullscreen";
+  /** Responsive fullscreen modal option */
+  fullscreen?:
+    | boolean
+    | "sm-down"
+    | "md-down"
+    | "lg-down"
+    | "xl-down"
+    | "xxl-down";
   buttonItems?: ModalButtonItem[];
   /** Custom footer content that takes precedence over buttonItems */
   footer?: React.ReactNode;
@@ -72,6 +80,7 @@ export default function Modal({
   onClose,
   title,
   size = "md",
+  fullscreen,
   buttonItems,
   footer,
   footerClassName = "",
@@ -192,6 +201,12 @@ export default function Modal({
     fullscreen: "modal-fullscreen",
   };
   const modalClass = sizeMap[size] || "";
+  const fullscreenClass =
+    typeof fullscreen === "string"
+      ? `modal-fullscreen-${fullscreen}`
+      : fullscreen
+        ? "modal-fullscreen"
+        : "";
 
   const modalElement = (
     <div
@@ -208,7 +223,7 @@ export default function Modal({
       aria-hidden={!show}
     >
       <div
-        className={`modal-dialog ${modalClass} ${
+        className={`modal-dialog ${modalClass} ${fullscreenClass} ${
           scrollable ? "modal-dialog-scrollable" : ""
         } ${centered ? "modal-dialog-centered" : ""}`}
       >

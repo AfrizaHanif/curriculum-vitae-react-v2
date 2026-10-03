@@ -19,7 +19,7 @@ import dynamic from "next/dynamic";
 import PortfolioCard from "./PortfolioCard";
 import ProjectCard from "./ProjectCard";
 import ProjectGridSkeleton from "./ProjectCardSkeleton";
-import { ProjectFilterToolbar } from "./ProjectFilterBar";
+import ProjectFilterToolbar from "./filter/ProjectFilterToolbar";
 import { matchCategory, matchTechnology, matchTag } from "./project-utils";
 const CaseStudyOffcanvas = dynamic(() => import("./CaseStudyOffcanvas"), {
   ssr: false,

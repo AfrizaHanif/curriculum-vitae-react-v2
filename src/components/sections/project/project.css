@@ -39,3 +39,44 @@ main#main-content > section#projects {
   z-index: 1050 !important;
   position: relative;
 }
+
+/* Project Detail Modal header optimization for mobile and compact view */
+#project-detail-modal .modal-header {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  min-width: 0;
+}
+
+#project-detail-modal .modal-title {
+  font-size: 1.05rem;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1;
+  margin-right: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  #project-detail-modal .modal-title {
+    font-size: 1.15rem;
+  }
+}
+
+/* Project filter dropdown responsiveness on smaller devices */
+.project-filter-dropdown-container .dropdown-menu {
+  box-sizing: border-box;
+}
+
+.project-filter-dropdown-content {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 400px) {
+  .project-filter-dropdown-container .dropdown-menu {
+    padding: 0.85rem !important;
+  }
+}

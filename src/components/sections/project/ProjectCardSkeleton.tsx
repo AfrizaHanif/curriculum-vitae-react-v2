@@ -9,7 +9,7 @@ export function ProjectCardSkeleton() {
       className="shadow-sm rounded-4 border h-100"
       fullHeight
       header={
-        <Placeholder.Glow className="d-flex justify-content-between align-items-center">
+        <Placeholder.Glow className="d-flex justify-content-between align-items-center flex-wrap gap-2">
           <Placeholder
             rounded="pill"
             style={{ width: "90px", height: "24px" }}

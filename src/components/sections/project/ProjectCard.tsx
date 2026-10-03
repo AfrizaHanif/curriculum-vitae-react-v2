@@ -50,11 +50,19 @@ export default function ProjectCard({
       fullHeight
       onClick={() => onOpenDetails(project)}
       header={
-        <div className="d-flex justify-content-between align-items-center">
+        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
           {/* Category badge */}
-          <Badge pill color="info" subtle className="px-2 py-1">
-            <i className="bi bi-briefcase me-1" />
-            {project.category || project.type || "Experience"}
+          <Badge
+            pill
+            color="info"
+            subtle
+            className="px-2 py-1 d-inline-flex align-items-center"
+            style={{ maxWidth: "60%" }}
+          >
+            <i className="bi bi-briefcase me-1 flex-shrink-0" />
+            <span className="text-truncate">
+              {project.category || project.type || "Experience"}
+            </span>
           </Badge>
 
           {/* Status badge */}
@@ -62,7 +70,7 @@ export default function ProjectCard({
             pill
             color={getProjectStatusColor(normalizedStatusKey || rawStatus)}
             subtle
-            className="px-2 py-1"
+            className="px-2 py-1 flex-shrink-0"
           >
             {statusLabel}
           </Badge>

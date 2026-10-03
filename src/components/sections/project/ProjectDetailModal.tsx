@@ -181,16 +181,18 @@ export default function ProjectDetailModal({
   //
   if (!item) return null;
 
+  const resolvedTitle =
+    getLocalizedText(item.title, lang) ||
+    t.sections.projects.modal.titleDefault;
+
   return (
     <Modal
       id="project-detail-modal"
       show={show}
       onClose={onClose}
-      title={
-        getLocalizedText(item.title, lang) ||
-        t.sections.projects.modal.titleDefault
-      }
+      title={resolvedTitle}
       size="lg"
+      fullscreen="sm-down"
       scrollable
       centered
       footerClassName="d-flex justify-content-between align-items-center"
@@ -223,6 +225,11 @@ export default function ProjectDetailModal({
       ]}
     >
       <div className="p-1">
+        {/* Full Project Title in Content Flow */}
+        <h4 className="fw-bold mb-3 text-break d-block">
+          {resolvedTitle}
+        </h4>
+
         {/* Visual Media Showcase */}
         {galleryImages.length > 1 ? (
           <Carousel

@@ -65,17 +65,20 @@ export default function PortfolioCard({
       fullHeight
       onClick={() => onOpenDetails(portfolio)}
       header={
-        <div className="d-flex justify-content-between align-items-center">
+        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
           {/* Badge */}
           <Badge
             pill
-            className="bg-primary-subtle text-primary border border-primary-subtle px-2 py-1"
+            className="bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 d-inline-flex align-items-center"
+            style={{ maxWidth: "65%" }}
           >
-            <i className="bi bi-folder2 me-1" />
-            {portfolio.category || portfolio.type || "Portfolio"}
+            <i className="bi bi-folder2 me-1 flex-shrink-0" />
+            <span className="text-truncate">
+              {portfolio.category || portfolio.type || "Portfolio"}
+            </span>
           </Badge>
           {/* Date */}
-          <small className="text-muted">
+          <small className="text-muted text-nowrap flex-shrink-0">
             <i className="bi bi-calendar3 me-1" />
             <time dateTime={portfolio.start_period}>
               {formatMonthYear(portfolio.start_period)}
