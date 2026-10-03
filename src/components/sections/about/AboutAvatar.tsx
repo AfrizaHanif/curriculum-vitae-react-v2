@@ -28,7 +28,8 @@ export default function AboutAvatar({ photo, fullname }: AboutAvatarProps) {
             enableZoom
             modalTitle={fullname || "Profile Photo"}
             className="about-avatar-img"
-            wrapperClassName="w-100 h-100 rounded"
+            wrapperClassName="w-100 h-100 d-block"
+            wrapperStyle={{ borderRadius: "inherit" }}
             loading="eager"
           />
         </div>
@@ -36,3 +37,4 @@ export default function AboutAvatar({ photo, fullname }: AboutAvatarProps) {
     </div>
   );
 }
+

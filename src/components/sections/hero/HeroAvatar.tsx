@@ -14,7 +14,7 @@ export default function HeroAvatar({ photo, fullname }: HeroAvatarProps) {
     <div className="position-relative d-inline-block">
       {/* Outer Glow Ring */}
       <div
-        className="p-2 shadow-lg d-inline-block hero-avatar-frame"
+        className="p-2 shadow-lg d-inline-flex align-items-center justify-content-center hero-avatar-frame"
         style={{
           background:
             "linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1))",
@@ -39,7 +39,7 @@ export default function HeroAvatar({ photo, fullname }: HeroAvatarProps) {
           enableZoom
           modalTitle={fullname || "Profile Photo"}
           className="img-fluid hero-avatar-img"
-          wrapperClassName="overflow-hidden"
+          wrapperClassName="overflow-hidden d-flex"
           wrapperStyle={{ borderRadius: "inherit" }}
           style={{
             objectFit: "cover",

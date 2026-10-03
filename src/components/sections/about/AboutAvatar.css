@@ -7,6 +7,8 @@
 
 .about-avatar-frame {
   width: 100%;
+  display: block;
+  line-height: 0;
   border-radius: 1.25rem !important;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -49,11 +51,16 @@
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: 1rem !important;
+  display: flex;
+  isolation: isolate;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
 }
 
 .about-avatar-img {
   width: 100% !important;
   height: 100% !important;
+  display: block !important;
   object-fit: cover !important;
   object-position: center 20%;
   border-radius: 1rem !important;
@@ -63,3 +70,4 @@
 .about-avatar-frame:hover .about-avatar-img {
   transform: scale(1.03);
 }
+

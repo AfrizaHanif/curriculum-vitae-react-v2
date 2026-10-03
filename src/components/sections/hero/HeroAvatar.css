@@ -1,19 +1,40 @@
-/* Mobile: Circular Avatar */
-.hero-avatar-frame,
+.hero-avatar-frame {
+  line-height: 0;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
 .hero-avatar-img {
+  display: block !important;
+}
+
+/* Mobile: Circular Avatar */
+.hero-avatar-frame {
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1;
+}
+
+.hero-avatar-frame > div {
   border-radius: 50% !important;
 }
 
 .hero-avatar-img {
   width: 190px !important;
   height: 190px !important;
+  border-radius: 50% !important;
 }
 
 /* Tablet & Desktop (>= 768px): Rounded Portrait Card */
 @media (min-width: 768px) {
-  .hero-avatar-frame,
+  .hero-avatar-frame {
+    border-radius: 1.25rem !important;
+    aspect-ratio: auto;
+  }
+
+  .hero-avatar-frame > div,
   .hero-avatar-img {
-    border-radius: var(--bs-border-radius-lg, 0.5rem) !important;
+    border-radius: 1rem !important;
   }
 
   .hero-avatar-img {
@@ -22,3 +43,4 @@
     aspect-ratio: 4 / 5;
   }
 }
+
