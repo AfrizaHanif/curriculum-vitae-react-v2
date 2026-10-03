@@ -211,6 +211,9 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
                         {item.icon && <i className={`${item.icon} me-2`}></i>}
                         <span className="flex-grow-1">{item.label}</span>
                         {item.active && <i className="bi bi-check2 ms-2"></i>}
+                        {item.newTab && (
+                          <i className="bi bi-box-arrow-up-right small text-muted ms-2" />
+                        )}
                       </a>
                     ) : (
                       <Link

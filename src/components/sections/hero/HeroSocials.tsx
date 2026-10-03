@@ -3,6 +3,7 @@
 import type { Social } from "@/types/social";
 import Tooltip from "@/components/ui/bootstrap/tooltip";
 import Button from "@/components/ui/bootstrap/button";
+import { useLanguage } from "@/context/LanguageContext";
 import "./HeroSocials.css";
 
 interface HeroSocialsProps {
@@ -10,6 +11,8 @@ interface HeroSocialsProps {
 }
 
 export default function HeroSocials({ socials }: HeroSocialsProps) {
+  const { t } = useLanguage();
+
   if (socials.length === 0) return null;
 
   return (
@@ -20,7 +23,7 @@ export default function HeroSocials({ socials }: HeroSocialsProps) {
       <ul className="list-unstyled d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2 mb-0">
         {/* Social media label */}
         <li>
-          <small className="text-white-75 me-2">Hubungkan:</small>
+          <small className="text-white-75 me-2">{t.hero.connect}</small>
         </li>
         {/* Social media buttons */}
         {socials.map((social) => (

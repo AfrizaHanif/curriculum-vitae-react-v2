@@ -7,12 +7,14 @@ interface TooltipProps {
   children: React.ReactElement;
   title: string;
   placement?: "top" | "bottom" | "left" | "right";
+  customClass?: string;
 }
 
 export default function Tooltip({
   children,
   title,
   placement = "top",
+  customClass = "",
 }: TooltipProps) {
   const triggerRef = useRef<HTMLElement | null>(null);
   const tooltipInstanceRef = useRef<BootstrapTooltip | null>(null);
@@ -95,6 +97,7 @@ export default function Tooltip({
           title,
           placement,
           trigger: "hover focus",
+          customClass,
         });
         tooltipInstanceRef.current = tooltipInstance;
       } catch {
@@ -116,7 +119,7 @@ export default function Tooltip({
         tooltipInstanceRef.current = null;
       }
     };
-  }, [title, placement, isDisabled]);
+  }, [title, placement, isDisabled, customClass]);
 
   const wrappedChild = React.cloneElement(child, {
     style: {

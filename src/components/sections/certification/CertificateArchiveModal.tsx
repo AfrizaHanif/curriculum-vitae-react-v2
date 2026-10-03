@@ -279,6 +279,7 @@ export default function CertificateArchiveModal({
                       dataBsTitle={
                         t.sections.certification.archiveModal.viewPdf
                       }
+                      dataBsCustomClass="d-sm-none"
                     >
                       <i className="bi bi-file-earmark-pdf" />
                       <span className="d-none d-sm-inline">

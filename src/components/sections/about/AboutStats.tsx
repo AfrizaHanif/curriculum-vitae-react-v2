@@ -181,14 +181,14 @@ export default function AboutStats() {
 
   return (
     <div className="mt-4">
-      <CardGrid smCols={1} mdCols={3} lgCols={3} gap={4}>
+      <CardGrid smCols={1} mdCols={3} lgCols={3} gap={3} className="g-lg-4">
         {stats.map((stat, idx) => (
           <Card
             key={idx}
             // Navigates using scrollToSection so it stays consistent with NavigationContext
             // (Option B: updates hash to #section | Option A: hides hash if disabled in NavigationContext)
             onClick={() => scrollToSection(stat.targetSection)}
-            className="h-100 p-4 border-0 shadow-sm text-center position-relative transition-all"
+            className="h-100 p-3 p-lg-4 border-0 shadow-sm text-center position-relative transition-all"
             style={{
               cursor: "pointer",
               transition: "transform 0.2s ease, box-shadow 0.2s ease",

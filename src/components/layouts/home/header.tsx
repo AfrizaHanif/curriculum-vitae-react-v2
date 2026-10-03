@@ -16,7 +16,6 @@ import Image from "next/image";
 import Button from "../../ui/bootstrap/button";
 import logoWhite from "@/assets/images/logo/logo-only-white.png";
 import logoBlack from "@/assets/images/logo/logo-only-black.png";
-import { getLocalizedText } from "@/utils/formatters";
 
 // Header's Props
 interface HeaderProps {
@@ -24,7 +23,7 @@ interface HeaderProps {
 }
 
 export default function Header({ className = "" }: HeaderProps) {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
   const { activeSection, availableSections, sectionConfig, scrollToSection } =
     useNavigation();
 
@@ -244,19 +243,18 @@ export default function Header({ className = "" }: HeaderProps) {
           {/* Action Buttons in Offcanvas */}
           <div className="d-flex flex-column gap-2 mt-auto pt-3 border-top">
             {profile?.resume && (
-              <Button
-                as="a"
-                href={getLocalizedText(profile.resume, lang)}
-                target="_blank"
-                rel="noopener noreferrer"
-                color="outline-primary"
-                rounded
-                className="w-100 py-2 d-flex align-items-center justify-content-center gap-2"
-              >
-                <i className="bi bi-file-earmark-person-fill" />
-                <span>{t.header.viewCv}</span>
-                <i className="bi bi-box-arrow-up-right small" />
-              </Button>
+              <Link href="/resume" className="w-100 text-decoration-none">
+                <Button
+                  type="button"
+                  color="outline-primary"
+                  rounded
+                  className="w-100 py-2 d-flex align-items-center justify-content-center gap-2"
+                  onClick={() => setShowOffcanvas(false)}
+                >
+                  <i className="bi bi-file-earmark-person-fill" />
+                  <span>{t.header.viewCv}</span>
+                </Button>
+              </Link>
             )}
             <Button
               type="button"

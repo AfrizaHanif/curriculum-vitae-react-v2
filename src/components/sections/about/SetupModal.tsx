@@ -87,8 +87,8 @@ export default function SetupModal({
       ) : (
         <div className="row g-4">
           {/* Workspace Setup Image */}
-          <div className="col-12 col-md-6">
-            {setupImage && (
+          {setupImage && (
+            <div className="col-12 col-md-6">
               <div className="sticky-md-top mb-4 mb-md-0" style={{ top: 0 }}>
                 <div className="rounded-4 overflow-hidden shadow-sm border position-relative">
                   <NextImage
@@ -117,10 +117,10 @@ export default function SetupModal({
                   </div>
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
           {/* Setup Items */}
-          <div className="col-12 col-md-6">
+          <div className={`col-12 ${setupImage ? "col-md-6" : "col-12"}`}>
             <Accordion item={setupItems} />
           </div>
         </div>

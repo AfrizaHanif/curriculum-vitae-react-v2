@@ -123,7 +123,7 @@ export default function TimelineItem({
           </Badge>
 
           {/* GPA, Type, and Status Badges */}
-          <div className="d-flex align-items-center gap-2">
+          <div className="d-flex flex-wrap align-items-center gap-1 gap-sm-2">
             {item.gpa !== undefined && item.gpa !== null && (
               <Badge color="success" subtle className="px-2 py-1">
                 {t.sections.eduExp.timeline.gpa} {item.gpa.toFixed(2)}
@@ -138,15 +138,6 @@ export default function TimelineItem({
               </Badge>
             )}
             {statusLabel && (
-              // <Badge
-              //   color={getTimelineStatusColor(
-              //     normalizedStatusKey || item.status,
-              //   )}
-              //   subtle
-              //   className="px-2 py-1"
-              // >
-              //   {statusLabel}
-              // </Badge>
               <Badge
                 color={getTimelineStatusColor(
                   normalizedStatusKey || item.status,

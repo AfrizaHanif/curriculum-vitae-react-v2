@@ -33,6 +33,7 @@ export const id: TranslationSchema = {
   hero: {
     greeting: "Halo, Saya",
     role: "Frontend Developer",
+    connect: "Hubungkan:",
     cta: "Lihat Portofolio",
     scroll: "Gulir",
     scrollAria: "Gulir ke Bagian Tentang Saya",
@@ -139,6 +140,7 @@ export const id: TranslationSchema = {
       },
       modal: {
         titleDefault: "Detail Proyek",
+        actions: "Aksi",
         viewCaseStudy: "Lihat Case Study",
         repositories: "Repositori ({count})",
         privateRepo: "Repositori Privat",

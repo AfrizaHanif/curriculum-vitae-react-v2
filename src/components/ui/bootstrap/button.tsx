@@ -46,6 +46,7 @@ export interface ButtonProps extends React.AriaAttributes {
   dataBsContent?: string | React.ReactNode;
   dataBsTrigger?: "hover" | "focus" | "click";
   dataBsDismiss?: "modal" | "offcanvas";
+  dataBsCustomClass?: string;
   onClick?: (
     event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>,
   ) => void;
@@ -76,6 +77,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
       dataBsContent,
       dataBsTrigger,
       dataBsDismiss,
+      dataBsCustomClass,
       onClick,
       style,
       className = "",
@@ -95,80 +97,86 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
     const fullWidthClass = fullWidth ? "w-100" : "";
     const disabledClass = disabled ? "disabled" : "";
 
-    const combinedClasses = `btn ${colorClass} ${sizeClass} ${roundedClass} ${fullWidthClass} ${disabledClass} ${className}`
-      .trim()
-      .replace(/\s+/g, " ");
+    const combinedClasses =
+      `btn ${colorClass} ${sizeClass} ${roundedClass} ${fullWidthClass} ${disabledClass} ${className}`
+        .trim()
+        .replace(/\s+/g, " ");
 
-    const content = as === "a" || href ? (
-      <Link
-        ref={ref as React.Ref<HTMLAnchorElement>}
-        id={id}
-        tabIndex={tabIndex}
-        title={title}
-        href={href || "#"}
-        scroll={scroll}
-        target={target}
-        rel={rel}
-        className={combinedClasses}
-        style={disabled ? { ...style, pointerEvents: "none" } : style}
-        data-bs-toggle={dataBsToggle}
-        data-bs-target={dataBsTarget}
-        data-bs-title={dataBsTitle}
-        data-bs-trigger={dataBsTrigger}
-        data-bs-dismiss={dataBsDismiss}
-        {...ariaProps}
-        onClick={(e) => {
-          if (disabled) {
-            e.preventDefault();
-            return;
-          }
-          if (dataBsToggle === "modal" && dataBsSubject) {
-            window.dispatchEvent(
-              new CustomEvent("set-lead-modal-subject", {
-                detail: dataBsSubject,
-              }),
-            );
-          }
-          if (onClick) onClick(e);
-        }}
-      >
-        {children}
-      </Link>
-    ) : (
-      <button
-        ref={ref as React.Ref<HTMLButtonElement>}
-        id={id}
-        tabIndex={tabIndex}
-        title={title}
-        className={combinedClasses}
-        style={disabled ? { ...style, pointerEvents: "none" } : style}
-        type={type}
-        disabled={disabled}
-        data-bs-toggle={dataBsToggle}
-        data-bs-target={dataBsTarget}
-        data-bs-title={dataBsTitle}
-        data-bs-trigger={dataBsTrigger}
-        data-bs-dismiss={dataBsDismiss}
-        {...ariaProps}
-        onClick={(e) => {
-          if (dataBsToggle === "modal" && dataBsSubject) {
-            window.dispatchEvent(
-              new CustomEvent("set-lead-modal-subject", {
-                detail: dataBsSubject,
-              }),
-            );
-          }
-          if (onClick) onClick(e);
-        }}
-      >
-        {children}
-      </button>
-    );
+    const content =
+      as === "a" || href ? (
+        <Link
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          id={id}
+          tabIndex={tabIndex}
+          title={title}
+          href={href || "#"}
+          scroll={scroll}
+          target={target}
+          rel={rel}
+          className={combinedClasses}
+          style={disabled ? { ...style, pointerEvents: "none" } : style}
+          data-bs-toggle={dataBsToggle}
+          data-bs-target={dataBsTarget}
+          data-bs-title={dataBsTitle}
+          data-bs-trigger={dataBsTrigger}
+          data-bs-dismiss={dataBsDismiss}
+          {...ariaProps}
+          onClick={(e) => {
+            if (disabled) {
+              e.preventDefault();
+              return;
+            }
+            if (dataBsToggle === "modal" && dataBsSubject) {
+              window.dispatchEvent(
+                new CustomEvent("set-lead-modal-subject", {
+                  detail: dataBsSubject,
+                }),
+              );
+            }
+            if (onClick) onClick(e);
+          }}
+        >
+          {children}
+        </Link>
+      ) : (
+        <button
+          ref={ref as React.Ref<HTMLButtonElement>}
+          id={id}
+          tabIndex={tabIndex}
+          title={title}
+          className={combinedClasses}
+          style={disabled ? { ...style, pointerEvents: "none" } : style}
+          type={type}
+          disabled={disabled}
+          data-bs-toggle={dataBsToggle}
+          data-bs-target={dataBsTarget}
+          data-bs-title={dataBsTitle}
+          data-bs-trigger={dataBsTrigger}
+          data-bs-dismiss={dataBsDismiss}
+          {...ariaProps}
+          onClick={(e) => {
+            if (dataBsToggle === "modal" && dataBsSubject) {
+              window.dispatchEvent(
+                new CustomEvent("set-lead-modal-subject", {
+                  detail: dataBsSubject,
+                }),
+              );
+            }
+            if (onClick) onClick(e);
+          }}
+        >
+          {children}
+        </button>
+      );
 
     if (dataBsToggle === "tooltip") {
       if (disabled) {
         return (
-          <Tooltip title={dataBsTitle as string} placement={dataBsPlacement}>
+          <Tooltip
+            title={dataBsTitle as string}
+            placement={dataBsPlacement}
+            customClass={dataBsCustomClass}
+          >
             <span
               className="d-inline-block"
               style={{ cursor: "not-allowed", pointerEvents: "auto" }}
@@ -180,7 +188,11 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
       }
 
       return (
-        <Tooltip title={dataBsTitle as string} placement={dataBsPlacement}>
+        <Tooltip
+          title={dataBsTitle as string}
+          placement={dataBsPlacement}
+          customClass={dataBsCustomClass}
+        >
           {content}
         </Tooltip>
       );

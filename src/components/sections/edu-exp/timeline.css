@@ -192,6 +192,16 @@
   }
 }
 
+@media (max-width: 380px) {
+  .timeline-item {
+    padding-left: 2.35rem;
+  }
+
+  .timeline-card {
+    padding: 0.875rem 0.75rem;
+  }
+}
+
 /* Accessibility: respect user preference for reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .timeline-dot,

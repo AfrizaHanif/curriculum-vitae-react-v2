@@ -247,7 +247,7 @@ export default function ProfileDetailModal({
                   <div className="text-primary p-2 d-inline-flex">
                     <i className="bi bi-linkedin fs-5" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <small className="text-body-secondary d-block">
                       LinkedIn
                     </small>
@@ -255,10 +255,10 @@ export default function ProfileDetailModal({
                       href="https://linkedin.com/in/afrizahanif"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-body text-decoration-none fw-medium d-inline-flex align-items-center gap-1"
+                      className="text-body text-decoration-none fw-medium d-inline-flex align-items-center gap-1 text-break"
                     >
-                      <span>linkedin.com/in/afrizahanif</span>
-                      <i className="bi bi-box-arrow-up-right small text-muted" />
+                      <span className="text-break">linkedin.com/in/afrizahanif</span>
+                      <i className="bi bi-box-arrow-up-right small text-muted flex-shrink-0" />
                     </a>
                   </div>
                 </div>

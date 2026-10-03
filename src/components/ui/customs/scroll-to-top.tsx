@@ -57,6 +57,7 @@ export default function ScrollToTop() {
         dataBsToggle="tooltip"
         dataBsPlacement="left"
         dataBsTitle={tooltipText}
+        dataBsCustomClass="d-none d-md-block"
         aria-label={tooltipText}
       >
         <i className="bi bi-arrow-up fs-5" />

@@ -10,7 +10,7 @@ import Modal from "@/components/ui/bootstrap/modal";
 import Carousel from "@/components/ui/bootstrap/carousel";
 import Badge from "@/components/ui/bootstrap/badge";
 import Button from "@/components/ui/bootstrap/button";
-import Dropdown from "@/components/ui/bootstrap/dropdown";
+import Dropdown, { DropdownItem } from "@/components/ui/bootstrap/dropdown";
 import Alert from "@/components/ui/bootstrap/alert";
 import Progress from "@/components/ui/bootstrap/progress";
 import { formatMonthYear } from "@/utils/date";
@@ -86,6 +86,98 @@ export default function ProjectDetailModal({
     [repositories],
   );
 
+  const actionItems: DropdownItem[] = useMemo(() => {
+    const items: DropdownItem[] = [];
+
+    // Case Study
+    if (isPortfolio && caseStudy && item) {
+      items.push({
+        label: t.sections.projects.modal.viewCaseStudy,
+        icon: "bi bi-journal-richtext text-success",
+        onClick: () => {
+          onOpenCaseStudy(
+            caseStudy,
+            getLocalizedText(item.title, lang),
+          );
+        },
+      });
+    }
+
+    // Demo URL
+    if (item?.demo_url) {
+      items.push({
+        label: t.sections.projects.modal.viewDemo,
+        icon: "bi bi-play-circle-fill text-primary",
+        href: item.demo_url,
+        hrefType: "external",
+        newTab: true,
+      });
+    }
+
+    const hasCodeSection =
+      (isPortfolio && validRepositories.length > 0) ||
+      (!isPortfolio && (projectItem?.is_private || projectItem?.sourcecode));
+
+    if (items.length > 0 && hasCodeSection) {
+      items.push({ type: "divider" });
+    }
+
+    // Portfolio Repositories
+    if (isPortfolio && validRepositories.length > 0) {
+      validRepositories.forEach((repo) => {
+        const iconClass = repo.icon
+          ? repo.icon.startsWith("bi-") || repo.icon.startsWith("bi ")
+            ? repo.icon
+            : `bi bi-${repo.icon}`
+          : "bi bi-github";
+
+        items.push({
+          label: repo.name || repo.label || "Repository",
+          icon: iconClass,
+          href: repo.url || repo.href || "#",
+          hrefType: "external",
+          newTab: true,
+        });
+      });
+    }
+
+    // Project Source Code / Private
+    if (!isPortfolio) {
+      if (projectItem?.is_private) {
+        items.push({
+          render: () => (
+            <span
+              key="private-repo"
+              className="dropdown-item text-muted pe-none d-flex align-items-center"
+            >
+              <i className="bi bi-lock-fill me-2" />
+              <span>{t.sections.projects.modal.privateRepo}</span>
+            </span>
+          ),
+        });
+      } else if (projectItem?.sourcecode) {
+        items.push({
+          label: t.sections.projects.modal.viewSourceCode,
+          icon: "bi bi-github",
+          href: projectItem.sourcecode,
+          hrefType: "external",
+          newTab: true,
+        });
+      }
+    }
+
+    return items;
+  }, [
+    isPortfolio,
+    caseStudy,
+    item,
+    lang,
+    onOpenCaseStudy,
+    projectItem,
+    t.sections.projects.modal,
+    validRepositories,
+  ]);
+
   //
   if (!item) return null;
 
@@ -101,162 +193,23 @@ export default function ProjectDetailModal({
       size="lg"
       scrollable
       centered
+      footerClassName="d-flex justify-content-between align-items-center"
       buttonItems={[
-        //
-        ...(isPortfolio && caseStudy
-          ? [
-              {
-                label: (
-                  <span className="d-inline-flex align-items-center gap-2">
-                    <i className="bi bi-journal-richtext" />
-                    <span>{t.sections.projects.modal.viewCaseStudy}</span>
-                  </span>
-                ),
-                color: "success" as const,
-                size: "sm" as const,
-                // rounded: true,
-                className: "px-3",
-                onClick: () => {
-                  onOpenCaseStudy(
-                    caseStudy,
-                    getLocalizedText(item.title, lang),
-                  );
-                },
-              },
-            ]
-          : []),
-        //
-        ...(isPortfolio && validRepositories.length === 1
-          ? [
-              {
-                label: (
-                  <span className="d-inline-flex align-items-center gap-2">
-                    <i
-                      className={
-                        validRepositories[0].icon
-                          ? validRepositories[0].icon.startsWith("bi-") ||
-                            validRepositories[0].icon.startsWith("bi ")
-                            ? validRepositories[0].icon
-                            : `bi bi-${validRepositories[0].icon}`
-                          : "bi bi-link-45deg"
-                      }
-                    />
-                    <span>
-                      {validRepositories[0].name ||
-                        validRepositories[0].label ||
-                        "Repository"}
-                    </span>
-                    <i className="bi bi-box-arrow-up-right small" />
-                  </span>
-                ),
-                as: "a" as const,
-                href:
-                  validRepositories[0].url || validRepositories[0].href || "#",
-                target: "_blank",
-                rel: "noopener noreferrer",
-                color: "outline-secondary" as const,
-                size: "sm" as const,
-                // rounded: true,
-                className: "px-3",
-              },
-            ]
-          : []),
-        //
-        ...(isPortfolio && validRepositories.length > 1
+        ...(actionItems.length > 0
           ? [
               {
                 custom: (
                   <Dropdown
                     direction="up"
                     size="sm"
-                    buttonColor="outline-secondary"
+                    buttonColor="outline-primary"
                     buttonClass="px-3 d-inline-flex align-items-center gap-2"
-                    items={validRepositories.map((repo) => {
-                      const iconClass = repo.icon
-                        ? repo.icon.startsWith("bi-") ||
-                          repo.icon.startsWith("bi ")
-                          ? repo.icon
-                          : `bi bi-${repo.icon}`
-                        : "bi bi-link-45deg";
-
-                      return {
-                        label: repo.name || repo.label || "Repository",
-                        icon: iconClass,
-                        href: repo.url || repo.href || "#",
-                        hrefType: "external",
-                        newTab: true,
-                      };
-                    })}
+                    items={actionItems}
                   >
-                    <i className="bi bi-github" />
-                    <span>
-                      {t.sections.projects.modal.repositories.replace(
-                        "{count}",
-                        validRepositories.length.toString(),
-                      )}
-                    </span>
+                    <i className="bi bi-grid" />
+                    <span>{t.sections.projects.modal.actions}</span>
                   </Dropdown>
                 ),
-              },
-            ]
-          : []),
-        //
-        ...(projectItem?.is_private
-          ? [
-              {
-                label: (
-                  <span className="d-inline-flex align-items-center gap-1">
-                    <i className="bi bi-lock-fill me-1" />
-                    <span>{t.sections.projects.modal.privateRepo}</span>
-                  </span>
-                ),
-                color: "outline-secondary" as const,
-                size: "sm" as const,
-                // rounded: true,
-                disabled: true,
-                className: "px-3",
-              },
-            ]
-          : projectItem?.sourcecode
-            ? [
-                {
-                  label: (
-                    <span className="d-inline-flex align-items-center gap-2">
-                      <i className="bi bi-github" />
-                      <span>{t.sections.projects.modal.viewSourceCode}</span>
-                      <i className="bi bi-box-arrow-up-right small" />
-                    </span>
-                  ),
-                  as: "a" as const,
-                  href: projectItem.sourcecode,
-                  target: "_blank",
-                  rel: "noopener noreferrer",
-                  color: "outline-dark" as const,
-                  size: "sm" as const,
-                  // rounded: true,
-                  className: "px-3",
-                },
-              ]
-            : []),
-        //
-        ...(item?.demo_url
-          ? [
-              {
-                label: (
-                  <span className="d-inline-flex align-items-center gap-2">
-                    <i className="bi bi-play-circle-fill" />
-                    <span>{t.sections.projects.modal.viewDemo}</span>
-                    <i className="bi bi-box-arrow-up-right small" />
-                  </span>
-                ),
-                as: "a" as const,
-                href: item.demo_url,
-                target: "_blank",
-                rel: "noopener noreferrer",
-                color: "outline-dark" as const,
-                size: "sm" as const,
-                // rounded: true,
-                className: "px-3",
               },
             ]
           : []),
@@ -264,7 +217,6 @@ export default function ProjectDetailModal({
           label: t.common.close,
           color: "secondary" as const,
           size: "sm" as const,
-          // rounded: true,
           className: "px-4 ms-auto",
           dismiss: true,
         },
@@ -315,38 +267,40 @@ export default function ProjectDetailModal({
         ) : null}
 
         {/* Badges & Meta Info Row */}
-        <div className="d-flex flex-wrap align-items-center gap-2 mb-3">
-          {item.category && (
-            <Badge
-              pill
-              className="bg-primary-subtle text-primary border border-primary-subtle px-3 py-1"
-            >
-              <i className="bi bi-tag-fill me-1" />
-              {item.category}
-            </Badge>
-          )}
+        <div className="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center gap-2 mb-3">
+          <div className="d-flex flex-wrap align-items-center gap-2">
+            {item.category && (
+              <Badge
+                pill
+                className="bg-primary-subtle text-primary border border-primary-subtle px-3 py-1"
+              >
+                <i className="bi bi-tag-fill me-1" />
+                {item.category}
+              </Badge>
+            )}
 
-          {item.type && (
-            <Badge pill color="secondary" subtle className="px-3 py-1">
-              {item.type}
-            </Badge>
-          )}
+            {item.type && (
+              <Badge pill color="secondary" subtle className="px-3 py-1">
+                {item.type}
+              </Badge>
+            )}
 
-          {projectStatusLabel && (
-            <Badge
-              pill
-              color={getProjectStatusColor(normalizedStatusKey || rawStatus)}
-              subtle
-              className="px-3 py-1"
-            >
-              <i className="bi bi-circle-fill me-1 small" />
-              {projectStatusLabel}
-            </Badge>
-          )}
+            {projectStatusLabel && (
+              <Badge
+                pill
+                color={getProjectStatusColor(normalizedStatusKey || rawStatus)}
+                subtle
+                className="px-3 py-1"
+              >
+                <i className="bi bi-circle-fill me-1 small" />
+                {projectStatusLabel}
+              </Badge>
+            )}
+          </div>
 
           <Badge
             pill
-            className="bg-body-tertiary text-muted border px-3 py-1 ms-auto"
+            className="bg-body-tertiary text-muted border px-3 py-1 align-self-start align-self-sm-auto flex-shrink-0"
           >
             <i className="bi bi-calendar3 me-1" />
             <time dateTime={item.start_period}>

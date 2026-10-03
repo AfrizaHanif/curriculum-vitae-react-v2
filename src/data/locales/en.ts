@@ -31,6 +31,7 @@ export const en = {
   hero: {
     greeting: "Hi, I am",
     role: "Frontend Developer",
+    connect: "Connect:",
     cta: "Explore Projects",
     scroll: "Scroll",
     scrollAria: "Scroll to About Section",
@@ -135,6 +136,7 @@ export const en = {
       },
       modal: {
         titleDefault: "Project Details",
+        actions: "Actions",
         viewCaseStudy: "View Case Study",
         repositories: "Repositories ({count})",
         privateRepo: "Private Repository",
