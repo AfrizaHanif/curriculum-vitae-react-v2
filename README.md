@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <b>A modern, responsive, and performance-driven curriculum vitae and portfolio website.</b><br />
+  <b>A modern, responsive, and interactive curriculum vitae and portfolio website.</b><br />
   Built with Next.js App Router, TypeScript, and Bootstrap 5.
 </p>
 
@@ -27,11 +27,17 @@
 
 ---
 
+## 📖 Motivation & Overview
+
+I built this interactive portfolio not just as a showcase of my past work, but as a hands-on playground to explore Next.js App Router, TypeScript architecture, and performance optimization. It serves as a central hub for my career journey and technical experiments.
+
+---
+
 ## ✨ Key Features
 
-- ⚡ **Blazing Fast & SEO Ready:** Built with Next.js App Router, dynamic metadata, and OpenGraph optimization.
+- ⚡ **High Performance & SEO Friendly:** Built with Next.js App Router, dynamic metadata, and OpenGraph optimization.
 - 📱 **Mobile-First & Responsive:** Clean layout crafted with Bootstrap 5 and custom modular SCSS.
-- 🗺️ **Interactive Leaflet Map:** Dynamic map component displaying working areas / project locations.
+- 🗺️ **Interactive Leaflet Map:** Dynamic map component displaying education and workplace locations.
 - 📬 **Interactive Contact Form:** Built-in contact form integration with validation and spam protection.
 - ♿ **Accessible & Semantic:** Follows modern web accessibility standards and semantic HTML5 hierarchy.
 
@@ -108,7 +114,7 @@ Follow these steps to run the project locally on your machine.
    Open `.env.local` and adjust the variables as needed.
 
    > 💡 **Local Development Tip:**  
-   > Set `NEXT_PUBLIC_MOCK_SUBMISSION=true` to test contact form submissions locally without requiring personal Formspree credentials.
+   > Set `NEXT_PUBLIC_MOCK_SUBMISSION=true` to test contact form submissions locally without requiring an active Formspree endpoint.
 
 4. Start the development server:
 
@@ -131,7 +137,7 @@ In the project directory, you can run:
 | `npm run start`      | Runs the built app in production mode         |
 | `npm run lint`       | Checks code formatting and linter issues      |
 | `npm run type-check` | Validates TypeScript types across the project |
-| `npm run sync-data`  | Runs script to synchronize data               |
+| `npm run sync-data`  | Syncs remote API data to local JSON datasets  |
 
 ---
 
@@ -169,12 +175,14 @@ curriculum-vitae-v2/
 
 ## 💡 Development & Workflow
 
-Architected and developed by **Muhammad Afriza Hanif**, leveraging modern developer workflows and AI pair-programming tools (Google Gemini / Claude) for code review, accessibility audits, and productivity optimization.
+Designed and developed by **Muhammad Afriza Hanif**, leveraging modern developer workflows and AI pair-programming tools (Google Gemini / Claude) for code review, accessibility audits, and productivity optimization.
 
 ---
 
 ## 📄 License
 
-© 2026 Muhammad Afriza Hanif. All rights reserved.
+This repository operates under a dual-license model:
 
-The source code is publicly accessible for evaluation, code review, and recruitment purposes only. Reproduction, redistribution, or unauthorized use of personal assets, branding, and content is strictly prohibited.
+- **Source Code & Architecture:** Licensed under the [MIT License](LICENSE). You are free to use, study, and adapt the underlying code and components for your own projects.
+- **Personal Content, Branding & Fallback Data:** © 2026 Muhammad Afriza Hanif. All rights reserved.  
+  All personal information, photography, resume content, and mock/fallback datasets (`src/data/`, `public/`, etc.) belong exclusively to the author and may not be copied, redistributed, or used for impersonation or personal branding without explicit written permission.

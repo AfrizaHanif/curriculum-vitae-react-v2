@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <b>Website curriculum vitae dan portofolio interaktif yang modern, responsif, dan berorientasi pada performa tinggi.</b><br />
+  <b>Website portofolio dan <i>curriculum vitae</i> interaktif yang modern dan responsif.</b><br />
   Dibangun dengan Next.js App Router, TypeScript, dan Bootstrap 5.
 </p>
 
@@ -27,11 +27,17 @@
 
 ---
 
+## 📖 Latar Belakang & Motivasi
+
+Saya membangun portofolio ini bukan sekadar sebagai ringkasan profil, melainkan juga area bermain interaktif langsung terhadap Next.js App Router, arsitektur TypeScript, dan optimasi performa web. Repositori ini menjadi dokumentasi perjalanan karier sekaligus tempat saya bereksperimen dengan teknologi frontend modern.
+
+---
+
 ## ✨ Fitur Utama
 
-- ⚡ **Performa Cepat & Siap SEO:** Dibangun dengan Next.js App Router, metadata dinamis, dan optimasi OpenGraph.
+- ⚡ **Performa Tinggi & Ramah SEO:** Dibangun dengan Next.js App Router, metadata dinamis, dan optimasi OpenGraph.
 - 📱 **Mobile-First & Responsif:** Tata letak bersih yang dirancang dengan Bootstrap 5 serta kustom SCSS modular.
-- 🗺️ **Peta Interaktif Leaflet:** Komponen peta dinamis untuk menampilkan lokasi kerja / jangkauan proyek.
+- 🗺️ **Peta Interaktif Leaflet:** Komponen peta dinamis untuk menampilkan lokasi instansi pendidikan dan pengalaman kerja.
 - 📬 **Formulir Kontak Interaktif:** Integrasi form kontak bawaan lengkap dengan validasi dan perlindungan spam.
 - ♿ **Aksesibel & Semantik:** Mematuhi standar aksesibilitas web modern serta hierarki HTML5 yang semantik.
 
@@ -70,7 +76,7 @@
 
 > 🔗 **Audit & Verifikasi Langsung:**
 >
-> - Jalankan audit _real-time_ langsung di [Google PageSpeed Insights](https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fafrizahanif.com)
+> - Jalankan audit secara _real-time_ di [Google PageSpeed Insights](https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fafrizahanif.com)
 > - Status audit otomatis CI/CD: [![CI & Lighthouse Audit](https://github.com/AfrizaHanif/curriculum-vitae-react-v2/actions/workflows/deploy.yml/badge.svg)](https://github.com/AfrizaHanif/curriculum-vitae-react-v2/actions/workflows/deploy.yml)
 
 ---
@@ -124,14 +130,14 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek ini secara lokal di kompu
 
 Di dalam direktori proyek, Anda dapat menjalankan perintah berikut:
 
-| Perintah             | Deskripsi                                      |
-| :------------------- | :--------------------------------------------- |
-| `npm run dev`        | Menjalankan aplikasi dalam mode dev (Webpack)  |
-| `npm run build`      | Membangun bundel produksi aplikasi             |
-| `npm run start`      | Menjalankan bundel produksi yang telah dibuild |
-| `npm run lint`       | Memeriksa format kode dan potensi isu linter   |
-| `npm run type-check` | Memvalidasi tipe TypeScript di seluruh proyek  |
-| `npm run sync-data`  | Menjalankan skrip sinkronisasi data            |
+| Perintah             | Deskripsi                                                 |
+| :------------------- | :-------------------------------------------------------- |
+| `npm run dev`        | Menjalankan aplikasi dalam mode dev (Webpack)             |
+| `npm run build`      | Membangun bundel produksi aplikasi                        |
+| `npm run start`      | Menjalankan bundel produksi yang telah dibuild            |
+| `npm run lint`       | Memeriksa format kode dan potensi isu linter              |
+| `npm run type-check` | Memvalidasi tipe TypeScript di seluruh proyek             |
+| `npm run sync-data`  | Menyinkronkan data dari backend API ke dataset JSON lokal |
 
 ---
 
@@ -175,6 +181,8 @@ Dirancang dan dikembangkan secara mandiri oleh **Muhammad Afriza Hanif**, dengan
 
 ## 📄 Lisensi
 
-© 2026 Muhammad Afriza Hanif. Hak cipta dilindungi undang-undang (_All rights reserved_).
+Repositori ini menerapkan lisensi ganda (_dual-licensing_):
 
-Kode sumber ini disediakan secara publik hanya untuk keperluan evaluasi, peninjauan kode (_code review_), dan rekrutmen. Penyalinan, redistribusi, atau penggunaan tanpa izin atas konten, aset, desain, dan identitas pribadi dilarang.
+- **Kode Sumber & Arsitektur:** Dilisensikan di bawah [Lisensi MIT](LICENSE). Anda dipersilakan menggunakan, mempelajari, dan mengadaptasi kode serta komponen untuk proyek atau portofolio Anda sendiri.
+- **Konten Pribadi, Aset & Data Fallback:** © 2026 Muhammad Afriza Hanif. Seluruh hak cipta dilindungi undang-undang (_All rights reserved_).  
+  Seluruh informasi profil, foto, riwayat hidup (CV), serta dataset _mock/fallback_ (`src/data/`, `public/`, dsb.) merupakan milik eksklusif penulis dan tidak boleh disalin, disebarluaskan, atau digunakan untuk peniruan identitas (_impersonation_) maupun klaim pribadi tanpa izin tertulis.

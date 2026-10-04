@@ -9,6 +9,8 @@
       "br",
       "b",
       "strong",
+      "i",
+      "em",
       "div",
       "span"
     ]
