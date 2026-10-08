@@ -115,8 +115,7 @@ export default function RootLayout(
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <head>
-        {/* Scripts (Exclusively on Head) */}
+      <body>
         {/* Theme Detection (Vanilla Script) */}
         <script
           dangerouslySetInnerHTML={{
@@ -138,8 +137,6 @@ export default function RootLayout(
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-      </head>
-      <body>
         <ThemeProvider>
           <LanguageProvider>
             <BootstrapClient />
