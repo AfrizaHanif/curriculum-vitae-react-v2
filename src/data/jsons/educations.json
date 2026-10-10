@@ -12,13 +12,14 @@
     "status_label": "Graduated",
     "start_period": "2021-08-01",
     "finish_period": "2025-03-01",
-    "description": [
-      "Fokus pada pengembangan perangkat lunak dan analisis sistem, dengan proyek akhir membangun sistem pendukung keputusan untuk evaluasi kinerja karyawan."
-    ],
+    "description": {
+      "id": "Fokus pada pengembangan perangkat lunak dan analisis sistem, dengan proyek akhir membangun sistem pendukung keputusan untuk evaluasi kinerja karyawan.",
+      "en": "Focus on software development and system analysis, with the final project building a decision support system for employee performance evaluation."
+    },
     "latitude": "-7.311713",
     "longitude": "112.782191",
     "deleted_at": null,
-    "created_at": "2026-09-28T16:04:39.000000Z",
-    "updated_at": "2026-09-28T16:04:39.000000Z"
+    "created_at": "2026-10-02T06:21:34.000000Z",
+    "updated_at": "2026-10-02T06:21:34.000000Z"
   }
 ]
