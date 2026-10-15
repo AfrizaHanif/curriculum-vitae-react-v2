@@ -12,6 +12,10 @@ updates:
     commit-message:
       prefix: "chore"
       include: "scope"
+    ignore:
+      # TypeScript 7 belum didukung oleh typescript-eslint / eslint-config-next
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
     # Mengelompokkan semua pembaruan npm ke dalam 1 PR gabungan untuk mencegah spam PR
     groups:
       npm-dependencies:
