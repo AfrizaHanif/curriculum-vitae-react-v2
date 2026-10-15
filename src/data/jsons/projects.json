@@ -6,7 +6,7 @@
     "slug": "web-delta-sari-indah-dan-baru",
     "type": "Personal Project",
     "category": "Full-Stack Development",
-    "image": null,
+    "image": "https://api.afrizahanif.com/storage/images/projects/PRJ-001.jpg",
     "gallery": null,
     "video": null,
     "start_period": "2025-03-01",
@@ -14,13 +14,18 @@
     "status": "ongoing",
     "status_label": "Ongoing",
     "description": {
-      "en": "Web application project for managing residential information and digital administrative services for the Delta Sari housing complex.",
-      "id": "Proyek aplikasi web untuk manajemen informasi dan administrasi digital kawasan perumahan Delta Sari Indah dan Delta Sari Baru."
+      "id": "Proyek aplikasi web untuk manajemen informasi dan administrasi digital kawasan perumahan Delta Sari Indah dan Delta Sari Baru.",
+      "en": "Web application project for managing residential information and digital administrative services for the Delta Sari housing complex."
     },
     "delay_reason": null,
     "resume_date": null,
-    "tags": ["Estate"],
-    "technology": ["Laravel", "PHP"],
+    "tags": [
+      "Estate"
+    ],
+    "technology": [
+      "Laravel",
+      "PHP"
+    ],
     "source_code": null,
     "demo_url": "https://delta-sari.pages.dev",
     "is_private": true,
@@ -34,13 +39,13 @@
         "description": null,
         "progress": 75,
         "deleted_at": null,
-        "created_at": "2026-10-01T03:39:41.000000Z",
-        "updated_at": "2026-10-01T03:39:41.000000Z"
+        "created_at": "2026-10-02T06:21:35.000000Z",
+        "updated_at": "2026-10-02T06:21:35.000000Z"
       }
     ],
     "deleted_at": null,
-    "created_at": "2026-10-01T03:39:41.000000Z",
-    "updated_at": "2026-10-01T03:39:41.000000Z"
+    "created_at": "2026-10-02T06:21:35.000000Z",
+    "updated_at": "2026-10-02T06:21:35.000000Z"
   },
   {
     "id": "PRJ-002",
@@ -49,7 +54,7 @@
     "slug": "curriculum-vitae-api",
     "type": "Personal Project",
     "category": "Backend Development",
-    "image": null,
+    "image": "https://api.afrizahanif.com/storage/images/projects/PRJ-002.jpg",
     "gallery": null,
     "video": null,
     "start_period": "2026-03-10",
@@ -57,13 +62,21 @@
     "status": "completed",
     "status_label": "Completed",
     "description": {
-      "en": "RESTful API backend engine built with Laravel Sanctum to manage and deliver curriculum vitae portfolio datasets securely.",
-      "id": "Backend engine RESTful API berbasis Laravel Sanctum untuk menyediakan dan mengelola dataset portofolio secara terstruktur dan aman."
+      "id": "Backend engine RESTful API berbasis Laravel Sanctum untuk menyediakan dan mengelola dataset portofolio secara terstruktur dan aman.",
+      "en": "RESTful API backend engine built with Laravel Sanctum to manage and deliver curriculum vitae portfolio datasets securely."
     },
     "delay_reason": null,
     "resume_date": null,
-    "tags": ["API", "Backend", "RESTful"],
-    "technology": ["Laravel", "MySQL", "PHP"],
+    "tags": [
+      "API",
+      "Backend",
+      "RESTful"
+    ],
+    "technology": [
+      "Laravel",
+      "MySQL",
+      "PHP"
+    ],
     "source_code": "https://github.com/AfrizaHanif/curriculum-vitae-api-v2",
     "demo_url": null,
     "is_private": false,
@@ -77,8 +90,8 @@
         "description": "Implementasi sistem autentikasi menggunakan Laravel Sanctum untuk keamanan aplikasi.",
         "progress": 100,
         "deleted_at": null,
-        "created_at": "2026-10-01T03:39:41.000000Z",
-        "updated_at": "2026-10-01T03:39:41.000000Z"
+        "created_at": "2026-10-02T06:21:35.000000Z",
+        "updated_at": "2026-10-02T06:21:35.000000Z"
       },
       {
         "id": "FEA-009",
@@ -88,13 +101,13 @@
         "description": "Implementasi endpoint untuk mengakses dan memanipulasi data melalui API.",
         "progress": 100,
         "deleted_at": null,
-        "created_at": "2026-10-01T03:39:41.000000Z",
-        "updated_at": "2026-10-01T03:39:41.000000Z"
+        "created_at": "2026-10-02T06:21:35.000000Z",
+        "updated_at": "2026-10-02T06:21:35.000000Z"
       }
     ],
     "deleted_at": null,
-    "created_at": "2026-10-01T03:39:41.000000Z",
-    "updated_at": "2026-10-01T03:39:41.000000Z"
+    "created_at": "2026-10-02T06:21:35.000000Z",
+    "updated_at": "2026-10-02T06:21:35.000000Z"
   },
   {
     "id": "PRJ-003",
@@ -103,7 +116,7 @@
     "slug": "interactive-curriculum-vitae-web",
     "type": "Personal Project",
     "category": "Front-End Development",
-    "image": null,
+    "image": "https://api.afrizahanif.com/storage/images/projects/PRJ-003.jpg",
     "gallery": null,
     "video": null,
     "start_period": "2026-03-22",
@@ -111,13 +124,22 @@
     "status": "ongoing",
     "status_label": "Ongoing",
     "description": {
-      "en": "Modern, interactive portfolio application developed with Next.js, React, and Bootstrap for dynamic showcase and dual-language CV exploration.",
-      "id": "Aplikasi portofolio interaktif modern yang dibangun dengan Next.js, React, dan Bootstrap dengan dukungan bilingual dan navigasi responsif."
+      "id": "Aplikasi portofolio interaktif modern yang dibangun dengan Next.js, React, dan Bootstrap dengan dukungan bilingual dan navigasi responsif.",
+      "en": "Modern, interactive portfolio application developed with Next.js, React, and Bootstrap for dynamic showcase and dual-language CV exploration."
     },
     "delay_reason": null,
     "resume_date": null,
-    "tags": ["React", "Next.js", "Portfolio"],
-    "technology": ["Next.js", "React", "TypeScript", "Bootstrap"],
+    "tags": [
+      "React",
+      "Next.js",
+      "Portfolio"
+    ],
+    "technology": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Bootstrap"
+    ],
     "source_code": "https://github.com/AfrizaHanif/curriculum-vitae-react-v2",
     "demo_url": null,
     "is_private": false,
@@ -131,8 +153,8 @@
         "description": "Implementasi sistem switching bahasa, navigasi halus, serta konsumsi data API terpusat.",
         "progress": 85,
         "deleted_at": null,
-        "created_at": "2026-10-01T03:39:41.000000Z",
-        "updated_at": "2026-10-01T03:39:41.000000Z"
+        "created_at": "2026-10-02T06:21:35.000000Z",
+        "updated_at": "2026-10-02T06:21:35.000000Z"
       },
       {
         "id": "FEA-011",
@@ -142,8 +164,8 @@
         "description": "Antarmuka pengguna yang responsif, animasi halus, dan navigasi intuitif untuk pengalaman pengguna yang optimal di berbagai perangkat.",
         "progress": 90,
         "deleted_at": null,
-        "created_at": "2026-10-01T03:39:41.000000Z",
-        "updated_at": "2026-10-01T03:39:41.000000Z"
+        "created_at": "2026-10-02T06:21:35.000000Z",
+        "updated_at": "2026-10-02T06:21:35.000000Z"
       },
       {
         "id": "FEA-012",
@@ -153,12 +175,12 @@
         "description": "Integrasi dengan CV API untuk menyediakan konten dinamis dan terstruktur di seluruh halaman web.",
         "progress": 100,
         "deleted_at": null,
-        "created_at": "2026-10-01T03:39:41.000000Z",
-        "updated_at": "2026-10-01T03:39:41.000000Z"
+        "created_at": "2026-10-02T06:21:35.000000Z",
+        "updated_at": "2026-10-02T06:21:35.000000Z"
       }
     ],
     "deleted_at": null,
-    "created_at": "2026-10-01T03:39:41.000000Z",
-    "updated_at": "2026-10-01T03:39:41.000000Z"
+    "created_at": "2026-10-02T06:21:35.000000Z",
+    "updated_at": "2026-10-02T06:21:35.000000Z"
   }
 ]
