@@ -14,6 +14,9 @@ on:
         type: string
         default: "ROLLBACK"
 
+permissions:
+  contents: read
+
 concurrency:
   group: production-deployment
   cancel-in-progress: false
@@ -25,21 +28,23 @@ jobs:
 
     steps:
       - name: "1. Validate Rollback Confirmation"
+        env:
+          CONFIRM_ROLLBACK: ${{ inputs.confirm_rollback }}
         run: |
-          if [ "${{ inputs.confirm_rollback }}" != "ROLLBACK" ]; then
+          if [ "$CONFIRM_ROLLBACK" != "ROLLBACK" ]; then
             echo "❌ Konfirmasi gagal! Anda harus mengetik 'ROLLBACK' secara tepat untuk mengeksekusi rollback."
             exit 1
           fi
           echo "✅ Konfirmasi tervalidasi."
 
       - name: "1b. Pre-Flight: Validate Hostinger SSH Credentials"
+        env:
+          SERVER_HOST: ${{ secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}
+          SERVER_USER: ${{ secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}
+          SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+          SSH_PASS: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
         run: |
           echo "🔍 Memeriksa kredensial SSH Hostinger untuk rollback..."
-          SERVER_HOST="${{ secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}"
-          SERVER_USER="${{ secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}"
-          SSH_KEY="${{ secrets.HOSTINGER_SSH_KEY }}"
-          SSH_PASS="${{ secrets.HOSTINGER_SSH_PASSWORD }}"
-
           MISSING_CREDS=()
           if [ -z "$SERVER_HOST" ]; then
             MISSING_CREDS+=("HOSTINGER_HOST")
@@ -64,12 +69,15 @@ jobs:
       - name: "2. Execute Atomic Rollback via SSH"
         id: ssh_rollback
         uses: appleboy/ssh-action@v1.2.5
+        env:
+          TARGET_RELEASE: ${{ inputs.target_release }}
         with:
           host: ${{ secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           password: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
           port: ${{ secrets.HOSTINGER_PORT || vars.HOSTINGER_PORT || 65002 }}
+          envs: TARGET_RELEASE
           script: |
             RAW_TARGET="${{ secrets.HOSTINGER_TARGET_PATH || vars.HOSTINGER_TARGET_PATH }}"
             CLEAN_TARGET="$(echo "$RAW_TARGET" | sed -e 's/^[[:space:]/]*//' -e 's/[[:space:]/]*$//')"
@@ -95,7 +103,7 @@ jobs:
             fi
 
             RELEASES_BASE="$HOME/releases"
-            INPUT_TARGET="${{ inputs.target_release }}"
+            INPUT_TARGET="$TARGET_RELEASE"
 
             echo "🔍 Memeriksa direktori rilis di: $RELEASES_BASE"
             if [ ! -d "$RELEASES_BASE" ]; then
@@ -173,12 +181,13 @@ jobs:
 
       - name: "4. Summary: Generate GitHub Rollback Summary"
         if: always()
+        env:
+          SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}
+          HTTP_CODE: ${{ steps.smoke_test.outputs.http_code || 'N/A' }}
+          ROLLBACK_STATUS: ${{ steps.ssh_rollback.outcome }}
+          TARGET_PARAM: ${{ inputs.target_release }}
+          ACTOR: ${{ github.actor }}
         run: |
-          SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}"
-          HTTP_CODE="${{ steps.smoke_test.outputs.http_code || 'N/A' }}"
-          ROLLBACK_STATUS="${{ steps.ssh_rollback.outcome }}"
-          TARGET_PARAM="${{ inputs.target_release }}"
-
           cat << EOF >> $GITHUB_STEP_SUMMARY
           ## 🔄 Production Rollback Summary
 
@@ -188,7 +197,7 @@ jobs:
           | **Target Rilis** | 🏷️ \`$TARGET_PARAM\` | Parameter input workflow |
           | **Proteksi Subdomain** | 🛡️ AMAN | \`api\`, \`admin\`, \`storage\`, \`shared\`, \`uploads\` |
           | **Live Healthcheck** | 🌐 HTTP $HTTP_CODE | <$SITE_URL> |
-          | **Operator** | 👤 @${{ github.actor }} | Dieksekusi secara manual via Actions |
+          | **Operator** | 👤 @$ACTOR | Dieksekusi secara manual via Actions |
 
           > 💡 **Informasi**: Jika rilis target bernilai \`previous\`, sistem secara otomatis mengembalikan situs ke folder rilis ke-2 terbaru di \`$HOME/releases/\`.
           EOF
@@ -216,7 +225,7 @@ jobs:
           fi
 
           if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
-            curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
               -d "chat_id=$TELEGRAM_CHAT_ID" \
               -d "text=$MSG" || true
           fi

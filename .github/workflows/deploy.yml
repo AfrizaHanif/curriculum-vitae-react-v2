@@ -27,6 +27,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   # =========================================================================
   # JOB 1: SECURITY & DEPENDENCY AUDIT (Runs in parallel with build)
@@ -92,13 +95,15 @@ jobs:
 
       - name: "0b. Pre-Flight: Verify External API Health"
         if: github.event_name != 'workflow_dispatch' || inputs.check_api == true
+        env:
+          API_BASE: ${{ secrets.NEXT_PUBLIC_API_BASE_URL || vars.NEXT_PUBLIC_API_BASE_URL || 'https://api.afrizahanif.com/api' }}
+          INPUT_API_URL: ${{ inputs.api_endpoint || '' }}
+          FAIL_ON_ERROR: ${{ inputs.fail_on_api_error != false }}
         run: |
-          API_BASE="${{ secrets.NEXT_PUBLIC_API_BASE_URL || vars.NEXT_PUBLIC_API_BASE_URL || 'https://api.afrizahanif.com/api' }}"
-          API_URL="${{ inputs.api_endpoint || '' }}"
+          API_URL="$INPUT_API_URL"
           if [ -z "$API_URL" ]; then
             API_URL="${API_BASE%/}/profiles"
           fi
-          FAIL_ON_ERROR="${{ inputs.fail_on_api_error != false }}"
 
           echo "🔍 Memeriksa status kesehatan API: $API_URL"
           HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 10 --max-time 15 "$API_URL" || echo "000")
@@ -377,16 +382,20 @@ jobs:
       # ---------------------------------------------------------------------
       - name: "6. Summary: Generate GitHub Deployment Report"
         if: always()
+        env:
+          SSH_OUTCOME: ${{ steps.ssh_sync.outcome }}
+          FTP_OUTCOME: ${{ steps.ftp_deploy.outcome }}
+          SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}
+          HTTP_CODE: ${{ steps.smoke_test.outputs.http_code || 'N/A' }}
+          COMMIT_SHA: ${{ github.sha }}
+          REF_NAME: ${{ github.ref_name }}
         run: |
           DEPLOY_METHOD="Tidak Terlaksana"
-          if [ "${{ steps.ssh_sync.outcome }}" = "success" ]; then
+          if [ "$SSH_OUTCOME" = "success" ]; then
             DEPLOY_METHOD="SSH Atomic (Rsync --delay-updates)"
-          elif [ "${{ steps.ftp_deploy.outcome }}" = "success" ]; then
+          elif [ "$FTP_OUTCOME" = "success" ]; then
             DEPLOY_METHOD="FTP Fallback (Safe Sync)"
           fi
-
-          SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}"
-          HTTP_CODE="${{ steps.smoke_test.outputs.http_code || 'N/A' }}"
 
           cat << 'EOF' >> $GITHUB_STEP_SUMMARY
           ## 🚀 Deployment & Quality Checklist Summary
@@ -401,11 +410,13 @@ jobs:
           | **6. Proteksi Subdomain** | 🛡️ AMAN | `api`, `admin`, `storage`, `shared`, `uploads` |
           | **7. Live Smoke Test** | 🌐 HTTP $HTTP_CODE | <$SITE_URL> |
 
-          > 💡 **Info Rilis**: Deployment dijalankan untuk commit `${{ github.sha }}` di branch `${{ github.ref_name }}`.
+          > 💡 **Info Rilis**: Deployment dijalankan untuk commit `$COMMIT_SHA` di branch `$REF_NAME`.
           EOF
           sed -i "s|\$DEPLOY_METHOD|$DEPLOY_METHOD|g" $GITHUB_STEP_SUMMARY
           sed -i "s|\$HTTP_CODE|$HTTP_CODE|g" $GITHUB_STEP_SUMMARY
           sed -i "s|\$SITE_URL|$SITE_URL|g" $GITHUB_STEP_SUMMARY
+          sed -i "s|\$COMMIT_SHA|$COMMIT_SHA|g" $GITHUB_STEP_SUMMARY
+          sed -i "s|\$REF_NAME|$REF_NAME|g" $GITHUB_STEP_SUMMARY
 
   # =========================================================================
   # JOB 4: LIGHTHOUSE SEO & PERFORMANCE AUDIT
@@ -501,7 +512,7 @@ jobs:
           if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
             echo "📨 Mengirim notifikasi ke Telegram..."
             TG_MSG="<b>$EMOJI $STATUS_TEXT</b>%0A<b>Repo:</b> $REPO ($BRANCH)%0A<b>Commit:</b> ${COMMIT_SHA:0:7}%0A<b>Deploy:</b> $DEPLOY_STATUS%0A<b>Lighthouse:</b> $LIGHTHOUSE_STATUS%0A<b>Live URL:</b> $SITE_URL"
-            curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
               -d "chat_id=$TELEGRAM_CHAT_ID" \
               -d "text=$TG_MSG" \
               -d "parse_mode=HTML" || echo "⚠️ Gagal mengirim ke Telegram"

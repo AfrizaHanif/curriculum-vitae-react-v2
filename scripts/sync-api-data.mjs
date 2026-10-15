@@ -78,7 +78,20 @@ async function syncAllData() {
         throw new Error("Payload 'data' kosong padahal endpoint diharapkan berisi data");
       }
 
-      const formattedJson = JSON.stringify(payload.data, null, 2) + "\n";
+      let dataToSave = payload.data;
+
+      // Mask sensitive personal contact info for public repository security
+      if (resource.file === "profiles.json" && Array.isArray(dataToSave)) {
+        dataToSave = dataToSave.map((item) => {
+          const maskedItem = { ...item };
+          if (typeof maskedItem.phone === "string" && maskedItem.phone.length >= 10) {
+            maskedItem.phone = maskedItem.phone.replace(/(\+?\d{4})\d+(\d{4})$/, "$1-XXXX-$2");
+          }
+          return maskedItem;
+        });
+      }
+
+      const formattedJson = JSON.stringify(dataToSave, null, 2) + "\n";
       await fs.writeFile(targetPath, formattedJson, "utf-8");
 
       const count = Array.isArray(payload.data) ? `${payload.data.length} item` : "1 objek";

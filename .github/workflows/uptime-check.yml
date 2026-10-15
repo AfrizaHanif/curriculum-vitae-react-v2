@@ -10,6 +10,9 @@ concurrency:
   group: uptime-monitor
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   health_check:
     name: 🌐 Website & API Health Monitor
@@ -18,8 +21,9 @@ jobs:
     steps:
       - name: "1. Check Live Website Uptime"
         id: web_check
+        env:
+          TARGET_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}
         run: |
-          TARGET_URL="${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}"
           echo "🔍 Memeriksa ketersediaan website: $TARGET_URL"
 
           HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -L --connect-timeout 10 --max-time 15 "$TARGET_URL" || echo "000")
@@ -36,8 +40,9 @@ jobs:
 
       - name: "2. Check Backend API Health"
         id: api_check
+        env:
+          API_BASE: ${{ secrets.NEXT_PUBLIC_API_BASE_URL || vars.NEXT_PUBLIC_API_BASE_URL || 'https://api.afrizahanif.com/api' }}
         run: |
-          API_BASE="${{ secrets.NEXT_PUBLIC_API_BASE_URL || vars.NEXT_PUBLIC_API_BASE_URL || 'https://api.afrizahanif.com/api' }}"
           API_URL="${API_BASE%/}/profiles"
           echo "🔍 Memeriksa ketersediaan backend API: $API_URL"
 
@@ -86,15 +91,15 @@ jobs:
 
       - name: "4. Generate GitHub Summary"
         if: always()
+        env:
+          WEB_STATUS: ${{ steps.web_check.outputs.status || 'UNKNOWN' }}
+          WEB_CODE: ${{ steps.web_check.outputs.http_code || '000' }}
+          API_STATUS: ${{ steps.api_check.outputs.status || 'UNKNOWN' }}
+          API_CODE: ${{ steps.api_check.outputs.http_code || '000' }}
+          SSL_STATUS: ${{ steps.ssl_check.outputs.ssl_status || 'UNKNOWN' }}
+          SSL_DAYS: ${{ steps.ssl_check.outputs.days_left || 'N/A' }}
+          SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}
         run: |
-          WEB_STATUS="${{ steps.web_check.outputs.status || 'UNKNOWN' }}"
-          WEB_CODE="${{ steps.web_check.outputs.http_code || '000' }}"
-          API_STATUS="${{ steps.api_check.outputs.status || 'UNKNOWN' }}"
-          API_CODE="${{ steps.api_check.outputs.http_code || '000' }}"
-          SSL_STATUS="${{ steps.ssl_check.outputs.ssl_status || 'UNKNOWN' }}"
-          SSL_DAYS="${{ steps.ssl_check.outputs.days_left || 'N/A' }}"
-          SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL || vars.NEXT_PUBLIC_SITE_URL || 'https://afrizahanif.com' }}"
-
           cat << EOF >> $GITHUB_STEP_SUMMARY
           ## 🩺 Uptime & SSL Monitor Summary
 
@@ -125,7 +130,7 @@ jobs:
           fi
 
           if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
-            curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
               -d "chat_id=$TELEGRAM_CHAT_ID" \
               -d "text=$MSG" || true
           fi

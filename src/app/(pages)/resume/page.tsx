@@ -131,12 +131,16 @@ export default function ResumePage() {
             {profile?.phone && (
               <span>
                 • <i className="bi bi-telephone me-1" />
-                <a
-                  href={`tel:${profile.phone}`}
-                  className="text-reset text-decoration-none"
-                >
-                  {profile.phone}
-                </a>
+                {profile.phone.includes("X") ? (
+                  <span>{profile.phone}</span>
+                ) : (
+                  <a
+                    href={`tel:${profile.phone}`}
+                    className="text-reset text-decoration-none"
+                  >
+                    {profile.phone}
+                  </a>
+                )}
               </span>
             )}
             {siteConfig.site.socials.linkedin && (

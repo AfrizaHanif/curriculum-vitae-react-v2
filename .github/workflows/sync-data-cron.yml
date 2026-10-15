@@ -15,7 +15,6 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  actions: write
 
 concurrency:
   group: sync-data-cron
@@ -99,17 +98,19 @@ jobs:
         if: inputs.force_deploy == true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REF_NAME: ${{ github.ref_name }}
         run: |
           echo "🚀 Menjalankan alur deployment manual (force_deploy)..."
-          gh workflow run deploy.yml --ref ${{ github.ref_name }} || echo "⚠️ Tidak dapat memicu via gh CLI, pastikan Actions permission 'Read and write' aktif."
+          gh workflow run deploy.yml --ref "$REF_NAME" || echo "⚠️ Tidak dapat memicu via gh CLI, pastikan Actions permission 'Read and write' aktif."
 
       - name: "8. Generate Summary"
         if: always()
+        env:
+          HAS_CHANGES: ${{ steps.git_diff.outputs.has_changes }}
+          FORCE_DEPLOY: ${{ inputs.force_deploy || 'false' }}
+          PR_URL: ${{ steps.cpr.outputs.pr_url || '-' }}
+          REF_NAME: ${{ github.ref_name }}
         run: |
-          HAS_CHANGES="${{ steps.git_diff.outputs.has_changes }}"
-          FORCE_DEPLOY="${{ inputs.force_deploy || 'false' }}"
-          PR_URL="${{ steps.cpr.outputs.pr_url || '-' }}"
-
           cat << EOF >> $GITHUB_STEP_SUMMARY
           ## 🔄 API Data Sync Summary
 
@@ -117,7 +118,8 @@ jobs:
           |---|:---:|---|
           | **Status Sinkronisasi** | ✅ SUKSES | Berhasil sinkronisasi seluruh dataset dari \`api.afrizahanif.com\` |
           | **Perubahan Data** | $([ "$HAS_CHANGES" = "true" ] && echo "✨ ADA PEMBARUAN" || echo "☕ TIDAK ADA PERUBAHAN") | Status berkas di folder \`src/data/jsons/\` |
-          | **Pull Request** | $([ "$PR_URL" != "-" ] && echo "[Lihat PR]($PR_URL)" || echo "⏭️ DILEWATI") | PR otomatis ke branch \`${{ github.ref_name }}\` |
+          | **Pull Request** | $([ "$PR_URL" != "-" ] && echo "[Lihat PR]($PR_URL)" || echo "⏭️ DILEWATI") | PR otomatis ke branch \`$REF_NAME\` |
           | **Pemicu Deploy** | $([ "$FORCE_DEPLOY" = "true" ] && echo "🚀 DIPICU (Force Deploy)" || echo "ℹ️ Mengikuti alur PR / Push") | Otomatis deploy jika PR di-merge |
           | **Target Folder** | 📂 \`src/data/jsons/\` (18 datasets) | Berkas penyimpanan data lokal |
           EOF
+

@@ -192,24 +192,38 @@ export default function ProfileDetailModal({
                 className="border rounded-3 bg-body"
                 bodyClassName="p-3"
               >
-                <div className="d-flex align-items-center gap-2">
-                  <div className="text-success p-2 d-inline-flex">
-                    <i className="bi bi-whatsapp fs-5" />
-                  </div>
-                  <div>
-                    <small className="text-body-secondary d-block">
-                      {t.sections.about.profileModal.phone}
-                    </small>
-                    <a
-                      href={`https://wa.me/${profile.phone.replace(/[^0-9]/g, "")}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-body text-decoration-none fw-medium"
-                    >
-                      {profile.phone}
-                    </a>
-                  </div>
-                </div>
+                {(() => {
+                  const rawWa = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || (profile.phone.includes("X") ? "" : profile.phone);
+                  const waDigits = rawWa.replace(/[^0-9]/g, "");
+                  const waHref = waDigits.length >= 10 ? `https://wa.me/${waDigits}` : null;
+
+                  return (
+                    <div className="d-flex align-items-center gap-2">
+                      <div className="text-success p-2 d-inline-flex">
+                        <i className="bi bi-whatsapp fs-5" />
+                      </div>
+                      <div>
+                        <small className="text-body-secondary d-block">
+                          {t.sections.about.profileModal.phone}
+                        </small>
+                        {waHref ? (
+                          <a
+                            href={waHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-body text-decoration-none fw-medium"
+                          >
+                            {profile.phone}
+                          </a>
+                        ) : (
+                          <span className="text-body fw-medium">
+                            {profile.phone}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })()}
               </Card>
             </div>
 

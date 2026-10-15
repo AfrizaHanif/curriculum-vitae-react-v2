@@ -65,29 +65,41 @@ export default function ContactInfoCard({ profile }: ContactInfoCardProps) {
           )}
 
           {/* WhatsApp / Phone */}
-          {profile.phone && (
-            <div className="d-flex align-items-center gap-3">
-              <div
-                className="rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center flex-shrink-0"
-                style={{ width: "42px", height: "42px" }}
-              >
-                <i className="bi bi-whatsapp fs-5" />
-              </div>
-              <div>
-                <small className="text-body-secondary d-block">
-                  {t.sections.contact.infoCard.phoneLabel}
-                </small>
-                <a
-                  href={`https://wa.me/${profile.phone.replace(/[^0-9]/g, "")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-decoration-none fw-semibold text-body"
+          {profile.phone && (() => {
+            const rawWa = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || (profile.phone.includes("X") ? "" : profile.phone);
+            const waDigits = rawWa.replace(/[^0-9]/g, "");
+            const waHref = waDigits.length >= 10 ? `https://wa.me/${waDigits}` : null;
+
+            return (
+              <div className="d-flex align-items-center gap-3">
+                <div
+                  className="rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center flex-shrink-0"
+                  style={{ width: "42px", height: "42px" }}
                 >
-                  {profile.phone}
-                </a>
+                  <i className="bi bi-whatsapp fs-5" />
+                </div>
+                <div>
+                  <small className="text-body-secondary d-block">
+                    {t.sections.contact.infoCard.phoneLabel}
+                  </small>
+                  {waHref ? (
+                    <a
+                      href={waHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-decoration-none fw-semibold text-body"
+                    >
+                      {profile.phone}
+                    </a>
+                  ) : (
+                    <span className="fw-semibold text-body">
+                      {profile.phone}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* Location */}
           {(profile.current_city || profile.current_province) && (
