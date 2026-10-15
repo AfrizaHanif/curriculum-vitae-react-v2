@@ -63,7 +63,7 @@ jobs:
 
       - name: "2. Execute Atomic Rollback via SSH"
         id: ssh_rollback
-        uses: appleboy/ssh-action@v1.2.0
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.HOSTINGER_HOST || vars.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USERNAME || vars.HOSTINGER_USERNAME }}
