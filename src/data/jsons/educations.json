@@ -8,6 +8,7 @@
     "degree": "S1",
     "major": "Sistem Informasi",
     "gpa": 3.26,
+    "max_gpa": 4,
     "status": "graduated",
     "status_label": "Graduated",
     "start_period": "2021-08-01",
