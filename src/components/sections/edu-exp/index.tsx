@@ -126,6 +126,7 @@ export default function EduExpSection() {
                 status: edu.status || edu.status_label,
                 address: edu.address,
                 gpa: edu.gpa,
+                max_gpa: edu.max_gpa,
                 type: edu.type || edu.type_label,
                 description: edu.description,
                 latitude: edu.latitude,

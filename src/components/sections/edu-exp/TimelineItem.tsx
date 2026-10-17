@@ -17,6 +17,7 @@ export interface TimelineItemData {
   status?: string | null;
   address?: string | null;
   gpa?: number | null;
+  max_gpa?: number | null;
   type?: string | null;
   description?: LocalizedContent | null;
   latitude?: string | null;
@@ -126,7 +127,7 @@ export default function TimelineItem({
           <div className="d-flex flex-wrap align-items-center gap-1 gap-sm-2">
             {item.gpa !== undefined && item.gpa !== null && (
               <Badge color="success" subtle className="px-2 py-1">
-                {t.sections.eduExp.timeline.gpa} {item.gpa.toFixed(2)}
+                {t.sections.eduExp.timeline.gpa} {item.gpa.toFixed(2)} / {item.max_gpa?.toFixed(2) ?? "N/A"}
               </Badge>
             )}
             {typeLabel && (

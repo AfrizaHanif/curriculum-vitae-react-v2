@@ -11,6 +11,7 @@ export interface Education {
   degree: string;
   major: string;
   gpa?: number | null;
+  max_gpa?: number | null;
   status: string;
   status_label?: string | null;
   start_period: string;
