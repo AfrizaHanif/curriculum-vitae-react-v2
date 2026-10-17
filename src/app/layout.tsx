@@ -63,6 +63,9 @@ export const metadata: Metadata = {
     index: process.env.NODE_ENV === "production",
     follow: process.env.NODE_ENV === "production",
   },
+  other: {
+    "darkreader-lock": "",
+  },
 };
 
 // JSON-LD
@@ -115,7 +118,10 @@ export default function RootLayout(
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body>
+      <head>
+        <meta name="darkreader-lock" content="" />
+      </head>
+      <body suppressHydrationWarning>
         {/* Theme Detection (Vanilla Script) */}
         <script
           dangerouslySetInnerHTML={{

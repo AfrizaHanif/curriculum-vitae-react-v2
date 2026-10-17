@@ -125,6 +125,7 @@ export default function NextImage({
         setIsLoading(false);
       }}
       onClick={handleClick}
+      suppressHydrationWarning
       {...rest}
     />
   );

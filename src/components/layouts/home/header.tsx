@@ -123,6 +123,7 @@ export default function Header({ className = "" }: HeaderProps) {
                 height={36}
                 className="me-2 flex-shrink-0 object-fit-contain logo-light"
                 priority
+                suppressHydrationWarning
               />
               <Image
                 src={logoBlack}
@@ -131,6 +132,7 @@ export default function Header({ className = "" }: HeaderProps) {
                 height={36}
                 className="me-2 flex-shrink-0 object-fit-contain logo-dark"
                 priority
+                suppressHydrationWarning
               />
               <span className="fs-5 fs-md-4 fw-bold text-truncate d-none d-sm-inline">
                 {profile?.fullname || "Muhammad Afriza Hanif"}
@@ -202,6 +204,7 @@ export default function Header({ className = "" }: HeaderProps) {
               width={24}
               height={24}
               className="me-2 flex-shrink-0 object-fit-contain logo-light"
+              suppressHydrationWarning
             />
             <Image
               src={logoBlack}
@@ -209,6 +212,7 @@ export default function Header({ className = "" }: HeaderProps) {
               width={24}
               height={24}
               className="me-2 flex-shrink-0 object-fit-contain logo-dark"
+              suppressHydrationWarning
             />
             <span className="fw-bold text-truncate small">
               {profile?.fullname || "Menu"}
