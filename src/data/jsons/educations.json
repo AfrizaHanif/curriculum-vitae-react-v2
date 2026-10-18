@@ -5,8 +5,17 @@
     "type": "formal",
     "type_label": "Formal",
     "address": "Jl. Raya Kedung Baruk No.98, Kedung Baruk, Kec. Rungkut, Surabaya, Jawa Timur 60298",
-    "degree": "S1",
-    "major": "Sistem Informasi",
+    "degree": "bachelor",
+    "degree_label": "Bachelor's Degree",
+    "degree_labels": {
+      "id": "Sarjana (S1)",
+      "en": "Bachelor's Degree"
+    },
+    "academic_title": "S.Kom",
+    "major": {
+      "id": "Sistem Informasi",
+      "en": "Information Systems"
+    },
     "gpa": 3.26,
     "max_gpa": 4,
     "status": "graduated",

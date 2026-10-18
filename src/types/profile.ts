@@ -3,6 +3,7 @@ import type { ApiResponse, LocalizedString } from "./api";
 export interface Profile {
   id?: string;
   fullname: string;
+  fullname_with_title: string;
   phone: string;
   current_city?: string | null;
   current_province?: string | null;
@@ -15,7 +16,6 @@ export interface Profile {
   status: string;
   formal_photo?: string | null;
   casual_photo?: string | null;
-  photo?: string | null; // Legacy alias (for formal_photo/casual_photo)
   setup_image?: string | null;
   resume?: LocalizedString | null;
 }

@@ -5,7 +5,6 @@ export interface Experience {
   profile_id?: string;
   title: string;
   company: string;
-  location?: string; // Legacy alias for company
   type: string;
   type_label?: string | null;
   address?: string | null;

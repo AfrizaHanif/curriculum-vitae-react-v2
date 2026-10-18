@@ -1,15 +1,17 @@
-import type { ApiResponse, LocalizedContent } from "./api";
+import type { ApiResponse, LocalizedContent, LocalizedString } from "./api";
 
 export interface Education {
   id: string;
   profile_id?: string;
   institution: string;
-  location?: string; // Legacy alias for institution
   type: string | null;
   type_label?: string | null;
   address?: string | null;
   degree: string;
-  major: string;
+  degree_label: string;
+  degree_labels: LocalizedString;
+  academic_title?: string | null;
+  major: LocalizedString;
   gpa?: number | null;
   max_gpa?: number | null;
   status: string;

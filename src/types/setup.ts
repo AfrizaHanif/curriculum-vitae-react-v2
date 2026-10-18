@@ -7,7 +7,6 @@ export interface Setup {
   category: string;
   description: string;
   reason?: string | string[] | null;
-  why?: string | string[] | null; // Legacy alias for reason
   deleted_at?: string | null;
   created_at?: string;
   updated_at?: string;

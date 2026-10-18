@@ -7,7 +7,6 @@ export interface Blog {
   slug: string;
   category?: string;
   author: string;
-  date?: string; // Optional/legacy
   tags?: string[] | null;
   summary: string;
   image?: string | null;

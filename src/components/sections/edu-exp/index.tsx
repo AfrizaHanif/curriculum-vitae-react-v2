@@ -22,6 +22,7 @@ import fallbackEducations from "@/data/jsons/educations.json";
 import fallbackExperiences from "@/data/jsons/experiences.json";
 import dynamic from "next/dynamic";
 import { getApiUrl } from "@/config/siteConfig";
+import { getLocalizedText } from "@/utils/formatters";
 
 interface TimelineTabContentProps {
   isLoading: boolean;
@@ -68,7 +69,7 @@ function TimelineTabContent({
 }
 
 export default function EduExpSection() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   // Fetch API Data
   const {
@@ -119,8 +120,8 @@ export default function EduExpSection() {
               locationIcon="bi-bank"
               item={{
                 id: edu.id,
-                title: `${edu.degree} — ${edu.major}`,
-                location: edu.institution || edu.location || "",
+                title: `${getLocalizedText(edu.degree_labels, lang)} — ${getLocalizedText(edu.major, lang)}`,
+                location: edu.institution || "",
                 start_period: edu.start_period,
                 finish_period: edu.finish_period,
                 status: edu.status || edu.status_label,
@@ -158,7 +159,7 @@ export default function EduExpSection() {
               item={{
                 id: exp.id,
                 title: exp.title,
-                location: exp.company || exp.location || "",
+                location: exp.company || "",
                 start_period: exp.start_period,
                 finish_period: exp.finish_period,
                 status: exp.status || exp.status_label,

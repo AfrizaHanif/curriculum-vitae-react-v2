@@ -25,11 +25,8 @@ export interface CaseStudy {
   role: string;
   problems: string[];
   goals?: string[];
-  goal?: string[]; // Alias for backward compatibility
   responsibilities?: string[];
-  responsibles?: string[]; // Alias for backward compatibility
   process?: string[];
-  progress?: string[]; // Alias for backward compatibility
   benefits: string[];
   challenges: string[];
   lessons: string[];

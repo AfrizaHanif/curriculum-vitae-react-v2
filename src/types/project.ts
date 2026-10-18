@@ -23,7 +23,6 @@ export interface Project {
   tags?: string[] | null;
   technology?: string[] | null;
   source_code?: string | null;
-  sourcecode?: string | null; // Alias for backward compatibility
   demo_url?: string | null;
   is_private?: boolean | null;
 

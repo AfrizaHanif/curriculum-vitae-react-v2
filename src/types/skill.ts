@@ -7,8 +7,6 @@ export interface Skill {
   type: string;
   type_label?: string;
   display_order: number;
-  level?: string; // Legacy alias
-  since?: number; // Legacy alias
   deleted_at?: string | null;
   created_at?: string;
   updated_at?: string;
