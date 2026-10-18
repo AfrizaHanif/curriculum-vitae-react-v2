@@ -120,7 +120,7 @@ export default function EduExpSection() {
               locationIcon="bi-bank"
               item={{
                 id: edu.id,
-                title: `${getLocalizedText(edu.degree_labels, lang)} — ${getLocalizedText(edu.major, lang)}`,
+                title: `${getLocalizedText(edu.degree_labels, lang)} — ${getLocalizedText(edu.major, lang)} (${edu.academic_title})`,
                 location: edu.institution || "",
                 start_period: edu.start_period,
                 finish_period: edu.finish_period,

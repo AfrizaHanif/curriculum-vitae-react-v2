@@ -87,7 +87,7 @@ export default function AboutSection() {
 
               {/* Tagline / Subtitle */}
               {profile.tagline && (
-                <h4 className="fw-semibold text-primary mb-3">
+                <h4 className="fw-semibold text-primary-emphasis mb-3">
                   {getLocalizedText(profile.tagline, lang)}
                 </h4>
               )}

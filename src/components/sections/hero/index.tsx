@@ -84,7 +84,9 @@ export default function HeroSection() {
                 </div>
 
                 {/* Name */}
-                <h1 className="display-4 fw-bold mb-2">{profile.fullname}</h1>
+                <h1 className="display-4 fw-bold mb-2">
+                  {profile.fullname_with_title}
+                </h1>
 
                 {/* Tagline */}
                 <p className="lead fs-4 text-white-75 mb-3 fw-normal">

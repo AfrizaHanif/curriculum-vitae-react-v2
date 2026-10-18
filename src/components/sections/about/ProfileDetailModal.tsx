@@ -106,20 +106,22 @@ export default function ProfileDetailModal({
             </div>
             {/* Full Name & Status */}
             <div className="col">
+              {profile.status && (
+                <Badge
+                  pill
+                  className="bg-success-subtle text-success border border-success-subtle px-2.5 py-1 small"
+                >
+                  <i className="bi bi-circle-fill small me-1" />
+                  {profile.status}
+                </Badge>
+              )}
               <div className="d-flex flex-wrap align-items-center gap-2 mb-1">
-                <h4 className="fw-bold mb-0 text-body">{profile.fullname}</h4>
-                {profile.status && (
-                  <Badge
-                    pill
-                    className="bg-success-subtle text-success border border-success-subtle px-2.5 py-1 small"
-                  >
-                    <i className="bi bi-circle-fill small me-1" />
-                    {profile.status}
-                  </Badge>
-                )}
+                <h4 className="fw-bold mb-0 text-body">
+                  {profile.fullname_with_title}
+                </h4>
               </div>
               {profile.tagline && (
-                <p className="text-primary fw-medium mb-0 small">
+                <p className="text-primary-emphasis fw-medium mb-0 small">
                   {getLocalizedText(profile.tagline, lang)}
                 </p>
               )}
@@ -193,9 +195,12 @@ export default function ProfileDetailModal({
                 bodyClassName="p-3"
               >
                 {(() => {
-                  const rawWa = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || (profile.phone.includes("X") ? "" : profile.phone);
+                  const rawWa =
+                    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ||
+                    (profile.phone.includes("X") ? "" : profile.phone);
                   const waDigits = rawWa.replace(/[^0-9]/g, "");
-                  const waHref = waDigits.length >= 10 ? `https://wa.me/${waDigits}` : null;
+                  const waHref =
+                    waDigits.length >= 10 ? `https://wa.me/${waDigits}` : null;
 
                   return (
                     <div className="d-flex align-items-center gap-2">
@@ -271,7 +276,9 @@ export default function ProfileDetailModal({
                       rel="noopener noreferrer"
                       className="text-body text-decoration-none fw-medium d-inline-flex align-items-center gap-1 text-break"
                     >
-                      <span className="text-break">linkedin.com/in/afrizahanif</span>
+                      <span className="text-break">
+                        linkedin.com/in/afrizahanif
+                      </span>
                       <i className="bi bi-box-arrow-up-right small text-muted flex-shrink-0" />
                     </a>
                   </div>
