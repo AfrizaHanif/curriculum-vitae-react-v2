@@ -15,9 +15,10 @@ import SkillCard from "./SkillCard";
 import SkillGridSkeleton from "./SkillCardSkeleton";
 import fallbackSkills from "@/data/jsons/skills.json";
 import { getApiUrl } from "@/config/siteConfig";
+import { getLocalizedText } from "@/utils/formatters";
 
 export default function SkillSection() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   // Fetch API Data
   const { data, isLoading, error } = useFetch<SkillApiResponse>(
@@ -36,30 +37,39 @@ export default function SkillSection() {
 
   // Get Unique Categories/Types for Filter
   const categories = useMemo(() => {
-    const list = Array.from(
-      new Set(
-        skills
-          .map((s) => s.type_label || s.type)
-          .filter((v): v is string => Boolean(v)),
-      ),
-    );
-    return ["All", ...list];
-  }, [skills]);
+    const map = new Map<string, string>();
+    skills.forEach((s) => {
+      const key = s.type || s.type_label;
+      if (key && !map.has(key)) {
+        const label =
+          getLocalizedText(s.type_labels, lang) ||
+          s.type_label ||
+          s.type ||
+          key;
+        map.set(key, label);
+      }
+    });
+
+    return [
+      { key: "all", label: t.sections.skills.filterAll },
+      ...Array.from(map.entries()).map(([key, label]) => ({ key, label })),
+    ];
+  }, [skills, lang, t.sections.skills.filterAll]);
 
   // Tab items for NavTab
   const tabItems: NavTabItem[] = useMemo(() => {
     return categories.map((cat, index) => {
       const catSkills =
-        cat === "All"
+        cat.key === "all"
           ? skills
-          : skills.filter((s) => (s.type_label || s.type) === cat);
+          : skills.filter((s) => (s.type || s.type_label) === cat.key);
       const isActive = index === activeTabIndex;
 
       return {
-        id: `skills-tab-${cat.toLowerCase().replace(/\s+/g, "-")}`,
+        id: `skills-tab-${cat.key.toLowerCase().replace(/\s+/g, "-")}`,
         title: (
           <span className="d-inline-flex align-items-center gap-2">
-            <span>{cat === "All" ? t.sections.skills.filterAll : cat}</span>
+            <span>{cat.label}</span>
             <Badge
               pill
               className={`rounded-pill ${

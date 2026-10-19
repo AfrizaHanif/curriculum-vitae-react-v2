@@ -54,6 +54,7 @@ export default function ProjectDetailModal({
     .toLowerCase()
     .replace(/[\s-]+/g, "_") as keyof typeof t.sections.projects.statuses;
   const projectStatusLabel =
+    getLocalizedText(projectItem?.status_labels, lang) ||
     (normalizedStatusKey &&
       t.sections.projects.statuses?.[normalizedStatusKey]) ||
     projectItem?.status_label ||

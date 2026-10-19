@@ -1,4 +1,4 @@
-import type { ApiResponse, LocalizedContent } from "./api";
+import type { ApiResponse, LocalizedContent, LocalizedString } from "./api";
 
 export interface Experience {
   id: string;
@@ -7,9 +7,11 @@ export interface Experience {
   company: string;
   type: string;
   type_label?: string | null;
+  type_labels: LocalizedString;
   address?: string | null;
   status: string;
   status_label?: string | null;
+  status_labels: LocalizedString;
   start_period: string;
   finish_period?: string | null;
   description?: LocalizedContent | null;

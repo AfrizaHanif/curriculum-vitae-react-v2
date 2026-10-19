@@ -1,4 +1,4 @@
-import type { ApiResponse } from "./api";
+import type { ApiResponse, LocalizedString } from "./api";
 
 export interface Skill {
   id?: string;
@@ -6,6 +6,7 @@ export interface Skill {
   name: string;
   type: string;
   type_label?: string;
+  type_labels?: LocalizedString;
   display_order: number;
   deleted_at?: string | null;
   created_at?: string;

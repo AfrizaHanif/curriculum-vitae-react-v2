@@ -13,19 +13,18 @@
     "finish_period": null,
     "status": "ongoing",
     "status_label": "Ongoing",
+    "status_labels": {
+      "id": "Sedang Berjalan",
+      "en": "Ongoing"
+    },
     "description": {
       "id": "Proyek aplikasi web untuk manajemen informasi dan administrasi digital kawasan perumahan Delta Sari Indah dan Delta Sari Baru.",
       "en": "Web application project for managing residential information and digital administrative services for the Delta Sari housing complex."
     },
     "delay_reason": null,
     "resume_date": null,
-    "tags": [
-      "Estate"
-    ],
-    "technology": [
-      "Laravel",
-      "PHP"
-    ],
+    "tags": ["Estate"],
+    "technology": ["Laravel", "PHP"],
     "source_code": null,
     "demo_url": "https://delta-sari.pages.dev",
     "is_private": true,
@@ -61,22 +60,18 @@
     "finish_period": "2026-10-01",
     "status": "completed",
     "status_label": "Completed",
+    "status_labels": {
+      "id": "Selesai",
+      "en": "Completed"
+    },
     "description": {
       "id": "Backend engine RESTful API berbasis Laravel Sanctum untuk menyediakan dan mengelola dataset portofolio secara terstruktur dan aman.",
       "en": "RESTful API backend engine built with Laravel Sanctum to manage and deliver curriculum vitae portfolio datasets securely."
     },
     "delay_reason": null,
     "resume_date": null,
-    "tags": [
-      "API",
-      "Backend",
-      "RESTful"
-    ],
-    "technology": [
-      "Laravel",
-      "MySQL",
-      "PHP"
-    ],
+    "tags": ["API", "Backend", "RESTful"],
+    "technology": ["Laravel", "MySQL", "PHP"],
     "source_code": "https://github.com/AfrizaHanif/curriculum-vitae-api-v2",
     "demo_url": null,
     "is_private": false,
@@ -123,23 +118,18 @@
     "finish_period": null,
     "status": "ongoing",
     "status_label": "Ongoing",
+    "status_labels": {
+      "id": "Sedang Berjalan",
+      "en": "Ongoing"
+    },
     "description": {
       "id": "Aplikasi portofolio interaktif modern yang dibangun dengan Next.js, React, dan Bootstrap dengan dukungan bilingual dan navigasi responsif.",
       "en": "Modern, interactive portfolio application developed with Next.js, React, and Bootstrap for dynamic showcase and dual-language CV exploration."
     },
     "delay_reason": null,
     "resume_date": null,
-    "tags": [
-      "React",
-      "Next.js",
-      "Portfolio"
-    ],
-    "technology": [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Bootstrap"
-    ],
+    "tags": ["React", "Next.js", "Portfolio"],
+    "technology": ["Next.js", "React", "TypeScript", "Bootstrap"],
     "source_code": "https://github.com/AfrizaHanif/curriculum-vitae-react-v2",
     "demo_url": null,
     "is_private": false,

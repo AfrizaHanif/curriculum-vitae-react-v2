@@ -6,6 +6,7 @@ export interface Education {
   institution: string;
   type: string | null;
   type_label?: string | null;
+  type_labels: LocalizedString;
   address?: string | null;
   degree: string;
   degree_label: string;
@@ -16,6 +17,7 @@ export interface Education {
   max_gpa?: number | null;
   status: string;
   status_label?: string | null;
+  status_labels: LocalizedString;
   start_period: string;
   finish_period?: string | null;
   description?: LocalizedContent | null;

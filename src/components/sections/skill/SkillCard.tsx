@@ -4,14 +4,21 @@ import { Skill } from "@/types/skill";
 import Card from "@/components/ui/bootstrap/card";
 import Badge from "@/components/ui/bootstrap/badge";
 import { renderSkillIcon, getLevelConfig } from "./skill-utils";
+import { useLanguage } from "@/context/LanguageContext";
+import { getLocalizedText } from "@/utils/formatters";
 
 interface SkillCardProps {
   skill: Skill;
 }
 
 export default function SkillCard({ skill }: SkillCardProps) {
-  const labelText = skill.type_label || skill.type || "";
-  const levelCfg = getLevelConfig(labelText);
+  const { lang } = useLanguage();
+  const labelText =
+    getLocalizedText(skill.type_labels, lang) ||
+    skill.type_label ||
+    skill.type ||
+    "";
+  const levelCfg = getLevelConfig(skill.type || labelText);
 
   return (
     <Card

@@ -5,8 +5,17 @@
     "company": "BPS Jawa Timur",
     "type": "internship",
     "type_label": "Internship",
+    "type_labels": {
+      "id": "Magang",
+      "en": "Internship"
+    },
     "address": "Jl. Raya Kendangsari Industri No.43-44, Kendangsari, Kec. Tenggilis Mejoyo, Surabaya, Jawa Timur 60292",
     "status": "finished",
+    "status_label": "Finished",
+    "status_labels": {
+      "id": "Selesai",
+      "en": "Finished"
+    },
     "start_period": "2023-01-01",
     "finish_period": "2023-03-01",
     "description": {
@@ -37,8 +46,17 @@
     "company": "Kominfo Jawa Timur",
     "type": "internship",
     "type_label": "Internship",
+    "type_labels": {
+      "id": "Magang",
+      "en": "Internship"
+    },
     "address": "Jl. Ahmad Yani No.242-244, Gayungan, Kec. Gayungan, Surabaya, Jawa Timur 60235",
     "status": "finished",
+    "status_label": "Finished",
+    "status_labels": {
+      "id": "Selesai",
+      "en": "Finished"
+    },
     "start_period": "2025-09-01",
     "finish_period": "2026-01-31",
     "description": {

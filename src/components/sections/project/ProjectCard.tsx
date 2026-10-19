@@ -28,6 +28,7 @@ export default function ProjectCard({
     .toLowerCase()
     .replace(/[\s-]+/g, "_") as keyof typeof t.sections.projects.statuses;
   const statusLabel =
+    getLocalizedText(project.status_labels, lang) ||
     (normalizedStatusKey &&
       t.sections.projects.statuses?.[normalizedStatusKey]) ||
     project.status_label ||

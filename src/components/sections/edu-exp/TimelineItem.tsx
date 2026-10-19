@@ -15,10 +15,12 @@ export interface TimelineItemData {
   start_period: string;
   finish_period?: string | null;
   status?: string | null;
+  statusLabel?: string | null;
   address?: string | null;
   gpa?: number | null;
   max_gpa?: number | null;
   type?: string | null;
+  typeLabel?: string | null;
   description?: LocalizedContent | null;
   latitude?: string | null;
   longitude?: string | null;
@@ -88,6 +90,7 @@ export default function TimelineItem({
       "_",
     ) as keyof typeof t.sections.eduExp.timeline.statuses;
   const statusLabel =
+    item.statusLabel ||
     (normalizedStatusKey &&
       t.sections.eduExp.timeline.statuses?.[normalizedStatusKey]) ||
     item.status;
@@ -98,6 +101,7 @@ export default function TimelineItem({
     .toLowerCase()
     .replace(/[\s-]+/g, "_") as keyof typeof t.sections.eduExp.timeline.types;
   const typeLabel =
+    item.typeLabel ||
     (normalizedTypeKey &&
       t.sections.eduExp.timeline.types?.[normalizedTypeKey]) ||
     item.type;

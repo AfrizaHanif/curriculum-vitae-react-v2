@@ -17,6 +17,7 @@ export interface Project {
   finish_period?: string | null;
   status: string;
   status_label?: string;
+  status_labels: LocalizedString;
   description: LocalizedContent;
   delay_reason?: string | null;
   resume_date?: string | null;
