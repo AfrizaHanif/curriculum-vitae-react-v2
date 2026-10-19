@@ -10,7 +10,7 @@ interface SkillCardProps {
 }
 
 export default function SkillCard({ skill }: SkillCardProps) {
-  const labelText = skill.type_label || skill.type || skill.level || "";
+  const labelText = skill.type_label || skill.type || "";
   const levelCfg = getLevelConfig(labelText);
 
   return (

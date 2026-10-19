@@ -127,7 +127,7 @@ export default function ProjectDetailModal({
 
     const hasCodeSection =
       (isPortfolio && validRepositories.length > 0) ||
-      (!isPortfolio && (projectItem?.is_private || projectItem?.sourcecode));
+      (!isPortfolio && (projectItem?.is_private || projectItem?.source_code));
 
     if (items.length > 0 && hasCodeSection) {
       items.push({ type: "divider" });
@@ -166,11 +166,11 @@ export default function ProjectDetailModal({
             </span>
           ),
         });
-      } else if (projectItem?.sourcecode) {
+      } else if (projectItem?.source_code) {
         items.push({
           label: t.sections.projects.modal.viewSourceCode,
           icon: "bi bi-github",
-          href: projectItem.sourcecode,
+          href: projectItem.source_code,
           hrefType: "external",
           newTab: true,
         });

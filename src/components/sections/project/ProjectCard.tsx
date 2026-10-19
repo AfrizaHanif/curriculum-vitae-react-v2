@@ -85,7 +85,7 @@ export default function ProjectCard({
                 <i className="bi bi-lock-fill me-1 text-secondary" />
                 {t.sections.projects.card.private}
               </span>
-            ) : project.sourcecode ? (
+            ) : project.source_code ? (
               <span>
                 <i className="bi bi-github me-1" />
                 {t.sections.projects.card.source}

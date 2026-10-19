@@ -83,10 +83,9 @@ export default function CaseStudyOffcanvas({
     return items;
   }, [caseStudy, diagram]);
 
-  const goals = caseStudy?.goals || caseStudy?.goal || [];
-  const responsibilities =
-    caseStudy?.responsibilities || caseStudy?.responsibles || [];
-  const processList = caseStudy?.process || caseStudy?.progress || [];
+  const goals = caseStudy?.goals || [];
+  const responsibilities = caseStudy?.responsibilities || [];
+  const processList = caseStudy?.process || [];
   const solutionList =
     solutions && solutions.length > 0
       ? solutions
