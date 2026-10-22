@@ -188,7 +188,7 @@ export default function CertificateArchiveModal({
                     >
                       <IssuerLogo
                         issuer={cert.issuer}
-                        logo={cert.issuer_logo || cert.logo}
+                        logo={cert.issuer_logo}
                         size={14}
                       />
                       <span>{cert.issuer}</span>

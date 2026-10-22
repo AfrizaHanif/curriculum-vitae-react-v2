@@ -9,7 +9,6 @@ export interface Profile {
   current_province?: string | null;
   email: string;
   age?: number | null;
-  birthday?: string | null;
   tagline?: LocalizedString | null;
   description?: LocalizedString | null;
   philosophy?: LocalizedString | null;
@@ -18,6 +17,8 @@ export interface Profile {
   casual_photo?: string | null;
   setup_image?: string | null;
   resume?: LocalizedString | null;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export type ProfileApiResponse = ApiResponse<Profile[]>;

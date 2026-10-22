@@ -6,8 +6,14 @@ export interface Certificate {
   title: string;
   type: string;
   issuer?: string | null;
+
+  /**
+   * Optional custom logo URL/path override.
+   * Note: Not currently provided by the Laravel API; logos are dynamically
+   * resolved on the client via cert-utils.tsx based on `issuer`.
+   */
   issuer_logo?: string | null;
-  logo?: string | null;
+
   issued_date?: string | null;
   expired_date?: string | null;
   credential_id?: string | null;

@@ -6,9 +6,6 @@ export interface DiagramCS {
   case_study_id?: string;
   name?: string;
   images?: string | null;
-  context?: string | null;
-  dfd_0?: string | null;
-  pdm?: string | null;
 }
 
 export interface SolutionCS {

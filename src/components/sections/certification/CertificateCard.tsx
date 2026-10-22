@@ -145,7 +145,7 @@ export default function CertificateCard({
         >
           <IssuerLogo
             issuer={cert.issuer}
-            logo={cert.issuer_logo || cert.logo}
+            logo={cert.issuer_logo}
             size={24}
           />
         </div>

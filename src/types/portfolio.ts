@@ -7,17 +7,13 @@ export interface Repository {
   portfolio_id?: string;
   name?: string;
   url?: string;
-  label?: string;
   icon?: string | null;
-  href?: string;
 }
 
 export interface Feature {
   id?: string;
   featureable_type?: string;
   featureable_id?: string;
-  portfolio_id?: string;
-  project_id?: string; // Legacy alias for featureable_id
   title: string;
   description?: string | null;
   progress?: number | null;
@@ -33,7 +29,6 @@ export interface Portfolio {
   title: LocalizedString;
   slug: string;
   category: string;
-  subcategory?: string | null;
   type: string;
   image?: string | null;
   gallery?: string[] | null;
@@ -50,6 +45,7 @@ export interface Portfolio {
   case_studies?: CaseStudy[];
   features?: Feature[];
   expertises?: Expertise[];
+  // Hierarchical relationship (optional / future extension)
   parent?: Portfolio | null;
   child_portfolios?: Portfolio[];
 

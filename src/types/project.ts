@@ -8,7 +8,6 @@ export interface Project {
   title: LocalizedString;
   slug: string;
   category: string;
-  subcategory?: string | null;
   type: string;
   image?: string | null;
   gallery?: string[] | null;

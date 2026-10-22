@@ -93,7 +93,7 @@ export default function ProjectDetailModal({
   const validRepositories = useMemo(
     () =>
       repositories.filter(
-        (repo) => (repo.url || repo.href || "").trim().length > 0,
+        (repo) => (repo.url || "").trim().length > 0,
       ),
     [repositories],
   );
@@ -144,9 +144,9 @@ export default function ProjectDetailModal({
           : "bi bi-github";
 
         items.push({
-          label: repo.name || repo.label || "Repository",
+          label: repo.name || "Repository",
           icon: iconClass,
-          href: repo.url || repo.href || "#",
+          href: repo.url || "#",
           hrefType: "external",
           newTab: true,
         });

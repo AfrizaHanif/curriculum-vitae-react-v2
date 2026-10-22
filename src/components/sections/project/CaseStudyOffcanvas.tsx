@@ -48,34 +48,13 @@ export default function CaseStudyOffcanvas({
       });
     }
 
-    // 2. Fallback to passed diagram prop (legacy or single diagram object)
+    // 2. Fallback to passed diagram prop (single diagram object)
     if (items.length === 0 && diagram) {
       if (diagram.images && diagram.name) {
         items.push({
           label: diagram.name,
           src: diagram.images,
           icon: "bi-diagram-3",
-        });
-      }
-      if (diagram.context) {
-        items.push({
-          label: "Context Diagram",
-          src: diagram.context,
-          icon: "bi-diagram-3",
-        });
-      }
-      if (diagram.dfd_0) {
-        items.push({
-          label: "Data Flow Diagram (Level 0)",
-          src: diagram.dfd_0,
-          icon: "bi-diagram-2",
-        });
-      }
-      if (diagram.pdm) {
-        items.push({
-          label: "Physical Data Model (PDM)",
-          src: diagram.pdm,
-          icon: "bi-database",
         });
       }
     }

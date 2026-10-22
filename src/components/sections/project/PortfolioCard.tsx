@@ -27,7 +27,7 @@ export default function PortfolioCard({
 
   // Repository dropdown items
   const validRepositories = repositories.filter(
-    (repo) => (repo.url || repo.href || "").trim().length > 0,
+    (repo) => (repo.url || "").trim().length > 0,
   );
 
   const repoDropdownItems: DropdownItem[] = validRepositories.map((repo) => {
@@ -38,9 +38,9 @@ export default function PortfolioCard({
       : "bi bi-link-45deg";
 
     return {
-      label: repo.name || repo.label || "Repository",
+      label: repo.name || "Repository",
       icon: iconClass,
-      href: repo.url || repo.href || "#",
+      href: repo.url || "#",
       hrefType: "external",
       newTab: true,
     };
@@ -101,7 +101,7 @@ export default function PortfolioCard({
             ) : (
               <span>
                 <i className="bi bi-layers me-1" />
-                {portfolio.subcategory || "Project"}
+                {portfolio.type || "Project"}
               </span>
             )}
           </span>

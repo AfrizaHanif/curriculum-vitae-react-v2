@@ -228,15 +228,10 @@ function ProjectSectionContent() {
   const featurePortfolioMap = useMemo(() => {
     const map = new Map<string, Feature[]>();
     featurePortfolios.forEach((feat) => {
-      const key =
-        feat.portfolio_id ||
-        (feat.featureable_type?.includes("Portfolio")
-          ? feat.featureable_id
-          : undefined);
-      if (key) {
-        const list = map.get(key) ?? [];
+      if (feat.featureable_type?.includes("Portfolio") && feat.featureable_id) {
+        const list = map.get(feat.featureable_id) ?? [];
         list.push(feat);
-        map.set(key, list);
+        map.set(feat.featureable_id, list);
       }
     });
     portfolios.forEach((p) => {

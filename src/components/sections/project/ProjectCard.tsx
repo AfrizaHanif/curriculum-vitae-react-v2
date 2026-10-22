@@ -94,7 +94,7 @@ export default function ProjectCard({
             ) : (
               <span>
                 <i className="bi bi-code-square me-1" />
-                {project.subcategory || "Project"}
+                {project.type || "Project"}
               </span>
             )}
           </span>
