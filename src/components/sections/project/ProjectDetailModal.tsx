@@ -305,7 +305,7 @@ export default function ProjectDetailModal({
 
             {item.type && (
               <Badge pill color="secondary" subtle className="px-3 py-1">
-                {item.type}
+                {getLocalizedText(item.type_labels, lang)}
               </Badge>
             )}
 

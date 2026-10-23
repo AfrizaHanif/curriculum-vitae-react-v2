@@ -2,496 +2,715 @@
   {
     "id": "CER-001",
     "title": "The Complete Full-Stack Web Development Bootcamp",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Udemy",
     "issued_date": "2025-11-23",
+    "expired_date": null,
     "credential_id": "UC-79cc6a5a-c324-440e-9015-8fb029874530",
     "credential_url": "https://www.udemy.com/certificate/UC-79cc6a5a-c324-440e-9015-8fb029874530/",
     "file": "https://api.afrizahanif.com/storage/images/certificates/CER-001.jpg",
     "description": "Menyelesaikan kursus pengembangan web (Full-Stack) dengan total 62 jam materi. Mempelajari teknologi HTML5, CSS3, JavaScript, React, dan SQL.",
     "is_featured": true,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-002",
     "title": "The Complete JavaScript Course 2025: From Zero to Expert!",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Udemy",
     "issued_date": "2025-11-30",
+    "expired_date": null,
     "credential_id": "UC-667e140f-afa4-45f7-be92-033c83f4d366",
     "credential_url": "https://www.udemy.com/certificate/UC-667e140f-afa4-45f7-be92-033c83f4d366/",
     "file": "https://api.afrizahanif.com/storage/images/certificates/CER-002.jpg",
     "description": "Menyelesaikan kursus JavaScript dengan total 71 jam materi. Mempelajari teknologi JavaScript (ES6+) untuk kebutuhan frontend framework (Seperti: React, Angular, Vue.js).",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-003",
     "title": "Konsep Pemrograman",
-    "type": "Pelatihan",
+    "type": "training",
+    "type_label": "Pelatihan",
+    "type_labels": {
+      "id": "Pelatihan",
+      "en": "Training"
+    },
     "issuer": "DigiTalent",
     "issued_date": "2025-06-15",
+    "expired_date": null,
     "credential_id": "2299793850-1837",
     "credential_url": "https://digitalent.komdigi.go.id/cek-sertifikat",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-003.pdf",
     "description": "Menyelesaikan modul Micro Skill Digitalent yang berfokus pada dasar-dasar pemrograman. Pembelajaran mencakup konsep pemrograman seperti tipe data, variabel, struktur kontrol, pemrograman prosedural dan Object Oriented Programming, serta penanganan error. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat mengenai dasar-dasar pemrograman.",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-004",
     "title": "Computational Thinking: Cara Berpikir Logis untuk Mengatasi Masalah",
-    "type": "Pelatihan",
+    "type": "training",
+    "type_label": "Pelatihan",
+    "type_labels": {
+      "id": "Pelatihan",
+      "en": "Training"
+    },
     "issuer": "DigiTalent",
     "issued_date": "2025-10-06",
+    "expired_date": null,
     "credential_id": "22910204850-7122",
     "credential_url": "https://digitalent.komdigi.go.id/cek-sertifikat",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-004.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-005",
     "title": "Pengantar Mindset Digital 1: Mengubah Masa Depan Anda Dengan Pola Pikir Digital (Micro Skill)",
-    "type": "Pelatihan",
+    "type": "training",
+    "type_label": "Pelatihan",
+    "type_labels": {
+      "id": "Pelatihan",
+      "en": "Training"
+    },
     "issuer": "DigiTalent",
     "issued_date": "2025-06-16",
+    "expired_date": null,
     "credential_id": "2299815850-3827",
     "credential_url": "https://digitalent.komdigi.go.id/cek-sertifikat",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-005.pdf",
     "description": "Menyelesaikan modul Micro Skill Digitalent yang berfokus pada mindset digital. Pembelajaran mencakup pengantar mindset digital seperti mindset digital yang diperlukan untuk menghadapi tantangan era transformasi digital melalui pengantar mindset digital, apa itu mindset digital, kenapa penting mindset digital dan elemen kunci mindset digital serta bagaimana cara membangun mindset digital. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-006",
     "title": "Magang Mandiri SEAL Batch 2 (Frontend Developer Intern)",
-    "type": "Magang",
+    "type": "internship",
+    "type_label": "Magang",
+    "type_labels": {
+      "id": "Magang",
+      "en": "Internship"
+    },
     "issuer": "SEAL Internship",
     "issued_date": "2026-01-31",
+    "expired_date": null,
     "credential_id": null,
     "credential_url": null,
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-006.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-007",
     "title": "Praktik Kerja Lapangan di Badan Pusat Statistik Provinsi Jawa Timur",
-    "type": "Magang",
+    "type": "internship",
+    "type_label": "Magang",
+    "type_labels": {
+      "id": "Magang",
+      "en": "Internship"
+    },
     "issuer": "BPS Jawa Timur",
     "issued_date": "2023-03-03",
+    "expired_date": null,
     "credential_id": null,
     "credential_url": null,
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-007.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-008",
     "title": "Introduction to Front-End Development",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Meta",
     "issued_date": "2026-05-12",
+    "expired_date": null,
     "credential_id": "229ROBY6PYIS",
     "credential_url": "https://coursera.org/verify/229ROBY6PYIS",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-008.pdf",
     "description": "Menyelesaikan sub-kursus dari Meta Front-End Developer Professional Certificate di Coursera yang berfokus kepada pengenalan programming front-end. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-009",
     "title": "Programming with JavaScript",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Meta",
     "issued_date": "2026-05-12",
+    "expired_date": null,
     "credential_id": "13ZC8LGUD05A",
     "credential_url": "https://coursera.org/verify/13ZC8LGUD05A",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-009.pdf",
     "description": "Menyelesaikan sub-kursus dari Meta Front-End Developer Professional Certificate di Coursera yang berfokus kepada pemahaman materi dasar pemrograman Javascript. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-010",
     "title": "Version Control",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Meta",
     "issued_date": "2026-05-15",
+    "expired_date": null,
     "credential_id": "0XXSLIKOPYRP",
     "credential_url": "https://coursera.org/verify/0XXSLIKOPYRP",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-010.pdf",
     "description": "Menyelesaikan sub-kursus dari Meta Front-End Developer Professional Certificate di Coursera yang berfokus kepada pemahaman materi dasar Git. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-011",
     "title": "HTML and CSS in depth",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Meta",
     "issued_date": "2026-06-04",
+    "expired_date": null,
     "credential_id": "JNJ4ZVPSOGYR",
     "credential_url": "https://coursera.org/verify/JNJ4ZVPSOGYR",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-011.pdf",
     "description": "Menyelesaikan sub-kursus dari Meta Front-End Developer Professional Certificate di Coursera yang berfokus kepada pemahaman materi dasar HTML dan CSS. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-012",
     "title": "React Basics",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Meta",
     "issued_date": "2026-06-15",
+    "expired_date": null,
     "credential_id": "QGH2IZBJSPI7",
     "credential_url": "https://coursera.org/verify/QGH2IZBJSPI7",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-012.pdf",
     "description": "Menyelesaikan sub-kursus dari Meta Front-End Developer Professional Certificate di Coursera yang berfokus kepada pemahaman materi dasar React. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": true,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-013",
     "title": "Advanced React",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Meta",
     "issued_date": "2026-06-30",
+    "expired_date": null,
     "credential_id": "E1SZVAVC8BSB",
     "credential_url": "https://coursera.org/verify/E1SZVAVC8BSB",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-013.pdf",
     "description": "Menyelesaikan sub-kursus dari Meta Front-End Developer Professional Certificate di Coursera yang berfokus kepada pemahaman materi dasar React. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": true,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-014",
     "title": "Introduction to AI",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-07-01",
+    "expired_date": null,
     "credential_id": "L9OP3VZT89JX",
     "credential_url": "https://coursera.org/verify/L9OP3VZT89JX",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-014.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-015",
     "title": "Maximize Productivity With AI Tools",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-07-05",
+    "expired_date": null,
     "credential_id": "Z161C4Q9VXS3",
     "credential_url": "https://coursera.org/verify/Z161C4Q9VXS3",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-015.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-016",
     "title": "Discover the Art of Prompting",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-07-08",
+    "expired_date": null,
     "credential_id": "9PXRGROQNI6B",
     "credential_url": "https://coursera.org/verify/9PXRGROQNI6B",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-016.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-017",
     "title": "Use AI Responsibly",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-07-09",
+    "expired_date": null,
     "credential_id": "40PPB0SCW6TP",
     "credential_url": "https://coursera.org/verify/40PPB0SCW6TP",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-017.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-018",
     "title": "Stay Ahead of the AI Curve",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-07-09",
+    "expired_date": null,
     "credential_id": "P1GD48X7PLT3",
     "credential_url": "https://coursera.org/verify/P1GD48X7PLT3",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-018.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-019",
     "title": "Google AI Essentials Specialization",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-07-09",
+    "expired_date": null,
     "credential_id": "HRUZ1HOC42KT",
     "credential_url": "https://coursera.org/verify/HRUZ1HOC42KT",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-019.pdf",
     "description": "",
     "is_featured": true,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-020",
     "title": "AI Fundamentals",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-07-10",
+    "expired_date": null,
     "credential_id": "1JZ9M3JDVXEF",
     "credential_url": "https://coursera.org/verify/1JZ9M3JDVXEF",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-020.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-021",
     "title": "AI for Brainstorming and Planning",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-08-03",
+    "expired_date": null,
     "credential_id": "HFBPXDIKG6JU",
     "credential_url": "https://coursera.org/verify/HFBPXDIKG6JU",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-021.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-022",
     "title": "AI for Research and Insights",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-08-03",
+    "expired_date": null,
     "credential_id": "P8078SDRI0O1",
     "credential_url": "https://coursera.org/verify/P8078SDRI0O1",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-022.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-023",
     "title": "Principles of UX/UI Design",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Meta",
     "issued_date": "2026-08-05",
+    "expired_date": null,
     "credential_id": "ADH10HV0EE4P",
     "credential_url": "https://coursera.org/verify/ADH10HV0EE4P",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-023.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-024",
     "title": "AI for Writing and Communicating",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-08-06",
+    "expired_date": null,
     "credential_id": "1A86DLSH7IJF",
     "credential_url": "https://coursera.org/verify/1A86DLSH7IJF",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-024.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-025",
     "title": "AI for Content Creation",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-08-06",
+    "expired_date": null,
     "credential_id": "Z9ZFBY82VMNT",
     "credential_url": "https://coursera.org/verify/Z9ZFBY82VMNT",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-025.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-026",
     "title": "AI for Data Analysis",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-08-06",
+    "expired_date": null,
     "credential_id": "F0U7SQLO1V8A",
     "credential_url": "https://coursera.org/verify/F0U7SQLO1V8A",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-026.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-027",
     "title": "AI for App Building",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-08-06",
+    "expired_date": null,
     "credential_id": "3WMBELNP9CYJ",
     "credential_url": "https://coursera.org/verify/3WMBELNP9CYJ",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-027.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-028",
     "title": "Google AI Professional Certificate",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-08-06",
+    "expired_date": null,
     "credential_id": "10C10AY77GJT",
     "credential_url": "https://coursera.org/verify/10C10AY77GJT",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-028.pdf",
     "description": "",
     "is_featured": true,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-029",
     "title": "Front-End Developer Capstone",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Meta",
     "issued_date": "2026-08-17",
+    "expired_date": null,
     "credential_id": "INFF5NX9L1BH",
     "credential_url": "https://coursera.org/verify/INFF5NX9L1BH",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-029.pdf",
     "description": "",
     "is_featured": true,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-030",
     "title": "Canva Design Fundamentals",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Coursera",
     "issued_date": "2026-08-20",
+    "expired_date": null,
     "credential_id": "IM2HB6JDA60A",
     "credential_url": "https://coursera.org/verify/IM2HB6JDA60A",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-030.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-031",
     "title": "Typography and Color Theory in Design with Canva",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Coursera",
     "issued_date": "2026-08-24",
+    "expired_date": null,
     "credential_id": "PC955G8Y6SG2",
     "credential_url": "https://coursera.org/verify/PC955G8Y6SG2",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-031.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-032",
     "title": "Brand Identity Design in Canva",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Coursera",
     "issued_date": "2026-09-17",
+    "expired_date": null,
     "credential_id": "JQLY80WBK2QC",
     "credential_url": "https://coursera.org/verify/JQLY80WBK2QC",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-032.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "CER-033",
     "title": "Foundations: Data, Data, Everywhere",
-    "type": "Kursus",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
     "issuer": "Google",
     "issued_date": "2026-09-27",
+    "expired_date": null,
     "credential_id": "CQZ50PKOWG57",
     "credential_url": "https://coursera.org/verify/CQZ50PKOWG57",
     "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-033.pdf",
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
+  },
+  {
+    "id": "CER-034",
+    "title": "Master Full-Stack Web Development with Laravel & PHP",
+    "type": "course",
+    "type_label": "Kursus",
+    "type_labels": {
+      "id": "Kursus",
+      "en": "Course"
+    },
+    "issuer": "Board Infinity",
+    "issued_date": "2026-10-03",
+    "expired_date": null,
+    "credential_id": "4Q0KCJU9U899",
+    "credential_url": "https://coursera.org/verify/4Q0KCJU9U899",
+    "file": "https://api.afrizahanif.com/storage/pdfs/certificates/CER-034.pdf",
+    "description": "",
+    "is_featured": false,
+    "deleted_at": null,
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   }
 ]

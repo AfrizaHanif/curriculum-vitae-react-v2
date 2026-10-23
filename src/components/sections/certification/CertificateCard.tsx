@@ -7,6 +7,7 @@ import Button from "@/components/ui/bootstrap/button";
 import { formatMonthYear } from "@/utils/date";
 import { useLanguage } from "@/context/LanguageContext";
 import { IssuerLogo } from "./cert-utils";
+import { getLocalizedText } from "@/utils/formatters";
 
 interface CertificateCardProps {
   certificate: Certificate;
@@ -31,7 +32,7 @@ export default function CertificateCard({
               className="bg-primary-subtle text-primary border border-primary-subtle px-2 py-1"
             >
               <i className="bi bi-award-fill me-1" />
-              {cert.type || t.sections.certification.card.defaultType}
+              {getLocalizedText(cert.type_labels, lang) || t.sections.certification.card.defaultType}
             </Badge>
 
             {/* Featured Badge */}

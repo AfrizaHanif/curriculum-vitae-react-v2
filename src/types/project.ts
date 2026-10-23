@@ -9,6 +9,8 @@ export interface Project {
   slug: string;
   category: string;
   type: string;
+  type_label?: string;
+  type_labels: LocalizedString;
   image?: string | null;
   gallery?: string[] | null;
   video?: string | null;

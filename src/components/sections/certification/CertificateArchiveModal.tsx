@@ -9,6 +9,7 @@ import Input from "@/components/forms/input";
 import { formatMonthYear } from "@/utils/date";
 import { useLanguage } from "@/context/LanguageContext";
 import { IssuerLogo } from "./cert-utils";
+import { getLocalizedText } from "@/utils/formatters";
 
 interface CertificateArchiveModalProps {
   certificates: Certificate[];
@@ -195,7 +196,7 @@ export default function CertificateArchiveModal({
                     </Badge>
                     {cert.type && (
                       <Badge className="bg-secondary border border-secondary">
-                        {cert.type}
+                        {getLocalizedText(cert.type_labels, lang)}
                       </Badge>
                     )}
                     {cert.credential_url && (

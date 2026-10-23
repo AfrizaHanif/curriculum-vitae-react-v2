@@ -4,7 +4,12 @@
     "portfolio_id": null,
     "title": "Web Delta Sari (Indah dan Baru)",
     "slug": "web-delta-sari-indah-dan-baru",
-    "type": "Personal Project",
+    "type": "personal",
+    "type_label": "Proyek Pribadi",
+    "type_labels": {
+      "id": "Proyek Pribadi",
+      "en": "Personal Project"
+    },
     "category": "Full-Stack Development",
     "image": "https://api.afrizahanif.com/storage/images/projects/PRJ-001.jpg",
     "gallery": null,
@@ -38,20 +43,25 @@
         "description": null,
         "progress": 75,
         "deleted_at": null,
-        "created_at": "2026-10-02T06:21:35.000000Z",
-        "updated_at": "2026-10-02T06:21:35.000000Z"
+        "created_at": "2026-10-23T03:36:18.000000Z",
+        "updated_at": "2026-10-23T03:36:18.000000Z"
       }
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:35.000000Z",
-    "updated_at": "2026-10-02T06:21:35.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "PRJ-002",
     "portfolio_id": null,
     "title": "Curriculum Vitae API",
     "slug": "curriculum-vitae-api",
-    "type": "Personal Project",
+    "type": "personal",
+    "type_label": "Proyek Pribadi",
+    "type_labels": {
+      "id": "Proyek Pribadi",
+      "en": "Personal Project"
+    },
     "category": "Backend Development",
     "image": "https://api.afrizahanif.com/storage/images/projects/PRJ-002.jpg",
     "gallery": null,
@@ -85,8 +95,8 @@
         "description": "Implementasi sistem autentikasi menggunakan Laravel Sanctum untuk keamanan aplikasi.",
         "progress": 100,
         "deleted_at": null,
-        "created_at": "2026-10-02T06:21:35.000000Z",
-        "updated_at": "2026-10-02T06:21:35.000000Z"
+        "created_at": "2026-10-23T03:36:18.000000Z",
+        "updated_at": "2026-10-23T03:36:18.000000Z"
       },
       {
         "id": "FEA-009",
@@ -96,20 +106,25 @@
         "description": "Implementasi endpoint untuk mengakses dan memanipulasi data melalui API.",
         "progress": 100,
         "deleted_at": null,
-        "created_at": "2026-10-02T06:21:35.000000Z",
-        "updated_at": "2026-10-02T06:21:35.000000Z"
+        "created_at": "2026-10-23T03:36:18.000000Z",
+        "updated_at": "2026-10-23T03:36:18.000000Z"
       }
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:35.000000Z",
-    "updated_at": "2026-10-02T06:21:35.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   },
   {
     "id": "PRJ-003",
     "portfolio_id": null,
     "title": "Interactive Curriculum Vitae Web",
     "slug": "interactive-curriculum-vitae-web",
-    "type": "Personal Project",
+    "type": "personal",
+    "type_label": "Proyek Pribadi",
+    "type_labels": {
+      "id": "Proyek Pribadi",
+      "en": "Personal Project"
+    },
     "category": "Front-End Development",
     "image": "https://api.afrizahanif.com/storage/images/projects/PRJ-003.jpg",
     "gallery": null,
@@ -143,8 +158,8 @@
         "description": "Implementasi sistem switching bahasa, navigasi halus, serta konsumsi data API terpusat.",
         "progress": 85,
         "deleted_at": null,
-        "created_at": "2026-10-02T06:21:35.000000Z",
-        "updated_at": "2026-10-02T06:21:35.000000Z"
+        "created_at": "2026-10-23T03:36:18.000000Z",
+        "updated_at": "2026-10-23T03:36:18.000000Z"
       },
       {
         "id": "FEA-011",
@@ -154,8 +169,8 @@
         "description": "Antarmuka pengguna yang responsif, animasi halus, dan navigasi intuitif untuk pengalaman pengguna yang optimal di berbagai perangkat.",
         "progress": 90,
         "deleted_at": null,
-        "created_at": "2026-10-02T06:21:35.000000Z",
-        "updated_at": "2026-10-02T06:21:35.000000Z"
+        "created_at": "2026-10-23T03:36:18.000000Z",
+        "updated_at": "2026-10-23T03:36:18.000000Z"
       },
       {
         "id": "FEA-012",
@@ -165,12 +180,12 @@
         "description": "Integrasi dengan CV API untuk menyediakan konten dinamis dan terstruktur di seluruh halaman web.",
         "progress": 100,
         "deleted_at": null,
-        "created_at": "2026-10-02T06:21:35.000000Z",
-        "updated_at": "2026-10-02T06:21:35.000000Z"
+        "created_at": "2026-10-23T03:36:18.000000Z",
+        "updated_at": "2026-10-23T03:36:18.000000Z"
       }
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:35.000000Z",
-    "updated_at": "2026-10-02T06:21:35.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   }
 ]

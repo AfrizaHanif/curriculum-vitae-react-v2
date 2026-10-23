@@ -1,10 +1,12 @@
-import type { ApiResponse } from "./api";
+import type { ApiResponse, LocalizedString } from "./api";
 
 export interface Certificate {
   id?: string;
   profile_id?: string;
   title: string;
   type: string;
+  type_label?: string;
+  type_labels: LocalizedString;
   issuer?: string | null;
 
   /**

@@ -1,4 +1,4 @@
-import type { ApiResponse } from "./api";
+import type { ApiResponse, LocalizedString } from "./api";
 
 export interface Blog {
   id?: string;
@@ -6,6 +6,8 @@ export interface Blog {
   title: string;
   slug: string;
   category?: string;
+  category_label?: string;
+  category_labels: LocalizedString;
   author: string;
   tags?: string[] | null;
   summary: string;
