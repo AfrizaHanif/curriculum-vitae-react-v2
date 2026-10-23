@@ -8,8 +8,8 @@
       "Komputer ini digunakan untuk melakukan pemrograman dengan cepat dan stabil tanpa bottleneck"
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "SET-002",
@@ -20,8 +20,8 @@
       "Menghasilkan layar yang cukup luas untuk melakukan multitasking saat melakukan pengerjaan"
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "SET-003",
@@ -32,8 +32,8 @@
       "Ringkas dan nyaman. Layout keyboard ini beradaptasi dengan keyboard laptop 14 inch"
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "SET-004",
@@ -44,8 +44,8 @@
       "Ringkas dan hening tanpa mengganggu aktivitas"
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "SET-005",
@@ -56,8 +56,8 @@
       "Laptop ini digunakan untuk melakukan programming dimana saja saat bepergian"
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "SET-006",
@@ -68,8 +68,8 @@
       "Ergonomic dan hening tanpa mengganggu aktivitas orang lain."
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "SET-007",
@@ -78,8 +78,8 @@
     "description": "Samsung Galaxy A54 5G",
     "reason": null,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "SET-008",
@@ -88,8 +88,8 @@
     "description": "Samsung Galaxy Fit3",
     "reason": null,
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "SET-009",
@@ -100,8 +100,8 @@
       "Cepat, dapat disesuaikan dengan ekosistem ekstensi yang luas, dan memiliki dukungan bawaan yang hebat untuk banyak bahasa pemrograman yang saya gunakan"
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "SET-010",
@@ -112,8 +112,8 @@
       "Terminal modern yang mendukung banyak tab, panel, dan profil. PowerShell sangat kuat untuk scripting dan otomatisasi di Windows"
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "SET-011",
@@ -124,8 +124,8 @@
       "Saya menggunakan Google Chrome karena alat pengembangnya yang tangguh dan kompatibilitasnya yang luas, dan Firefox Developer Edition karena inspector CSS grid-nya yang luar biasa dan fitur privasinya"
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "SET-012",
@@ -136,7 +136,7 @@
       "Sebuah alat yang tak tergantikan untuk menguji dan berinteraksi dengan API. Alat ini dapat menyederhanakan proses pengiriman permintaan dan pemeriksaan respons"
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:34.000000Z",
-    "updated_at": "2026-10-02T06:21:34.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   }
 ]

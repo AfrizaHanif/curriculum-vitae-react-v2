@@ -17,8 +17,8 @@
     "description": "Menyelesaikan kursus pengembangan web (Full-Stack) dengan total 62 jam materi. Mempelajari teknologi HTML5, CSS3, JavaScript, React, dan SQL.",
     "is_featured": true,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-002",
@@ -38,8 +38,8 @@
     "description": "Menyelesaikan kursus JavaScript dengan total 71 jam materi. Mempelajari teknologi JavaScript (ES6+) untuk kebutuhan frontend framework (Seperti: React, Angular, Vue.js).",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-003",
@@ -59,8 +59,8 @@
     "description": "Menyelesaikan modul Micro Skill Digitalent yang berfokus pada dasar-dasar pemrograman. Pembelajaran mencakup konsep pemrograman seperti tipe data, variabel, struktur kontrol, pemrograman prosedural dan Object Oriented Programming, serta penanganan error. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat mengenai dasar-dasar pemrograman.",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-004",
@@ -80,8 +80,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-005",
@@ -101,8 +101,8 @@
     "description": "Menyelesaikan modul Micro Skill Digitalent yang berfokus pada mindset digital. Pembelajaran mencakup pengantar mindset digital seperti mindset digital yang diperlukan untuk menghadapi tantangan era transformasi digital melalui pengantar mindset digital, apa itu mindset digital, kenapa penting mindset digital dan elemen kunci mindset digital serta bagaimana cara membangun mindset digital. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-006",
@@ -122,8 +122,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-007",
@@ -143,8 +143,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-008",
@@ -164,8 +164,8 @@
     "description": "Menyelesaikan sub-kursus dari Meta Front-End Developer Professional Certificate di Coursera yang berfokus kepada pengenalan programming front-end. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-009",
@@ -185,8 +185,8 @@
     "description": "Menyelesaikan sub-kursus dari Meta Front-End Developer Professional Certificate di Coursera yang berfokus kepada pemahaman materi dasar pemrograman Javascript. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-010",
@@ -206,8 +206,8 @@
     "description": "Menyelesaikan sub-kursus dari Meta Front-End Developer Professional Certificate di Coursera yang berfokus kepada pemahaman materi dasar Git. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-011",
@@ -227,8 +227,8 @@
     "description": "Menyelesaikan sub-kursus dari Meta Front-End Developer Professional Certificate di Coursera yang berfokus kepada pemahaman materi dasar HTML dan CSS. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-012",
@@ -248,8 +248,8 @@
     "description": "Menyelesaikan sub-kursus dari Meta Front-End Developer Professional Certificate di Coursera yang berfokus kepada pemahaman materi dasar React. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": true,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-013",
@@ -269,8 +269,8 @@
     "description": "Menyelesaikan sub-kursus dari Meta Front-End Developer Professional Certificate di Coursera yang berfokus kepada pemahaman materi dasar React. Berhasil lulus dari ujian akhir dengan pemahaman yang kuat.",
     "is_featured": true,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-014",
@@ -290,8 +290,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-015",
@@ -311,8 +311,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-016",
@@ -332,8 +332,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-017",
@@ -353,8 +353,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-018",
@@ -374,8 +374,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-019",
@@ -395,8 +395,8 @@
     "description": "",
     "is_featured": true,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-020",
@@ -416,8 +416,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-021",
@@ -437,8 +437,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-022",
@@ -458,8 +458,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-023",
@@ -479,8 +479,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-024",
@@ -500,8 +500,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-025",
@@ -521,8 +521,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-026",
@@ -542,8 +542,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-027",
@@ -563,8 +563,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-028",
@@ -584,8 +584,8 @@
     "description": "",
     "is_featured": true,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-029",
@@ -605,8 +605,8 @@
     "description": "",
     "is_featured": true,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-030",
@@ -626,8 +626,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-031",
@@ -647,8 +647,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-032",
@@ -668,8 +668,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-033",
@@ -689,8 +689,8 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   },
   {
     "id": "CER-034",
@@ -710,7 +710,7 @@
     "description": "",
     "is_featured": false,
     "deleted_at": null,
-    "created_at": "2026-10-23T03:36:18.000000Z",
-    "updated_at": "2026-10-23T03:36:18.000000Z"
+    "created_at": "2026-10-23T09:24:23.000000Z",
+    "updated_at": "2026-10-23T09:24:23.000000Z"
   }
 ]
