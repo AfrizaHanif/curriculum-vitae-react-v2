@@ -3,10 +3,10 @@
     "id": "PRO-001",
     "fullname": "Muhammad Afriza Hanif",
     "fullname_with_title": "Muhammad Afriza Hanif, S.Kom",
-    "phone": "+6287-XXXX-6650",
+    "phone": "+6281-XXXX-7890",
     "current_city": "Sidoarjo",
     "current_province": "Jawa Timur",
-    "email": "afrizahanif728@gmail.com",
+    "email": "contact@example.com",
     "age": 30,
     "tagline": {
       "id": "Junior Web Developer | Full-Stack Enthusiast | Berdedikasi Membangun Solusi Digital Berdampak",
@@ -27,6 +27,8 @@
     "resume": {
       "id": "https://api.afrizahanif.com/storage/pdfs/CV_Muhammad_Afriza_Hanif_ID.pdf",
       "en": "https://api.afrizahanif.com/storage/pdfs/CV_Muhammad_Afriza_Hanif_EN.pdf"
-    }
+    },
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   }
 ]

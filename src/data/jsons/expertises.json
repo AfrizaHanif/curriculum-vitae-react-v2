@@ -12,7 +12,12 @@
         "id": "POR-001",
         "title": "Rancang Bangun Aplikasi Pelayanan Perpustakaan pada Badan Pusat Statistik Provinsi Jawa Timur",
         "slug": "rancang-bangun-aplikasi-pelayanan-perpustakaan-pada-badan-pusat-statistik-provinsi-jawa-timur",
-        "type": "Proyek Akademik",
+        "type": "academic",
+        "type_label": "Proyek Akademik",
+        "type_labels": {
+          "id": "Proyek Akademik",
+          "en": "Academic Project"
+        },
         "category": "Full-Stack Development",
         "image": "https://api.afrizahanif.com/storage/images/portfolios/POR-001.png",
         "gallery": [
@@ -68,14 +73,19 @@
         ],
         "demo_url": null,
         "deleted_at": null,
-        "created_at": "2026-10-02T06:21:34.000000Z",
-        "updated_at": "2026-10-02T06:21:34.000000Z"
+        "created_at": "2026-10-23T03:36:18.000000Z",
+        "updated_at": "2026-10-23T03:36:18.000000Z"
       },
       {
         "id": "POR-002",
         "title": "Rancang Bangun Aplikasi Penentuan Karyawan Terbaik Berbasis Web menggunakan Metode Simple Additive Weighting (SAW) pada BPS Provinsi Jawa Timur",
         "slug": "rancang-bangun-aplikasi-penentuan-karyawan-terbaik-berbasis-web-menggunakan-metode-simple-additive-weighting-saw-pada-bps-provinsi-jawa-timur",
-        "type": "Proyek Akademik",
+        "type": "academic",
+        "type_label": "Proyek Akademik",
+        "type_labels": {
+          "id": "Proyek Akademik",
+          "en": "Academic Project"
+        },
         "category": "Full-Stack Development",
         "image": "https://api.afrizahanif.com/storage/images/portfolios/POR-002.png",
         "gallery": [
@@ -140,12 +150,12 @@
         ],
         "demo_url": null,
         "deleted_at": null,
-        "created_at": "2026-10-02T06:21:34.000000Z",
-        "updated_at": "2026-10-02T06:21:34.000000Z"
+        "created_at": "2026-10-23T03:36:18.000000Z",
+        "updated_at": "2026-10-23T03:36:18.000000Z"
       }
     ],
     "deleted_at": null,
-    "created_at": "2026-10-02T06:21:35.000000Z",
-    "updated_at": "2026-10-02T06:21:35.000000Z"
+    "created_at": "2026-10-23T03:36:18.000000Z",
+    "updated_at": "2026-10-23T03:36:18.000000Z"
   }
 ]
