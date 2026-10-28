@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/react/icons";
 
 export function renderSkillIcon(name: string) {
+  // Normalize the name to lowercase for easier matching
   const n = name.toLowerCase();
 
   // Using custom SVG icons for some technologies

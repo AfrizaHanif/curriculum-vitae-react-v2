@@ -33,6 +33,7 @@ export default function TechnologyBadges({
           {tech}
         </Badge>
       ))}
+
       {/* Showing remaining technologies */}
       {remaining > 0 && (
         <Badge pill className="bg-body-tertiary text-muted border">

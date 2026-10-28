@@ -115,6 +115,7 @@ export default function TimelineItem({
 
       {/* Content Card */}
       <article className="timeline-card">
+        {/* Year and Status */}
         <div className="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
           {/* Year Badge */}
           <Badge

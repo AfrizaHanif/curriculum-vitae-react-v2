@@ -12,7 +12,10 @@ interface SkillCardProps {
 }
 
 export default function SkillCard({ skill }: SkillCardProps) {
+  // Get Language & Translation Context
   const { lang } = useLanguage();
+
+  // Get the localized label text for the skill type/category
   const labelText =
     getLocalizedText(skill.type_labels, lang) ||
     skill.type_label ||

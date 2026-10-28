@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { useFetch } from "@/hooks/useFetch";
 import { sortByLatestPeriod } from "@/utils/date";
 import { ApiResponse } from "@/types/api";
@@ -20,7 +21,6 @@ import "./timeline.css";
 import { useLanguage } from "@/context/LanguageContext";
 import fallbackEducations from "@/data/jsons/educations.json";
 import fallbackExperiences from "@/data/jsons/experiences.json";
-import dynamic from "next/dynamic";
 import { getApiUrl } from "@/config/siteConfig";
 import { getLocalizedText } from "@/utils/formatters";
 
@@ -28,7 +28,6 @@ interface TimelineTabContentProps {
   isLoading: boolean;
   error: Error | null;
   itemsCount: number;
-  loadingLabel?: string;
   errorLabel: string;
   emptyLabel: string;
   children: ReactNode;
@@ -109,7 +108,6 @@ export default function EduExpSection() {
           isLoading={eduLoading}
           error={eduError}
           itemsCount={educations.length}
-          loadingLabel={t.sections.eduExp.loadingEducation}
           errorLabel={t.sections.eduExp.errorEducation}
           emptyLabel={t.sections.eduExp.emptyEducation}
         >
@@ -149,7 +147,6 @@ export default function EduExpSection() {
           isLoading={expLoading}
           error={expError}
           itemsCount={experiences.length}
-          loadingLabel={t.sections.eduExp.loadingExperience}
           errorLabel={t.sections.eduExp.errorExperience}
           emptyLabel={t.sections.eduExp.emptyExperience}
         >

@@ -25,10 +25,6 @@ export default function GlobalError({
         <div className="container" style={{ maxWidth: "560px" }}>
           <div className="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-center bg-body">
             <div className="mb-3">
-              {/* <span className="badge text-bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-3 py-2 fw-semibold text-uppercase">
-                <i className="bi bi-exclamation-triangle-fill me-1.5" />
-                Critical Error
-              </span> */}
               <Badge
                 color="danger"
                 className="px-3 py-2 fw-semibold text-uppercase tracking-wider"
@@ -64,14 +60,6 @@ export default function GlobalError({
             </p>
 
             <div className="d-flex flex-wrap justify-content-center gap-2">
-              {/* <button
-                type="button"
-                className="btn btn-primary rounded-pill px-4 py-2"
-                onClick={() => reset()}
-              >
-                <i className="bi bi-arrow-clockwise me-1.5" />
-                Try Again
-              </button> */}
               <Button
                 color="primary"
                 rounded
@@ -81,13 +69,6 @@ export default function GlobalError({
                 <i className="bi bi-arrow-clockwise me-1.5" />
                 Try Again
               </Button>
-              {/* <Link
-                href="/"
-                className="btn btn-outline-secondary rounded-pill px-4 py-2"
-              >
-                <i className="bi bi-house me-1.5" />
-                Back to Home
-              </Link> */}
               <Link href="/">
                 <Button color="outline-secondary" rounded className="px-4 py-2">
                   <i className="bi bi-house me-2" />

@@ -35,6 +35,7 @@ export default function TestimonialSection() {
         subtitle={t.sections.testimonial.subtitle}
       />
 
+      {/* Testimonials Grid */}
       <div className="mt-4">
         {isLoading ? (
           <TestimonialGridSkeleton count={3} />

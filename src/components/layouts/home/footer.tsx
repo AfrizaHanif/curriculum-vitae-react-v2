@@ -7,7 +7,6 @@ import { useFetch } from "@/hooks/useFetch";
 import { SocialApiResponse } from "@/types/social";
 import Tooltip from "../../ui/bootstrap/tooltip";
 import Image from "next/image";
-// import logoSite from "@/assets/images/logo/logo-only-white.png";
 import logoWhite from "@/assets/images/logo/logo-only-white.png";
 import logoBlack from "@/assets/images/logo/logo-only-black.png";
 import fallbackSocials from "@/data/jsons/socials.json";
@@ -76,7 +75,6 @@ export default function Footer({ className = "", style }: FooterProps) {
               width={24}
               height={24}
               className="object-fit-contain logo-light"
-              // priority
               loading="lazy"
             />
             <Image
@@ -85,7 +83,6 @@ export default function Footer({ className = "", style }: FooterProps) {
               width={24}
               height={24}
               className="object-fit-contain logo-dark"
-              // priority
               loading="lazy"
             />
           </Link>

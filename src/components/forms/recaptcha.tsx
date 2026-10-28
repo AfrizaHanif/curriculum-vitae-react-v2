@@ -11,7 +11,7 @@
 
 "use client";
 
-import React, {
+import {
   useEffect,
   useRef,
   useImperativeHandle,

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Portfolio, Repository } from "@/types/portfolio";
 import Card from "@/components/ui/bootstrap/card";
 import Badge from "@/components/ui/bootstrap/badge";
@@ -22,6 +22,7 @@ export default function PortfolioCard({
   repositories = [],
   onOpenDetails,
 }: PortfolioCardProps) {
+  // Get Language & Translation Context
   const { t, lang } = useLanguage();
   const [isRepoOpen, setIsRepoOpen] = useState(false);
 
@@ -30,6 +31,7 @@ export default function PortfolioCard({
     (repo) => (repo.url || "").trim().length > 0,
   );
 
+  // Map valid repositories to dropdown items
   const repoDropdownItems: DropdownItem[] = validRepositories.map((repo) => {
     const iconClass = repo.icon
       ? repo.icon.startsWith("bi-") || repo.icon.startsWith("bi ")
@@ -77,6 +79,7 @@ export default function PortfolioCard({
               {portfolio.category || portfolio.type || "Portfolio"}
             </span>
           </Badge>
+
           {/* Date */}
           <small className="text-muted text-nowrap flex-shrink-0">
             <i className="bi bi-calendar3 me-1" />
@@ -105,6 +108,7 @@ export default function PortfolioCard({
               </span>
             )}
           </span>
+
           {/* Dropdown */}
           <div className="d-flex align-items-center gap-2">
             {repoDropdownItems.length > 0 && (

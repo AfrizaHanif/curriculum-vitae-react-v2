@@ -11,6 +11,7 @@ interface HeroSocialsProps {
 }
 
 export default function HeroSocials({ socials }: HeroSocialsProps) {
+  // Access the translation function
   const { t } = useLanguage();
 
   if (socials.length === 0) return null;
@@ -25,6 +26,7 @@ export default function HeroSocials({ socials }: HeroSocialsProps) {
         <li>
           <small className="text-white-75 me-2">{t.hero.connect}</small>
         </li>
+
         {/* Social media buttons */}
         {socials.map((social) => (
           <li key={social.id}>

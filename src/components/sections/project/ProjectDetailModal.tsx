@@ -43,6 +43,7 @@ export default function ProjectDetailModal({
   onClose,
   onOpenCaseStudy,
 }: ProjectDetailModalProps) {
+  // Get Language & Translation Context
   const { t, lang } = useLanguage();
   const dateLocale = lang === "id" ? "id-ID" : "en-US";
   const isPortfolio = type === "portfolio";
@@ -85,19 +86,19 @@ export default function ProjectDetailModal({
     null,
   );
 
+  // Handle modal close
   const handleModalClose = () => {
     setActiveLightboxIndex(null);
     onClose();
   };
 
+  // Filter valid repositories
   const validRepositories = useMemo(
-    () =>
-      repositories.filter(
-        (repo) => (repo.url || "").trim().length > 0,
-      ),
+    () => repositories.filter((repo) => (repo.url || "").trim().length > 0),
     [repositories],
   );
 
+  // Prepare action items for dropdown menu
   const actionItems: DropdownItem[] = useMemo(() => {
     const items: DropdownItem[] = [];
 
@@ -107,10 +108,7 @@ export default function ProjectDetailModal({
         label: t.sections.projects.modal.viewCaseStudy,
         icon: "bi bi-journal-richtext text-success",
         onClick: () => {
-          onOpenCaseStudy(
-            caseStudy,
-            getLocalizedText(item.title, lang),
-          );
+          onOpenCaseStudy(caseStudy, getLocalizedText(item.title, lang));
         },
       });
     }
@@ -126,6 +124,7 @@ export default function ProjectDetailModal({
       });
     }
 
+    // Check if there's a code section to display
     const hasCodeSection =
       (isPortfolio && validRepositories.length > 0) ||
       (!isPortfolio && (projectItem?.is_private || projectItem?.source_code));
@@ -190,9 +189,9 @@ export default function ProjectDetailModal({
     validRepositories,
   ]);
 
-  //
   if (!item) return null;
 
+  // Resolve title for modal
   const resolvedTitle =
     getLocalizedText(item.title, lang) ||
     t.sections.projects.modal.titleDefault;
@@ -204,335 +203,343 @@ export default function ProjectDetailModal({
         show={show}
         onClose={handleModalClose}
         title={resolvedTitle}
-      size="lg"
-      fullscreen="sm-down"
-      scrollable
-      centered
-      footerClassName="d-flex justify-content-between align-items-center"
-      buttonItems={[
-        ...(actionItems.length > 0
-          ? [
-              {
-                custom: (
-                  <Dropdown
-                    direction="up"
-                    size="sm"
-                    buttonColor="outline-primary"
-                    buttonClass="px-3 d-inline-flex align-items-center gap-2"
-                    items={actionItems}
-                  >
-                    <i className="bi bi-grid" />
-                    <span>{t.sections.projects.modal.actions}</span>
-                  </Dropdown>
-                ),
-              },
-            ]
-          : []),
-        {
-          label: t.common.close,
-          color: "secondary" as const,
-          size: "sm" as const,
-          className: "px-4 ms-auto",
-          dismiss: true,
-        },
-      ]}
-    >
-      <div className="p-1">
-        {/* Full Project Title in Content Flow */}
-        <h4 className="fw-bold mb-3 text-break d-block">
-          {resolvedTitle}
-        </h4>
+        size="lg"
+        fullscreen="sm-down"
+        scrollable
+        centered
+        footerClassName="d-flex justify-content-between align-items-center"
+        buttonItems={[
+          ...(actionItems.length > 0
+            ? [
+                {
+                  custom: (
+                    <Dropdown
+                      direction="up"
+                      size="sm"
+                      buttonColor="outline-primary"
+                      buttonClass="px-3 d-inline-flex align-items-center gap-2"
+                      items={actionItems}
+                    >
+                      <i className="bi bi-grid" />
+                      <span>{t.sections.projects.modal.actions}</span>
+                    </Dropdown>
+                  ),
+                },
+              ]
+            : []),
+          {
+            label: t.common.close,
+            color: "secondary" as const,
+            size: "sm" as const,
+            className: "px-4 ms-auto",
+            dismiss: true,
+          },
+        ]}
+      >
+        <div className="p-1">
+          {/* Full Project Title in Content Flow */}
+          <h4 className="fw-bold mb-3 text-break d-block">{resolvedTitle}</h4>
 
-        {/* Visual Media Showcase */}
-        {galleryImages.length > 1 ? (
-          <Carousel
-            id="project-detail-carousel"
-            items={galleryImages.map((img, idx) => ({
-              image: img,
-              alt: `${item.title} screenshot ${idx + 1}`,
-            }))}
-            width={1200}
-            height={675}
-            className="rounded-3 overflow-hidden mb-4 shadow-sm controls-inset"
-            hoverControlsOnly
-            showSpinner
-            showSkeleton
-            onSlideClick={(idx) => setActiveLightboxIndex(idx)}
-            placeholder="blur"
-            blurDataURL={getShimmerDataUrl(1200, 675)}
-          />
-        ) : galleryImages.length === 1 ? (
-          <div
-            className="position-relative rounded-3 overflow-hidden mb-4 shadow-sm border bg-body-secondary bg-opacity-25"
-            style={{ cursor: "zoom-in" }}
-            onClick={() => setActiveLightboxIndex(0)}
-          >
-            <NextImage
-              src={galleryImages[0]}
-              alt={getLocalizedText(item.title, lang)}
+          {/* Visual Media Showcase */}
+          {galleryImages.length > 1 ? (
+            <Carousel
+              id="project-detail-carousel"
+              items={galleryImages.map((img, idx) => ({
+                image: img,
+                alt: `${item.title} screenshot ${idx + 1}`,
+              }))}
               width={1200}
               height={675}
-              placeholder="blur"
-              blurDataURL={getShimmerDataUrl(1200, 675)}
-              className="w-100 h-auto"
-              style={{
-                aspectRatio: "16 / 9",
-                objectFit: "cover",
-                objectPosition: "top",
-                cursor: "zoom-in",
-              }}
-              loading="lazy"
+              className="rounded-3 overflow-hidden mb-4 shadow-sm controls-inset"
+              hoverControlsOnly
               showSpinner
               showSkeleton
-              responsive
-              wrapperClassName="w-100 d-block"
+              onSlideClick={(idx) => setActiveLightboxIndex(idx)}
+              placeholder="blur"
+              blurDataURL={getShimmerDataUrl(1200, 675)}
             />
-          </div>
-        ) : null}
+          ) : galleryImages.length === 1 ? (
+            <div
+              className="position-relative rounded-3 overflow-hidden mb-4 shadow-sm border bg-body-secondary bg-opacity-25"
+              style={{ cursor: "zoom-in" }}
+              onClick={() => setActiveLightboxIndex(0)}
+            >
+              <NextImage
+                src={galleryImages[0]}
+                alt={getLocalizedText(item.title, lang)}
+                width={1200}
+                height={675}
+                placeholder="blur"
+                blurDataURL={getShimmerDataUrl(1200, 675)}
+                className="w-100 h-auto"
+                style={{
+                  aspectRatio: "16 / 9",
+                  objectFit: "cover",
+                  objectPosition: "top",
+                  cursor: "zoom-in",
+                }}
+                loading="lazy"
+                showSpinner
+                showSkeleton
+                responsive
+                wrapperClassName="w-100 d-block"
+              />
+            </div>
+          ) : null}
 
-        {/* Badges & Meta Info Row */}
-        <div className="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center gap-2 mb-3">
-          <div className="d-flex flex-wrap align-items-center gap-2">
-            {item.category && (
-              <Badge
-                pill
-                className="bg-primary-subtle text-primary border border-primary-subtle px-3 py-1"
-              >
-                <i className="bi bi-tag-fill me-1" />
-                {item.category}
-              </Badge>
-            )}
+          {/* Badges & Meta Info Row */}
+          <div className="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center gap-2 mb-3">
+            <div className="d-flex flex-wrap align-items-center gap-2">
+              {item.category && (
+                <Badge
+                  pill
+                  className="bg-primary-subtle text-primary border border-primary-subtle px-3 py-1"
+                >
+                  <i className="bi bi-tag-fill me-1" />
+                  {item.category}
+                </Badge>
+              )}
 
-            {item.type && (
-              <Badge pill color="secondary" subtle className="px-3 py-1">
-                {getLocalizedText(item.type_labels, lang)}
-              </Badge>
-            )}
+              {item.type && (
+                <Badge pill color="secondary" subtle className="px-3 py-1">
+                  {getLocalizedText(item.type_labels, lang)}
+                </Badge>
+              )}
 
-            {projectStatusLabel && (
-              <Badge
-                pill
-                color={getProjectStatusColor(normalizedStatusKey || rawStatus)}
-                subtle
-                className="px-3 py-1"
-              >
-                <i className="bi bi-circle-fill me-1 small" />
-                {projectStatusLabel}
-              </Badge>
-            )}
-          </div>
+              {projectStatusLabel && (
+                <Badge
+                  pill
+                  color={getProjectStatusColor(
+                    normalizedStatusKey || rawStatus,
+                  )}
+                  subtle
+                  className="px-3 py-1"
+                >
+                  <i className="bi bi-circle-fill me-1 small" />
+                  {projectStatusLabel}
+                </Badge>
+              )}
+            </div>
 
-          <Badge
-            pill
-            className="bg-body-tertiary text-muted border px-3 py-1 align-self-start align-self-sm-auto flex-shrink-0"
-          >
-            <i className="bi bi-calendar3 me-1" />
-            <time dateTime={item.start_period}>
-              {formatMonthYear(item.start_period, dateLocale, t.common.present)}
-            </time>{" "}
-            &mdash;{" "}
-            {item.finish_period ? (
-              <time dateTime={item.finish_period}>
+            <Badge
+              pill
+              className="bg-body-tertiary text-muted border px-3 py-1 align-self-start align-self-sm-auto flex-shrink-0"
+            >
+              <i className="bi bi-calendar3 me-1" />
+              <time dateTime={item.start_period}>
                 {formatMonthYear(
-                  item.finish_period,
+                  item.start_period,
                   dateLocale,
                   t.common.present,
                 )}
-              </time>
-            ) : (
-              formatMonthYear(item.finish_period, dateLocale, t.common.present)
-            )}
-          </Badge>
-        </div>
-
-        {/* Delay Warning if applicable */}
-        {projectItem?.delay_reason && (
-          <Alert
-            color="warning"
-            className="d-flex align-items-start gap-2 mb-4 py-2 px-3 rounded-3"
-          >
-            <i className="bi bi-exclamation-triangle-fill mt-1 text-warning" />
-            <div>
-              <div className="fw-semibold small">
-                {t.sections.projects.modal.timelineNote}
-              </div>
-              <div className="small">{projectItem.delay_reason}</div>
-              {projectItem.resume_date && (
-                <div className="small text-muted mt-1">
-                  {t.sections.projects.modal.expectedResumption.replace(
-                    "{date}",
-                    formatMonthYear(
-                      projectItem.resume_date,
-                      dateLocale,
-                      t.common.present,
-                    ),
+              </time>{" "}
+              &mdash;{" "}
+              {item.finish_period ? (
+                <time dateTime={item.finish_period}>
+                  {formatMonthYear(
+                    item.finish_period,
+                    dateLocale,
+                    t.common.present,
                   )}
+                </time>
+              ) : (
+                formatMonthYear(
+                  item.finish_period,
+                  dateLocale,
+                  t.common.present,
+                )
+              )}
+            </Badge>
+          </div>
+
+          {/* Delay Warning if applicable */}
+          {projectItem?.delay_reason && (
+            <Alert
+              color="warning"
+              className="d-flex align-items-start gap-2 mb-4 py-2 px-3 rounded-3"
+            >
+              <i className="bi bi-exclamation-triangle-fill mt-1 text-warning" />
+              <div>
+                <div className="fw-semibold small">
+                  {t.sections.projects.modal.timelineNote}
                 </div>
+                <div className="small">{projectItem.delay_reason}</div>
+                {projectItem.resume_date && (
+                  <div className="small text-muted mt-1">
+                    {t.sections.projects.modal.expectedResumption.replace(
+                      "{date}",
+                      formatMonthYear(
+                        projectItem.resume_date,
+                        dateLocale,
+                        t.common.present,
+                      ),
+                    )}
+                  </div>
+                )}
+              </div>
+            </Alert>
+          )}
+
+          {/* Description */}
+          <div className="mb-4">
+            <h6 className="fw-bold text-body-secondary text-uppercase small mb-2">
+              {t.sections.projects.modal.overview}
+            </h6>
+            <p
+              className="text-body"
+              style={{
+                whiteSpace: "pre-line",
+                lineHeight: "1.7",
+              }}
+            >
+              {getLocalizedText(item.description, lang)}
+            </p>
+          </div>
+
+          {/* Video Walkthrough (if available) */}
+          {item.video && (
+            <div className="mb-4">
+              <h6 className="fw-bold text-body-secondary text-uppercase small mb-2 d-flex align-items-center gap-2">
+                <i className="bi bi-camera-video-fill text-danger" />
+                {t.sections.projects.modal.walkthrough}
+              </h6>
+              {youtubeEmbedUrl ? (
+                <div className="ratio ratio-16x9 rounded-3 overflow-hidden border shadow-sm">
+                  <iframe
+                    src={youtubeEmbedUrl}
+                    title={`${getLocalizedText(item.title, lang)} Video Walkthrough`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                  />
+                </div>
+              ) : (
+                <Button
+                  as="a"
+                  href={item.video}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  color="outline-danger"
+                  size="sm"
+                  rounded
+                  className="px-3 d-inline-flex align-items-center gap-2"
+                >
+                  <i className="bi bi-play-circle-fill" />
+                  <span>{t.sections.projects.modal.watchVideo}</span>
+                  <i className="bi bi-box-arrow-up-right small" />
+                </Button>
               )}
             </div>
-          </Alert>
-        )}
+          )}
 
-        {/* Description */}
-        <div className="mb-4">
-          <h6 className="fw-bold text-body-secondary text-uppercase small mb-2">
-            {t.sections.projects.modal.overview}
-          </h6>
-          <p
-            className="text-body"
-            style={{
-              whiteSpace: "pre-line",
-              lineHeight: "1.7",
-            }}
-          >
-            {getLocalizedText(item.description, lang)}
-          </p>
-        </div>
-
-        {/* Video Walkthrough (if available) */}
-        {item.video && (
-          <div className="mb-4">
-            <h6 className="fw-bold text-body-secondary text-uppercase small mb-2 d-flex align-items-center gap-2">
-              <i className="bi bi-camera-video-fill text-danger" />
-              {t.sections.projects.modal.walkthrough}
-            </h6>
-            {youtubeEmbedUrl ? (
-              <div className="ratio ratio-16x9 rounded-3 overflow-hidden border shadow-sm">
-                <iframe
-                  src={youtubeEmbedUrl}
-                  title={`${getLocalizedText(item.title, lang)} Video Walkthrough`}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  referrerPolicy="strict-origin-when-cross-origin"
-                />
+          {/* Technologies */}
+          {item.technology && item.technology.length > 0 && (
+            <div className="mb-4">
+              <h6 className="fw-bold text-body-secondary text-uppercase small mb-2">
+                {t.sections.projects.modal.technologies}
+              </h6>
+              <div className="d-flex flex-wrap gap-2">
+                {item.technology.map((tech, idx) => (
+                  <Badge
+                    key={idx}
+                    pill
+                    className="bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 fw-normal"
+                  >
+                    <i className="bi bi-code-slash me-1" />
+                    {tech}
+                  </Badge>
+                ))}
               </div>
-            ) : (
-              <Button
-                as="a"
-                href={item.video}
-                target="_blank"
-                rel="noopener noreferrer"
-                color="outline-danger"
-                size="sm"
-                rounded
-                className="px-3 d-inline-flex align-items-center gap-2"
-              >
-                <i className="bi bi-play-circle-fill" />
-                <span>{t.sections.projects.modal.watchVideo}</span>
-                <i className="bi bi-box-arrow-up-right small" />
-              </Button>
-            )}
-          </div>
-        )}
-
-        {/* Technologies */}
-        {item.technology && item.technology.length > 0 && (
-          <div className="mb-4">
-            <h6 className="fw-bold text-body-secondary text-uppercase small mb-2">
-              {t.sections.projects.modal.technologies}
-            </h6>
-            <div className="d-flex flex-wrap gap-2">
-              {item.technology.map((tech, idx) => (
-                <Badge
-                  key={idx}
-                  pill
-                  className="bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 fw-normal"
-                >
-                  <i className="bi bi-code-slash me-1" />
-                  {tech}
-                </Badge>
-              ))}
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Portfolio Key Features */}
-        {isPortfolio && features.length > 0 && (
-          <div className="mb-4">
-            <h6 className="fw-bold text-body-secondary text-uppercase small mb-2">
-              {t.sections.projects.modal.keyFeatures}
-            </h6>
-            <ul className="list-group list-group-flush rounded-3 border ps-0 mb-0">
-              {features.map((feat) => (
-                <li
-                  key={feat.id}
-                  className="list-group-item bg-transparent py-2"
-                >
-                  <div className="fw-semibold small d-flex align-items-center gap-2">
-                    <i className="bi bi-check-circle-fill text-success" />
-                    {getLocalizedText(feat.title, lang)}
-                  </div>
-                  {feat.description && (
-                    <div className="text-muted small ps-4 mt-1">
-                      {getLocalizedText(feat.description, lang)}
+          {/* Portfolio Key Features */}
+          {isPortfolio && features.length > 0 && (
+            <div className="mb-4">
+              <h6 className="fw-bold text-body-secondary text-uppercase small mb-2">
+                {t.sections.projects.modal.keyFeatures}
+              </h6>
+              <ul className="list-group list-group-flush rounded-3 border ps-0 mb-0">
+                {features.map((feat) => (
+                  <li
+                    key={feat.id}
+                    className="list-group-item bg-transparent py-2"
+                  >
+                    <div className="fw-semibold small d-flex align-items-center gap-2">
+                      <i className="bi bi-check-circle-fill text-success" />
+                      {getLocalizedText(feat.title, lang)}
                     </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Project Feature Progress */}
-        {!isPortfolio && featureProjects.length > 0 && (
-          <div className="mb-4">
-            <h6 className="fw-bold text-body-secondary text-uppercase small mb-2">
-              {t.sections.projects.modal.featureProgress}
-            </h6>
-            <ul className="list-unstyled d-flex flex-column gap-2 mb-0">
-              {featureProjects.map((fp) => (
-                <li
-                  key={fp.id}
-                  className="p-3 border rounded-3 bg-body-tertiary"
-                >
-                  <div className="d-flex justify-content-between align-items-center mb-1">
-                    <span className="fw-semibold small">
-                      {getLocalizedText(fp.title, lang)}
-                    </span>
-                    <Badge
-                      pill
-                      className="bg-primary-subtle text-primary border border-primary-subtle"
-                    >
-                      {fp.progress}%
-                    </Badge>
-                  </div>
-                  {fp.description && (
-                    <div className="text-muted small mb-2">
-                      {getLocalizedText(fp.description, lang)}
-                    </div>
-                  )}
-                  <Progress
-                    value={fp.progress ?? 0}
-                    color="primary"
-                    height="6px"
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Tags */}
-        {item.tags && item.tags.length > 0 && (
-          <div className="mb-4">
-            <h6 className="fw-bold text-body-secondary text-uppercase small mb-2">
-              {t.sections.projects.modal.tags}
-            </h6>
-            <div className="d-flex flex-wrap gap-1">
-              {item.tags.map((tag, idx) => (
-                <Badge
-                  key={idx}
-                  pill
-                  className="bg-body-tertiary text-muted border px-2 py-1 small"
-                >
-                  #{tag}
-                </Badge>
-              ))}
+                    {feat.description && (
+                      <div className="text-muted small ps-4 mt-1">
+                        {getLocalizedText(feat.description, lang)}
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-        )}
-      </div>
-    </Modal>
+          )}
+
+          {/* Project Feature Progress */}
+          {!isPortfolio && featureProjects.length > 0 && (
+            <div className="mb-4">
+              <h6 className="fw-bold text-body-secondary text-uppercase small mb-2">
+                {t.sections.projects.modal.featureProgress}
+              </h6>
+              <ul className="list-unstyled d-flex flex-column gap-2 mb-0">
+                {featureProjects.map((fp) => (
+                  <li
+                    key={fp.id}
+                    className="p-3 border rounded-3 bg-body-tertiary"
+                  >
+                    <div className="d-flex justify-content-between align-items-center mb-1">
+                      <span className="fw-semibold small">
+                        {getLocalizedText(fp.title, lang)}
+                      </span>
+                      <Badge
+                        pill
+                        className="bg-primary-subtle text-primary border border-primary-subtle"
+                      >
+                        {fp.progress}%
+                      </Badge>
+                    </div>
+                    {fp.description && (
+                      <div className="text-muted small mb-2">
+                        {getLocalizedText(fp.description, lang)}
+                      </div>
+                    )}
+                    <Progress
+                      value={fp.progress ?? 0}
+                      color="primary"
+                      height="6px"
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Tags */}
+          {item.tags && item.tags.length > 0 && (
+            <div className="mb-4">
+              <h6 className="fw-bold text-body-secondary text-uppercase small mb-2">
+                {t.sections.projects.modal.tags}
+              </h6>
+              <div className="d-flex flex-wrap gap-1">
+                {item.tags.map((tag, idx) => (
+                  <Badge
+                    key={idx}
+                    pill
+                    className="bg-body-tertiary text-muted border px-2 py-1 small"
+                  >
+                    #{tag}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </Modal>
 
       {/* Dedicated Fullscreen Lightbox Overlay */}
       <GalleryLightbox

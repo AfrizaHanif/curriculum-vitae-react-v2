@@ -107,10 +107,11 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout(
-  // { children }: LayoutProps<"/">
-  { children }: { children: React.ReactNode },
-) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
@@ -146,7 +147,6 @@ export default function RootLayout(
         <ThemeProvider>
           <LanguageProvider>
             <BootstrapClient />
-            {/* <PageLoader /> */}
             {children}
           </LanguageProvider>
         </ThemeProvider>

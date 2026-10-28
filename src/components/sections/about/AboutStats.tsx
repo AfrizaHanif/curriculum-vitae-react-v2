@@ -27,6 +27,7 @@ interface StatItem {
 }
 
 export default function AboutStats() {
+  // Get Context & Hooks
   const { t } = useLanguage();
   const { scrollToSection } = useNavigation();
 
@@ -48,24 +49,22 @@ export default function AboutStats() {
     { fallbackData: { data: fallbackCertificates } },
   );
 
-  // Calculate Real Cumulative Experience & Start Year
+  // Calculate Real Cumulative Experience Duration
   const { totalMonths, isOverOneYear, yearsCount } = useMemo(() => {
     // Get experiences data with fallback
     const experiences = expData?.data ?? fallbackExperiences;
     if (!experiences || experiences.length === 0) {
       return {
-        startYear: 2023,
         totalMonths: 7,
         isOverOneYear: false,
         yearsCount: 0,
       };
     }
 
-    // Calculate total months and start year
+    // Calculate total months
     let monthsSum = 0;
-    const startYearsList: number[] = [];
 
-    // Iterate over each experience to calculate total months and start year
+    // Iterate over each experience to calculate total months
     experiences.forEach((exp) => {
       const start = new Date(exp.start_period);
       const finish = exp.finish_period
@@ -73,7 +72,6 @@ export default function AboutStats() {
         : new Date();
 
       if (!isNaN(start.getTime())) {
-        startYearsList.push(start.getFullYear());
         const finishTime = isNaN(finish.getTime())
           ? new Date().getTime()
           : finish.getTime();
@@ -87,17 +85,13 @@ export default function AboutStats() {
       }
     });
 
-    // Get the minimum year from the experiences
-    const minYear =
-      startYearsList.length > 0 ? Math.min(...startYearsList) : 2023;
     // Check if the total months is over one year
     const isOver = monthsSum >= 12;
     // Get the number of years
     const yearsCount = Math.floor(monthsSum / 12);
 
-    // Return the cumulative experience and start year
+    // Return the cumulative experience duration
     return {
-      startYear: minYear,
       totalMonths: monthsSum,
       isOverOneYear: isOver,
       yearsCount,

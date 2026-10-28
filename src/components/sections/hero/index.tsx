@@ -45,7 +45,7 @@ export default function HeroSection() {
       minFullHeight
       container={false}
     >
-      {/*  */}
+      {/* Hero Content */}
       <div
         className="container position-relative z-2 w-100 my-auto"
         style={{

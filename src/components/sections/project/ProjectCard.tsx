@@ -19,6 +19,7 @@ export default function ProjectCard({
   project,
   onOpenDetails,
 }: ProjectCardProps) {
+  // Get Language & Translation Context
   const { t, lang } = useLanguage();
   const dateLocale = lang === "id" ? "id-ID" : "en-US";
 
@@ -98,7 +99,8 @@ export default function ProjectCard({
               </span>
             )}
           </span>
-          {/*  */}
+
+          {/* Details Button */}
           <Button
             as="button"
             color="primary"

@@ -16,6 +16,7 @@ interface CertificateCardProps {
 export default function CertificateCard({
   certificate: cert,
 }: CertificateCardProps) {
+  // Get Language & Translation Context
   const { t, lang } = useLanguage();
   const dateLocale = lang === "id" ? "id-ID" : "en-US";
 
@@ -34,17 +35,6 @@ export default function CertificateCard({
               <i className="bi bi-award-fill me-1" />
               {getLocalizedText(cert.type_labels, lang) || t.sections.certification.card.defaultType}
             </Badge>
-
-            {/* Featured Badge */}
-            {/* {cert.is_featured && (
-              <Badge
-                pill
-                className="bg-warning-subtle text-warning-emphasis border border-warning-subtle px-2 py-1"
-              >
-                <i className="bi bi-star-fill text-warning me-1" />
-                {t.sections.certification.card.featured}
-              </Badge>
-            )} */}
 
             {/* Validity / Expiry Status Badge */}
             {cert.expired_date && (
@@ -89,6 +79,7 @@ export default function CertificateCard({
       }
       footer={
         <div className="d-flex justify-content-between align-items-center gap-2">
+          {/* Credential ID */}
           <div className="d-flex align-items-center gap-2 text-truncate">
             {/* Credential ID */}
             {cert.credential_id && (
@@ -101,6 +92,7 @@ export default function CertificateCard({
               </small>
             )}
           </div>
+
           {/* Action buttons */}
           <div className="ms-auto d-flex gap-2">
             {/* View Certificate PDF */}
@@ -157,7 +149,9 @@ export default function CertificateCard({
             {cert.title}
           </h3>
           <div className="d-flex align-items-center gap-2 text-muted small flex-wrap">
+            {/* Issuer */}
             <span className="fw-semibold text-truncate">{cert.issuer}</span>
+
             {/* Verified Credential Badge */}
             {cert.credential_url && (
               <Badge

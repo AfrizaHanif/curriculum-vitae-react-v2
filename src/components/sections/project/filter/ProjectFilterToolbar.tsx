@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import ProjectFilterDropdown from "./ProjectFilterDropdown";
 import ProjectActiveFilterChips from "./ProjectActiveFilterChips";
 import { ProjectFilterBarProps } from "./types";
@@ -24,7 +23,10 @@ export default function ProjectFilterToolbar({
   resetLabel = "Reset",
   className = "",
 }: ProjectFilterBarProps) {
-  const isCategoryFiltered = Boolean(activeCategory && activeCategory !== "all");
+  // Determine which filters are active
+  const isCategoryFiltered = Boolean(
+    activeCategory && activeCategory !== "all",
+  );
   const isTechFiltered = Boolean(activeTech);
   const isTagFiltered = Boolean(activeTag);
   const isFiltered = isCategoryFiltered || isTechFiltered || isTagFiltered;
@@ -52,7 +54,8 @@ export default function ProjectFilterToolbar({
           <span className="text-muted small d-inline-flex align-items-center gap-1">
             <i className="bi bi-collection opacity-75" />
             <span>
-              Showing <strong>{totalAll}</strong> {totalAll === 1 ? "item" : "items"}
+              Showing <strong>{totalAll}</strong>{" "}
+              {totalAll === 1 ? "item" : "items"}
             </span>
           </span>
         )}

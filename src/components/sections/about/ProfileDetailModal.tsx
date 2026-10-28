@@ -194,6 +194,7 @@ export default function ProfileDetailModal({
                 className="border rounded-3 bg-body"
                 bodyClassName="p-3"
               >
+                {/* WhatsApp (Immediately Invoked Function Expression (IIFE)) */}
                 {(() => {
                   const rawWa =
                     process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ||

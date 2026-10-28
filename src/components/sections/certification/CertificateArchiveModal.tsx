@@ -150,6 +150,7 @@ export default function CertificateArchiveModal({
               .replace("{current}", filteredCertificates.length.toString())
               .replace("{total}", certificates.length.toString())}
           </span>
+
           {/* Reset filters button */}
           {(searchQuery || selectedIssuer !== "All") && (
             <Button
@@ -312,9 +313,6 @@ export default function CertificateArchiveModal({
                         {t.sections.certification.archiveModal.noUrl}
                       </span>
                     </Button>
-                    // <Badge className="bg-secondary border border-secondary">
-                    //   {t.sections.certification.archiveModal.noUrl}
-                    // </Badge>
                   )}
                 </div>
               </li>

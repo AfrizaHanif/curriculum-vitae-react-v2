@@ -44,7 +44,6 @@ interface ShowcaseTabContentProps<T extends { id: string | number }> {
   itemsPerPage: number;
   isLoading: boolean;
   error: Error | null;
-  loadingLabel?: string;
   errorLabel: string;
   emptyLabel: string;
   renderCard: (item: T) => ReactNode;
@@ -108,6 +107,7 @@ function ShowcaseTabContent<T extends { id: string | number }>({
 
 // Project Section Content
 function ProjectSectionContent() {
+  // Get language and routing hooks
   const { t } = useLanguage();
   const router = useRouter();
   const pathname = usePathname();
@@ -148,10 +148,9 @@ function ProjectSectionContent() {
     data: dataPortfolio,
     isLoading: isLoadingPortfolio,
     error: errorPortfolio,
-  } = useFetch<ApiResponse<Portfolio[]>>(
-    getApiUrl("portfolios"),
-    { fallbackData: { data: fallbackPortfolios } },
-  );
+  } = useFetch<ApiResponse<Portfolio[]>>(getApiUrl("portfolios"), {
+    fallbackData: { data: fallbackPortfolios },
+  });
   const { data: dataFeaturePortfolio } = useFetch<ApiResponse<Feature[]>>(
     getApiUrl("features"),
     { fallbackData: { data: fallbackFeatures } },
@@ -160,10 +159,9 @@ function ProjectSectionContent() {
     data: dataProject,
     isLoading: isLoadingProject,
     error: errorProject,
-  } = useFetch<ApiResponse<Project[]>>(
-    getApiUrl("projects"),
-    { fallbackData: { data: fallbackProjects } },
-  );
+  } = useFetch<ApiResponse<Project[]>>(getApiUrl("projects"), {
+    fallbackData: { data: fallbackProjects },
+  });
   const { data: dataCaseStudy } = useFetch<ApiResponse<CaseStudy[]>>(
     getApiUrl("caseStudies"),
     { fallbackData: { data: fallbackCaseStudies } },
@@ -184,6 +182,7 @@ function ProjectSectionContent() {
   );
   const caseStudies = useMemo(() => dataCaseStudy?.data ?? [], [dataCaseStudy]);
 
+  // Create a map of case studies by their IDs
   const caseStudyMap = useMemo(() => {
     const map = new Map<string, CaseStudy>();
     caseStudies.forEach((cs) => {
@@ -199,6 +198,7 @@ function ProjectSectionContent() {
     return map;
   }, [caseStudies, portfolios]);
 
+  // Create a map of diagrams by case study IDs
   const diagramMap = useMemo(() => {
     const map = new Map<string, DiagramCS>();
     caseStudies.forEach((cs) => {
@@ -215,6 +215,7 @@ function ProjectSectionContent() {
     return map;
   }, [caseStudies]);
 
+  // Create a map of solutions by case study IDs
   const solutionMap = useMemo(() => {
     const map = new Map<string, SolutionCS[]>();
     caseStudies.forEach((cs) => {
@@ -225,6 +226,7 @@ function ProjectSectionContent() {
     return map;
   }, [caseStudies]);
 
+  // Create a map of features by portfolio IDs
   const featurePortfolioMap = useMemo(() => {
     const map = new Map<string, Feature[]>();
     featurePortfolios.forEach((feat) => {
@@ -242,6 +244,7 @@ function ProjectSectionContent() {
     return map;
   }, [featurePortfolios, portfolios]);
 
+  // Create a map of repositories by portfolio IDs
   const repositoryMap = useMemo(() => {
     const map = new Map<string, Repository[]>();
     portfolios.forEach((p) => {
@@ -252,6 +255,7 @@ function ProjectSectionContent() {
     return map;
   }, [portfolios]);
 
+  // Create a map of feature projects by project IDs
   const featureProjectMap = useMemo(() => {
     const map = new Map<string, FeatureProjectItem[]>();
     featurePortfolios.forEach((feat) => {
@@ -378,6 +382,7 @@ function ProjectSectionContent() {
       }
     });
 
+    // Combine base categories with extra categories
     const activeList = [
       ...baseCategories.filter((c) => c.key === "all" || c.count > 0),
       ...extraCategories,
@@ -445,7 +450,6 @@ function ProjectSectionContent() {
           itemsPerPage={itemsPerPage}
           isLoading={isLoadingPortfolio}
           error={errorPortfolio}
-          loadingLabel={t.sections.projects.loadingPortfolio}
           errorLabel={t.sections.projects.errorPortfolio}
           emptyLabel={t.sections.projects.emptyPortfolio}
           renderCard={(portfolio) => (
@@ -470,7 +474,6 @@ function ProjectSectionContent() {
           itemsPerPage={itemsPerPage}
           isLoading={isLoadingProject}
           error={errorProject}
-          loadingLabel={t.sections.projects.loadingProject}
           errorLabel={t.sections.projects.errorProject}
           emptyLabel={t.sections.projects.emptyProject}
           renderCard={(project) => (
@@ -493,6 +496,7 @@ function ProjectSectionContent() {
         subtitle={t.sections.projects.subtitle}
       />
 
+      {/* Filter Toolbar */}
       <div className="mt-4">
         <NavTab
           id="projects-tabs"
@@ -513,7 +517,9 @@ function ProjectSectionContent() {
               activeTag={currentTag}
               onSelectTag={(tag) => setFilterParam("tag", tag)}
               onReset={resetFilters}
-              totalFiltered={filteredPortfolios.length + filteredProjects.length}
+              totalFiltered={
+                filteredPortfolios.length + filteredProjects.length
+              }
               totalAll={portfolios.length + projects.length}
               filterAllLabel={
                 t.sections.skills.filterAll

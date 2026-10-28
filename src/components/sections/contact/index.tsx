@@ -43,6 +43,7 @@ export default function ContactSection() {
           subtitleClassName="text-white-50"
         />
 
+        {/* Contact Information */}
         {isLoading ? (
           <div className="d-flex align-items-center gap-2 mt-3">
             <Spinner

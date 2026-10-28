@@ -20,6 +20,7 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
         aria-hidden="true"
       />
 
+      {/* Testimonial Content */}
       <figure className="mb-0 d-flex flex-column h-100 justify-content-between">
         <div>
           {/* 5 Stars Rating */}

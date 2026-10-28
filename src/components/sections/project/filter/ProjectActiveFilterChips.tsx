@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Button from "@/components/ui/bootstrap/button";
 import { ProjectActiveFilterChipsProps } from "./types";
 
@@ -17,13 +16,17 @@ export default function ProjectActiveFilterChips({
   totalAll,
   className = "",
 }: ProjectActiveFilterChipsProps) {
-  const isCategoryFiltered = Boolean(activeCategory && activeCategory !== "all");
+  // Determine which filters are active
+  const isCategoryFiltered = Boolean(
+    activeCategory && activeCategory !== "all",
+  );
   const isTechFiltered = Boolean(activeTech);
   const isTagFiltered = Boolean(activeTag);
   const isFiltered = isCategoryFiltered || isTechFiltered || isTagFiltered;
 
   if (!isFiltered) return null;
 
+  // Get the label for the active category
   const categoryLabel =
     categories.find((c) => c.key.toLowerCase() === activeCategory.toLowerCase())
       ?.label || activeCategory;
@@ -32,10 +35,12 @@ export default function ProjectActiveFilterChips({
     <div
       className={`project-active-filter-chips d-flex flex-wrap align-items-center gap-2 p-2 px-3 rounded-4 bg-body-tertiary border small text-muted ${className}`}
     >
+      {/* Filter Summary */}
       <span className="fw-medium me-1">
         Found <strong>{totalFiltered}</strong> of {totalAll}:
       </span>
 
+      {/* Active Filters */}
       {isCategoryFiltered && (
         <span className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill d-inline-flex align-items-center gap-1 py-1 px-2">
           <span>
@@ -52,6 +57,7 @@ export default function ProjectActiveFilterChips({
         </span>
       )}
 
+      {/* Technology Filter */}
       {isTechFiltered && (
         <span className="badge bg-info-subtle text-info-emphasis border border-info-subtle rounded-pill d-inline-flex align-items-center gap-1 py-1 px-2">
           <span>
@@ -67,6 +73,7 @@ export default function ProjectActiveFilterChips({
         </span>
       )}
 
+      {/* Tag Filter */}
       {isTagFiltered && onClearTag && (
         <span className="badge bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle rounded-pill d-inline-flex align-items-center gap-1 py-1 px-2">
           <span>
@@ -82,6 +89,7 @@ export default function ProjectActiveFilterChips({
         </span>
       )}
 
+      {/* Clear All Button */}
       <Button
         color="link"
         size="sm"

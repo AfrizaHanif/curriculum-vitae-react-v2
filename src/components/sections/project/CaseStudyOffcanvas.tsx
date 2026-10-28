@@ -33,7 +33,7 @@ export default function CaseStudyOffcanvas({
   const diagramItems = useMemo(() => {
     const items: { label: string; src: string; icon: string }[] = [];
 
-    // 1. Check embedded diagrams array on caseStudy (API v2)
+    // Check embedded diagrams array on caseStudy (API v2)
     if (caseStudy?.diagrams && Array.isArray(caseStudy.diagrams)) {
       caseStudy.diagrams.forEach((diag) => {
         const src = diag.images || "";
@@ -48,7 +48,7 @@ export default function CaseStudyOffcanvas({
       });
     }
 
-    // 2. Fallback to passed diagram prop (single diagram object)
+    // Fallback to passed diagram prop (single diagram object)
     if (items.length === 0 && diagram) {
       if (diagram.images && diagram.name) {
         items.push({
@@ -62,6 +62,7 @@ export default function CaseStudyOffcanvas({
     return items;
   }, [caseStudy, diagram]);
 
+  // Get goals, responsibilities, process, and solutions from caseStudy
   const goals = caseStudy?.goals || [];
   const responsibilities = caseStudy?.responsibilities || [];
   const processList = caseStudy?.process || [];
@@ -91,7 +92,7 @@ export default function CaseStudyOffcanvas({
             {t.sections.projects.caseStudy.badge}
           </Badge>
 
-          {/*  */}
+          {/* Portfolio Title */}
           <span
             className="text-truncate small text-muted fw-normal flex-grow-1"
             title={portfolioTitle}

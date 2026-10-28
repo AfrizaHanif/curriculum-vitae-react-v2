@@ -144,10 +144,6 @@ export default function Header({ className = "" }: HeaderProps) {
               {profile?.resume && (
                 <Link href="/resume">
                   <Button
-                    // as="a"
-                    // href={profile.resume}
-                    // target="_blank"
-                    // rel="noopener noreferrer"
                     color="outline-secondary"
                     rounded
                     className="px-3"

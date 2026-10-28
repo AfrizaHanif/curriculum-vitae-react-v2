@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/bootstrap/button";
@@ -71,40 +70,6 @@ export default function ErrorLayout({
   return (
     <div className="min-vh-100 d-flex flex-column bg-body-tertiary">
       {/* Top Header */}
-      {/* <header className="smart-header sticky-top border-bottom py-2 py-md-3">
-        <div className="container d-flex align-items-center justify-content-between">
-          <Link
-            href="/"
-            className="d-flex align-items-center link-body-emphasis text-decoration-none"
-            aria-label="Back to Homepage"
-          >
-            <Image
-              src={logoWhite}
-              alt="Logo"
-              width={34}
-              height={34}
-              className="me-2 flex-shrink-0 object-fit-contain logo-light"
-              priority
-            />
-            <Image
-              src={logoBlack}
-              alt="Logo"
-              width={34}
-              height={34}
-              className="me-2 flex-shrink-0 object-fit-contain logo-dark"
-              priority
-            />
-            <span className="fw-bold text-truncate d-none d-sm-inline fs-5">
-              {siteConfig.site.name}
-            </span>
-          </Link>
-
-          <div className="d-flex align-items-center gap-2">
-            <ThemeToggle />
-            <LanguageToggle />
-          </div>
-        </div>
-      </header> */}
       <ErrorHeader />
 
       {/* Main Content */}
@@ -116,12 +81,6 @@ export default function ErrorLayout({
           <div className="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-center bg-body">
             {/* Status Code Badge */}
             <div className="mb-3">
-              {/* <span
-                className={`badge text-bg-${badgeVariant}-subtle text-${badgeVariant} border border-${badgeVariant}-subtle rounded-pill px-3 py-2 fw-semibold text-uppercase tracking-wider`}
-              >
-                <i className={`bi ${icon} me-2`} aria-hidden="true" />
-                {badgeText}
-              </span> */}
               <Badge
                 color={badgeVariant}
                 className="px-3 py-2 fw-semibold text-uppercase tracking-wider"

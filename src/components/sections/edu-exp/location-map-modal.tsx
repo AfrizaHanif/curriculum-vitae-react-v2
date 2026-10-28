@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import Modal from "@/components/ui/bootstrap/modal";
 import Alert from "@/components/ui/bootstrap/alert";
@@ -47,6 +47,7 @@ export default function LocationMapModal({
   icon = "bi-geo-alt-fill",
   size = "lg",
 }: LocationMapModalProps) {
+  // Access the translation function
   const { t } = useLanguage();
 
   // Convert latitude and longitude to numbers
@@ -141,6 +142,7 @@ export default function LocationMapModal({
           {subtitle && (
             <span className="fw-semibold text-primary">{subtitle}</span>
           )}
+
           {/* Address */}
           {address && (
             <div className="d-flex align-items-start gap-2 text-secondary small">
@@ -148,6 +150,7 @@ export default function LocationMapModal({
               <span>{address}</span>
             </div>
           )}
+
           {/* Coordinates */}
           {isValidCoordinates && (
             <div className="text-muted small">

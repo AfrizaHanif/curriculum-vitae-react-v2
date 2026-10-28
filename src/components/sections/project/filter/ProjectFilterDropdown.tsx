@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Button from "@/components/ui/bootstrap/button";
 import Badge from "@/components/ui/bootstrap/badge";
 import Dropdown from "@/components/ui/bootstrap/dropdown";
@@ -26,6 +25,7 @@ export default function ProjectFilterDropdown({
   resetLabel = "Reset",
   className = "",
 }: ProjectFilterBarProps) {
+  // Determine the number of active filters
   const activeCount =
     (activeCategory && activeCategory !== "all" ? 1 : 0) +
     (activeTech ? 1 : 0) +
@@ -33,16 +33,23 @@ export default function ProjectFilterDropdown({
 
   const isFiltered = activeCount > 0;
 
+  // Dropdown content for the filter options
   const dropdownContent = (
-    <div className="project-filter-dropdown-content w-100" style={{ minWidth: 0 }}>
+    <div
+      className="project-filter-dropdown-content w-100"
+      style={{ minWidth: 0 }}
+    >
       {/* Dropdown Header */}
       <div className="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+        {/* Filter Summary */}
         <div className="d-flex align-items-center gap-2">
           <i className="bi bi-funnel-fill text-primary" />
           <span className="fw-bold small text-uppercase tracking-wider">
             Filter Projects
           </span>
         </div>
+
+        {/* Reset Button */}
         {isFiltered && (
           <Button
             color="link"
@@ -81,7 +88,8 @@ export default function ProjectFilterDropdown({
                 .filter((c) => c.key !== "all")
                 .map((cat) => ({
                   value: cat.key.toLowerCase(),
-                  label: `${cat.label} ${cat.count !== undefined ? `(${cat.count})` : ""}`.trim(),
+                  label:
+                    `${cat.label} ${cat.count !== undefined ? `(${cat.count})` : ""}`.trim(),
                 })),
             ]}
           />
@@ -144,9 +152,12 @@ export default function ProjectFilterDropdown({
 
       {/* Dropdown Footer */}
       <div className="d-flex align-items-center justify-content-between mt-3 pt-2 border-top border-secondary-subtle small text-muted">
+        {/* Filter Summary */}
         <span className="text-nowrap me-2">
           Found <strong>{totalFiltered}</strong> of {totalAll}
         </span>
+
+        {/* Reset Button */}
         {isFiltered && (
           <Button
             color="link"
