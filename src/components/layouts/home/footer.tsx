@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import "./footer.css";
+import { useLanguage } from "@/context/LanguageContext";
 import { useFetch } from "@/hooks/useFetch";
 import { SocialApiResponse } from "@/types/social";
 import Tooltip from "../../ui/bootstrap/tooltip";
@@ -21,6 +22,7 @@ interface FooterProps {
 }
 
 export default function Footer({ className = "", style }: FooterProps) {
+  const { t } = useLanguage();
   const footerRef = useRef<HTMLElement>(null);
 
   // Fetch API Data
@@ -61,12 +63,12 @@ export default function Footer({ className = "", style }: FooterProps) {
       style={style}
     >
       <div className="container py-4 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 text-center text-md-start">
-        {/* Copyright & Logo */}
-        <div className="d-flex align-items-center justify-content-center justify-content-md-start">
+        {/* Copyright & Credits */}
+        <div className="d-flex flex-column flex-md-row align-items-center align-items-md-center">
           {/* Logo */}
           <Link
             href="/"
-            className="me-2 text-body-secondary text-decoration-none lh-1"
+            className="mb-2 mb-md-0 me-md-3 text-body-secondary text-decoration-none lh-1 flex-shrink-0"
             aria-label="CV Portfolio"
           >
             <Image
@@ -86,11 +88,25 @@ export default function Footer({ className = "", style }: FooterProps) {
               loading="lazy"
             />
           </Link>
-          {/* Copyright */}
-          <span className="text-body-secondary small">
-            © {new Date().getFullYear()}{" "}
-            {profile?.fullname || "Muhammad Afriza Hanif"}. All rights reserved.
-          </span>
+
+          {/* Text Block */}
+          <div className="d-flex flex-column align-items-center align-items-md-start">
+            {/* Copyright */}
+            <span className="text-body-secondary small">
+              © {new Date().getFullYear()}{" "}
+              {profile?.fullname || "Muhammad Afriza Hanif"}. {t.footer.allRightsReserved}
+            </span>
+
+            {/* Tech Stack & AI Mention */}
+            <div
+              className="text-body-tertiary mt-1 d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-1"
+              style={{ fontSize: "0.8rem" }}
+            >
+              <span>{t.footer.designedAndBuilt}</span>
+              <span className="opacity-50">·</span>
+              <span>{t.footer.aiAssisted}</span>
+            </div>
+          </div>
         </div>
 
         {/* Social Media */}
