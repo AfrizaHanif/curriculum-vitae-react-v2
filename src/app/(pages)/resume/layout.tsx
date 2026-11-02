@@ -1,4 +1,3 @@
-// src/app/(pages)/resume/layout.tsx
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -7,17 +7,25 @@ import ThemeToggle from "@/components/ThemeToggle";
 import LanguageToggle from "@/components/LanguageToggle";
 import { useLanguage } from "@/context/LanguageContext";
 import "@/components/layouts/home/header.css";
+import Image from "next/image";
+import logoWhite from "@/assets/images/logo/logo-only-white.png";
+import logoBlack from "@/assets/images/logo/logo-only-black.png";
 
-interface ResumeHeaderProps {
+interface PageHeaderProps {
+  withLogo?: boolean;
   fullname?: string;
-  originalPdfUrl?: string | null;
-  onPrint: () => void;
+  backHref?: string;
+  backLabel?: string;
+  actions?: React.ReactNode;
 }
 
 export default function PageHeader({
-  originalPdfUrl,
-  onPrint,
-}: ResumeHeaderProps) {
+  withLogo = false,
+  fullname,
+  backHref = "/",
+  backLabel,
+  actions,
+}: PageHeaderProps) {
   const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,6 +61,14 @@ export default function PageHeader({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const backButton = (
+    <Link href={backHref}>
+      <Button color="outline-secondary" rounded>
+        <i className="bi bi-arrow-left me-1" /> {backLabel || t.resume.back}
+      </Button>
+    </Link>
+  );
+
   return (
     <header
       className={`smart-header fixed-top border-bottom ${
@@ -60,32 +76,47 @@ export default function PageHeader({
       } ${isScrolled ? "shadow-sm scrolled" : ""} d-print-none`}
     >
       <div className="container d-flex align-items-center justify-content-between py-2 py-md-3">
-        {/* Back Button */}
-        <Link href="/">
-          <Button color="outline-secondary" rounded>
-            <i className="bi bi-arrow-left me-1" /> {t.resume.back}
-          </Button>
-        </Link>
-
-        {/* Actions */}
-        <div className="d-flex align-items-center gap-2">
-          {originalPdfUrl && (
-            <Button
-              as="a"
-              href={originalPdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              color="outline-secondary"
-              className="d-none d-md-flex align-items-center gap-1"
-              rounded
+        {/* Left Side: Brand Logo and/or Back Button */}
+        <div className="d-flex align-items-center gap-2 min-w-0">
+          {withLogo && (
+            <Link
+              href="/"
+              className="d-flex align-items-center link-body-emphasis text-decoration-none min-w-0"
             >
-              <i className="bi bi-file-earmark-arrow-down" />
-              <span>{t.resume.originalPdf}</span>
-            </Button>
+              <Image
+                src={logoWhite}
+                alt="Logo"
+                width={36}
+                height={36}
+                className={`${fullname ? "me-2" : ""} flex-shrink-0 object-fit-contain logo-light`}
+                priority
+                suppressHydrationWarning
+              />
+              <Image
+                src={logoBlack}
+                alt="Logo"
+                width={36}
+                height={36}
+                className={`${fullname ? "me-2" : ""} flex-shrink-0 object-fit-contain logo-dark`}
+                priority
+                suppressHydrationWarning
+              />
+              {fullname && (
+                <span className="fs-5 fs-md-4 fw-bold text-truncate d-none d-sm-inline">
+                  {fullname}
+                </span>
+              )}
+            </Link>
           )}
-          <Button color="primary" rounded onClick={onPrint}>
-            <i className="bi bi-printer me-1" /> {t.resume.printPdf}
-          </Button>
+
+          {/* Back button next to logo when no fullname, or on left when no logo */}
+          {(!withLogo || !fullname) && backButton}
+        </div>
+
+        {/* Right Side: Back Button (if withLogo and fullname present) + Actions */}
+        <div className="d-flex align-items-center gap-2">
+          {withLogo && fullname && backButton}
+          {actions}
           <ThemeToggle />
           <LanguageToggle />
         </div>
