@@ -62,6 +62,7 @@ I built this interactive portfolio not just as a showcase of my past work, but a
 - [Leaflet](https://leafletjs.com/) (Interactive Maps)
 - [ESLint](https://eslint.org/) (Code linting & quality)
 - GitHub Actions & Lighthouse CI (Automated deployment & auditing)
+- [Google Antigravity](https://deepmind.google) & Gemini (AI Pair Programming & Workflow Automation)
 
 ---
 
@@ -175,7 +176,7 @@ curriculum-vitae-v2/
 
 ## 💡 Development & Workflow
 
-Designed and developed by **Muhammad Afriza Hanif**, leveraging modern developer workflows and AI pair-programming tools (Google Gemini / Claude) for code review, accessibility audits, and productivity optimization.
+Designed and developed by **Muhammad Afriza Hanif**, leveraging modern developer workflows and AI pair-programming tools (Google Antigravity / Gemini / Claude) for architecture scaffolding, code review, accessibility audits, and productivity optimization.
 
 ---
 

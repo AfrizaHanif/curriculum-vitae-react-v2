@@ -62,6 +62,7 @@ Saya membangun portofolio ini bukan sekadar sebagai ringkasan profil, melainkan 
 - [Leaflet](https://leafletjs.com/) (Peta Interaktif)
 - [ESLint](https://eslint.org/) (Linting dan kualitas kode)
 - GitHub Actions & Lighthouse CI (Otomatisasi deployment dan audit)
+- [Google Antigravity](https://deepmind.google) & Gemini (AI Pair Programming & Otomatisasi Alur Kerja)
 
 ---
 
@@ -175,7 +176,7 @@ curriculum-vitae-v2/
 
 ## 💡 Alur Pengembangan & Kolaborasi
 
-Dirancang dan dikembangkan secara mandiri oleh **Muhammad Afriza Hanif**, dengan memanfaatkan alur kerja modern dan _AI pair-programming_ (Google Gemini / Claude) untuk peninjauan kode, audit aksesibilitas, dan efisiensi produktivitas.
+Dirancang dan dikembangkan secara mandiri oleh **Muhammad Afriza Hanif**, dengan memanfaatkan alur kerja frontend modern dan _AI pair-programming_ (Google Antigravity / Gemini / Claude) untuk perancangan arsitektur, peninjauan kode, audit aksesibilitas, dan efisiensi produktivitas.
 
 ---
 
