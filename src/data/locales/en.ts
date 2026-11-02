@@ -22,6 +22,12 @@ export const en = {
     private: "Private",
     backToTop: "Back to Top",
     pageLoading: "Loading page...",
+    underConstruction: {
+      title: "Under Construction",
+      subtitle:
+        "This page is currently being developed. Stay tuned for updates!",
+      backHome: "Back to Home",
+    },
   },
   header: {
     viewCv: "View CV",
@@ -350,6 +356,11 @@ export const en = {
       backHome: "Back to Home",
       technicalDetails: "Technical Details",
     },
+  },
+  footer: {
+    allRightsReserved: "All rights reserved.",
+    designedAndBuilt: "Designed & Built with React (Next.js) & Bootstrap",
+    aiAssisted: "AI-Assisted Workflow",
   },
 };
 

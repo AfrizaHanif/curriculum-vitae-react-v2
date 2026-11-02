@@ -33,10 +33,9 @@ export default function Header({ className = "" }: HeaderProps) {
   const headerRef = useRef<HTMLDivElement>(null);
 
   // Fetch API Data
-  const { data } = useFetch<ProfileApiResponse>(
-    getApiUrl("profiles"),
-    { fallbackData: { data: fallbackProfiles } },
-  );
+  const { data } = useFetch<ProfileApiResponse>(getApiUrl("profiles"), {
+    fallbackData: { data: fallbackProfiles },
+  });
   const profile = data?.data?.[0];
 
   // Resize Observer (For Dynamic Header Height)
@@ -141,13 +140,19 @@ export default function Header({ className = "" }: HeaderProps) {
 
             {/* Desktop Navigation (Screens >= 1200px / xl) */}
             <div className="d-none d-xl-flex align-items-center gap-2">
+              <Link href="/blog">
+                <Button
+                  type="button"
+                  color="outline-secondary"
+                  rounded
+                  className="px-3"
+                >
+                  Blog
+                </Button>
+              </Link>
               {profile?.resume && (
                 <Link href="/resume">
-                  <Button
-                    color="outline-secondary"
-                    rounded
-                    className="px-3"
-                  >
+                  <Button color="outline-secondary" rounded className="px-3">
                     {t.header.viewCv}
                   </Button>
                 </Link>

@@ -24,6 +24,12 @@ export const id: TranslationSchema = {
     private: "Privat",
     backToTop: "Kembali ke Atas",
     pageLoading: "Memuat halaman...",
+    underConstruction: {
+      title: "Sedang Dalam Pengembangan",
+      subtitle:
+        "Halaman ini sedang dalam proses pengerjaan. Mampir lagi segera, ya!",
+      backHome: "Kembali ke Beranda",
+    },
   },
   header: {
     viewCv: "Lihat CV",
@@ -357,5 +363,10 @@ export const id: TranslationSchema = {
       backHome: "Kembali ke Beranda",
       technicalDetails: "Detail Teknis",
     },
+  },
+  footer: {
+    allRightsReserved: "Seluruh hak cipta dilindungi undang-undang.",
+    designedAndBuilt: "Dirancang & Dibangun dengan React (Next.js) & Bootstrap",
+    aiAssisted: "Alur Kerja Berbantu AI",
   },
 };
