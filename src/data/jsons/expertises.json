@@ -11,10 +11,10 @@
       {
         "id": "POR-001",
         "title": {
-          "id": "Rancang Bangun Aplikasi Pelayanan Perpustakaan pada Badan Pusat Statistik Provinsi Jawa Timur",
-          "en": "Design and Development of Library Service Application at BPS East Java Province"
+          "id": "Sistem Informasi Pelayanan Perpustakaan Berbasis Web – BPS Provinsi Jawa Timur",
+          "en": "Web-Based Library Service Information System – BPS East Java Province"
         },
-        "slug": "rancang-bangun-aplikasi-pelayanan-perpustakaan-pada-badan-pusat-statistik-provinsi-jawa-timur",
+        "slug": "sistem-informasi-pelayanan-perpustakaan-berbasis-web-bps-provinsi-jawa-timur",
         "type": "academic",
         "type_label": "Proyek Akademik",
         "type_labels": {
@@ -42,18 +42,18 @@
         "finish_period": "2023-07-02",
         "description": {
           "id": [
-            "Mengembangkan sistem perpustakaan berbasis web menggunakan Laravel, PHP, MySQL, HTML, dan Bootstrap.",
-            "Mengimplementasikan fungsionalitas CRUD untuk mengelola data buku, daftar isi, data staf, serta transaksi peminjaman/pengembalian.",
-            "Merancang fitur pencarian agar staf dapat menemukan buku dan isi dengan cepat tanpa harus membuka banyak halaman.",
-            "Membangun kemampuan import Excel untuk mempercepat entri data massal dan mengurangi pemasukan data secara manual saat migrasi server atau downtime.",
-            "Menambahkan fitur ekspor ke Excel/PDF, memungkinkan staf menghasilkan laporan dan mencetak data dengan lebih efisien."
+            "Mengembangkan aplikasi web manajemen dan pelayanan perpustakaan menggunakan arsitektur MVC (Laravel, PHP, MySQL, HTML, Bootstrap).",
+            "Mengimplementasikan fitur CRUD untuk mengelola data buku, daftar isi, data staf, serta transaksi peminjaman dan pengembalian.",
+            "Merancang fitur pencarian agar staf dapat menemukan buku dan bagian isinya dengan cepat tanpa membuka banyak halaman.",
+            "Membangun fitur impor data massal melalui Excel untuk mempercepat entri data dan mendukung pemulihan/migrasi data saat downtime.",
+            "Menambahkan fitur ekspor laporan dan data ke format Excel dan PDF guna mempermudah dokumentasi dan pencetakan."
           ],
           "en": [
-            "Developed a web-based library system using Laravel, PHP, MySQL, HTML, and Bootstrap.",
-            "Implemented CRUD functionality to manage books, table of contents, staff records, and loan/return transactions.",
-            "Designed features to help staff quickly search books and contents without navigating multiple pages.",
-            "Built Excel import capability to streamline bulk data entry and reduce manual input during server migration or downtime.",
-            "Added export to Excel/PDF functionality, enabling staff to generate reports and print records efficiently."
+            "Developed a library management and service web application using the MVC architecture (Laravel, PHP, MySQL, HTML, Bootstrap).",
+            "Implemented CRUD features to manage book records, tables of contents, staff data, as well as borrowing and returning transactions.",
+            "Designed a search feature enabling staff to quickly find books and specific sections of their contents without navigating through multiple pages.",
+            "Built a bulk data import feature via Excel to accelerate data entry and support data recovery/migration during downtime.",
+            "Added report and data export functionality in Excel and PDF formats to simplify documentation and printing."
           ]
         },
         "tags": [
@@ -70,22 +70,21 @@
         "repositories": [
           {
             "name": "Dokumen",
-            "url": "https://repository.dinamika.ac.id/id/eprint/7167/",
-            "icon": "file-earmark-text"
+            "url": "https://repository.dinamika.ac.id/id/eprint/7167/"
           }
         ],
         "demo_url": null,
         "deleted_at": null,
         "created_at": "2026-10-23T09:24:23.000000Z",
-        "updated_at": "2026-10-28T08:14:07.000000Z"
+        "updated_at": "2026-11-19T09:03:23.000000Z"
       },
       {
         "id": "POR-002",
         "title": {
-          "id": "Rancang Bangun Aplikasi Penentuan Karyawan Terbaik Berbasis Web menggunakan Metode Simple Additive Weighting (SAW) pada BPS Provinsi Jawa Timur",
-          "en": "Design and Development of Web-Based Employee Performance Evaluation Application Using the Simple Additive Weighting (SAW) Method at BPS East Java Province"
+          "id": "Sistem Pendukung Keputusan Penentuan Karyawan Terbaik (Metode SAW) – BPS Provinsi Jawa Timur",
+          "en": "Employee Selection Decision Support System – Statistics Indonesia (BPS) – East Java Province"
         },
-        "slug": "rancang-bangun-aplikasi-penentuan-karyawan-terbaik-berbasis-web-menggunakan-metode-simple-additive-weighting-saw-pada-bps-provinsi-jawa-timur",
+        "slug": "sistem-pendukung-keputusan-penentuan-karyawan-terbaik-metode-saw-bps-provinsi-jawa-timur",
         "type": "academic",
         "type_label": "Proyek Akademik",
         "type_labels": {
@@ -113,16 +112,16 @@
         "finish_period": "2025-01-01",
         "description": {
           "id": [
-            "Merancang dan mengembangkan solusi full-stack menggunakan Laravel, PHP, MySQL, HTML, dan Bootstrap.",
-            "Mengimplementasikan algoritma Simple Additive Weighting (SAW) untuk mengotomatisasi evaluasi kriteria, sehingga meningkatkan efisiensi pengambilan keputusan.",
-            "Membangun sistem autentikasi pengguna yang aman serta kontrol akses berbasis peran untuk melindungi data evaluasi yang sensitif.",
-            "Mengoptimalkan proses pemilihan karyawan terbaik menjadi 1,79 menit untuk 10 kriteria, memangkas waktu dari proses manual sebelumnya yang membutuhkan 4–5 minggu."
+            "Merancang dan mengembangkan aplikasi web evaluasi kinerja dengan menggunakan Laravel, PHP, MySQL, dan Bootstrap.",
+            "Mengintegrasikan algoritma Simple Additive Weighting (SAW) untuk mengotomatisasi proses penilaian dan perankingan multi-kriteria secara akurat.",
+            "Menerapkan sistem autentikasi yang aman serta kontrol akses berbasis peran (Role-Based Access Control) guna menjamin kerahasiaan data evaluasi karyawan.",
+            "Meningkatkan efisiensi waktu seleksi karyawan secara signifikan, dari 4–5 minggu secara manual menjadi hanya 1,79 menit untuk 10 kriteria penilaian."
           ],
           "en": [
-            "Designed and developed a full-stack solution using Laravel, PHP, MySQL, HTML, and Bootstrap.",
-            "Implemented the Simple Additive Weighting (SAW) algorithm to automate criteria evaluation, improving decision-making efficiency.",
-            "Built secure user authentication and role-based access control to protect sensitive evaluation data.",
-            "Optimized the employee selection process to 1.79 minutes for 10 criteria, reducing the manual timeline of 4–5 weeks."
+            "Designed and developed a web-based performance evaluation application using Laravel, PHP, MySQL, and Bootstrap.",
+            "Integrated the Simple Additive Weighting (SAW) algorithm to automate multi-criteria assessment and achieve high-accuracy ranking.",
+            "Implemented a secure authentication system combined with Role-Based Access Control (RBAC) to ensure the confidentiality of employee evaluation data.",
+            "Significantly improved employee selection efficiency by reducing evaluation time from 4–5 weeks manually to 1.79 minutes for 10 assessment criteria."
           ]
         },
         "tags": [
@@ -140,24 +139,21 @@
         "repositories": [
           {
             "name": "Dokumen",
-            "url": "https://repository.dinamika.ac.id/id/eprint/7908/",
-            "icon": "file-earmark-text"
+            "url": "https://repository.dinamika.ac.id/id/eprint/7908/"
           },
           {
             "name": "Source Code (GitHub)",
-            "url": "https://github.com/AfrizaHanif/tugas_akhir_s1/",
-            "icon": "github"
+            "url": "https://github.com/AfrizaHanif/tugas_akhir_s1/"
           },
           {
             "name": "Jurnal (JATI)",
-            "url": "https://ojs.unikom.ac.id/index.php/jati/article/view/15243/",
-            "icon": "journal-text"
+            "url": "https://ojs.unikom.ac.id/index.php/jati/article/view/15243/"
           }
         ],
         "demo_url": null,
         "deleted_at": null,
         "created_at": "2026-10-23T09:24:23.000000Z",
-        "updated_at": "2026-10-28T08:14:07.000000Z"
+        "updated_at": "2026-11-19T09:03:18.000000Z"
       }
     ],
     "deleted_at": null,

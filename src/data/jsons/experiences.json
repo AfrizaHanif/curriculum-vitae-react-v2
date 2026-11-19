@@ -20,25 +20,23 @@
     "finish_period": "2023-03-01",
     "description": {
       "id": [
-        "Membantu dalam desain dan pengembangan aplikasi web manajemen perpustakaan menggunakan Laravel (PHP framework) dan MySQL untuk fungsionalitas backend.",
-        "Mengimplementasikan operasi CRUD untuk data buku dan pengguna, memastikan manajemen basis data yang terstruktur.",
-        "Berkolaborasi dalam pengembangan frontend dengan Bootstrap, menciptakan layout responsif dan antarmuka yang ramah pengguna.",
-        "Mendapatkan pengalaman langsung dalam arsitektur MVC, integrasi basis data, serta workflow deployment aplikasi web.",
-        "Bekerja dalam lingkungan tim, menerapkan keterampilan pemecahan masalah (problem solving) dan mempelajari praktik terbaik industri untuk pengembangan full-stack."
+        "Merancang dan mengembangkan aplikasi web evaluasi kinerja dengan menggunakan Laravel, PHP, MySQL, dan Bootstrap.",
+        "Mengintegrasikan algoritma Simple Additive Weighting (SAW) untuk mengotomatisasi proses penilaian dan perankingan multi-kriteria secara akurat.",
+        "Menerapkan sistem autentikasi yang aman serta kontrol akses berbasis peran (Role-Based Access Control) guna menjamin kerahasiaan data evaluasi karyawan.",
+        "Meningkatkan efisiensi waktu seleksi karyawan secara signifikan, dari 4–5 minggu secara manual menjadi hanya 1,79 menit untuk 10 kriteria penilaian."
       ],
       "en": [
-        "Assisted in the design and development of a library management web application using Laravel (PHP framework) and MySQL for backend functionality.",
-        "Implemented CRUD operations for book records and user data, ensuring structured database management.",
-        "Collaborated on frontend development with Bootstrap, creating responsive layouts and user-friendly interfaces.",
-        "Gained hands-on experience in MVC architecture, database integration, and web application deployment workflows.",
-        "Worked in a team environment, applying problem-solving skills and learning industry best practices for full-stack development."
+        "Developed a full-stack web application for library management by leveraging the MVC architecture (Laravel, PHP, MySQL, Bootstrap) to digitize institutional operations.",
+        "Reduced book data entry time from 5 minutes to 2 minutes per record by optimizing the form interface.",
+        "Implemented bulk data import functionality via Excel, along with automated report export capabilities in both PDF and Excel formats.",
+        "Integrated instant search features based on specific criteria to accelerate archival book data retrieval for staff."
       ]
     },
     "latitude": "-7.328969",
     "longitude": "112.745766",
     "deleted_at": null,
     "created_at": "2026-10-23T09:24:23.000000Z",
-    "updated_at": "2026-10-23T09:24:23.000000Z"
+    "updated_at": "2026-11-19T08:58:30.000000Z"
   },
   {
     "id": "EXP-002",
@@ -61,24 +59,20 @@
     "finish_period": "2026-01-31",
     "description": {
       "id": [
-        "Berkontribusi dalam debugging dan troubleshooting masalah frontend pada aplikasi web, meningkatkan stabilitas dan performa.",
-        "Menerapkan fundamental JavaScript untuk mengidentifikasi dan menyelesaikan inkonsistensi UI/UX.",
-        "Bekerja sama dengan tim untuk menguji dan memvalidasi perbaikan bug, memastikan interaksi pengguna lebih lancar.",
-        "Memperkuat pengetahuan tentang framework frontend melalui pembelajaran mandiri, menyelesaikan kursus online di React, dan JavaScript modern (Udemy).",
-        "Mendapatkan pengalaman praktis dalam workflow pengembangan web, version control, serta pemecahan masalah (problem solving) di lingkungan profesional."
+        "Memperbaiki dan mengoptimalkan modul front-end aplikasi instansi, sehingga berhasil mengatasi 3 bug tampilan UI.",
+        "Berkolaborasi lintas fungsi dengan tim pengembang dalam melakukan validasi bug serta memastikan kelancaran peluncuran fitur pembaruan perangkat lunak.",
+        "Mengelola dokumentasi teknis dan alur penyelesaian masalah secara sistematis menggunakan Git untuk mendukung sinkronisasi kerja tim."
       ],
       "en": [
-        "Contributed to debugging and troubleshooting frontend issues in a web application, improving stability and performance.",
-        "Applied JavaScript fundamentals to identify and resolve UI/UX inconsistencies.",
-        "Collaborated with team members to test and validate bug fixes, ensuring smoother user interactions.",
-        "Strengthened knowledge of frontend frameworks through self-study, completing online courses in React, and modern JavaScript (Udemy).",
-        "Gained practical exposure to web development workflows, version control, and problem-solving in a professional environment."
+        "Enhanced and optimized the front-end module of the institutional application, successfully resolving 3 UI display issues.",
+        "Collaborated cross-functionally with the development team to validate defects and ensure seamless deployment of software update features.",
+        "Managed technical documentation and systematically organized issue resolution workflows using Git to facilitate team synchronization."
       ]
     },
     "latitude": "-7.336187",
     "longitude": "112.729142",
     "deleted_at": null,
     "created_at": "2026-10-23T09:24:23.000000Z",
-    "updated_at": "2026-10-23T09:24:23.000000Z"
+    "updated_at": "2026-11-19T08:57:50.000000Z"
   }
 ]
