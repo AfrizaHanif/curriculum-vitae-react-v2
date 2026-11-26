@@ -20,10 +20,10 @@
     "finish_period": "2023-03-01",
     "description": {
       "id": [
-        "Merancang dan mengembangkan aplikasi web evaluasi kinerja dengan menggunakan Laravel, PHP, MySQL, dan Bootstrap.",
-        "Mengintegrasikan algoritma Simple Additive Weighting (SAW) untuk mengotomatisasi proses penilaian dan perankingan multi-kriteria secara akurat.",
-        "Menerapkan sistem autentikasi yang aman serta kontrol akses berbasis peran (Role-Based Access Control) guna menjamin kerahasiaan data evaluasi karyawan.",
-        "Meningkatkan efisiensi waktu seleksi karyawan secara signifikan, dari 4–5 minggu secara manual menjadi hanya 1,79 menit untuk 10 kriteria penilaian."
+        "Mengembangkan aplikasi web manajemen perpustakaan secara full-stack menggunakan arsitektur MVC (Laravel, PHP, MySQL, Bootstrap) dengan tujuan mendigitalisasi operasional instansi.",
+        "Mengurangi durasi input data buku dari 5 menit menjadi 2 menit per entri melalui optimalisasi antarmuka formulir.",
+        "Membangun fitur impor data massal melalui Excel serta fungsionalitas ekspor laporan otomatis dalam format PDF dan Excel.",
+        "Menerapkan fitur pencarian instan berbasis kriteria spesifik untuk mempercepat proses pencarian data arsip buku oleh staf."
       ],
       "en": [
         "Developed a full-stack web application for library management by leveraging the MVC architecture (Laravel, PHP, MySQL, Bootstrap) to digitize institutional operations.",
@@ -36,7 +36,7 @@
     "longitude": "112.745766",
     "deleted_at": null,
     "created_at": "2026-10-23T09:24:23.000000Z",
-    "updated_at": "2026-11-19T08:58:30.000000Z"
+    "updated_at": "2026-11-26T03:19:58.000000Z"
   },
   {
     "id": "EXP-002",
