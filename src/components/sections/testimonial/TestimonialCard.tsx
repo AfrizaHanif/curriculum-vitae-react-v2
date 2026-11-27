@@ -2,12 +2,14 @@
 
 import { Testimonial } from "@/types/testimonial";
 import Card from "@/components/ui/bootstrap/card";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface TestimonialCardProps {
   testimonial: Testimonial;
 }
 
 export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
+  const { t } = useLanguage();
   return (
     <Card
       key={testimonial.id}
@@ -27,7 +29,7 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
           <div
             className="d-flex align-items-center gap-1 text-warning mb-3"
             role="img"
-            aria-label="5 out of 5 stars"
+            aria-label={t.sections.testimonial.ratingAria}
           >
             {[...Array(5)].map((_, i) => (
               <i key={i} className="bi bi-star-fill small" aria-hidden="true" />

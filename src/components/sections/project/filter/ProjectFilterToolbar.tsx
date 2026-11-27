@@ -3,6 +3,7 @@
 import ProjectFilterDropdown from "./ProjectFilterDropdown";
 import ProjectActiveFilterChips from "./ProjectActiveFilterChips";
 import { ProjectFilterBarProps } from "./types";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ProjectFilterToolbar({
   categories,
@@ -17,12 +18,18 @@ export default function ProjectFilterToolbar({
   onReset,
   totalFiltered,
   totalAll,
-  filterAllLabel = "All Categories",
-  allTechLabel = "All Technologies",
-  allTagsLabel = "All Tags",
-  resetLabel = "Reset",
+  filterAllLabel,
+  allTechLabel,
+  allTagsLabel,
+  resetLabel,
   className = "",
 }: ProjectFilterBarProps) {
+  const { t } = useLanguage();
+  const f = t.sections.projects.filter;
+  const resolvedFilterAllLabel = filterAllLabel ?? f.allCategories;
+  const resolvedAllTechLabel = allTechLabel ?? f.allTechnologies;
+  const resolvedAllTagsLabel = allTagsLabel ?? f.allTags;
+  const resolvedResetLabel = resetLabel ?? f.reset;
   // Determine which filters are active
   const isCategoryFiltered = Boolean(
     activeCategory && activeCategory !== "all",
@@ -54,8 +61,10 @@ export default function ProjectFilterToolbar({
           <span className="text-muted small d-inline-flex align-items-center gap-1">
             <i className="bi bi-collection opacity-75" />
             <span>
-              Showing <strong>{totalAll}</strong>{" "}
-              {totalAll === 1 ? "item" : "items"}
+              {(totalAll === 1 ? f.showingItem : f.showingItems).replace(
+                "{count}",
+                String(totalAll),
+              )}
             </span>
           </span>
         )}
@@ -76,10 +85,10 @@ export default function ProjectFilterToolbar({
           onReset={onReset}
           totalFiltered={totalFiltered}
           totalAll={totalAll}
-          filterAllLabel={filterAllLabel}
-          allTechLabel={allTechLabel}
-          allTagsLabel={allTagsLabel}
-          resetLabel={resetLabel}
+          filterAllLabel={resolvedFilterAllLabel}
+          allTechLabel={resolvedAllTechLabel}
+          allTagsLabel={resolvedAllTagsLabel}
+          resetLabel={resolvedResetLabel}
         />
       </div>
     </div>

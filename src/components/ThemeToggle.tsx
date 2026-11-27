@@ -2,27 +2,35 @@
 
 import Dropdown, { DropdownItem } from "./ui/bootstrap/dropdown";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ThemeToggle() {
   //
   const { theme, setTheme } = useTheme();
+  const { t } = useLanguage();
+
+  const themeLabels = {
+    light: t.ui.themeToggle.light,
+    dark: t.ui.themeToggle.dark,
+    auto: t.ui.themeToggle.auto,
+  } as const;
 
   //
   const items: DropdownItem[] = [
     {
-      label: "Light",
+      label: themeLabels.light,
       icon: "bi bi-sun-fill",
       active: theme === "light",
       onClick: () => setTheme("light"),
     },
     {
-      label: "Dark",
+      label: themeLabels.dark,
       icon: "bi bi-moon-stars-fill",
       active: theme === "dark",
       onClick: () => setTheme("dark"),
     },
     {
-      label: "Auto",
+      label: themeLabels.auto,
       icon: "bi bi-circle-half",
       active: theme === "auto",
       onClick: () => setTheme("auto"),
@@ -49,7 +57,10 @@ export default function ThemeToggle() {
       buttonClass="nav-link p-2 d-flex align-items-center"
       menuClass="dropdown-menu-end shadow"
       showCaret={false}
-      aria-label={`Current theme: ${theme}. Change theme`}
+      aria-label={t.ui.themeToggle.ariaLabel.replace(
+        "{theme}",
+        themeLabels[theme as keyof typeof themeLabels] || theme,
+      )}
     >
       <span className="text-body lh-1 d-inline-flex align-items-center">
         {getThemeIcon()}

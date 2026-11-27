@@ -24,6 +24,7 @@ export default function PortfolioCard({
 }: PortfolioCardProps) {
   // Get Language & Translation Context
   const { t, lang } = useLanguage();
+  const dateLocale = lang === "id" ? "id-ID" : "en-US";
   const [isRepoOpen, setIsRepoOpen] = useState(false);
 
   // Repository dropdown items
@@ -76,7 +77,9 @@ export default function PortfolioCard({
           >
             <i className="bi bi-folder2 me-1 flex-shrink-0" />
             <span className="text-truncate">
-              {portfolio.category || portfolio.type || "Portfolio"}
+              {portfolio.category ||
+                portfolio.type ||
+                t.sections.projects.card.portfolioFallback}
             </span>
           </Badge>
 
@@ -84,7 +87,11 @@ export default function PortfolioCard({
           <small className="text-muted text-nowrap flex-shrink-0">
             <i className="bi bi-calendar3 me-1" />
             <time dateTime={portfolio.start_period}>
-              {formatMonthYear(portfolio.start_period)}
+              {formatMonthYear(
+                portfolio.start_period,
+                dateLocale,
+                t.common.present,
+              )}
             </time>
           </small>
         </div>
@@ -104,7 +111,7 @@ export default function PortfolioCard({
             ) : (
               <span>
                 <i className="bi bi-layers me-1" />
-                {portfolio.type || "Project"}
+                {portfolio.type || t.sections.projects.card.projectFallback}
               </span>
             )}
           </span>

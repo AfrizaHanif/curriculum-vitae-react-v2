@@ -3,6 +3,7 @@
 import Badge from "@/components/ui/bootstrap/badge";
 import Button from "@/components/ui/bootstrap/button";
 import { ProjectActiveFilterChipsProps } from "./types";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ProjectActiveFilterChips({
   categories,
@@ -17,6 +18,8 @@ export default function ProjectActiveFilterChips({
   totalAll,
   className = "",
 }: ProjectActiveFilterChipsProps) {
+  const { t } = useLanguage();
+  const f = t.sections.projects.filter;
   // Determine which filters are active
   const isCategoryFiltered = Boolean(
     activeCategory && activeCategory !== "all",
@@ -38,7 +41,10 @@ export default function ProjectActiveFilterChips({
     >
       {/* Filter Summary */}
       <span className="fw-medium me-1">
-        Found <strong>{totalFiltered}</strong> of {totalAll}:
+        {f.foundCount
+          .replace("{filtered}", String(totalFiltered))
+          .replace("{total}", String(totalAll))}
+        :
       </span>
 
       {/* Active Filters */}
@@ -50,14 +56,14 @@ export default function ProjectActiveFilterChips({
           className="d-inline-flex align-items-center gap-1 py-1 px-2"
         >
           <span>
-            Category:{" "}
+            {f.categoryLabel}:{" "}
             <strong className="text-capitalize">{categoryLabel}</strong>
           </span>
           <button
             type="button"
             className="btn-close btn-close-sm"
             style={{ fontSize: "0.55rem" }}
-            aria-label="Remove category filter"
+            aria-label={f.removeCategoryAria}
             onClick={onClearCategory}
           />
         </Badge>
@@ -72,13 +78,14 @@ export default function ProjectActiveFilterChips({
           className="d-inline-flex align-items-center gap-1 py-1 px-2"
         >
           <span>
-            Tech: <strong className="text-capitalize">{activeTech}</strong>
+            {f.techShort}:{" "}
+            <strong className="text-capitalize">{activeTech}</strong>
           </span>
           <button
             type="button"
             className="btn-close btn-close-sm"
             style={{ fontSize: "0.55rem" }}
-            aria-label="Remove technology filter"
+            aria-label={f.removeTechAria}
             onClick={onClearTech}
           />
         </Badge>
@@ -93,13 +100,14 @@ export default function ProjectActiveFilterChips({
           className="d-inline-flex align-items-center gap-1 py-1 px-2"
         >
           <span>
-            Tag: <strong className="text-capitalize">{activeTag}</strong>
+            {f.tagLabel}:{" "}
+            <strong className="text-capitalize">{activeTag}</strong>
           </span>
           <button
             type="button"
             className="btn-close btn-close-sm"
             style={{ fontSize: "0.55rem" }}
-            aria-label="Remove tag filter"
+            aria-label={f.removeTagAria}
             onClick={onClearTag}
           />
         </Badge>
@@ -112,7 +120,7 @@ export default function ProjectActiveFilterChips({
         className="text-danger text-decoration-none p-0 ms-auto small fw-semibold"
         onClick={onReset}
       >
-        Clear all
+        {f.clearAll}
       </Button>
     </div>
   );

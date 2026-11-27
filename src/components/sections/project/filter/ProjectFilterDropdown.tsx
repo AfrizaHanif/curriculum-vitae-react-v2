@@ -5,6 +5,7 @@ import Badge from "@/components/ui/bootstrap/badge";
 import Dropdown from "@/components/ui/bootstrap/dropdown";
 import InputSelect from "@/components/forms/input-select";
 import { ProjectFilterBarProps } from "./types";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ProjectFilterDropdown({
   categories,
@@ -19,12 +20,18 @@ export default function ProjectFilterDropdown({
   onReset,
   totalFiltered,
   totalAll,
-  filterAllLabel = "All Categories",
-  allTechLabel = "All Technologies",
-  allTagsLabel = "All Tags",
-  resetLabel = "Reset",
+  filterAllLabel,
+  allTechLabel,
+  allTagsLabel,
+  resetLabel,
   className = "",
 }: ProjectFilterBarProps) {
+  const { t } = useLanguage();
+  const f = t.sections.projects.filter;
+  const resolvedFilterAllLabel = filterAllLabel ?? f.allCategories;
+  const resolvedAllTechLabel = allTechLabel ?? f.allTechnologies;
+  const resolvedAllTagsLabel = allTagsLabel ?? f.allTags;
+  const resolvedResetLabel = resetLabel ?? f.reset;
   // Determine the number of active filters
   const activeCount =
     (activeCategory && activeCategory !== "all" ? 1 : 0) +
@@ -45,7 +52,7 @@ export default function ProjectFilterDropdown({
         <div className="d-flex align-items-center gap-2">
           <i className="bi bi-funnel-fill text-primary" />
           <span className="fw-bold small text-uppercase tracking-wider">
-            Filter Projects
+            {f.title}
           </span>
         </div>
 
@@ -56,10 +63,10 @@ export default function ProjectFilterDropdown({
             size="sm"
             className="text-danger text-decoration-none p-0 small fw-semibold flex-shrink-0"
             onClick={onReset}
-            title="Reset all filters"
+            title={f.resetAll}
           >
             <i className="bi bi-x-circle me-1" />
-            {resetLabel}
+            {resolvedResetLabel}
           </Button>
         )}
       </div>
@@ -73,7 +80,7 @@ export default function ProjectFilterDropdown({
             className="form-label small fw-semibold text-muted mb-1 d-flex align-items-center gap-1"
           >
             <i className="bi bi-grid text-primary small" />
-            <span>Category</span>
+            <span>{f.categoryLabel}</span>
           </label>
           <InputSelect
             name="categoryFilter"
@@ -83,7 +90,7 @@ export default function ProjectFilterDropdown({
             value={activeCategory}
             onChange={(e) => onSelectCategory(e.target.value)}
             options={[
-              { value: "all", label: filterAllLabel },
+              { value: "all", label: resolvedFilterAllLabel },
               ...categories
                 .filter((c) => c.key !== "all")
                 .map((cat) => ({
@@ -102,7 +109,7 @@ export default function ProjectFilterDropdown({
             className="form-label small fw-semibold text-muted mb-1 d-flex align-items-center gap-1"
           >
             <i className="bi bi-code-slash text-primary small" />
-            <span>Technology</span>
+            <span>{f.techLabel}</span>
           </label>
           <InputSelect
             name="techFilter"
@@ -112,7 +119,7 @@ export default function ProjectFilterDropdown({
             value={activeTech}
             onChange={(e) => onSelectTech(e.target.value)}
             options={[
-              { value: "", label: allTechLabel },
+              { value: "", label: resolvedAllTechLabel },
               ...availableTechs.map((tech) => ({
                 value: tech.toLowerCase(),
                 label: tech,
@@ -129,7 +136,7 @@ export default function ProjectFilterDropdown({
               className="form-label small fw-semibold text-muted mb-1 d-flex align-items-center gap-1"
             >
               <i className="bi bi-tag text-primary small" />
-              <span>Tag</span>
+              <span>{f.tagLabel}</span>
             </label>
             <InputSelect
               name="tagFilter"
@@ -139,7 +146,7 @@ export default function ProjectFilterDropdown({
               value={activeTag}
               onChange={(e) => onSelectTag(e.target.value)}
               options={[
-                { value: "", label: allTagsLabel },
+                { value: "", label: resolvedAllTagsLabel },
                 ...availableTags.map((tag) => ({
                   value: tag.toLowerCase(),
                   label: tag,
@@ -154,18 +161,21 @@ export default function ProjectFilterDropdown({
       <div className="d-flex align-items-center justify-content-between mt-3 pt-2 border-top border-secondary-subtle small text-muted">
         {/* Filter Summary */}
         <span className="text-nowrap me-2">
-          Found <strong>{totalFiltered}</strong> of {totalAll}
+          {f.foundCount
+            .replace("{filtered}", String(totalFiltered))
+            .replace("{total}", String(totalAll))}
         </span>
 
         {/* Reset Button */}
         {isFiltered && (
           <Button
-            color="link"
+            color="outline-primary"
             size="sm"
-            className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill text-decoration-none cursor-pointer py-1 px-2 flex-shrink-0"
+            rounded
+            className="py-0 px-2 flex-shrink-0"
             onClick={onReset}
           >
-            Clear filters
+            {f.clearFilters}
           </Button>
         )}
       </div>
@@ -189,7 +199,7 @@ export default function ProjectFilterDropdown({
         content={dropdownContent}
       >
         <i className="bi bi-funnel-fill" />
-        <span className="fw-semibold">Filter</span>
+        <span className="fw-semibold">{f.button}</span>
         {activeCount > 0 && (
           <Badge
             pill

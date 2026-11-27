@@ -521,11 +521,10 @@ function ProjectSectionContent() {
                 filteredPortfolios.length + filteredProjects.length
               }
               totalAll={portfolios.length + projects.length}
-              filterAllLabel={
-                t.sections.skills.filterAll
-                  ? `${t.sections.skills.filterAll} Categories`
-                  : "All Categories"
-              }
+              filterAllLabel={t.sections.projects.filter.allCategories}
+              allTechLabel={t.sections.projects.filter.allTechnologies}
+              allTagsLabel={t.sections.projects.filter.allTags}
+              resetLabel={t.sections.projects.filter.reset}
             />
           }
         />

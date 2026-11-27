@@ -180,7 +180,7 @@ export default function Header({ className = "" }: HeaderProps) {
                 className="p-2 d-inline-flex align-items-center justify-content-center"
                 style={{ width: 40, height: 40 }}
                 onClick={() => setShowOffcanvas(true)}
-                aria-label="Open navigation menu"
+                aria-label={t.header.openMenu}
                 rounded
               >
                 <i className="bi bi-list fs-4" />

@@ -135,6 +135,29 @@ export const id: TranslationSchema = {
         private: "Privat",
         source: "Source",
         ongoing: "Berlangsung",
+        portfolioFallback: "Portofolio",
+        projectFallback: "Proyek",
+      },
+      filter: {
+        button: "Filter",
+        title: "Filter Proyek",
+        resetAll: "Reset semua filter",
+        reset: "Reset",
+        clearFilters: "Hapus filter",
+        clearAll: "Hapus semua",
+        allCategories: "Semua Kategori",
+        allTechnologies: "Semua Teknologi",
+        allTags: "Semua Tag",
+        categoryLabel: "Kategori",
+        techLabel: "Teknologi",
+        techShort: "Teknologi",
+        tagLabel: "Tag",
+        showingItem: "Menampilkan {count} item",
+        showingItems: "Menampilkan {count} item",
+        foundCount: "Ditemukan {filtered} dari {total}",
+        removeCategoryAria: "Hapus filter kategori",
+        removeTechAria: "Hapus filter teknologi",
+        removeTagAria: "Hapus filter tag",
       },
       statuses: {
         completed: "Selesai",
@@ -263,6 +286,7 @@ export const id: TranslationSchema = {
       subtitle:
         "Apa kata mereka yang pernah bekerja sama dan berkolaborasi dengan saya",
       loading: "Memuat testimoni...",
+      ratingAria: "5 dari 5 bintang",
     },
     contact: {
       title: "Hubungi Saya",
@@ -326,6 +350,62 @@ export const id: TranslationSchema = {
   ui: {
     scrollToTop: "Kembali ke Atas",
     pageLoader: "Memuat halaman...",
+    themeToggle: {
+      light: "Terang",
+      dark: "Gelap",
+      auto: "Otomatis",
+      ariaLabel: "Tema saat ini: {theme}. Ubah tema",
+    },
+    chatbot: {
+      openAria: "Tanya AI Assistant",
+      closeAria: "Tutup AI Chat",
+      title: "AI Assistant",
+      modeLocalDesc: "WebGPU (Lokal)",
+      modeCloudDesc: "Cloud API (Utama)",
+      chatModeAria: "Mode chat",
+      modeLocal: "Lokal",
+      modeCloud: "Cloud",
+      clearChat: "Hapus chat",
+      localDesc:
+        "Mode lokal menjalankan AI langsung di browser menggunakan WebGPU.",
+      loadModel: "Muat Model AI",
+      emptyGreeting:
+        "Halo! Tanyakan apa saja tentang pengalaman, proyek, atau keahlian di CV ini.",
+      suggestedPrompts: [
+        "Apa pengalaman kerja terbaru?",
+        "Proyek unggulan apa saja?",
+        "Keahlian utama yang dimiliki?",
+      ],
+      fallbackBadge: "Dijawab via AI Lokal (Fallback)",
+      retry: "Coba lagi",
+      useLocalFallback: "Gunakan AI Lokal (WebGPU)",
+      typing: "Mengetik...",
+      copyAnswer: "Salin jawaban",
+      copiedAnswer: "Tersalin",
+      inputPlaceholderReady: "Tulis pertanyaan...",
+      inputPlaceholderNotReady: "Muat model atau pilih Cloud...",
+      clearInput: "Hapus teks",
+      stopResponse: "Hentikan respons",
+      sendMessage: "Kirim pesan",
+      errors: {
+        webgpuUnsupported:
+          "Browser Anda tidak mendukung WebGPU. Gunakan Chrome atau Edge versi terbaru.",
+        webgpuNoAdapter:
+          "Adapter WebGPU tidak tersedia. Pastikan akselerasi hardware browser aktif.",
+        webgpuInitializing: "Memulai inisialisasi WebGPU...",
+        unknownError: "Terjadi kesalahan tidak diketahui.",
+        loadLocalFailed:
+          "Gagal memuat model lokal: {message}. Pastikan browser mendukung WebGPU (Chrome/Edge) dan koneksi internet tersedia.",
+        webgpuDeviceLost:
+          "Koneksi WebGPU terputus (memori GPU tidak mencukupi atau perangkat di-reset). Silakan muat ulang model atau beralih ke mode Cloud.",
+        localProcessFailed:
+          "Maaf, terjadi kesalahan saat memproses balasan lokal.",
+        cloudHttpError: "Gagal menghubungi Cloud AI (HTTP {status})",
+        cloudEmptyJson: "Respons JSON dari Cloud AI tidak memiliki teks balasan.",
+        streamUnavailable: "Stream tidak tersedia dari server.",
+        cloudUnavailable: "Maaf, layanan Cloud AI sedang tidak dapat dihubungi.",
+      },
+    },
   },
   resume: {
     back: "Kembali",
