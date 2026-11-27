@@ -2,6 +2,7 @@ import Button from "@/components/ui/bootstrap/button";
 import Header from "@/components/layouts/home/header";
 import SideNav from "@/components/ui/customs/side-nav";
 import ScrollToTop from "@/components/ui/customs/scroll-to-top";
+import ChatbotUI from "@/components/ui/customs/chatbot-ui";
 import { NavigationProvider } from "@/context/NavigationContext";
 
 export default function HomeLayout({
@@ -22,7 +23,13 @@ export default function HomeLayout({
       <Header />
       <main id="main-content">{children}</main>
       <SideNav />
-      <ScrollToTop />
+      <div
+        className="position-fixed bottom-0 end-0 m-3 m-md-4 d-flex flex-row align-items-end gap-2"
+        style={{ zIndex: 1040, pointerEvents: "none" }}
+      >
+        <ScrollToTop />
+        <ChatbotUI />
+      </div>
     </NavigationProvider>
   );
 }

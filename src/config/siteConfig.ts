@@ -136,6 +136,8 @@ export const siteConfig = {
       certificates: "/certificates?all=true",
       testimonials: "/testimonials?all=true",
       socials: "/socials",
+      chatbotContext: "/chatbot/context",
+      chat: "/chatbot",
     },
   },
 } as const;

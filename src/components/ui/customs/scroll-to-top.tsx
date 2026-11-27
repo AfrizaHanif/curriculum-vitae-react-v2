@@ -36,9 +36,7 @@ export default function ScrollToTop() {
 
   return (
     <div
-      className="position-fixed bottom-0 end-0 m-3 m-md-4"
       style={{
-        zIndex: 1040,
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0) scale(1)" : "translateY(16px) scale(0.8)",
         pointerEvents: isVisible ? "auto" : "none",

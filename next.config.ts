@@ -8,11 +8,12 @@ const devOrigins =
 
 const cspHeader = `
     default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/;
+    worker-src 'self' blob:;
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https://api.afrizahanif.com ${isDev ? devOrigins : ""} https://*.ytimg.com https://*.tile.openstreetmap.org https://tile.openstreetmap.org https://www.gstatic.com https://cdn.simpleicons.org;
     font-src 'self' data:;
-    connect-src 'self' https://api.afrizahanif.com ${isDev ? devOrigins : ""} https://*.tile.openstreetmap.org https://formspree.io https://www.google.com https://www.gstatic.com https://recaptcha.google.com;
+    connect-src 'self' https://api.afrizahanif.com ${isDev ? devOrigins : ""} https://*.tile.openstreetmap.org https://formspree.io https://www.google.com https://www.gstatic.com https://recaptcha.google.com https://huggingface.co https://*.huggingface.co https://*.hf.co https://raw.githubusercontent.com;
     frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/;
     object-src 'none';
     base-uri 'self';
