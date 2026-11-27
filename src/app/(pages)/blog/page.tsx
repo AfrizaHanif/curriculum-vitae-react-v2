@@ -9,7 +9,7 @@ export default function BlogPage() {
       className="d-flex flex-column min-vh-100 bg-body-tertiary"
       style={{ paddingTop: "75px" }}
     >
-      <PageHeader fullname="Resume" withLogo />
+      <PageHeader fullname="Blog" withLogo />
       <main className="flex-grow-1 d-flex align-items-center justify-content-center text-center p-4">
         <UnderConstruction />
       </main>
