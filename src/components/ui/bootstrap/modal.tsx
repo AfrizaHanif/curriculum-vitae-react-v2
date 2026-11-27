@@ -66,7 +66,7 @@ export interface ModalProps {
   show?: boolean;
   /** Callback triggered when the modal is closed */
   onClose?: () => void;
-  /** Optional custom click handler for the close button (defaults to onClose) */
+  /** Optional custom click handler for the close button (bypasses `data-bs-dismiss="modal"`) */
   onCloseClick?: () => void;
   /** Modal header title */
   title?: React.ReactNode;
@@ -120,7 +120,7 @@ const getServerSnapshot = () => false;
  */
 export default function Modal({
   id,
-  show = false,
+  show,
   onClose,
   onCloseClick,
   title,
@@ -148,14 +148,22 @@ export default function Modal({
     getSnapshot,
     getServerSnapshot,
   );
+  const isControlled = show !== undefined;
+  const isOpen = show ?? false;
+
   const modalRef = useRef<HTMLDivElement | null>(null);
   const modalInstanceRef = useRef<BootstrapModal | null>(null);
-  const showRef = useRef(show);
+  const showRef = useRef(isOpen);
+  const isControlledRef = useRef(isControlled);
   const onCloseRef = useRef(onClose);
 
   useEffect(() => {
-    showRef.current = show;
-  }, [show]);
+    showRef.current = isOpen;
+  }, [isOpen]);
+
+  useEffect(() => {
+    isControlledRef.current = isControlled;
+  }, [isControlled]);
 
   useEffect(() => {
     onCloseRef.current = onClose;
@@ -166,7 +174,7 @@ export default function Modal({
     const node = modalRef.current;
     if (!node) return;
 
-    if (show) {
+    if (isOpen) {
       // Dynamically import Bootstrap to avoid SSR errors in Next.js
       import("bootstrap").then((bootstrap) => {
         if (!document.body.contains(node)) return;
@@ -184,7 +192,7 @@ export default function Modal({
     } else {
       modalInstanceRef.current?.hide();
     }
-  }, [show, isStatic]);
+  }, [isOpen, isStatic]);
 
   // Handle hidden.bs.modal event fired by Bootstrap (including backdrop clicks & Esc)
   useEffect(() => {
@@ -199,7 +207,7 @@ export default function Modal({
           modalBody.scrollTop = 0;
         }
       }
-      if (showRef.current) {
+      if (!isControlledRef.current || showRef.current) {
         onCloseRef.current?.();
       }
     };
@@ -212,12 +220,13 @@ export default function Modal({
 
   // Clean up modal instance and any leftover backdrop on unmount
   useEffect(() => {
-    const currentInstance = modalInstanceRef.current;
     return () => {
+      const currentInstance = modalInstanceRef.current;
       try {
         currentInstance?.hide();
         currentInstance?.dispose();
       } catch {}
+      modalInstanceRef.current = null;
       // Remove any lingering backdrops
       document.querySelectorAll(".modal-backdrop").forEach((el) => el.remove());
       document.body.classList.remove("modal-open");
@@ -264,8 +273,6 @@ export default function Modal({
         ? "modal-fullscreen"
         : "";
 
-  const handleClose = onCloseClick || onClose;
-
   const modalElement = (
     <div
       ref={modalRef}
@@ -278,7 +285,7 @@ export default function Modal({
       aria-labelledby={!noHeader ? `${id}-title` : undefined}
       data-bs-backdrop={isStatic ? "static" : "true"}
       data-bs-keyboard={!isStatic}
-      aria-hidden={!show}
+      aria-hidden={!isOpen}
     >
       <div
         className={`modal-dialog ${modalClass} ${fullscreenClass} ${
@@ -294,11 +301,11 @@ export default function Modal({
               <Button
                 className="btn-close"
                 dataBsDismiss={
-                  closeButtonDisabled || handleClose ? undefined : "modal"
+                  closeButtonDisabled || onCloseClick ? undefined : "modal"
                 }
                 disabled={closeButtonDisabled}
                 aria-label="Close"
-                onClick={closeButtonDisabled ? undefined : handleClose}
+                onClick={closeButtonDisabled ? undefined : onCloseClick}
               />
             </div>
           )}
@@ -339,8 +346,8 @@ export default function Modal({
               ) : (
                 <Button
                   color="secondary"
-                  dataBsDismiss={handleClose ? undefined : "modal"}
-                  onClick={handleClose}
+                  dataBsDismiss={onCloseClick ? undefined : "modal"}
+                  onClick={onCloseClick}
                 >
                   Close
                 </Button>
