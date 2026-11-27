@@ -44,6 +44,10 @@ export interface SpinnerProps {
   label?: string;
 }
 
+/**
+ * Bootstrap loading spinner component supporting border and grow animations,
+ * size variants (`sm`, `md`, `lg`), contextual colors, and accessibility screen reader text.
+ */
 export default function Spinner({
   variant = "border",
   color,
@@ -55,7 +59,8 @@ export default function Spinner({
   const hasCustomText = /\btext-/.test(className);
   const resolvedColor = color ?? (hasCustomText ? undefined : "primary");
 
-  const spinnerBaseClass = variant === "grow" ? "spinner-grow" : "spinner-border";
+  const spinnerBaseClass =
+    variant === "grow" ? "spinner-grow" : "spinner-border";
   const colorClass = resolvedColor ? `text-${resolvedColor}` : "";
   const sizeClass = size === "sm" ? `${spinnerBaseClass}-sm` : "";
 
@@ -64,16 +69,13 @@ export default function Spinner({
     ...style,
   };
 
-  const combinedClasses = `${spinnerBaseClass} ${colorClass} ${sizeClass} ${className}`
-    .trim()
-    .replace(/\s+/g, " ");
+  const combinedClasses =
+    `${spinnerBaseClass} ${colorClass} ${sizeClass} ${className}`
+      .trim()
+      .replace(/\s+/g, " ");
 
   return (
-    <div
-      className={combinedClasses}
-      role="status"
-      style={customStyle}
-    >
+    <div className={combinedClasses} role="status" style={customStyle}>
       <span className="visually-hidden">{label}</span>
     </div>
   );

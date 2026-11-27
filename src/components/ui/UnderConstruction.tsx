@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Button from "@/components/ui/bootstrap/button";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface UnderConstructionProps {
@@ -23,10 +23,10 @@ export default function UnderConstruction({
       <p className="lead text-muted mb-4">
         {subtitle || t.common.underConstruction.subtitle}
       </p>
-      <Link href="/" className="btn btn-outline-primary">
+      <Button as="a" href="/" color="outline-primary">
         <i className="bi bi-arrow-left me-2"></i>
         {t.common.underConstruction.backHome}
-      </Link>
+      </Button>
     </div>
   );
 }

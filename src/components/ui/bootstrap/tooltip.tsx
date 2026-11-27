@@ -3,13 +3,27 @@
 import React, { useEffect, useRef } from "react";
 import type { Tooltip as BootstrapTooltip } from "bootstrap";
 
-interface TooltipProps {
+/**
+ * Props for the {@link Tooltip} component.
+ */
+export interface TooltipProps {
+  /** The single trigger element that activates the tooltip on hover/focus. */
   children: React.ReactElement;
+
+  /** Tooltip text displayed to the user. */
   title: string;
+
+  /** Placement direction: `"top"`, `"bottom"`, `"left"`, or `"right"`. Defaults to `"top"`. */
   placement?: "top" | "bottom" | "left" | "right";
+
+  /** Additional CSS class names applied to the tooltip element. */
   customClass?: string;
 }
 
+/**
+ * Bootstrap tooltip overlay component wrapping a single child element.
+ * Safely handles disabled triggers via pointer-events wrappers and cleans up bootstrap instances on unmount.
+ */
 export default function Tooltip({
   children,
   title,
@@ -18,6 +32,7 @@ export default function Tooltip({
 }: TooltipProps) {
   const triggerRef = useRef<HTMLElement | null>(null);
   const tooltipInstanceRef = useRef<BootstrapTooltip | null>(null);
+  const titleRef = useRef(title);
 
   const child = React.Children.only(children) as React.ReactElement<{
     disabled?: boolean;
@@ -94,7 +109,7 @@ export default function Tooltip({
         }
 
         tooltipInstance = new bootstrap.Tooltip(node, {
-          title,
+          title: titleRef.current,
           placement,
           trigger: "hover focus",
           customClass,
@@ -119,7 +134,19 @@ export default function Tooltip({
         tooltipInstanceRef.current = null;
       }
     };
-  }, [title, placement, isDisabled, customClass]);
+  }, [placement, isDisabled, customClass]);
+
+  useEffect(() => {
+    titleRef.current = title;
+    const instance = tooltipInstanceRef.current;
+    if (!instance) return;
+
+    try {
+      instance.setContent({ ".tooltip-inner": title });
+    } catch {
+      // Ignore lifecycle errors
+    }
+  }, [title]);
 
   const wrappedChild = React.cloneElement(child, {
     style: {

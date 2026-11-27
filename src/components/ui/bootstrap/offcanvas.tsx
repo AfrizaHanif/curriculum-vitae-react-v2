@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useSyncExternalStore } from "react";
 import ReactDOM from "react-dom";
 import type { Offcanvas as BootstrapOffcanvas } from "bootstrap";
 import Button from "./button";
+import "./offcanvas.css";
 
 export interface OffcanvasProps {
   id: string;
@@ -33,12 +34,19 @@ export interface OffcanvasProps {
   bodyClassName?: string;
   /** Automatically reset the offcanvas and offcanvas body scroll position when closed */
   resetScrollOnClose?: boolean;
+  /** Whether the offcanvas should stack above active modals (z-index 1060 and backdrop 1058) */
+  stacked?: boolean;
 }
 
 const subscribe = () => () => {};
 const getSnapshot = () => true;
 const getServerSnapshot = () => false;
 
+/**
+ * Bootstrap 5 offcanvas sidebar drawer component rendered via React Portal.
+ * Supports configurable placement (start, end, top, bottom), backdrop management,
+ * background scrolling, and closing transitions.
+ */
 export default function Offcanvas({
   id,
   show = false,
@@ -54,11 +62,12 @@ export default function Offcanvas({
   headerClassName = "",
   bodyClassName = "",
   resetScrollOnClose = true,
+  stacked = false,
 }: OffcanvasProps) {
   const mounted = useSyncExternalStore(
     subscribe,
     getSnapshot,
-    getServerSnapshot
+    getServerSnapshot,
   );
 
   const offcanvasRef = useRef<HTMLDivElement | null>(null);
@@ -153,7 +162,7 @@ export default function Offcanvas({
     <div
       id={id}
       ref={offcanvasRef}
-      className={`offcanvas offcanvas-${placement} ${className}`}
+      className={`offcanvas offcanvas-${placement} ${stacked ? "offcanvas-stacked" : ""} ${className}`.trim()}
       style={style}
       tabIndex={-1}
       aria-labelledby={`${id}-label`}

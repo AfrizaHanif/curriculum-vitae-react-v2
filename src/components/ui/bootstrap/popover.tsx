@@ -20,6 +20,10 @@ export interface PopoverProps {
   customClass?: string;
 }
 
+/**
+ * Bootstrap popover overlay component wrapping a child trigger element.
+ * Supports string or rich React node content with client-side Bootstrap initialization.
+ */
 export default function Popover({
   children,
   title = "",
@@ -85,7 +89,15 @@ export default function Popover({
         popoverInstanceRef.current = null;
       }
     };
-  }, [title, content, placement, trigger, html, customClass, contentContainerId]);
+  }, [
+    title,
+    content,
+    placement,
+    trigger,
+    html,
+    customClass,
+    contentContainerId,
+  ]);
 
   // Attach the ref to the single child element
   const child = React.Children.only(children) as React.ReactElement<{

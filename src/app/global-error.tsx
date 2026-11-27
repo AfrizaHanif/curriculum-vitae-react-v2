@@ -7,6 +7,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "./globals.css";
 import Badge from "@/components/ui/bootstrap/badge";
 import Button from "@/components/ui/bootstrap/button";
+import Card from "@/components/ui/bootstrap/card";
 
 export default function GlobalError({
   error,
@@ -23,7 +24,10 @@ export default function GlobalError({
     <html lang="en" data-bs-theme="auto">
       <body className="min-vh-100 d-flex flex-column align-items-center justify-content-center bg-body-tertiary p-3">
         <div className="container" style={{ maxWidth: "560px" }}>
-          <div className="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-center bg-body">
+          <Card
+            className="border-0 shadow-sm rounded-4 text-center bg-body"
+            bodyClassName="p-4 p-md-5"
+          >
             <div className="mb-3">
               <Badge
                 color="danger"
@@ -76,7 +80,7 @@ export default function GlobalError({
                 </Button>
               </Link>
             </div>
-          </div>
+          </Card>
         </div>
       </body>
     </html>

@@ -5,62 +5,100 @@ import type { Dropdown as BootstrapDropdown } from "bootstrap";
 import Button, { ButtonProps } from "./button";
 import Link from "next/link";
 
+/**
+ * Item configuration in a dropdown menu.
+ * Can be either a divider (`{ type: "divider" }`) or an interactive action item.
+ */
 export type DropdownItem =
   | { type: "divider"; label?: string }
   | {
+      /** Item text label. */
       label?: string;
+      /** Bootstrap icon class name. */
       icon?: string;
+      /** Highlights item as active. */
       active?: boolean;
+      /** Link destination URL. */
       href?: string;
+      /** Internal Next.js Link vs External link. */
       hrefType?: "external" | "internal";
+      /** Opens in new tab when true. */
       newTab?: boolean;
+      /** Explicit item discriminator type. */
       type?: "item";
+      /** Bootstrap modal or offcanvas toggle attribute. */
       dataBsToggle?: "modal" | "offcanvas";
+      /** Target selector for toggled modal/offcanvas. */
       dataBsTarget?: string;
+      /** Click handler for button items. */
       onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+      /** Custom render function for item. */
       render?: (item: DropdownItem) => React.ReactNode;
     };
 
+/**
+ * Union type allowing either declarative `items` array or arbitrary `content` JSX.
+ */
 export type DropdownDataSource =
   | { items: DropdownItem[]; content?: never }
   | { items?: never; content: ReactNode };
 
+/**
+ * Props for the {@link Dropdown} component.
+ */
 export type DropdownProps = DropdownDataSource & {
-  /** The wrapper container contents (containing the toggle and menu) */
+  /** Sizing variant: `"sm"` (small) or `"lg"` (large). */
   size?: "sm" | "lg";
+  /** Placement direction: `"up"` (dropup), `"down"`, `"start"` (dropleft), `"end"` (dropright). */
   direction?: "up" | "down" | "start" | "end";
+  /** Centers the menu relative to the toggle. */
   centered?: boolean;
+  /** Footer content placed at the bottom of the dropdown menu. */
   footer?: React.ReactNode;
+  /** Inline styles for the outer dropdown container. */
   dropdownStyle?: React.CSSProperties;
+  /** Inline styles for the toggle button. */
   buttonStyle?: React.CSSProperties;
+  /** CSS class applied to the toggle button. */
   buttonClass?: string;
+  /** Bootstrap color for the toggle button. Defaults to `"secondary"`. */
   buttonColor?: ButtonProps["color"];
+  /** CSS class applied to the dropdown menu element. */
   menuClass?: string;
+  /** Inline styles for the dropdown menu. */
   menuStyle?: React.CSSProperties;
+  /** Shows or hides the dropdown caret arrow icon. Defaults to `true`. */
   showCaret?: boolean;
+  /** Toggle button label or elements. */
   children: React.ReactNode;
+  /** Disables the toggle button. */
   disabled?: boolean;
+  /** Accessibility label. */
   "aria-label"?: string;
-  /** Bootstrap container class (e.g., 'dropdown', 'btn-group', 'dropup') */
+  /** Bootstrap container class (e.g. `'dropdown'`, `'btn-group'`, `'dropup'`). */
   className?: string;
-  /** How the dropdown closes when elements are clicked */
+  /** How the dropdown closes when clicking inside/outside. */
   autoClose?: boolean | "inside" | "outside";
-  /** Overflow constraint boundary */
+  /** Overflow constraint boundary. */
   boundary?: Element | Element[] | "clippingParents";
-  /** Reference element for positioning */
+  /** Reference element for positioning. */
   reference?:
     | "toggle"
     | "parent"
     | Element
     | { width: number; height: number; x: number; y: number };
-  /** Offset of the dropdown menu relative to its target */
+  /** Offset of the dropdown menu relative to its target. */
   offset?: [number, number] | string | (() => [number, number]);
-  /** Callback fired when dropdown opens or closes */
+  /** Callback fired when dropdown opens or closes. */
   onOpenChange?: (isOpen: boolean) => void;
 };
 
 const DEFAULT_OFFSET: [number, number] = [0, 2];
 
+/**
+ * Bootstrap dropdown component supporting declarative items, arbitrary menu content,
+ * direction placement (dropup, dropleft, dropright), and custom offsets.
+ */
 const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
   function Dropdown(
     {
@@ -184,7 +222,9 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
 
         if (!container.contains(e.target as Node)) {
           if (autoClose === true || autoClose === "outside") {
-            const toggleEl = container.querySelector('[data-bs-toggle="dropdown"]');
+            const toggleEl = container.querySelector(
+              '[data-bs-toggle="dropdown"]',
+            );
             if (toggleEl) {
               import("bootstrap").then((bootstrap) => {
                 const instance = bootstrap.Dropdown.getInstance(toggleEl);

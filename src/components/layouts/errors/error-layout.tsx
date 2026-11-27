@@ -6,6 +6,7 @@ import Button from "@/components/ui/bootstrap/button";
 import { siteConfig } from "@/config/siteConfig";
 import ErrorHeader from "./error-header";
 import Badge from "@/components/ui/bootstrap/badge";
+import Card from "@/components/ui/bootstrap/card";
 import "./error-footer.css";
 
 export interface QuickLinkItem {
@@ -78,7 +79,10 @@ export default function ErrorLayout({
         className="flex-grow-1 d-flex align-items-center justify-content-center py-5 px-3"
       >
         <div className="container" style={{ maxWidth: "680px" }}>
-          <div className="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-center bg-body">
+          <Card
+            className="border-0 shadow-sm rounded-4 text-center bg-body"
+            bodyClassName="p-4 p-md-5"
+          >
             {/* Status Code Badge */}
             <div className="mb-3">
               <Badge
@@ -221,7 +225,7 @@ export default function ErrorLayout({
                 </details>
               </div>
             )}
-          </div>
+          </Card>
         </div>
       </main>
 

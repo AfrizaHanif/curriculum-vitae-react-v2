@@ -1,5 +1,6 @@
 "use client";
 
+import Badge from "@/components/ui/bootstrap/badge";
 import Button from "@/components/ui/bootstrap/button";
 import { ProjectActiveFilterChipsProps } from "./types";
 
@@ -42,7 +43,12 @@ export default function ProjectActiveFilterChips({
 
       {/* Active Filters */}
       {isCategoryFiltered && (
-        <span className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill d-inline-flex align-items-center gap-1 py-1 px-2">
+        <Badge
+          color="primary"
+          subtle
+          pill
+          className="d-inline-flex align-items-center gap-1 py-1 px-2"
+        >
           <span>
             Category:{" "}
             <strong className="text-capitalize">{categoryLabel}</strong>
@@ -54,12 +60,17 @@ export default function ProjectActiveFilterChips({
             aria-label="Remove category filter"
             onClick={onClearCategory}
           />
-        </span>
+        </Badge>
       )}
 
       {/* Technology Filter */}
       {isTechFiltered && (
-        <span className="badge bg-info-subtle text-info-emphasis border border-info-subtle rounded-pill d-inline-flex align-items-center gap-1 py-1 px-2">
+        <Badge
+          color="info"
+          subtle
+          pill
+          className="d-inline-flex align-items-center gap-1 py-1 px-2"
+        >
           <span>
             Tech: <strong className="text-capitalize">{activeTech}</strong>
           </span>
@@ -70,12 +81,17 @@ export default function ProjectActiveFilterChips({
             aria-label="Remove technology filter"
             onClick={onClearTech}
           />
-        </span>
+        </Badge>
       )}
 
       {/* Tag Filter */}
       {isTagFiltered && onClearTag && (
-        <span className="badge bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle rounded-pill d-inline-flex align-items-center gap-1 py-1 px-2">
+        <Badge
+          color="secondary"
+          subtle
+          pill
+          className="d-inline-flex align-items-center gap-1 py-1 px-2"
+        >
           <span>
             Tag: <strong className="text-capitalize">{activeTag}</strong>
           </span>
@@ -86,7 +102,7 @@ export default function ProjectActiveFilterChips({
             aria-label="Remove tag filter"
             onClick={onClearTag}
           />
-        </span>
+        </Badge>
       )}
 
       {/* Clear All Button */}

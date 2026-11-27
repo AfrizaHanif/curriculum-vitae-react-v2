@@ -2,8 +2,14 @@
 
 import React from "react";
 
+/**
+ * Props for the {@link Progress} bar component.
+ */
 export interface ProgressProps {
-  value: number; // 0 to 100
+  /** Numeric progress percentage between 0 and 100. */
+  value: number;
+
+  /** Contextual background color for the progress bar. Defaults to `"primary"`. */
   color?:
     | "primary"
     | "secondary"
@@ -14,15 +20,33 @@ export interface ProgressProps {
     | "light"
     | "dark"
     | (string & {});
+
+  /** Applies striped pattern styling to the progress bar (`progress-bar-striped`). */
   striped?: boolean;
+
+  /** Animates the striped pattern (`progress-bar-animated`). */
   animated?: boolean;
+
+  /** Fixed height for the progress container (e.g. `"8px"`, `12`). */
   height?: string | number;
+
+  /** Additional CSS class names applied to the outer `.progress` container. */
   className?: string;
+
+  /** Additional CSS class names applied to the inner `.progress-bar` fill element. */
   barClassName?: string;
+
+  /** Inline CSS styles. */
   style?: React.CSSProperties;
+
+  /** Label or text content rendered inside the progress bar. */
   children?: React.ReactNode;
 }
 
+/**
+ * Bootstrap progress bar component for displaying completion ratios, skill percentages,
+ * and loading progress with support for stripes and animation.
+ */
 export default function Progress({
   value,
   color,
@@ -44,9 +68,10 @@ export default function Progress({
   const animatedClass = animated ? "progress-bar-animated" : "";
 
   const progressClasses = `progress ${className}`.trim().replace(/\s+/g, " ");
-  const progressBarClasses = `progress-bar ${bgClass} ${stripedClass} ${animatedClass} ${barClassName}`
-    .trim()
-    .replace(/\s+/g, " ");
+  const progressBarClasses =
+    `progress-bar ${bgClass} ${stripedClass} ${animatedClass} ${barClassName}`
+      .trim()
+      .replace(/\s+/g, " ");
 
   return (
     <div
@@ -59,7 +84,10 @@ export default function Progress({
     >
       <div
         className={progressBarClasses}
-        style={{ width: `${normalizedValue}%`, transition: "width 0.2s ease-out" }}
+        style={{
+          width: `${normalizedValue}%`,
+          transition: "width 0.2s ease-out",
+        }}
       >
         {children}
       </div>

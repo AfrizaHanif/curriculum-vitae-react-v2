@@ -66,6 +66,7 @@
   .carousel .carousel-control-prev {
     left: 10px;
   }
+
   .carousel .carousel-control-next {
     right: 10px;
   }
@@ -75,6 +76,7 @@
   .carousel .carousel-control-prev {
     left: -22px;
   }
+
   .carousel .carousel-control-next {
     right: -22px;
   }
@@ -113,6 +115,7 @@
 
 /* Show indicators and controls only on hover for hover-capable devices */
 @media (hover: hover) {
+
   .carousel.hover-controls-only .carousel-indicators,
   .carousel.hover-controls-only .carousel-control-prev,
   .carousel.hover-controls-only .carousel-control-next {
@@ -139,5 +142,3 @@
     opacity: 1;
   }
 }
-
-

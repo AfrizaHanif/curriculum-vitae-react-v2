@@ -1,0 +1,10 @@
+/* Only elevate offcanvases explicitly marked as stacked (e.g. Help drawer opened over a modal) */
+body:has(.offcanvas-stacked.show) .offcanvas-backdrop,
+body:has(.offcanvas-stacked.showing) .offcanvas-backdrop,
+body:has(.offcanvas-stacked.hiding) .offcanvas-backdrop {
+  z-index: 1058;
+}
+
+.offcanvas.offcanvas-stacked {
+  z-index: 1060;
+}

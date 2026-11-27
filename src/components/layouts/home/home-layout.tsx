@@ -1,3 +1,4 @@
+import Button from "@/components/ui/bootstrap/button";
 import Header from "@/components/layouts/home/header";
 import SideNav from "@/components/ui/customs/side-nav";
 import ScrollToTop from "@/components/ui/customs/scroll-to-top";
@@ -10,12 +11,14 @@ export default function HomeLayout({
 }) {
   return (
     <NavigationProvider>
-      <a
+      <Button
+        as="a"
         href="#main-content"
-        className="visually-hidden-focusable position-fixed top-0 start-0 m-3 btn btn-primary z-3"
+        color="primary"
+        className="visually-hidden-focusable position-fixed top-0 start-0 m-3 z-3"
       >
         Skip to main content
-      </a>
+      </Button>
       <Header />
       <main id="main-content">{children}</main>
       <SideNav />

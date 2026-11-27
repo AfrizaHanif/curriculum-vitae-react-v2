@@ -7,21 +7,43 @@ import NextImage from "../react/image";
 import "@/components/ui/bootstrap/carousel.css";
 import { getShimmerDataUrl } from "@/lib/shimmer";
 
+/**
+ * Slide item configuration in {@link Carousel}.
+ */
+export interface CarouselSlideItem {
+  /** Image URL for this slide. */
+  image: string;
+  /** Alt text for accessibility. */
+  alt: string;
+  /** Optional caption title displayed over the slide. */
+  title?: string;
+  /** Optional caption description displayed over the slide. */
+  description?: string;
+  /** CSS object-position (e.g. `"center"`, `"top"`). */
+  objectPosition?: string;
+  /** CSS object-fit (`"cover"`, `"contain"`, etc.). */
+  objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
+  /** Fallback image source when main image fails. */
+  fallbackSrc?: string | StaticImageData;
+}
+
+/**
+ * Props for the {@link Carousel} component.
+ */
 export interface CarouselProps {
+  /** Unique element ID for carousel. Defaults to `"carouselExample"`. */
   id?: string;
-  items: Array<{
-    image: string;
-    alt: string;
-    title?: string;
-    description?: string;
-    objectPosition?: string;
-    objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
-    fallbackSrc?: string | StaticImageData;
-  }>;
+  /** Array of slides to display. */
+  items: CarouselSlideItem[];
+  /** Shows slide indicator dots at the bottom. Defaults to `true`. */
   withIndicators?: boolean;
+  /** Shows previous and next navigation arrows. Defaults to `true`. */
   withControls?: boolean;
+  /** Arrow controls position: `"side"` or `"bottom"`. Defaults to `"side"`. */
   controlsPosition?: "side" | "bottom";
+  /** Enables smooth crossfade transition instead of sliding. Defaults to `false`. */
   crossFade?: boolean;
+  /** Auto play animation mode: `"carousel"`, `"ride"`, or boolean. Defaults to `"carousel"`. */
   autoPlay?: "carousel" | "ride" | boolean;
   interval?: number;
   touch?: boolean;
@@ -69,6 +91,10 @@ export interface CarouselProps {
   blurDataURL?: string;
 }
 
+/**
+ * Bootstrap image and content carousel slideshow component.
+ * Supports crossfade, autoplay, indicators, swipe gestures, and Next.js image loading skeletons.
+ */
 export default function Carousel({
   id = "carouselExample",
   items,

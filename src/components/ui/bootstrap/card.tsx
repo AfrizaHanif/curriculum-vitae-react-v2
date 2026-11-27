@@ -13,14 +13,27 @@ import { getShimmerDataUrl } from "@/lib/shimmer";
     https://getbootstrap.com/docs/5.3/components/card/#:~:text=Card%20body
  */
 
+/**
+ * Item in a card list group.
+ */
 export interface ListGroupItemProps {
+  /** Unique ID for the item. */
   id: string;
+  /** Label/title content displayed in list item. */
   title: string;
 }
 
+/**
+ * Props for the {@link Card} component.
+ */
 export interface CardProps {
+  /** Optional card header node rendered in `<div className="card-header">`. */
   header?: React.ReactNode;
+  headerClassName?: string;
+  /** Optional card footer node rendered in `<div className="card-footer">`. */
   footer?: React.ReactNode;
+  footerClassName?: string;
+  /** Bootstrap background color scheme for the card. */
   cardColor?:
     | "primary"
     | "success"
@@ -30,6 +43,7 @@ export interface CardProps {
     | "light"
     | "dark"
     | "transparent";
+  /** Contextual border color class. */
   borderColor?:
     | "primary"
     | "success"
@@ -38,14 +52,23 @@ export interface CardProps {
     | "info"
     | "light"
     | "dark";
+  /** Image source URL for card image. */
   imgSrc?: string;
+  /** Position of image: `"top"`, `"bottom"`, or `"overlay"`. Defaults to `"top"`. */
   imgPosition?: "top" | "bottom" | "overlay";
+  /** Image display width in pixels. Defaults to 600. */
   imgWidth?: number;
+  /** Image display height in pixels. Defaults to 400. */
   imgHeight?: number;
+  /** Alt text for accessibility. */
   imgAlt?: string;
+  /** Applies a dark gradient overlay on the image. */
   imgGradient?: boolean;
+  /** Inline CSS styles for image element. */
   imgStyle?: React.CSSProperties;
+  /** Fallback image URL or StaticImageData when image fails to load. */
   fallbackSrc?: string | StaticImageData;
+  /** Image loading strategy: `"lazy"` or `"eager"`. */
   imgLoading?: "lazy" | "eager";
   /** Whether to show a spinner during image loading */
   imgShowSpinner?: boolean;
@@ -55,22 +78,41 @@ export interface CardProps {
   placeholder?: "blur" | "empty";
   /** Custom base64 blurDataURL for the image */
   blurDataURL?: string;
+  /** Optional link URL making the card header/image linkable. */
   linkHref?: string;
+  /** Bootstrap modal or offcanvas toggle attribute. */
   linkToggle?: toggleAllowed;
+  /** Link target attribute (e.g. `"_blank"`). */
   linkTarget?: string;
+  /** Optional array of items rendered as a Bootstrap list group inside the card. */
   listGroupItem?: ListGroupItemProps[];
+  /** Layout orientation: `"vertical"` (standard) or `"horizontal"` (side-by-side). Defaults to `"vertical"`. */
   cardLayout?: "horizontal" | "vertical";
+  /** Forces card to stretch to 100% height (`h-100`). */
   fullHeight?: boolean;
+  /** Additional CSS class names applied to the card wrapper. */
   className?: string;
+  /** Additional CSS class names applied to the `<div className="card-body">`. */
   bodyClassName?: string;
+  /** When true, renders children directly inside the card without wrapping in `<div className="card-body">`. Defaults to `false`. */
+  noBody?: boolean;
+  /** Inline CSS styles. */
   style?: React.CSSProperties;
+  /** Main card body contents. */
   children?: React.ReactNode;
+  /** Click event handler on card container. */
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
+/**
+ * Versatile Bootstrap Card component supporting header/footer, image positions (top, bottom, overlay),
+ * horizontal layouts, list groups, and Next.js image loading states.
+ */
 export default function Card({
   header,
+  headerClassName,
   footer,
+  footerClassName,
   cardColor,
   borderColor,
   imgSrc,
@@ -94,6 +136,7 @@ export default function Card({
   fullHeight = false,
   className,
   bodyClassName,
+  noBody = false,
   style,
   children,
   onClick,
@@ -224,7 +267,11 @@ export default function Card({
               )}
             </>
           )}
-          {header && <div className="card-header">{header}</div>}
+          {header && (
+            <div className={`card-header ${headerClassName || ""}`}>
+              {header}
+            </div>
+          )}
           {listGroupItem && (
             <ul className="list-group list-group-flush">
               {listGroupItem?.map((item) => (
@@ -239,13 +286,22 @@ export default function Card({
               {children}
               {linkToggle ? linkToggleBtn : linkHref && linkHrefBtn}
             </div>
+          ) : noBody ? (
+            <>
+              {children}
+              {linkToggle ? linkToggleBtn : linkHref && linkHrefBtn}
+            </>
           ) : (
             <div className={`card-body ${bodyClassName || ""}`}>
               {children}
               {linkToggle ? linkToggleBtn : linkHref && linkHrefBtn}
             </div>
           )}
-          {footer && <div className="card-footer">{footer}</div>}
+          {footer && (
+            <div className={`card-footer ${footerClassName || ""}`}>
+              {footer}
+            </div>
+          )}
           {imgSrc && imgPosition === "bottom" && (
             <div
               className="card-img-bottom-wrapper overflow-hidden position-relative bg-body-secondary bg-opacity-50"
@@ -298,10 +354,17 @@ export default function Card({
             />
           </div>
           <div className="col-md-8">
-            <div className="card-body">
-              {children}
-              {linkToggle ? linkToggleBtn : linkHref && linkHrefBtn}
-            </div>
+            {noBody ? (
+              <>
+                {children}
+                {linkToggle ? linkToggleBtn : linkHref && linkHrefBtn}
+              </>
+            ) : (
+              <div className={`card-body ${bodyClassName || ""}`}>
+                {children}
+                {linkToggle ? linkToggleBtn : linkHref && linkHrefBtn}
+              </div>
+            )}
           </div>
         </div>
       )}

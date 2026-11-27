@@ -2,20 +2,44 @@
 
 import React, { useId } from "react";
 
+/**
+ * Configuration for an individual accordion panel item.
+ */
 export interface AccordionItemProps {
+  /** Unique ID for the accordion collapsible panel. */
   id: string;
+
+  /** Title or header node displayed in the accordion toggle button. */
   title: React.ReactNode;
+
+  /** Content rendered inside `<div className="accordion-body">`. */
   content: React.ReactNode;
+
+  /** Initial expanded state. Defaults to false (collapsed). */
   show?: boolean;
 }
 
+/**
+ * Props for the {@link Accordion} component.
+ */
 export interface AccordionProps {
+  /** Optional HTML element ID for the accordion container. */
   id?: string;
+
+  /** Optional heading title displayed above the accordion. */
   title?: string;
+
+  /** Additional CSS class names. */
   className?: string;
+
+  /** Array of accordion items to render. */
   item: AccordionItemProps[];
 }
 
+/**
+ * Bootstrap accordion component rendering collapsible content panels
+ * with synchronized single-panel expansion (`data-bs-parent`).
+ */
 export default function Accordion({
   id,
   title,

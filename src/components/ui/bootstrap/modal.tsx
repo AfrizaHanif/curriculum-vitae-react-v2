@@ -5,31 +5,69 @@ import ReactDOM from "react-dom";
 import type { Modal as BootstrapModal } from "bootstrap";
 import Button, { ButtonProps } from "./button";
 
+/**
+ * Configuration for an action button rendered in the {@link Modal} footer.
+ */
 export interface ModalButtonItem {
+  /** Text or React element label for the button. */
   label?: React.ReactNode;
+
+  /** Completely custom node replacing the standard button markup. */
   custom?: React.ReactNode;
+
+  /** Element tag to render: `"button"` or `"a"`. Defaults to `"button"`. */
   as?: "button" | "a";
+
+  /** Link target URL when `as="a"`. */
   href?: string;
+
+  /** Link target attribute (e.g. `"_blank"`). */
   target?: string;
+
+  /** Link relationship attribute. */
   rel?: string;
+
+  /** HTML button type attribute (`"button"` | `"submit"` | `"reset"`). */
   type?: "button" | "submit" | "reset";
+
+  /** Bootstrap button variant color. */
   color?: ButtonProps["color"];
+
+  /** Button size variant (`"sm"` | `"lg"`). */
   size?: "sm" | "lg";
+
+  /** Disables the button. */
   disabled?: boolean;
+
+  /** Applies pill borders. */
   rounded?: boolean;
+
+  /** HTML form ID when triggering submit outside form tags. */
+  form?: string;
+
+  /** If true, automatically closes the modal when clicked. */
   dismiss?: boolean;
+
+  /** Additional CSS class names. */
   className?: string;
+
+  /** Click event handler. */
   onClick?: (
     event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>,
   ) => void;
 }
 
+/**
+ * Props for the {@link Modal} dialog component.
+ */
 export interface ModalProps {
   id: string;
   /** Controls the visibility of the modal */
   show?: boolean;
   /** Callback triggered when the modal is closed */
   onClose?: () => void;
+  /** Optional custom click handler for the close button (defaults to onClose) */
+  onCloseClick?: () => void;
   /** Modal header title */
   title?: React.ReactNode;
   /** Sizing class for the modal dialog */
@@ -68,16 +106,23 @@ export interface ModalProps {
   style?: React.CSSProperties;
   /** Automatically reset modal and modal body scroll position when closed */
   resetScrollOnClose?: boolean;
+  closeButtonDisabled?: boolean;
 }
 
 const subscribe = () => () => {};
 const getSnapshot = () => true;
 const getServerSnapshot = () => false;
 
+/**
+ * Reusable Bootstrap 5 modal component rendered via React Portal.
+ * Handles mounting, backdrop management, static backdrop constraints,
+ * focus trapping, and body scroll restoration.
+ */
 export default function Modal({
   id,
   show = false,
   onClose,
+  onCloseClick,
   title,
   size = "md",
   fullscreen,
@@ -96,6 +141,7 @@ export default function Modal({
   contentClassName = "",
   style,
   resetScrollOnClose = true,
+  closeButtonDisabled = false,
 }: ModalProps) {
   const mounted = useSyncExternalStore(
     subscribe,
@@ -104,6 +150,16 @@ export default function Modal({
   );
   const modalRef = useRef<HTMLDivElement | null>(null);
   const modalInstanceRef = useRef<BootstrapModal | null>(null);
+  const showRef = useRef(show);
+  const onCloseRef = useRef(onClose);
+
+  useEffect(() => {
+    showRef.current = show;
+  }, [show]);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   // Synchronize modal state with Bootstrap JS API
   useEffect(() => {
@@ -143,14 +199,16 @@ export default function Modal({
           modalBody.scrollTop = 0;
         }
       }
-      onClose?.();
+      if (showRef.current) {
+        onCloseRef.current?.();
+      }
     };
 
     node.addEventListener("hidden.bs.modal", handleHidden);
     return () => {
       node.removeEventListener("hidden.bs.modal", handleHidden);
     };
-  }, [onClose, resetScrollOnClose]);
+  }, [resetScrollOnClose]);
 
   // Clean up modal instance and any leftover backdrop on unmount
   useEffect(() => {
@@ -161,9 +219,7 @@ export default function Modal({
         currentInstance?.dispose();
       } catch {}
       // Remove any lingering backdrops
-      document
-        .querySelectorAll(".modal-backdrop")
-        .forEach((el) => el.remove());
+      document.querySelectorAll(".modal-backdrop").forEach((el) => el.remove());
       document.body.classList.remove("modal-open");
       document.body.style.removeProperty("overflow");
       document.body.style.removeProperty("padding-right");
@@ -208,6 +264,8 @@ export default function Modal({
         ? "modal-fullscreen"
         : "";
 
+  const handleClose = onCloseClick || onClose;
+
   const modalElement = (
     <div
       ref={modalRef}
@@ -235,8 +293,12 @@ export default function Modal({
               </h5>
               <Button
                 className="btn-close"
-                dataBsDismiss="modal"
+                dataBsDismiss={
+                  closeButtonDisabled || handleClose ? undefined : "modal"
+                }
+                disabled={closeButtonDisabled}
                 aria-label="Close"
+                onClick={closeButtonDisabled ? undefined : handleClose}
               />
             </div>
           )}
@@ -249,9 +311,7 @@ export default function Modal({
                 buttonItems.map((item, index) => {
                   if (item.custom) {
                     return (
-                      <React.Fragment key={index}>
-                        {item.custom}
-                      </React.Fragment>
+                      <React.Fragment key={index}>{item.custom}</React.Fragment>
                     );
                   }
 
@@ -263,6 +323,7 @@ export default function Modal({
                       target={item.target}
                       rel={item.rel}
                       type={item.type}
+                      form={item.form}
                       color={item.color}
                       size={item.size}
                       disabled={item.disabled}
@@ -278,7 +339,8 @@ export default function Modal({
               ) : (
                 <Button
                   color="secondary"
-                  dataBsDismiss="modal"
+                  dataBsDismiss={handleClose ? undefined : "modal"}
+                  onClick={handleClose}
                 >
                   Close
                 </Button>
